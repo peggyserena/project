@@ -1,0 +1,454 @@
+body {
+    height: auto;
+}
+
+.container {
+    width: 100%;
+    height: auto;
+}
+
+section {
+    margin-bottom: 1rem;
+}
+
+h3{
+    color: white;
+    padding: 0.5rem 0;
+    text-align: center;
+    text-shadow: 0 0 0.2em #0000E3, 0 0 0.25em #9AFF02, -1px -1px white, 1px 1px rgb(26, 2, 94);
+
+}
+
+
+
+P>span {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #0000E3;
+    display: inline-block;
+    padding: 1rem 0 0.5rem 0;
+    margin: 0;
+}
+
+
+a {
+    color: white;
+}
+
+main {
+    width: 100%;
+    height: auto;
+}
+
+.map {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    margin: 1rem auto;
+    text-align: center;
+    justify-content: space-evenly;
+}
+
+.map img {
+    width: 30rem;
+    height: 100%;
+    border: 0.5rem solid lightgray;
+    border-style: outset;
+}
+
+.map iframe {
+    width: 30rem;
+    height: 100%;
+    border: 0.5rem solid lightgray;
+    border-style: outset;
+}
+
+.container_02 {
+    display: flex;
+    align-items: flex-end;
+    position: relative;
+}
+
+.information {
+    position: relative;
+}
+
+.information img {
+    margin: 0 10px 5px 0;
+    width: 30px;
+    padding: 2.5px;
+}
+
+.information a {
+    color: inherit;
+    font-size: 1rem;
+}
+
+.information span {
+    color: inherit;
+    font-size: 1rem;
+    font-weight: 400;
+    padding: 0;
+}
+
+.animation_01 img {
+    height: 15rem;
+    position: relative;
+    z-index: -1;
+}
+
+.ani {
+    position: relative;
+    z-index: 9;
+}
+
+.cloud img:nth-child(1) {
+    top: 1rem;
+    width: 5rem;
+}
+
+.cloud img:nth-child(2) {
+    top: 2rem;
+    width: 3.5rem;
+    right: 1rem;
+}
+
+.cloud img:nth-child(3) {
+    top: 3rem;
+    width: 2.5rem;
+    right: 3rem
+}
+
+.cloud {
+    position: absolute;
+    right: 0;
+    width: 10rem;
+    animation-name: cloud;
+    animation-duration: 25s;
+    animation-iteration-count: infinite;
+    bottom: 45%;
+}
+
+@keyframes cloud {
+    0% {
+        right: 0;
+    }
+
+    100% {
+        right: 100%
+    }
+}
+
+.car_01 {
+    position: absolute;
+    right: 0;
+    width: 10rem;
+    animation-name: car_01;
+    animation-duration: 20s;
+    animation-iteration-count: infinite;
+    bottom: 0;
+}
+
+@keyframes car_01 {
+    0% {
+        right: 0;
+    }
+
+    100% {
+        right: 100%
+    }
+}
+
+.car_02 {
+    position: absolute;
+    right: 0;
+    width: 10rem;
+    animation-name: car_02;
+    animation-duration: 20s;
+    animation-iteration-count: infinite;
+    bottom: 0;
+
+}
+
+@keyframes car_02 {
+    0% {
+        right: 0;
+    }
+
+    100% {
+        right: 100%
+    }
+}
+
+.transportation p img {
+    height: 2.5rem;
+}
+
+.transportation section:last-child img {
+    width: 30rem;
+    height: auto;
+    border: 0.5rem solid lightgray;
+    border-style: outset;
+}
+
+.transportation section:nth-child(2) {
+    height: 300px;
+}
+
+/*CLOUDS*/
+.sky {
+    position: relative;
+    z-index: -2;
+
+}
+
+.cloud_train {
+    margin: 5% 5% 5% 100%;
+    position: relative;
+    bottom: 160px;
+    z-index: -1;
+}
+
+.cloud_train:before,
+.cloud_train:after {
+    position: absolute;
+    content: "";
+
+}
+
+.cloud_train,
+.cloud_train:before,
+.cloud_train:after {
+    background: #fff;
+    border-radius: 50%;
+    border: 25px solid #fff;
+    width: 0.5%;
+    overflow: visible;
+}
+
+.cloud_train:before {
+    top: -35px;
+    right: -60px;
+    border-width: 30px;
+
+}
+
+.cloud_train:after {
+    bottom: -25px;
+    right: -95px;
+    border-width: 28px;
+
+}
+
+.sky .cloud_train:nth-child(1) {
+    animation: wind 80s infinite;
+    position: relative;
+}
+
+.sky .cloud_train:nth-child(2) {
+    animation: wind 150s infinite;
+}
+
+@keyframes wind {
+    0% {
+        right: 0;
+    }
+
+    100% {
+        right: 110%;
+    }
+}
+
+.stage:after {
+    content: " ";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 60px;
+    border-top: 3px solid #5c5b5b;
+    border-bottom: 3px dashed rgb(151, 122, 75);
+}
+
+/*TRAIN*/
+.train {
+    position: absolute;
+    bottom: 70px;
+    width: 300px;
+    z-index: -1;
+
+}
+
+.wagon,
+.cabin,
+.chimney {
+    border-radius: 4px 4px 0 0;
+    border-top: 4px solid #ffc928;
+}
+
+.wagon,
+.motor {
+    border-bottom: 2px solid #ffc928;
+}
+
+.wagon,
+.locomotive {
+    display: inline-block;
+    width: 70px;
+    height: 55px;
+    background-color: #4fc7ff;
+    position: relative;
+}
+
+/*WHEELS*/
+.wagon:before,
+.wagon:after,
+.motor:before,
+.motor:after,
+.cabin:after {
+    content: " ";
+    color: #fff;
+    padding: 6px;
+    position: absolute;
+    border-radius: 46%;
+    border: 6px solid rgb(92, 92, 92);
+    bottom: -10px;
+    background-color: rgb(158, 158, 158);
+    animation: spin 4s linear infinite;
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.wagon:before {
+    left: 6px;
+}
+
+.wagon:after {
+    right: 6px;
+}
+
+.motor:before {
+    left: 32px;
+}
+
+.motor:after {
+    right: 4px;
+}
+
+.cabin:after {
+    bottom: -50px;
+    padding: 8px;
+    left: 3px;
+}
+
+/*LOCOMOTIVE*/
+.locomotive {
+    background-color: transparent;
+}
+
+.locomotive .cabin {
+    width: 58px;
+    height: 35px;
+    background-color: #4fc7ff;
+    position: relative;
+    z-index: 1;
+    border-radius: 8px 8px 0 0;
+}
+
+/*locomotive window*/
+.locomotive .cabin:before {
+    content: " ";
+    width: 25px;
+    height: 18px;
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    border-radius: 3px;
+    border: 3px solid rgb(21, 90, 122);
+    background-color: #ffffff;
+}
+
+.locomotive .motor {
+    display: inline-block;
+    width: 85px;
+    height: 40px;
+    background-color: #4fc7ff;
+    position: relative;
+    border-radius: 0 8px 0px 0px;
+}
+
+.locomotive .chimney {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background-color: #4fc7ff;
+    right: -6px;
+    bottom: 10px;
+    -webkit-animation: puf 4s 2;
+    animation: puf 4s 2;
+}
+
+@keyframes puf {
+    0% {
+        bottom: 20px;
+    }
+
+    25% {
+        bottom: 10px;
+    }
+
+    100% {
+        bottom: 20px;
+    }
+}
+
+
+.locomotive .light {
+    content: " ";
+    position: absolute;
+    right: -10px;
+    bottom: 0;
+    border-radius: 50%;
+    border: 3px solid #ffc928;
+}
+
+.train {
+    -webkit-animation: voyage 20s linear infinite;
+    animation: voyage 20s linear infinite;
+}
+
+@keyframes voyage {
+    0% {
+        left: -310px;
+    }
+
+    100% {
+        left: 100%;
+    }
+}
+
+body {
+    background-color: #ffffff;
+    animation: dayTime 20s linear infinite;
+}
+
+@keyframes dayTime {
+    0% {
+        background-color: #cce6fd;
+        color: rgb(0, 0, 0);
+    }
+
+    50% {
+        background-color: #252645;
+        color: white;
+    }
+
+    100% {
+        background-color: #cce6fd;
+        color: rgb(0, 0, 0);
+
+    }
+}

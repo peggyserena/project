@@ -1,0 +1,39 @@
+@charset "UTF-8";
+@media only screen and (min-width:992px){
+
+
+/* ===================== HOTEL ===================== */
+
+    .poetry2 {
+        display: none;
+    }
+
+        #myTab li {
+            border-radius: 10px 10px 0 0;
+            margin-right: 2px;
+            padding: 1rem;
+            background-color: rgb(194, 218, 226);
+        }
+
+        #myTab li:hover {
+            background: linear-gradient(45deg, #DCC5EF 0%, #adda9a 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#499bea', endColorstr='#1abc9c', GradientType=1);
+        }
+
+        #myTab li a {
+            color: white;
+            list-style: none;
+            text-decoration: none;
+        }
+        .amenities ul li {
+            position: relative;
+            list-style: none;
+            font-size: 1rem;
+            font-weight: 300;
+            color: #0e384b;
+        }
+
+}
+
+
+

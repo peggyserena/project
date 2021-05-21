@@ -1,0 +1,78 @@
+@charset "UTF-8";
+@media only screen and (max-width: 786px) {
+    body{
+        margin: 0;
+        padding: 0;
+    }
+    table{
+        width: 100%;
+    }
+
+    .nav_02{
+        display: none;
+    } 
+    #reservation>table>tbody>tr>th+th{
+        display: none;
+    }
+    /* #reservation>table>tbody>i, input, span{
+        margin: 0 ;
+        padding: 0;
+    } */
+    h1 {
+        padding: 1.2rem;
+    }
+    h2 {
+        font-size: 1.1rem;
+        font-weight: 600;
+    }
+    h3 {
+        font-size: 1rem;
+        font-weight: 400;
+    }
+
+    
+/* ===================== HOTEL ===================== */
+
+    .poetry1 {
+        display: none;
+    }
+    .poetry2{
+        font-size: 1rem;
+        line-height: 2rem;
+        font-weight: 600;
+        letter-spacing: 3px;
+    }
+
+        #myTab li {
+            border-radius: 10px 10px 0 0;
+            margin-right: 2px;
+            padding:0.25rem 0.5rem;
+            background-color: rgb(194, 218, 226);
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        #myTab li:hover {
+            background: linear-gradient(45deg, #DCC5EF 0%, #adda9a 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#499bea', endColorstr='#1abc9c', GradientType=1);
+        }
+
+        #myTab li a {
+            color: white;
+            list-style: none;
+            text-decoration: none;
+        }
+        .amenities ul {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        .amenities ul li {
+            position: relative;
+            list-style: none;
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: #0e384b;
+        }
+
+	
+}
