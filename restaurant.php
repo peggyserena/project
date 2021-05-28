@@ -310,7 +310,7 @@ $pageName = 'restaurant';
 		<script src="/follow.js" type="text/javascript"></script>
 	</div>
 	<div class="container rounded pb-0 text-white ">
-		<h1 class=" pt-1 mt-1" class="text-center text-white pt-3 pb-0 t_shadow" style="font-weight:900;">MENU</h1>
+		<h1 class="text-center text-white pt-3 pb-0 t_shadow" style="font-weight:900;">MENU</h1>
 		<div class="book_wrapper ">
 			<a id="next_page_button"></a>
 			<a id="prev_page_button"></a>
@@ -319,260 +319,241 @@ $pageName = 'restaurant';
 				<div class="b-load">
 					<div>
 						<img src="./restaurant/images/set_01.jpg" alt="" />
-						<h1 class=" pt-1 mt-1">Slider Gallery</h1>
-						<p class="p-2">This tutorial is about creating a creative gallery with a
+						<h1>Slider Gallery</h1>
+						<p>This tutorial is about creating a creative gallery with a
 							slider for the thumbnails. The idea is to have an expanding
-							thumbnails area which opens once an album is chosen.</p>
-						<p class="p-2" style="font-size:1.2rem;" >$ 260</p>
-
+							thumbnails area which opens once an album is chosen.
+							The thumbnails will scroll to the end and move back to
 					</div>
 					<div>
 						<img src="./restaurant/images/set_02.jpg" alt="" />
-						<h1 class=" pt-1 mt-1">Animated Portfolio Gallery</h1>
-						<p class="p-2">Today we will create an animated portfolio gallery with jQuery.
+						<h1>Animated Portfolio Gallery</h1>
+						<p>Today we will create an animated portfolio gallery with jQuery.
 							The gallery will contain a scroller for thumbnails and a
-							content area where we will display details about the portfolio</p>
-							<p class="p-2" style="font-size:1.2rem;" >$ 280</p>
+							content area where we will display details about the portfolio
 					</div>
 					<div>
 						<img src="./restaurant/images/set_04.jpg" alt="" />
-						<h1 class=" pt-1 mt-1">Annotation Overlay Effect</h1>
-						<p class="p-2">Today we will create a simple overlay effect to display annotations in e.g. portfolio
-							items of a web designers portfolio. We got the idea from the wonderful</p>
-						<p class="p-2" style="font-size:1.2rem;" >$ 320</p>
+						<h1>Annotation Overlay Effect</h1>
+						<p>Today we will create a simple overlay effect to display annotations in e.g. portfolio
+							items of a web designers portfolio. We got the idea from the wonderful
 					</div>
 					<div>
 						<img src="./restaurant/images/set_05.jpg" alt="" />
-						<h1 class=" pt-1 mt-1">Bubbleriffic Image Gallery</h1>
-						<p class="p-2">In this tutorial we will create a bubbly image gallery that
+						<h1>Bubbleriffic Image Gallery</h1>
+						<p>In this tutorial we will create a bubbly image gallery that
 							shows your images in a unique way. The idea is to show the
 							thumbnails of albums in a rounded fashion allowing the
 							fit into the screen.</p>
-						<p class="p-2" style="font-size:1.2rem;" >$ 260</p>
 					</div>
 					<div>
 						<img src="./restaurant/images/set_09.jpg" alt="" />
-						<h1 class=" pt-1 mt-1">Collapsing Site Navigation</h1>
-						<p class="p-2">Today we will create a collapsing menu that contains vertical
+						<h1>Collapsing Site Navigation</h1>
+						<p>Today we will create a collapsing menu that contains vertical
 							navigation bars and a slide out content area. When hovering
-							over a menu item, an image slides down from the top and a</p>
-						<p class="p-2" style="font-size:1.2rem;" >$ 250</p>
+							over a menu item, an image slides down from the top and a
 					</div>
 					<div>
 						<img src="./restaurant/images/set_10.jpg" alt="" />
-						<h1 class=" pt-1 mt-1">Custom Animation Banner</h1>
-						<p class="p-2">We will be using the jQuery Easing Plugin and the jQuery 2D
+						<h1>Custom Animation Banner</h1>
+						<p>We will be using the jQuery Easing Plugin and the jQuery 2D
 							Transform Plugin to create some nifty animations.</p>
-						<p class="p-2" style="font-size:1.2rem;" >$ 250</p>
-						</div>
+					</div>
 					<div>
 						<img src="./restaurant/images/picnic.jpg" alt="" />
-						<h1 class=" pt-1 mt-1">Thumbnails Navigation Gallery</h1>
-						<p class="p-2">In this tutorial we are going to create an extraordinary
+						<h1>Thumbnails Navigation Gallery</h1>
+						<p>In this tutorial we are going to create an extraordinary
 							gallery with scrollable thumbnails that slide out from a
 							navigation. We are going to use jQuery and some CSS3
 							bar with thumbnails when clicked.</p>
-						<p class="p-2" style="font-size:1.2rem;" >$ 280</p>
 					</div>
 
 					<div>
 						<img src="./restaurant/images/dessert_01.jpg" alt="" />
-						<h1 class=" pt-1 mt-1">Full Page Image Gallery</h1>
-						<p class="p-2">In this tutorial we are going to create a stunning full page
+						<h1>Full Page Image Gallery</h1>
+						<p>In this tutorial we are going to create a stunning full page
 							gallery with scrollable thumbnails and a scrollable full
 							screen preview. The idea is to have a thumbnails bar at
-							the bottom of the page that scrolls automatically when</p>
-						<p class="p-2" style="font-size:1.2rem;" >$ 150</p>
+							the bottom of the page that scrolls automatically when
 					</div>
 					<div>
 						<img src="./restaurant/images/dessert_02.jpg" alt="" />
-						<h1 class=" pt-1 mt-1">Hover Slide Effect</h1>
-						<p class="p-2">Today we will create a neat effect with some images using
+						<h1>Hover Slide Effect</h1>
+						<p>Today we will create a neat effect with some images using
 							jQuery. The main idea is to have an image area with several
 							right, fading out or not. When we click on any area,
 							all areas will slide their images out.</p>
-						<p class="p-2" style="font-size:1.2rem;" >$ 150</p>
 					</div>
 					<div>
 						<img src="./restaurant/images/dessert_03.jpg" alt="" />
-						<h1 class=" pt-1 mt-1">Merging Image Boxes</h1>
-						<p class="p-2">Today we will show you a nice effect for images with jQuery.
+						<h1>Merging Image Boxes</h1>
+						<p>Today we will show you a nice effect for images with jQuery.
 							The idea is to have a set of rotated thumbnails that,
 							it will scatter into the little box shaped thumbnails again.</p>
-							<p class="p-2" style="font-size:1.2rem;" >$ 150</p>
 					</div>
 					<div>
 						<img src="./restaurant/images/dessert_04.jpg" alt="" />
-						<h1 class=" pt-1 mt-1">Compact News Previewer</h1>
-						<p class="p-2">Today we will create a news previewer that let’s you
+						<h1>Compact News Previewer</h1>
+						<p>Today we will create a news previewer that let’s you
 							show your latest articles or news in a compact way.
 							longer description on the right. Once a news on the left
 							is clicked, the preview will slide in.</p>
-							<p class="p-2" style="font-size:1.2rem;" >$ 150</p>
 					</div>
 					<div>
 						<img src="./restaurant/images/drink_01_LAVENDER GIN AND TONIC PUNCH.jpg" alt="" />
-						<h1 class=" pt-1 mt-1">Overlay Effect Menu</h1>
-						<p class="p-2">In this tutorial we are going to create a simple menu
+						<h1>Overlay Effect Menu</h1>
+						<p>In this tutorial we are going to create a simple menu
 							that will stand out once we hover over it by covering
 							everything except the menu with a dark overlay.
 							The menu will stay white and a submenu area will
 							expand. We will create this effect using jQuery.</p>
-							<p class="p-2" style="font-size:1.2rem;" >$ 150</p>
 					</div>
 					<div>
 						<img src="./restaurant/images/drink_02Lavender Tea Lemonade.jpg" alt="" />
-						<h1 class=" pt-1 mt-1">Polaroid Photobar Gallery</h1>
-						<p class="p-2">In this tutorial we are going to create an image gallery
+						<h1>Polaroid Photobar Gallery</h1>
+						<p>In this tutorial we are going to create an image gallery
 							with a Polaroid look. We will have albums that will expand
 							through the pictures or simply choose another thumbnail
 							to be displayed.</p>
-							<p class="p-2" style="font-size:1.2rem;" >$ 150</p>
 					</div>
 					<div>
 						<img src="./restaurant/images/drink_03wild rose petal sangria.jpg" alt="" />
-						<h1 class=" pt-1 mt-1">Pull Out Content Panel</h1>
-						<p class="p-2">In this tutorial we will create a content panel that
+						<h1>Pull Out Content Panel</h1>
+						<p>In this tutorial we will create a content panel that
 							slides out at a predefined scroll position. It will
 							slider allows to scroll through many items in the
 							panel.</p>
-							<p class="p-2" style="font-size:1.2rem;" >$ 150</p>
 					</div>
 					<div>
 						<img src="./restaurant/images/drink_04_milktea_Lavender London Fog Latte for Mom.jpg" alt="" />
-						<h1 class=" pt-1 mt-1">Thumbnails Navigation Gallery</h1>
-						<p class="p-2">In this tutorial we are going to create an extraordinary
+						<h1>Thumbnails Navigation Gallery</h1>
+						<p>In this tutorial we are going to create an extraordinary
 							gallery with scrollable thumbnails that slide out from a
 							navigation. We are going to use jQuery and some CSS3
 							bar with thumbnails when clicked.</p>
-							<p class="p-2" style="font-size:1.2rem;" >$ 150</p>
 					</div>
 					<div>
 						<img src="./restaurant/images/drink_05_coffee_Honey Lavender Cold Brew Latte.jpg" alt="" />
-						<h1 class=" pt-1 mt-1">Thumbnails Navigation Gallery</h1>
-						<p class="p-2">In this tutorial we are going to create an extraordinary
+						<h1>Thumbnails Navigation Gallery</h1>
+						<p>In this tutorial we are going to create an extraordinary
 							gallery with scrollable thumbnails that slide out from a
 							navigation. We are going to use jQuery and some CSS3
 							bar with thumbnails when clicked.</p>
-							<p class="p-2" style="font-size:1.2rem;" >$ 150</p>
 					</div>
 
 				</div>
 			</div>
 		</div>
 	</div>
-	
-	<div>
-		<form action="./addCartItems.php" method="post">
-			<div class="container   rounded text-white  ">
-				<h2><i class="fas fa-step-forward"></i>步驟一 STEP 1：填選日期、時段及人數</h2>
-				<div class="d-flex ">
-					<div>
-						<label class="t_shadow" for=""><i class="fas fa-calendar-alt"></i>日期</label>
-						<input type="date" value="date" name="order_date" id="order_date" format="yyyy-MM-dd">
-					</div>
-					<div>
-						<label class="t_shadow" for=""><i class="fas fa-clock"></i>時段</label>
-						<select name="order_time" id="order_time" style="width: 5rem; ">
-							<option value="08:00:00"> 08 a.m.</option>
-							<option value="10:00:00"> 10 a.m.</option>
-							<option value="12:00:00"> 12 p.m.</option>
-							<option value="14:00:00"> 14 p.m.</option>
-							<option value="17:00:00"> 17 p.m.</option>
-							<option value="19:00:00"> 19 p.m.</option>
-						</select>
-					</div>
-					<div>
-						<label class="t_shadow" for=""><i class="fas fa-user-friends"></i>訂位人數</label>
-						<input type="number" value="1" min="1" name="quantity" id="quantity" style="width: 5rem; " placeholder="1">
-					</div>
+	<form action="./addCartItems.php" method="post">
+		<div class="container   rounded text-white  ">
+			<h2><i class="fas fa-step-forward"></i>步驟一 STEP 1：填選日期、時段及人數</h2>
+			<div class="d-flex ">
+				<div>
+					<label class="t_shadow" for=""><i class="fas fa-calendar-alt"></i>日期</label>
+					<input type="date" value="date" name="order_date" id="order_date" format="yyyy-MM-dd">
+				</div>
+				<div>
+					<label class="t_shadow" for=""><i class="fas fa-clock"></i>時段</label>
+					<select name="order_time" id="order_time" style="width: 5rem; ">
+						<option value="08:00:00"> 08 a.m.</option>
+						<option value="10:00:00"> 10 a.m.</option>
+						<option value="12:00:00"> 12 p.m.</option>
+						<option value="14:00:00"> 14 p.m.</option>
+						<option value="17:00:00"> 17 p.m.</option>
+						<option value="19:00:00"> 19 p.m.</option>
+					</select>
+				</div>
+				<div>
+					<label class="t_shadow" for=""><i class="fas fa-user-friends"></i>訂位人數</label>
+					<input type="number" value="1" min="1" name="quantity" id="quantity" style="width: 5rem; " placeholder="1">
 				</div>
 			</div>
+		</div>
 
-						<!-- 快速設定座位label和checkbox -->
-						<!-- var str = "";
-				for (var i = 1; i <= 26; i++){
-					str += `<div><input type="checkbox" name="table[]" value="a${i}" id="a${i}"><label for="a${i}">${i}</label></div>`
-				} -->
+		<!-- 快速設定座位label和checkbox -->
+		<!-- var str = "";
+for (var i = 1; i <= 26; i++){
+    str += `<div><input type="checkbox" name="table[]" value="a${i}" id="a${i}"><label for="a${i}">${i}</label></div>`
+} -->
 
-			<div class="container   rounded pb-4 text-white">
-				<h2><i class="fas fa-step-forward"></i>步驟二 STEP 2：挑選座位</h2>
-				<div class="seatChart_parents">
-					<div class="seatChart_num">
-						<div><input type="checkbox" name="table[]" value="c1" id="c1"><label for="c1">1</label></div>
-						<div><input type="checkbox" name="table[]" value="b2" id="b2"><label for="b2">2</label></div>
-						<div><input type="checkbox" name="table[]" value="c3" id="c3"><label for="c3">3</label></div>
-						<div><input type="checkbox" name="table[]" value="c4" id="c4"><label for="c4">4</label></div>
-						<div><input type="checkbox" name="table[]" value="c5" id="c5"><label for="c5">5</label></div>
-						<div><input type="checkbox" name="table[]" value="b6" id="b6"><label for="b6">6</label></div>
-						<div><input type="checkbox" name="table[]" value="b7" id="b7"><label for="b7">7</label></div>
-						<div><input type="checkbox" name="table[]" value="b8" id="b8"><label for="b8">8</label></div>
-						<div><input type="checkbox" name="table[]" value="b9" id="b9"><label for="b9">9</label></div>
-						<div><input type="checkbox" name="table[]" value="d10" id="d10"><label for="d10">10</label></div>
-						<div><input type="checkbox" name="table[]" value="d11" id="d11"><label for="d11">11</label></div>
-						<div><input type="checkbox" name="table[]" value="c12" id="c12"><label for="c12">12</label></div>
-						<div><input type="checkbox" name="table[]" value="d13" id="d13"><label for="d13">13</label></div>
-						<div><input type="checkbox" name="table[]" value="a14" id="a14"><label for="a14">14</label></div>
-						<div><input type="checkbox" name="table[]" value="a15" id="a15"><label for="a15">15</label></div>
-						<div><input type="checkbox" name="table[]" value="a16" id="a16"><label for="a16">16</label></div>
-						<div><input type="checkbox" name="table[]" value="a17" id="a17"><label for="a17">17</label></div>
-						<div><input type="checkbox" name="table[]" value="a18" id="a18"><label for="a18">18</label></div>
-						<div><input type="checkbox" name="table[]" value="a19" id="a19"><label for="a19">19</label></div>
-						<div><input type="checkbox" name="table[]" value="d20" id="d20"><label for="d20">20</label></div>
-						<div><input type="checkbox" name="table[]" value="c21" id="c21"><label for="c21">21</label></div>
-						<div><input type="checkbox" name="table[]" value="a22" id="a22"><label for="a22">22</label></div>
-						<div><input type="checkbox" name="table[]" value="b23" id="b23"><label for="b23">23</label></div>
-						<div><input type="checkbox" name="table[]" value="c24" id="c24"><label for="c24">24</label></div>
-						<div><input type="checkbox" name="table[]" value="c25" id="c25"><label for="c25">25</label></div>
-						<div><input type="checkbox" name="table[]" value="c26" id="c26"><label for="c26">26</label></div>
+		<div class="container   rounded pb-4 text-white">
+			<h2><i class="fas fa-step-forward"></i>步驟二 STEP 2：挑選座位</h2>
+			<div class="seatChart_parents">
+				<div class="seatChart_num">
+					<div><input type="checkbox" name="table[]" value="c1" id="c1"><label for="c1">1</label></div>
+					<div><input type="checkbox" name="table[]" value="b2" id="b2"><label for="b2">2</label></div>
+					<div><input type="checkbox" name="table[]" value="c3" id="c3"><label for="c3">3</label></div>
+					<div><input type="checkbox" name="table[]" value="c4" id="c4"><label for="c4">4</label></div>
+					<div><input type="checkbox" name="table[]" value="c5" id="c5"><label for="c5">5</label></div>
+					<div><input type="checkbox" name="table[]" value="b6" id="b6"><label for="b6">6</label></div>
+					<div><input type="checkbox" name="table[]" value="b7" id="b7"><label for="b7">7</label></div>
+					<div><input type="checkbox" name="table[]" value="b8" id="b8"><label for="b8">8</label></div>
+					<div><input type="checkbox" name="table[]" value="b9" id="b9"><label for="b9">9</label></div>
+					<div><input type="checkbox" name="table[]" value="d10" id="d10"><label for="d10">10</label></div>
+					<div><input type="checkbox" name="table[]" value="d11" id="d11"><label for="d11">11</label></div>
+					<div><input type="checkbox" name="table[]" value="c12" id="c12"><label for="c12">12</label></div>
+					<div><input type="checkbox" name="table[]" value="d13" id="d13"><label for="d13">13</label></div>
+					<div><input type="checkbox" name="table[]" value="a14" id="a14"><label for="a14">14</label></div>
+					<div><input type="checkbox" name="table[]" value="a15" id="a15"><label for="a15">15</label></div>
+					<div><input type="checkbox" name="table[]" value="a16" id="a16"><label for="a16">16</label></div>
+					<div><input type="checkbox" name="table[]" value="a17" id="a17"><label for="a17">17</label></div>
+					<div><input type="checkbox" name="table[]" value="a18" id="a18"><label for="a18">18</label></div>
+					<div><input type="checkbox" name="table[]" value="a19" id="a19"><label for="a19">19</label></div>
+					<div><input type="checkbox" name="table[]" value="d20" id="d20"><label for="d20">20</label></div>
+					<div><input type="checkbox" name="table[]" value="c21" id="c21"><label for="c21">21</label></div>
+					<div><input type="checkbox" name="table[]" value="a22" id="a22"><label for="a22">22</label></div>
+					<div><input type="checkbox" name="table[]" value="b23" id="b23"><label for="b23">23</label></div>
+					<div><input type="checkbox" name="table[]" value="c24" id="c24"><label for="c24">24</label></div>
+					<div><input type="checkbox" name="table[]" value="c25" id="c25"><label for="c25">25</label></div>
+					<div><input type="checkbox" name="table[]" value="c26" id="c26"><label for="c26">26</label></div>
 
-					</div>
+				</div>
 
-					<div>
-						<p class="p-2"icture class="seatChart_02"> <img src="./restaurant/images/seatingChart_02.png" alt=""> </picture>
-					</div>
+				<div>
+					<picture class="seatChart_02"> <img src="./restaurant/images/seatingChart_02.png" alt=""> </picture>
 				</div>
 			</div>
+		</div>
 
-			<div class="container   rounded text-white">
-				<h3 class="c_pink_t">已被訂位的桌數顯示 disabled <br>人數與桌數的條件 例如4人桌 只能坐 3~5人 桌的座位數(n人桌) n+1> 人數 > n-1 <br>
-					a:1人 b:2人 b:4人 c:6人 <br> "p"不見 </h3>
+		<div class="container   rounded text-white">
+			<h3 class="c_pink_t">已被訂位的桌數顯示 disabled <br>人數與桌數的條件 例如4人桌 只能坐 3~5人 桌的座位數(n人桌) n+1> 人數 > n-1 <br>
+				a:1人 b:2人 b:4人 c:6人 <br> "p"不見 </h3>
 
-				<div class="  p-0 pb-2 m-0 mb-5">
-					<h2><i class="fas fa-step-forward"></i>步驟三 STEP 3 加入購物車</h2>
-					<div class="mb-2 orderBoard">
-						<h3 class="mb-4">以下為您的訂位資訊</h3>
-						<div class="mb-3">
-							<h4 class="f-fle">訂位日期：<span id="show_order_date"></span></h4>
-							<h4>訂位時段：<span id="show_order_time"></span></h4>
-							<h4>訂位人數：<span id="show_quantity"></span></h4>
-							<h4>訂位桌號：<span id="show_table"></span></h4>
-							<h4>訂位費用：<span class="c_pink_t"><i class="fas fa-dollar-sign "></i>0</span></h4>
-						</div>
-						<div class=" m-0 p-0 ">
-							<div class="d-flex">
+			<div class="  p-0 pb-2 m-0 mb-5">
+				<h2><i class="fas fa-step-forward"></i>步驟三 STEP 3 加入購物車</h2>
+				<div class="mb-2 orderBoard">
+					<h3 class="mb-4">以下為您的訂位資訊</h3>
+					<div class="mb-3">
+						<h4 class="f-fle">訂位日期：<span id="show_order_date"></span></h4>
+						<h4>訂位時段：<span id="show_order_time"></span></h4>
+						<h4>訂位人數：<span id="show_quantity"></span></h4>
+						<h4>訂位桌號：<span id="show_table"></span></h4>
+						<h4>訂位費用：<span class="c_pink_t"><i class="fas fa-dollar-sign "></i>0</span></h4>
+					</div>
+					<div class=" m-0 p-0 ">
+						<div class="d-flex">
 
-								<div class="d-flex align-items-center">
-									<label for="" class="mb-0">
-										<h3 class="p-0 m-0 ">加入購物車</h3>
-									</label>
-									<button class='btn add-to-cart text-white m-2' type="button" style='background-color:#04c2ff' onclick="addToCart()"><i class='fas fa-cart-plus'></i></button>
-								</div>
-								<div class="d-flex align-items-center">
-									<label for="" class="ml-5 mb-0">
-										<h3 class="p-0 m-0">加入我的最愛</h3>
-									</label>
-									<button class='btn text-white c_pink_b m-2 ' type="button"><i class='fas fa-heart'></i></button>
-								</div>
+							<div class="d-flex align-items-center">
+								<label for="" class="mb-0">
+									<h3 class="p-0 m-0 ">加入購物車</h3>
+								</label>
+								<button class='btn add-to-cart text-white m-2' type="button" style='background-color:#04c2ff' onclick="addToCart()"><i class='fas fa-cart-plus'></i></button>
+							</div>
+							<div class="d-flex align-items-center">
+								<label for="" class="ml-5 mb-0">
+									<h3 class="p-0 m-0">加入我的最愛</h3>
+								</label>
+								<button class='btn text-white c_pink_b m-2 ' type="button"><i class='fas fa-heart'></i></button>
 							</div>
 						</div>
-						<p class="p-2">本公司保留最終會員註冊、訂單條件、商品兌換、調整相關商品或服務價格及修改本服務條款之權利，本公司擁有最終決定權。</p>
-
 					</div>
+					<p>本公司保留最終會員註冊、訂單條件、商品兌換、調整相關商品或服務價格及修改本服務條款之權利，本公司擁有最終決定權。</p>
+
 				</div>
 			</div>
-		</form>
-	</div>
+		</div>
+	</form>
 	
 	<?php // include __DIR__ . '/parts/scripts.php'; ?>
 	<!-- <script src="./js/jquery-3.6.0.js"></script> -->

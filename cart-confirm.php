@@ -49,10 +49,10 @@ $sum = 0;
     </div>
     <div class="row card con_01 ">
         <div class="col-12 pt-4 text-secondary">
-            <h4>訂單編號：<?= $_SESSION['cart']['order_id'] ?></h4> 
+            <h4>訂單編號：<span id="order_id"></span></h4> 
         </div>
         <div class="col-12  ">
-            <?php if (empty($_SESSION['cart']['event']) && empty($_SESSION['cart']['restaurant'])) : ?>
+            <?php if (empty($_SESSION['cart']['event']) && empty($_SESSION['cart']['restaurant']) && empty($_SESSION['cart']['hotel'])) : ?>
                 <div class="alert alert-danger" role="alert">
                     目前購物車裡沒有商品, 請至商品列表選購
                 </div>
@@ -73,19 +73,6 @@ $sum = 0;
                             </tr>
                         </thead>
                         <tbody>
-                            <?php
-                            if (!empty($_SESSION['cart']['event']))
-                                foreach ($_SESSION['cart']['event'] as $key => $event) : 
-                                    $sum += $event['price'] * $event['quantity'];
-                            ?>
-                                <tr data-sid="<?= $event['id'] ?>">
-                                    <td><a href="event.php#event_<?= $event['id'] ?>"><?= $event['name'] ?></a></td>
-                                    <td><?= $event['date'] . "/" . $event['time'] ?></td>
-                                    <td><?= $event['quantity'] ?></td>
-                                    <td class="event_price">$ <?= $event['price'] ?></td>
-                                    <td class="event_sub-total">$ <?= $event['price'] * $event['quantity'] ?></td>
-                                </tr>
-                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 <?php endif; ?>
@@ -105,22 +92,30 @@ $sum = 0;
                             </tr>
                         </thead>
                         <tbody>
-                            <?php
-                                foreach ($_SESSION['cart']['restaurant'] as $key => $restaurant) : ?>
-                                <tr data-sid="<?= $restaurant['id'] ?>">
-                                    <td><?= $restaurant['order_date'] ?></td>
-                                    <td><?= $restaurant['order_time'] ?></td>
-                                    <td><?= $restaurant['quantity'] ?></td>
-                                    <td><?= implode ("、", $restaurant['id']) ?></td>
-                                    <td class="restaurant_price">$0</td>
-                                    <td class="restaurant_sub-total">$<?= intval(0) * 100 ?></td>
-                                </tr>
-                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                <?php endif; ?>
+                <?php if (!empty($_SESSION['cart']['hotel'])): ?>
+                    <table class="table table-striped table-bordered" id="hotel_table">
+                        <thead>
+                            <h4 class=" title b-green rot-135">訂單明細 - 活動</h4>
+                            <tr class="b-green rot-135 text-white">
+                                <th scope="col" class="m-0 t_shadow text-center">
+                                    項目名稱
+                                </th>
+                                <th scope="col" class="m-0 t_shadow text-center">日期</th>
+                                <th scope="col" class="m-0 t_shadow text-center">數量</th>
+                                <th scope="col" class="m-0 t_shadow text-center">人數</th>
+                                <th scope="col" class="m-0 t_shadow text-center">單價</th>
+                                <th scope="col" class="m-0 t_shadow text-center">小計</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                         </tbody>
                     </table>
                 <?php endif; ?>
                 <div class="alert alert-primary text-center" role="alert">
-                    <h4 class="m-0"> 總計: <span class="totalPrice  ">$ <?=$sum?></span></h4>
+                     <h4 class="m-0"> 原價: <span class="originalPrice"></span> - 折扣: <span class="discountPrice"></span> = 總計: <span class="totalPrice"></span></h4>
                 </div>
 
                 <div class="orderStatus text-secondary ">
@@ -177,6 +172,7 @@ $(document).ready(function(){
     updateFormContainer();
     isCompletedUserData();
     isCompletedPayWayData();
+    fillTable();
 });
 function isCompletedUserData(){
     $.post('member-api.php', {
@@ -208,6 +204,70 @@ function isCompletedPayWayData(){
         $("#warning_msg_payway").show();
     }
 }
+
+function fillTable(){
+    var url_string = window.location.href
+    var url = new URL(url_string);
+    var id = url.searchParams.get("id");
+    $.post('order-api.php', {
+        'action': 'readOne',
+        id
+    }, function(data){
+        console.log("fileTable");
+        console.log(data);
+
+        data['event'].forEach(function(elem){
+            var id = 0; //elem['id'];
+            var name = elem['name'];
+            var order_datetime = elem['order_datetime'];
+            var quantity = elem['quantity'];
+            var price = elem['price'];
+            var sub_total = elem['sub_total'];
+            
+            tr = `<tr>
+                    <td><a href="event.php#event_${id}">${name}</a></td>
+                    <td>${order_datetime}</td>
+                    <td>${quantity}</td>
+                    <td class="event_price">$ ${price}</td>
+                    <td class="event_sub-total">$ ${sub_total}</td>
+                </tr>`;
+            $('#event_table tbody').append(tr);
+        });
+        data['restaurant'].forEach(function(elem){
+            tr = `<tr data-sid="${elem['id']}">
+                                    <td>${elem['order_date']}</td>
+                                    <td>${elem['order_time']}</td>
+                                    <td>${elem['quantity']}</td>
+                                    <td>${elem['id']}</td>
+                                    <td class="restaurant_price">$0</td>
+                                    <td class="restaurant_sub-total">$<?= intval(0) * 100 ?></td>
+                                </tr>`;
+            $('#restaurant_table tbody').append(tr);
+        });
+        data['hotel'].forEach(function(elem){
+            tr = `<tr data-sid="${elem['id'] }">
+                                    <td>${elem['name_zh'] }</br>${elem['name_en'] }</td>
+                                    <td>${elem['order_date']}</td>
+                                    <td>${elem['quantity'] }</td>
+                                    <td>${elem['people_num'] }</td>
+                                    <td class="hotel_price">$ ${elem['price'] }</td>
+                                    <td class="hotel_sub-total">$ ${elem['sub_total']}</td>
+                                </tr>`;
+            $('#hotel_table tbody').append(tr);
+        });
+         $("#order_id").text( data['order']['order_id']);
+         $(".originalPrice").text( data['order']['original_price']);
+         $(".discountPrice").text( data['order']['discount']);
+         $(".totalPrice").text( data['order']['price']);
+
+    }, 'json').fail(function(e){
+        console.log("error");
+        console.log(e.responseText);
+    });
+
+}
 </script>
 
 <?php include __DIR__ . '/parts/html-foot.php'; ?>
+<?php unset($_SESSION['cart'])?>
+<?php // unset($_SESSION['cart'])?>

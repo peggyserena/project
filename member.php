@@ -79,7 +79,7 @@ $r = $pdo->query($sql)->fetch();
     #myTabContent a:hover{
 	box-shadow: 0px 0px 20px rgb(0, 255, 191);
 	transform: scale(1.05);
-    color:white;
+    /* color:white; */
     text-decoration:none
 }
 #tradeRecord table tbody td{
@@ -106,6 +106,9 @@ $r = $pdo->query($sql)->fetch();
                     </ul>
 
                     <div id="myTabContent" class="tab-content">
+
+
+
                         <div id="profile" class="tab-pane fade in active">
                             <div class="col-12 con_01 m-0 p-0 ">
                                 <form name="form1" method="post">
@@ -150,19 +153,20 @@ $r = $pdo->query($sql)->fetch();
 
                             <div class="mt-4">
                                 <table class="table table-striped table-bordered">
+                                    <h3 class="c_pink_t">設訂單連結,顯示cart-confirm的資料</h3>
                                     <thead>
                                         <tr class="b-green rot-135 text-white">
                                             <th scope="col" class="m-0 t_shadow text-center">訂單編號</th>
                                             <th scope="col" class="m-0 t_shadow text-center">訂單日期</th>
-                                            <th scope="col" class="m-0 t_shadow text-center">訂單金額</th>
-                                            <th scope="col" class="m-0 t_shadow text-center">訂單狀態</th>
+                                            <th scope="col" class="m-0 t_shadow text-center">訂單</th>
+                                            <th scope="col" class="m-0 t_shadow text-center">狀態</th>
+                                            <th scope="col" class="m-0 t_shadow text-center">取消</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     </tbody>
                                 </table>
                             </div>
-
                         </div>
 
 
@@ -191,6 +195,8 @@ $r = $pdo->query($sql)->fetch();
                                     <tbody>
                                     </tbody>
                                 </table>
+                                <h3 class="title  custom-btn btn-4 text-center c_1" ><a href="javascript:" id="" class="text-white"  onclick="" >清空</a></h3>
+
                             </div>
                         </div>
 
@@ -364,6 +370,7 @@ $r = $pdo->query($sql)->fetch();
                                 <td class="order_date text-center">${elem['create_datetime']}</td>
                                 <td class="order_price text-left">${elem['price']}</td>
                                 <td class="order_status text-center">${elem['status']}</td>
+                                <td class="order_status text-center "><a href="orderCancel.php">取消</a></td>
                             </tr>`;
                         $("#tradeRecord table tbody").append(tr);
                     });
@@ -396,7 +403,10 @@ $r = $pdo->query($sql)->fetch();
             $('#myTab li:eq(0) a').tab('show');
         }
         if (nowTab === 'wishList') {
-            $('#myTab li:eq(3) a').tab('show');
+            $('#myTab li:eq(2) a').tab('show');
+        }
+        if (nowTab === 'tradeRecord') {
+            $('#myTab li:eq(1) a').tab('show');
         }
     </script>
 

@@ -1,8 +1,8 @@
 <?php
 $db_host = 'localhost';
 $db_name = 'course';
-$db_user = 'root';
-$db_pass = '';
+$db_user = 'peiching';
+$db_pass = 'admin';
 
 // data source name
 $dsn = sprintf('mysql:host=%s;dbname=%s;charset=utf8', $db_host, $db_name);

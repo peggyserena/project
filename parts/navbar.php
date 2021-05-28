@@ -34,10 +34,10 @@ if (!isset($pageName)) {
                     森林快報
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="news.php">園區相關</a>
-                    <a class="dropdown-item" href="news.php">森林體驗</a>
-                    <a class="dropdown-item" href="news.php">主廚上菜</a>
-                    <a class="dropdown-item" href="news.php">夜宿薰衣草</a>
+                    <a class="dropdown-item" href="news.php#gardenInfo">園區相關</a>
+                    <a class="dropdown-item" href="news.php#eventInfo">森林體驗</a>
+                    <a class="dropdown-item" href="news.php#restaurantInfo">森林咖啡館</a>
+                    <a class="dropdown-item" href="news.php#hotelInfo">夜宿薰衣草</a>
                 </div>
             </li>
             <li class="nav-item dropdown<?= $pageName == '' ? 'active' : '' ?>">
@@ -55,17 +55,17 @@ if (!isset($pageName)) {
                     森林體驗
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="event.php">特惠活動</a>
+                    <a class="dropdown-item" href="news.php#eventInfo">特惠活動</a>
                     <a class="dropdown-item" href="event.php">活動項目</a>
                     <a class="dropdown-item" href="event.php">報名參加</a>
                 </div>
             </li>
             <li class="nav-item dropdown<?= $pageName == '' ? 'active' : '' ?>">
                 <a class="nav-link dropdown-toggle" href="restaurant.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    主廚上菜
+                    森林咖啡館
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="restaurant.php">特惠活動</a>
+                    <a class="dropdown-item" href="news.php#restaurantInfo">特惠活動</a>
                     <a class="dropdown-item" href="restaurant.php">線上訂位</a>
                 </div>
             </li>
@@ -75,7 +75,7 @@ if (!isset($pageName)) {
                     夜宿薰衣草
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="hotel.php">特惠活動</a>
+                    <a class="dropdown-item" href="news.php#hotelInfo">特惠活動</a>
                     <a class="dropdown-item" href="hotel.php">房型介紹</a>
                     <a class="dropdown-item" href="hotel.php">線上訂房</a>
                 </div>

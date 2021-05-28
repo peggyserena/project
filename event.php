@@ -8,14 +8,14 @@ $time = "";
 $cat_id = "";
 $date = date("Y-m-d");
 
-$month = $_get['month'] ?? "";
-$time = $_get['time'] ?? "";
-$cat_id = $_get['cat_id'] ?? "";
-$order = $_get['order'] ?? "";
+$month = $_GET['month'] ?? "";
+$time = $_GET['time'] ?? "";
+$cat_id = $_GET['cat_id'] ?? "";
+$order = $_GET['order'] ?? "";
 
 
 
-$sql = "SELECT `event`.*, ec.name as `ec_name` FROM `event`";
+$sql = "SELECT `e`.*, ec.name as `ec_name`, SUM(`oe`.quantity) as quantity FROM `event` as e";
 $sql_condition = [];
 if ($month != "") {
     array_push($sql_condition, "MONTH(`date`) = $month");
@@ -30,13 +30,16 @@ if ($cat_id != "") {
 array_push($sql_condition, "`date` >= '$date'");
 
 $sql .= " JOIN `event_category` as ec ON `cat_id` = ec.`id`";
+$sql .= " LEFT JOIN `order_event` as oe ON e.id = oe.event_id";
 
 if (sizeof($sql_condition) > 0) {
     $sql .= " WHERE ";
 }
 $sql .= implode(" AND ", $sql_condition);
+$sql .= " group by e.id";
 switch ($order) {
     case 1:
+        $sql .= " ORDER BY `quantity` DESC";
         break;
     case 2:
         $sql .= " ORDER BY `price`";
@@ -48,10 +51,16 @@ switch ($order) {
         $sql .= " ORDER BY `date`";
         break;
 }
-
-
 $stmt = $pdo->query($sql);
 $events = $stmt->fetchAll();
+// 活動歷年總數
+$sql = "SELECT e.name, IFNULL(sum(`quantity`), 0) as quantity FROM `event` as e LEFT JOIN `order_event` as oe ON e.id = oe.event_id GROUP BY `name`";
+$stmt = $pdo->query($sql);
+$quantity_list = $stmt->fetchAll();
+$quantity_map = [];
+foreach($quantity_list as $value){
+    $quantity_map[$value['name']] = $value['quantity'];
+}
 
 // 活動類別
 $sql = "SELECT * FROM `event_category`";
@@ -755,7 +764,7 @@ $pageName = 'event';
                     薰衣草森林的探索與手作體驗，<br>以最初的心念，向旅人傳遞幸福，<br>尋回自己的夢想與勇氣，感受這座森林的紫色幸福！</h3>
             </div>
         </div>
-        <div class=" m-0 p-0">
+        <div class=" m-0 p-0" id="event">
             <form action="event.php" method="get">
                 <ul class="d-flex  m-0 p-2 ">
                     <li>
@@ -827,24 +836,35 @@ $pageName = 'event';
                             </div>
                         </div>
                     </div>
-                    <div class='col-4 m-0 p-0 pop' id="event_<?= $event['id'] ?>">
-                        <div class='col-12 p-3 m-0 '>
-                            <h4>活動類別：
-                                <?= $event["ec_name"] ?>
-                            </h4>
-                            <h4>日期：
-                                <?= $event["date"] . '&emsp;' . $event["time"] ?>
-                            </h4>
-                            <h4>費用：<span class="c_pink_t">
-                                    <?= $event["price"]  ?>
-                                    <span>元</span>
-                            </h4>
-
-
+                    <div class='col-4 m-0 p-0 pop ' id="event_<?= $event['id'] ?>">
+                        <div class='col-12 p-3 m-0  '> <!-- row justify-content-between 沒有效果 -->
+                            <div>
+                                <h4>活動類別：
+                                    <?= $event["ec_name"] ?>
+                                </h4>
+                                <h4>日期：
+                                    <?= $event["date"] . '&emsp;' . $event["time"] ?>
+                                </h4>
+                                <h4>尚有名額 / 總額：
+                                        <?= $event["limitNum"] - $event["quantity"]  ?>/<?= $event["limitNum"] . '人'  ?>
+                                </h4>
+                                <h4>費用：<span class="c_pink_t">
+                                        <?= $event["price"]  ?>
+                                        <span>元</span>
+                                </h4>
+                            </div>
                             <br>
-                            <p>
-                                <?= $event["description"] ?>
-                            </p>
+                            <div>
+                                <p>
+                                    <?= $event["description"] ?>
+                                </p>
+                            </div>
+                            <div>
+                                <p>累積銷售數量：<span class="">
+                                        <?= $quantity_map[$event['name']]  ?>
+                                </p>
+                            </div>
+
                         </div>
                         <div class='col-12 p-0 m-0 priceBar01'>
                             <form class='' action='' method=''>
@@ -853,7 +873,7 @@ $pageName = 'event';
                                         <label for='' class='m-0 pr-2'>
                                             <h4 class='m-0 p-0'>參加人數</h4>
                                         </label>
-                                        <input type='number' value='1' min='1' max="<?= $event['limitNum'] ?>" name='quantity' id='quantity' style='width: 3rem; ' placeholder='1' class=''>
+                                        <input type='number' value='1' min='1' max="<?= $event['limitNum'] - $event['quantity'] ?>" name='quantity' id='quantity' style='width: 3rem; ' placeholder='1' class=''>
                                     </div>
                                     <button class='btn add-to-cart text-white m-0' type="button" style='background-color:#04c2ff' onclick="addToCart('<?= $event['id'] ?>')"><i class='fas fa-cart-plus'></i></button>
                                     <button class='btn text-white c_pink_b m-0 ' type="button"><i class='fas fa-heart' onclick="addToWishList('<?= $event['id'] ?>', 'event')"></i></button>

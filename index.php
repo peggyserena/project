@@ -174,7 +174,7 @@ $pageName = 'index';
         background-image: url("images/map/map_01.jpg");
         background-repeat: no-repeat;
         background-position: center;
-        background-size: cover;
+        background-size: contain;
     }
 
     .big .radioArea {
@@ -371,7 +371,7 @@ $pageName = 'index';
 }
 
 
-span {
+.box span {
     color: dimgray;
 }
 
@@ -583,9 +583,24 @@ span {
 
                             </td>
                         </tr>
+                        <tr>
+                            <td colspan="3" class="pt-3 pm-3 c_pink">
+                                <ul> 
+                                    <li><h4 class="">※ 加入會員，填寫完整資料，即贈門票和生日禮！</h4></li>
+                                    <li><h4 class="">※ 加購～享折扣優惠！</h4>
+                                        <ul style="text-indent : -0.6rem">
+                                            <li>購買（活動+住宿），可享85折優惠！用餐也享有85折優惠</li>
+                                            <li>購買住宿/活動之一，享有用餐9折優惠</li>
+                                        </ul>
+                                    </li> 
+                                    <li><h4>※ 醫護人員入園免費，及森林咖啡館用 8 折！</h4></li>       
+                                </ul>
+                       
+                                
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
-
             </div>
         </div>
         <div class="container ">
@@ -596,7 +611,7 @@ span {
             <div class="grid-container">
 
                 <div class="small grid_01">
-                    <h4 class="p-3 m-0 b-green rot-135 ts text-center text-white ">心中一畝田</h4>
+                    <h4 class="p-3 m-0 b-green rot-135 c_1 text-center text-white ">心中一畝田</h4>
                     <div class="push-2">
                         <h4>尊重自然，以友善大地的方式，<br>在山上自己種、自己吃，<br>感謝大自然給予的食物。 <br>看著植物努力扎根，<br>我們也找到自己想要的生活樣貌。</h4>
                     </div>
@@ -647,7 +662,7 @@ span {
 
                 </div>
                 <div class="small grid_02">
-                    <h4 class="p-3 m-0 b-green rot-135 ts text-center text-white ">初衷小屋</h4>
+                    <h4 class="p-3 m-0 b-green rot-135 c_1 text-center text-white ">初衷小屋</h4>
                     <div class="push-2">
                         <h4 class="">親手蓋一棟屋子，<br>是森林人目前最大的手作體驗，<br>希望以最初的心念，<br>向旅人傳遞幸福，<br>尋回自己的夢想與勇氣</h4>
                     </div>
@@ -695,7 +710,7 @@ span {
                     </div>
                 </div>
                 <div class="small grid_03">
-                    <h4 class="p-3 m-0 b-green rot-135 ts text-center text-white ">森林秘境</h4>
+                    <h4 class="p-3 m-0 b-green rot-135 c_1 text-center text-white ">森林秘境</h4>
                     <div class="push-2">
                         <h4 class="">那樣原始、擁抱森林初始氣息的步道，<br>讓沉澱地思緒尋覓安靜的落腳處，就在眼前。</h4>
                     </div>
@@ -743,7 +758,7 @@ span {
                     </div>
                 </div>
                 <div class="small grid_04">
-                    <h4 class="p-3 m-0 b-green rot-135 ts text-center text-white ">肖楠之境</h4>
+                    <h4 class="p-3 m-0 b-green rot-135 c_1 text-center text-white ">肖楠之境</h4>
                     <div class="push-2">
                         <h4 class="">森林是一座無牆美術館，<br>不同季節時刻<br>形塑動植物與生態環境的多元樣貌<br>是大自然最美的藝術作品</h4>
                     </div>
@@ -791,7 +806,7 @@ span {
                     </div>
                 </div>
                 <div class="small grid_05">
-                    <h4 class="p-3 m-0 b-green rot-135 ts text-center text-white ">旋轉木馬</h4>
+                    <h4 class="p-3 m-0 b-green rot-135 c_1 text-center text-white ">旋轉木馬</h4>
                     <div class="push-2">
                         <h4 class="">在轉動旋轉木馬欄杆旁，<br>看見了幸福的場景。<br>戀人們手拉著手，父母緊緊地擁著孩子，<br>騎著木馬在數不清的燦爛小燈泡間，<br>此起彼落的奔跑著，<br>從真實世界躍入夢幻的童話空間裡。</h4>
                     </div>
@@ -839,7 +854,7 @@ span {
                     </div>
                 </div>
                 <div class="small grid_06">
-                    <h4 class="p-3 m-0 b-green rot-135 ts text-center text-white ">紫色希望之丘</h4>
+                    <h4 class="p-3 m-0 b-green rot-135 c_1 text-center text-white ">紫色希望之丘</h4>
                     <div class="push-2">
                         <h4 class="">點杯花草茶或咖啡，<br>坐下來享受樹林的芬多精，<br>或漫步在紫丘的薰衣草田步道，<br>跟著飛躍在花田的蝴蝶共舞。 </h4>
                     </div>
@@ -886,7 +901,7 @@ span {
                     </div>
                 </div>
                 <div class="small grid_07">
-                    <h4 class="p-3 m-0 b-green rot-135 ts text-center text-white ">年輪郵局</h4>
+                    <h4 class="p-3 m-0 b-green rot-135 c_1 text-center text-white ">年輪郵局</h4>
                     <div class="push-2">
                         <h4 class="">生命的故事及情感的刻畫，<br>每個旅人都是一棵有年輪的樹。<br>手寫明信片是一種豐饒心靈的儀式，<br>年輪郵局的明信片，是一張張的小森林，<br>乘載著旅人的字跡與祝福，寄給心裡重要的人。</h4>
                     </div>
@@ -934,7 +949,7 @@ span {
                     </div>
                 </div>
                 <div class="small grid_08">
-                    <h4 class="p-3 m-0 b-green rot-135 ts text-center text-white ">森林咖啡館</h4>
+                    <h4 class="p-3 m-0 b-green rot-135 c_1 text-center text-white ">森林咖啡館</h4>
                     <div class="push-2">
                         <h4 class="">放下生活的束縛，<br>打開心靈的耳朵，<br>傾聽大自然的聲音，<br>森林咖啡館提供您，<br>新鮮香草入味的風味餐/飲品/及點心</h4>
                     </div>
@@ -981,7 +996,7 @@ span {
                     </div>
                 </div>
                 <div class="small grid_09">
-                    <h4 class="p-3 m-0 b-green rot-135 ts text-center text-white ">淨身儀式</h4>
+                    <h4 class="p-3 m-0 b-green rot-135 c_1 text-center text-white ">淨身儀式</h4>
                     <div class="push-2">
                         <h4 class="">入園後右手邊即可看到淨身儀式噴霧器，<br>將手掌放在玻璃板上，<br>噴霧器便會噴灑具香味的薰衣草水，<br>可以釋放身心，並重新獲得能量。</h4>
                     </div>
@@ -1029,7 +1044,7 @@ span {
                     </div>
                 </div>
                 <div class="small grid_10">
-                    <h4 class="p-3 m-0 b-green rot-135 ts text-center text-white ">香草鋪子</h4>
+                    <h4 class="p-3 m-0 b-green rot-135 c_1 text-center text-white ">香草鋪子</h4>
                     <div class="push-2">
                         <h4 class="">每個夢想，<br>都需要發芽的空間。<br>薰衣草森林在成長茁壯的同時，<br>也想幫助更多美好的夢想。</h4>
                     </div>
@@ -1096,7 +1111,7 @@ span {
                 </div>
 
                 <div class="small grid_11">
-                    <h4 class="p-3 m-0 b-green rot-135 ts text-center text-white ">入口</h4>
+                    <h4 class="p-3 m-0 b-green rot-135 c_1 text-center text-white ">入口</h4>
                     <div class="push-2">
                         <h4 class="">歡迎來到薰衣草森林，<br>為了讓您呼吸新鮮空氣，森林裡暫時不要吸菸<br>為了享受森林經典餐點，不帶外食<br>請將悲傷、憤怒、憂愁、沮喪丟到一旁，<br>好好享受森林的時光…祝您遊園愉快！</h4>
                     </div>
@@ -1144,7 +1159,7 @@ span {
                     </div>
                 </div>
                 <div class="small grid_12">
-                    <h4 class="p-3 m-0 b-green rot-135 ts text-center text-white ">葛雷斯花園＆香草市集</h4>
+                    <h4 class="p-3 m-0 b-green rot-135 c_1 text-center text-white ">葛雷斯花園＆香草市集</h4>
                     <div class="push-2">
                         <h4 class="">融合了熱帶植物及台灣原生植物的英國式花園。<br>內有梅花、櫻花、油桐、杉樹及樹上的各種鳥屋，<br>花園旁設置有咖啡座。<br>露天的市集裡販賣浴鹽、手工皂以及紀念商品，<br>營造歐洲市集的休閒氛圍。</h4>
                     </div>
@@ -1192,7 +1207,7 @@ span {
                     </div>
                 </div>
                 <div class="small grid_13">
-                    <h4 class="p-3 m-0 b-green rot-135 ts text-center text-white ">森林島嶼＆<br>Lavender Forest House</h4>
+                    <h4 class="p-3 m-0 b-green rot-135 c_1 text-center text-white ">森林島嶼＆<br>Lavender Forest House</h4>
                     <div class="push-2">
                         <h4 class="">森林裡的童話小屋，有香氣的氛圍流竄，<br>提供各類香草清潔保養品，香草花茶、香氛香體用品　<br>
                             簡單樸實的山居生活，將<br>原初夢想的森林生活落實成為生活空間。<br>放慢腳步感受這生活中難得的寧靜。<br>推開窗外，嗅嗅甜甜的香草香氣，<br>原來這就是簡單生活中的小小幸福。</h4>
@@ -1240,7 +1255,7 @@ span {
                     </div>
                 </div>
                 <div class="small grid_14">
-                    <h4 class="p-3 m-0 b-green rot-135 ts text-center text-white ">許願樹＆森林平台</h4>
+                    <h4 class="p-3 m-0 b-green rot-135 c_1 text-center text-white ">許願樹＆森林平台</h4>
                     <div class="push-2">
                         <h4 class="">將願望寫在許願卡，<br>掛在許願樹周圍的欄杆上，<br>然後在樹下誠心許願，敲響許願鐘，<br>讓你的願望也能早日實現。</h4>
                     </div>
@@ -1303,7 +1318,7 @@ span {
                     <p class="card-text">兩園區面積廣闊，有足夠的空間供旅人遊覽，可以盡情與植物連結再連結，但防疫要當心，照顧自己也照顧別人，出外要小心，才能大盡興，薰衣草森林關心您。</p>
                 </div>
                 <div class="card-footer">
-                <small class="text-muted">※ 繡球花節 活動期間4/17~6/30，<br>目前園區花卉還有 #鼠尾草 #追風草 #小天使花～</p></small>
+                <div class="text-muted"><span style="font-weight:700">※ 醫護人員入園免費，及森林咖啡館用 8 折 </span><br>※ 繡球花節，活動期間4/17~6/30<br>※ 目前園區花卉還有 #鼠尾草 #追風草 #小天使花～</p></div>
                 </div>
             </div>
 

@@ -15,6 +15,7 @@ if (empty($row)) {
 
 ?>
 <?php include __DIR__ . '/parts/html-head.php'; ?>
+
 <?php include __DIR__ . '/parts/navbar.php'; ?>
 <style>
     form .form-group small.error {

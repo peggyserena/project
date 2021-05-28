@@ -11,6 +11,8 @@ body{
 .container{
 	width: 100%;
 }
+/* ====================== Text / background-color ====================== */
+
 h1 {
 	padding: 2rem;
 	font-weight: 900;
@@ -58,8 +60,25 @@ p{
 	text-shadow: 0 0 0.2em #0000E3, 0 0 0.25em #9AFF02, -1px -1px white, 1px 1px rgb(26, 2, 94);
 	background: linear-gradient(45deg, #DCC5EF 0%, #adda9a 100%);
 }
+.title1 {
+	color: white;
+	font-weight: 700;
+	padding: 0.8rem 2rem;
+	letter-spacing:2px;
+	margin-bottom: 0;
+	border-radius: 0.25rem;
+	text-shadow: 0 0 0.2em #0000E3, 0 0 0.25em #9AFF02, -1px -1px white, 1px 1px rgb(26, 2, 94);
+	background: linear-gradient(45deg, #DCC5EF 0%, #adda9a 100%);
+}
 .title:hover {
 	filter: hue-rotate(45deg);
+}
+.title1:hover {
+	filter: hue-rotate(45deg);
+}
+
+.c_pink_t{
+	color: rgb(255, 0, 140)
 }
 
 .t_shadow{
@@ -78,8 +97,50 @@ p{
 	box-shadow: 0px 0px 15px #666E9C;
 	-webkit-box-shadow: 0px 0px 15px #666E9C;
 	-moz-box-shadow: 0px 0px 15px #666E9C;
-
 }
+
+.c_pink_b{
+	background-color: rgb(255, 0, 140)
+}
+.c_pink{
+	background-color: #ee609b;
+}
+.C_lBlue_b{
+	background-color: #04c2ff;
+}
+
+
+/* ====================== input ====================== */
+
+
+input[type=text]:focus {
+	background-color: #cce5ff;
+  }
+	  textarea:focus {
+	background-color: #cce5ff;
+  }
+  input:focus { 
+	  outline: none !important;
+	  border-color: #719ECE;
+	  box-shadow: 0 0 10px #719ECE;
+  }
+  textarea:focus { 
+	  outline: none !important;
+	  border-color: #719ECE;
+	  box-shadow: 0 0 10px #719ECE;
+  }
+  .form-group ::-webkit-input-placeholder {
+	color: #a4b0be;
+}
+
+input[type=number]::-webkit-inner-spin-button {
+	opacity: 1;
+  }
+
+/* ====================== button ====================== */
+
+
+  
 button{
 	transform: all 0.3s ease 0s;
 	border: white 2px solid;
@@ -203,18 +264,7 @@ input[tpye=submit]:hover{
 .btn-4 span:hover:after {
 	width: 100%;
 }
-.c_pink_b{
-	background-color: rgb(255, 0, 140)
-}
-.c_pink_t{
-	color: rgb(255, 0, 140)
-}
-.c_pink{
-	background-color: #ee609b;
-}
-.C_lBlue_b{
-	background-color: #04c2ff;
-}
+
 /* ====================== priceBar ====================== */
 
 .priceBar{
@@ -226,6 +276,7 @@ input[tpye=submit]:hover{
 /* ====================== header ====================== */
 header{
 	background-image: url('../images/bg/bg_08.svg');
+	background-color: black;
 	backdrop-filter: invert(85%);
 	background-size:50rem ;
 	width: 100%;
@@ -440,9 +491,6 @@ nav#nav_01{
 	text-shadow: 2px 2px 2px #000;
 }
 
-.form-group ::-webkit-input-placeholder {
-	color: #a4b0be;
-}
 
 /* ====================== slider ==================== */
 #slider{

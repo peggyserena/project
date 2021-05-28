@@ -2,6 +2,19 @@
 <?php
 $title = 'Lavendar Room';
 $pageName = 'hotel';
+
+
+
+
+
+$sql = "SELECT * FROM `hotel`";
+
+
+$stmt = $pdo->query($sql);
+$hotels = $stmt->fetchAll();
+
+
+
 ?>
 <?php include __DIR__ . '/parts/html-head.php'; ?>
 <?php include __DIR__ . '/parts/navbar.php'; ?>
@@ -178,6 +191,10 @@ $pageName = 'hotel';
     input:hover {
         box-shadow: 0px 0px 20px rgb(0, 255, 191);
         border: 2px white solid;
+    }
+
+    table span img{
+        width: 2em;
     }
 </style>
 </head>
@@ -513,7 +530,24 @@ $pageName = 'hotel';
             </div>
         </div>
     </div>
-
+    <div class="modal fade" id="myModal_1">
+        <div class="modal-dialog modal-lg modal-dialog-centered ">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <input id="id" type="hidden"/>
+                    <label>日期</label><span id="date"></span>
+                    <label>數量</label><input id="quantity" type="number" min="1"/>
+                    <label>人數</label><input id="people_num" type="number" min="1"/>
+                    <button  onclick="addToCart()">加入購物車</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="container">
         <h2 class="c_pink_t"> 日期設定和選擇日期房間未定,每種房型2間<br>
             </h2>
@@ -556,27 +590,21 @@ $pageName = 'hotel';
                         <td><div></div><div></div></td>
                         <td><div></div><div></div></td>
                     </tr>
+                    <?php foreach ($hotels as $hotel) : ?>
                     <tr>
-                        <th width="215" rowspan="2" scope="row" style="vertical-align: middle;">愜意雙人房<br>
-                            Double&#160;Room</th>
-                        <th rowspan="2" scope="row"><img style="width: 8rem;" src="./images/hotel/doubleRoom_01.jpg" alt=""></th>
-                        <td><div></div><div></div></td>
-                        <td><div></div><div></div></td>
-                        <td><div></div><div></div></td>
-                        <td><div></div><div></div></td>
-                        <td><div></div><div></div></td>
-                        <td><div></div><div></div></td>
-                        <td><div></div><div></div></td>
+                        <th width="215" scope="row" style="vertical-align: middle;"><?= $hotel['name_zh'] ?><br>
+                            <?= $hotel['name_en'] ?></th>
+                        <th scope="row"><img style="width: 8rem;" src='<?= WEB_ROOT ?>/images/hotel/<?= $hotel['hotel_id'] . '_1' ?>.jpg' alt=""></th>
+                        <td><div><span class="" data-toggle="modal" data-target="#myModal_1" onclick="modalInfo('<?= $hotel['id']?>', '2021-05-23', <?= $hotel['quantity_limit']?>, <?= $hotel['people_num_limit']?>)"><img src="./images/icon/bookStatus-01.svg" alt=""></span></div><div><?= $hotel['price_weekdays'] ?></div></td>
+                        <td><div><span class="" data-toggle="modal" data-target="#myModal_1" onclick="modalInfo('<?= $hotel['id']?>', '2021-05-23', <?= $hotel['quantity_limit']?>, <?= $hotel['people_num_limit']?>)"><img src="./images/icon/bookStatus-01.svg" alt=""></span></div><div><?= $hotel['price_weekdays'] ?></div></td>
+                        <td><div><span class="" data-toggle="modal" data-target="#myModal_1" onclick="modalInfo('<?= $hotel['id']?>', '2021-05-23', <?= $hotel['quantity_limit']?>, <?= $hotel['people_num_limit']?>)"><img src="./images/icon/bookStatus-01.svg" alt=""></span></div><div><?= $hotel['price_weekdays'] ?></div></td>
+                        <td><div><span class="" data-toggle="modal" data-target="#myModal_1" onclick="modalInfo('<?= $hotel['id']?>', '2021-05-23', <?= $hotel['quantity_limit']?>, <?= $hotel['people_num_limit']?>)"><img src="./images/icon/bookStatus-01.svg" alt=""></span></div><div><?= $hotel['price_weekdays'] ?></div></td>
+                        <td><div><span class="" data-toggle="modal" data-target="#myModal_1" onclick="modalInfo('<?= $hotel['id']?>', '2021-05-23', <?= $hotel['quantity_limit']?>, <?= $hotel['people_num_limit']?>)"><img src="./images/icon/bookStatus-01.svg" alt=""></span></div><div><?= $hotel['price_weekdays'] ?></div></td>
+                        <td><div><span class="" data-toggle="modal" data-target="#myModal_1" onclick="modalInfo('<?= $hotel['id']?>', '2021-05-23', <?= $hotel['quantity_limit']?>, <?= $hotel['people_num_limit']?>)"><img src="./images/icon/bookStatus-01.svg" alt=""></span></div><div><?= $hotel['price_weekdays'] ?></div></td>
+                        <td><div><span class="" data-toggle="modal" data-target="#myModal_1" onclick="modalInfo('<?= $hotel['id']?>', '2021-05-23', <?= $hotel['quantity_limit']?>, <?= $hotel['people_num_limit']?>)"><img src="./images/icon/bookStatus-01.svg" alt=""></span></div><div><?= $hotel['price_weekdays'] ?></div></td>
                     </tr>
-                    <tr>
-                        <td><div></div><div></div></td>
-                        <td></td>
-                        <td><div></div><div></div></td>
-                        <td><div></div><div></div></td>
-                        <td><div></div><div></div></td>
-                        <td><div></div><div></div></td>
-                        <td><div></div><div></div></td>
-                    </tr>
+                    <?php endforeach ?>
+                    <!-- 
                     <tr>
                         <th rowspan="2" scope="row" style="vertical-align: middle;"> 輕奢三人房－樓中樓
                             <br>Triple&#160;Room
@@ -632,16 +660,7 @@ $pageName = 'hotel';
                         <td><div></div><div></div></td>
                         <td><div></div><div></div></td>
                         <td><div></div><div></div></td>
-                    </tr>
-                    <tr>
-                        <td><div></div><div></div></td>
-                        <td><div></div><div></div></td>
-                        <td><div></div><div></div></td>
-                        <td><div></div><div></div></td>
-                        <td><div></div><div></div></td>
-                        <td><div></div><div></div></td>
-                        <td><div></div><div></div></td>
-                    </tr>
+                    </tr> -->
                     <tr class="block">
                         <th class="status block " height="60" colspan="9" scope="col">
                             <span class=""><img src="./images/icon/bookStatus-01.svg" alt="">尚有空房</span>
@@ -705,6 +724,40 @@ $pageName = 'hotel';
         $(function() {
             $('#myTab li:eq(0) a').tab('show');
         });
+
+         //  購物車
+         function addToCart() {
+			var type = "hotel";
+            var qty = $("#quantity").val();
+            var people_num = $("#people_num").val();
+            var order_date = $("#date").text();
+            var id = $("#id").val();
+            if (confirm("確認訂購?")) {
+                $.get('cart-api.php', {
+                    action: 'add',
+                    type: type,
+                    id,
+                    qty,
+                    order_date,
+                    people_num,
+                }, function(data) {
+                    console.log("AddToCart_success");
+                    console.log(data);
+                    updateCartCount();
+                }).fail(function(data){
+                    console.log("AddToCart_fail");
+                    console.log(data);
+                });
+            }
+        }
+        function modalInfo(id, date, quantity_limit, people_num_limit){
+            $("#id").val(id);
+            $("#date").text(date);
+            $("#quantity").val(0);
+            $("#people_num").val(0);
+            $("#quantity").attr("max", quantity_limit);
+            $("#people_num").attr("max", people_num_limit);
+        }
     </script>
 
     <?php include __DIR__ . '/parts/html-foot.php'; ?>

@@ -9,6 +9,8 @@
 <script>
     function showCartCount(cart) {
         let total = 0;
+        console.log("cart");
+        console.log(cart);
         for (let i in cart) {
             total += Object.keys(cart[i]).length;
             // total ++;
