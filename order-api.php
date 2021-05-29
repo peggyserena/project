@@ -44,8 +44,8 @@ switch ($action){
         $flag = true;
         foreach($cart['event'] as $key => $cart_item){
             // $cart_item['quantity'] <= limitNum - order_quantity
-            $sql = "SELECT (e.limitNum - SUM(oe.quantity)) as available_num FROM `event` as e 
-                JOIN `order_event` as oe ON e.id = oe.event_id 
+            $sql = "SELECT (e.limitNum - IFNULL(SUM(oe.quantity), 0)) as available_num FROM `event` as e 
+                LEFT JOIN `order_event` as oe ON e.id = oe.event_id 
                 WHERE e.id=?  
                 GROUP BY oe.event_id";
             $stmt = $pdo->prepare($sql);
@@ -65,10 +65,11 @@ switch ($action){
                 break;
             }
         }
+        if (!$flag) break;
         foreach($cart['hotel'] as $key => $cart_item){
             // $cart_item['quantity'] <= limitNum - order_quantity
-            $sql = "SELECT (h.quantity_limit - SUM(oh.quantity)) as available_num, (h.people_num_limit - SUM(oh.people_num)) as available_people_num FROM `hotel` as h
-                JOIN `order_hotel` as oh ON h.id = oh.hotel_id 
+            $sql = "SELECT (h.quantity_limit - IFNULL(SUM(oh.quantity), 0)) as available_num, (h.people_num_limit - IFNULL(SUM(oh.people_num), 0)) as available_people_num FROM `hotel` as h
+                LEFT JOIN `order_hotel` as oh ON h.id = oh.hotel_id 
                 WHERE h.id=?  
                 GROUP BY oh.hotel_id";
             $stmt = $pdo->prepare($sql);
@@ -126,7 +127,7 @@ switch ($action){
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetch();
-        $_SESSION['cart']['order_id'] = $result['order_id'];
+       
         
         foreach($cart as $type => $value){
             switch ($type){
