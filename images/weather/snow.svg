@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 55.1 52.5">
+  <g fill="#fff">
+    <path d="M47.2 34.5H7.9C3.6 34.5 0 31 0 26.6c0-4.3 3.5-7.9 7.9-7.9h39.4c4.3 0 7.9 3.5 7.9 7.9-.1 4.3-3.6 7.9-8 7.9z"/>
+    <circle cx="17.4" cy="17.3" r="9.3"/>
+    <circle cx="34.5" cy="15.6" r="15.6"/>
+    <circle cx="37" cy="43.5" r="3">
+      <animateTransform attributeName="transform" attributeType="XML" dur="1.5s" keyTimes="0;0.33;0.66;1" repeatCount="indefinite" type="translate" values="1 -2;3 2; 1 4; 2 6" calcMode="linear"/>
+    </circle>
+    <circle cx="27" cy="43.5" r="3">
+      <animateTransform attributeName="transform" attributeType="XML" dur="1.5s" keyTimes="0;0.33;0.66;1" repeatCount="indefinite" type="translate" values="1 -2;3 2; 1 4; 2 6" calcMode="linear"/>
+    </circle>
+    <circle cx="17" cy="43.5" r="3">
+      <animateTransform attributeName="transform" attributeType="XML" dur="1.5s" keyTimes="0;0.33;0.66;1" repeatCount="indefinite" type="translate" values="1 -2;3 2; 1 4; 2 6" calcMode="linear"/>
+    </circle>
+  </g>
+</svg>

@@ -1,0 +1,135 @@
+@charset "UTF-8";
+@media only screen and (min-width: 768px) and (max-width: 992px) {
+  .box_cellphone {
+    display: none;
+  }
+
+  .box_desktop {
+    display: none;
+  }
+
+  .nav_04,
+  .nav_03 {
+    display: none;
+  }
+
+  /* ===================== font; ===================== */
+
+  h1 {
+    padding: 1.8rem;
+    font-weight: 900;
+    text-shadow: 0 0 0.2em #0000e3, 0 0 0.25em #9aff02, -1px -1px white, 1px 1px rgb(26, 2, 94);
+  }
+  h2 {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-shadow: 0 0 0.2em #0000e3, 0 0 0.25em #9aff02, -1px -1px white, 1px 1px rgb(26, 2, 94);
+  }
+
+  h3 {
+    font-size: 1.35rem;
+    font-weight: 600;
+  }
+
+  h4 {
+    font-size: 1.15rem;
+    font-weight: 600;
+  }
+
+  h5 {
+    font-size: 0.8rem;
+  }
+
+  p {
+    font-size: 1rem;
+    margin: 0;
+    line-height: 1.8rem;
+  }
+
+  /* ===================== index ===================== */
+
+  .poetry2 {
+    display: none;
+  }
+
+  .pop-up {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 99;
+    width: 500px;
+  }
+
+  .box_tablet .grid-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .box_tablet .push-2 p {
+    line-height: 1rem;
+    font-size: 0.5rem;
+  }
+  .box_tablet .small h4 {
+    font-size: 1rem;
+  }
+  .box_tablet .grid_12 h4 {
+    font-size: 0.8rem;
+  }
+  .box_tablet .grid_13 h4 {
+    font-size: 0.8rem;
+  }
+
+  /* ===================== NEWS ===================== */
+
+  /* ===================== HOTEL ===================== */
+
+  #reservation .table th {
+    padding: 0.5rem;
+  }
+  #reservation .table td {
+    padding: 0.5rem;
+  }
+
+  /* ===================== RESTAURANT ===================== */
+
+  .tablet_cellphone .tab-content h2 {
+    line-height: 1.4rem;
+    font-weight: 500;
+    font-size: 1.3rem;
+    padding-top: 0.5rem;
+    margin: 0;
+  }
+  .box_desktop {
+    font-display: none;
+  }
+
+  .seatChart_num > div > input[type='checkbox']:checked ~ label {
+    background-color: #2acd72;
+    font-weight: 500;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    line-height: 20px;
+    text-align: center;
+  }
+
+  .seatChart_num > div > input {
+    display: none;
+  }
+
+  .seatChart_num > div > label {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    line-height: 20px;
+    text-align: center;
+    background-color: #f98f8f;
+    font-weight: 500;
+    font-size: 0.9rem;
+  }
+  .seatChart_num > div > label.available {
+    background-color: #0000e3;
+  }
+}

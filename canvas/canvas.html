@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        .inline {
+            display: inline-block;
+        }
+
+        .top {
+            vertical-align: top;
+        }
+
+        .m-3 {
+            margin: 3px;
+        }
+
+        input[type="button"] {
+            min-height: 130px;
+            min-width: 130px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <img src="./img/image.jpg" id="image1"><input type="radio" name="img" onchange="drawImage_1(document.getElementById(this.value))" value="image1"/>
+    <img src="./img/rainbow.jpg" id="image2"><input type="radio" name="img" onchange="drawImage_1(document.getElementById(this.value))" value="image2"/>
+    <div class="inline">
+        <canvas id="myCanvas" width="400" height="400" style="border:1px solid #d3d3d3;">
+            Your browser does not support the HTML5 canvas tag.
+        </canvas>
+    </div>
+    <div>
+        reciver<input type="text" maxlength="10" id="receiver" onchange="fillText()"/>
+    </div>
+    <div>
+        context<input type="text" maxlength="10" id="context" onchange="fillText()"/>
+    </div>
+    <dvi>
+
+        <a href="mailto:example@gmail.com">mail</a>
+    </dvi>
+    <div class="inline top">
+        <div class="m-3">
+            <input type="button" onclick="fillRect();" value="fillRect" />
+            <input type="button" onclick="gradient(400, 0, 0, 0);" value="gradient_right" />
+            <input type="button" onclick="gradient(0, 400, 0, 0);" value="gradient_bottom" />
+            <input type="button" onclick="gradient(0, 0, 400, 0);" value="gradient_left" />
+            <input type="button" onclick="gradient(0, 0, 0, 400);" value="gradient_top" />
+        
+        </div>
+        <div class="m-3">
+            <input type="button" onclick="fillText();" value="fillText" />
+            <input type="button" onclick="fillTextWithPattern();" value="fillTextWithPattern" />
+            <input type="button" onclick="fillTextWithGradient();" value="fillTextWithGradient" />
+            <input type="button" onclick="textAlign();" value="textAlign" />
+        </div>
+        <div class="m-3">
+            <input type="button" onclick="drawImage_1();" value="drawImage_1" />
+            <input type="button" onclick="drawImage_2();" value="drawImage_2" />
+        </div>
+        <div class="m-3">
+            <input type="button" onclick="shadow();" value="shadow" />
+            <input type="button" onclick="alpha();" value="alpha" />
+        </div>
+        <div class="m-3">
+            <input type="button" onclick="clearCanvas();" value="clear" />
+            <input type="button" onclick="downloadCanvas();" value="download" />
+        </div>
+    </div>
+    <script>
+        var c = document.getElementById("myCanvas");
+        var ctx = c.getContext("2d");
+        var width = 400;
+        var height = 400;
+
+
+        // fill with color
+        function fillRect() {
+            // fillRect(x, y, width, height)
+            // fillStyle = color|gradient|pattern
+            ctx.fillStyle = "#FF0000";
+            ctx.fillRect(20, 20, 150, 100);
+        }
+        function gradient(right, bottom, left, top) {
+            // createLinearGradient(right, bottom, left, top)
+            var my_gradient = ctx.createLinearGradient(right, bottom, left, top);
+            my_gradient.addColorStop(1 / 5 * 0, "red");
+            my_gradient.addColorStop(1 / 5 * 1, "orange");
+            my_gradient.addColorStop(1 / 5 * 2, "yellow");
+            my_gradient.addColorStop(1 / 5 * 3, "green");
+            my_gradient.addColorStop(1 / 5 * 4, "blue");
+            my_gradient.addColorStop(1 / 5 * 5, "purple");
+            ctx.fillStyle = my_gradient;
+            ctx.fillRect(0, 0, width, height);
+        }
+
+
+        
+        // add text
+        function fillText() {
+            // fillText(text, x, y)
+            clearCanvas();
+            
+            // draw image
+            var id = document.querySelector("input:checked").value;
+            var img = document.getElementById(id);
+            drawImage_1(img);
+
+            // draw text
+            var receiver = document.getElementById("receiver").value;
+            var context = document.getElementById("context").value;
+
+            ctx.font = "900 70px Arial italic";
+            ctx.fillStyle = "grey";
+            ctx.textAlign = "left";
+            ctx.fillText(receiver, 0, 100);
+            ctx.fillText(context, 0, 200);
+        }
+
+
+
+
+        function fillTextWithPattern() {
+            // createPattern(url, repeat|repeat-x|repeat-y|no-repeat)
+            ctx.font = "900 70px Arial italic";
+            var img = document.getElementById("image2");
+            var pat = ctx.createPattern(img, "repeat");
+            ctx.fillStyle = pat;
+            ctx.textAlign = "center";
+            ctx.fillText("Hello World", width / 2, height / 2);
+        }
+        function fillTextWithGradient() {
+            ctx.font = "900 70px Arial italic";
+            var gradient = ctx.createLinearGradient(0, 0, width, 0);
+            gradient.addColorStop("0", "white");
+            gradient.addColorStop("1.0", "black");
+            ctx.fillStyle = gradient;
+            ctx.textAlign = "center";
+            ctx.fillText("Hello World", width / 2, height / 2);
+        }
+        function textAlign() {
+            var x = width;
+            var y = height;
+            // Draw a veritical red line at middle
+            var vLineX = x * 0.5;
+            ctx.strokeStyle = "red";
+            ctx.fillStyle = "red";
+            ctx.moveTo(vLineX, 0);
+            ctx.lineTo(vLineX, y);
+            ctx.stroke();
+            // Draw a horizontal red line at middle
+            var hLineY = y * 0.75;
+            ctx.moveTo(0, hLineY);
+            ctx.lineTo(x, hLineY);
+            ctx.stroke();
+
+            ctx.font = "20px Arial";
+            // Veritical Line
+            ctx.textAlign = "start";
+            ctx.fillText("textAlign=start", vLineX, 20);
+            ctx.textAlign = "end";
+            ctx.fillText("textAlign=end", vLineX, 60);
+            ctx.textAlign = "left";
+            ctx.fillText("textAlign=left", vLineX, 100);
+            ctx.textAlign = "center";
+            ctx.fillText("textAlign=center", vLineX, 140);
+            ctx.textAlign = "right";
+            ctx.fillText("textAlign=right", vLineX, 200);
+            ctx.textAlign = "start";
+
+            // Horizontal Line
+            ctx.textBaseline = "top";
+            ctx.fillText("Top", 5, hLineY);
+            ctx.textBaseline = "bottom";
+            ctx.fillText("Bottom", 50, hLineY);
+            ctx.textBaseline = "middle";
+            ctx.fillText("Middle", 120, hLineY);
+            ctx.textBaseline = "alphabetic";
+            ctx.fillText("Alphabetic", 210, hLineY);
+            ctx.textBaseline = "hanging";
+            ctx.fillText("Hanging", 310, hLineY);
+        }
+
+
+        // image
+        function drawImage_1(img) {
+            // drawImage(url, x, y, width, height)
+            // var img = document.getElementById("image1");
+            clearCanvas();
+            ctx.drawImage(img, 10, 10);
+        }
+        function drawImage_2() {
+            // drawImage(url, selectFromX, selectFromY, selectWidth, selectHeight, x, y, width, height);
+            var img = document.getElementById("image1");
+            ctx.drawImage(img, 65, 80, 130, 105, 10, 10, 390, 315);
+        }
+
+
+        // shadow
+        function shadow() {
+            ctx.shadowBlur = 30;
+            ctx.shadowColor = "black";
+            ctx.fillStyle = "white";
+            ctx.fillRect(20, 20, 100, 80);
+        }
+
+        
+        // alpha
+        function alpha(){
+            ctx.fillStyle = "black";
+            ctx.globalAlpha = 0.5;
+            ctx.fillRect(20, 20, 100, 80);
+        }
+
+        
+
+
+        // clear and download
+        function clearCanvas() {
+            // x, y, width, height
+            ctx.clearRect(0, 0, width, height);
+        }
+
+
+
+
+
+        function downloadCanvas() {
+            var a = document.createElement("a");
+            
+            a.href = c.toDataURL("image/png");
+
+            a.download = "image.png";
+            a.click();
+        }
+    </script>
+</body>
+
+</html>
