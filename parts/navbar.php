@@ -129,6 +129,7 @@ if (!isset($pageName)) {
                 <li class="nav-item">
                     <a class="nav-link"><?= htmlentities($_SESSION['user']['fullname']) ?></a>
                 </li>
+                <li class="nav-item">
                     <a class="nav-link " href="logout.php">登出</a>
                 </li>
                 <li class="nav-item p-0 m-0 <?= $pageName == 'member' ? 'active' : '' ?>">

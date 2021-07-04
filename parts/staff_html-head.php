@@ -12,6 +12,9 @@
     <title>Document</title>
     <link rel="stylesheet" href="<?= WEB_ROOT ?>/css/bootstrap.css">
     <link rel="stylesheet" href="<?= WEB_ROOT ?>/css/style.css">
+    <link rel="stylesheet" href="<?= WEB_ROOT ?>/css/style_desktop.css">
+    <link rel="stylesheet" href="<?= WEB_ROOT ?>/css/style_tablet.css">
+    <link rel="stylesheet" href="<?= WEB_ROOT ?>/css/style_cellphone.css">
 
 
 </head>

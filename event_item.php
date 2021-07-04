@@ -31,6 +31,14 @@ $sql .= " group by e.id";
 $stmt = $pdo->prepare($sql);
 $stmt->execute([$_GET['id']]);
 $event = $stmt->fetch();
+
+// 抓圖片
+$sql = "SELECT * FROM `event_image` WHERE event_id = ".$event['id'];
+$stmt = $pdo->prepare($sql);
+$stmt->execute([]);
+$event_img = $stmt->fetchAll();
+
+
 // 活動歷年總數
 $sql = "SELECT e.name, IFNULL(sum(`quantity`), 0) as quantity FROM `event` as e LEFT JOIN `order_event` as oe ON e.id = oe.event_id WHERE e.id = ? GROUP BY `name`";
 $stmt = $pdo->prepare($sql);
@@ -161,16 +169,16 @@ foreach ($quantity_list as $value) {
 
         <div class='col-lg-8 col-md-12 col-sm-12 m-0 p-0'>
             <div class='d-flex col-12 p-0 m-0'>
-                <img src='<?= WEB_ROOT ?>/images/event/<?= $event['event_id'] . '_1' ?>.jpg' alt=''>
+                <img src='<?= WEB_ROOT."/".$event_img[0]['path'] ?>' alt=''>
             </div>
             <div class='col-12 p-0 m-0'>
                 <div class='fancybox d-flex  p-0 m-0'>
                     <a href='<?= $event['video'] ?>' data-fancybox='F_box1' data-caption='qwe'>
-                        <img src='<?= WEB_ROOT ?>/images/event/<?= $event['event_id'] . '_2' ?>.jpg' alt=''>
+                        <img src='<?= WEB_ROOT ?>/<?= $event['video_img'] ?>' alt=''>
                     </a>
-                    <?php for ($i = 3; $i <= $event['img_count']; $i++) : ?>
-                        <a href='<?= WEB_ROOT ?>/images/event/<?= $event['event_id'] . '_' . $i ?>.jpg' data-fancybox='F_box1' data-caption='qwe'>
-                            <img src='<?= WEB_ROOT ?>/images/event/<?= $event['event_id'] . '_' . $i ?>.jpg' alt=''>
+                    <?php for ($i = 1; $i < count($event_img); $i++) : ?>
+                        <a href='<?= WEB_ROOT."/".$event_img[$i]['path'] ?>' data-fancybox='F_box1' data-caption='qwe'>
+                            <img src='<?= WEB_ROOT."/".$event_img[$i]['path'] ?>' alt=''>
                         </a>
                     <?php endfor; ?>
 

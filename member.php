@@ -269,7 +269,7 @@ Toggle - knob button style
                                     <div class="form-group">
                                         <label for="address">區域及地址： </label><span><?= htmlentities($r['address']) ?></span>
                                     </div>
-                                    <div  class="text-center"><a href="editMember.php" class="custom-btn btn-4 text-center">修改</a>
+                                    <div  class="text-center"><a href="editMember.php" class="custom-btn btn-4 t_shadow text-center">修改</a>
                                     </div>
                                 </form>
                             </div>

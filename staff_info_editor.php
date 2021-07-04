@@ -2,9 +2,11 @@
 <?php
 $title = '會員註冊';
 $pageName ='staff_register';
+// print_r($_SESSION['staff']);
 ?>
 <?php include __DIR__. '/parts/staff_html-head.php'; ?>
-
+<script src="erTWZipcode-master/js/er.twzipcode.data.js"></script>
+<script src="erTWZipcode-master/js/er.twzipcode.min.js"></script>
 <style>
     body {
         background: linear-gradient(45deg, #e1ebdc 0%, #e8ddf1 100%);
@@ -18,32 +20,7 @@ $pageName ='staff_register';
         -moz-box-shadow: 0px 0px 15px #666E9C;
     }
 
-    form .form-group small.error {
-        color: red;
-    }
-
-    .btnGroup button.facebook {
-        background-color: #3b5998;
-    }
-
-    .btnGroup button.twitter {
-        background-color: #1da1f2;
-    }
-
-    .btnGroup button.google {
-        background-color: #dd4b39;
-    }
-
-    span {
-        color: rgb(224, 100, 100);
-        font-size: 0.8rem;
-    }
-
-    .container {
-        margin: 5% auto;
-    }
-
-    .button {
+      .button {
         text-align: center;
     }
 
@@ -52,15 +29,16 @@ $pageName ='staff_register';
         padding: 5% 7.5%;
         background: white;
         font-weight: 600;
-
     }
 
-    .form-group ::-webkit-input-placeholder {
+    .form-group ::-webkit-input required-placeholder {
         color: #a4b0be;
     }
+    input[value]{
+        color: blue;
+    }
+
 /* =============================== modal =============================== */
-
-
 
     .bee svg{
         width: 100px;
@@ -74,55 +52,56 @@ $pageName ='staff_register';
 
 <main>
     <!-- ===============================  modal - 確認登入 =============================== -->
-    
     <?php include "parts/modal.php"?>
-    <div class="container ">
+    <div class="container my-5 ">
         <div class="row justify-content-center  ">
-            <div class="col-7 con_01 m-0 p-0">
+            <div class="col-md-8 col-sm-12 con_01 m-2 p-0">
                 <h2 class="title b-green rot-135">修改個人資料</h2>
-                <form name="form1" method="post" novalidate onsubmit="checkForm(); return false;">
-                    <input type="hidden" name="action" value="changeProfile"/>
+                <form name="form1" id="myForm" method="post" novalidate onsubmit="checkForm(); return false;">
+                    <input required type="hidden" name="action" value="changeProfile"/>
                     <div class="form-group">
-                        <label for="staff_id">員工編號</label>
-                        <div type="text" id="staff_id"><?= $_SESSION['staff']['staff_id'] ?></div>
-                        <small class="form-text error"></small>
+                        <label for="staff_id">員工編號： </label>
+                        <span type="text" id="staff_id"><?= $_SESSION['staff']['staff_id'] ?></span>
                     </div>
                     <div class="form-group">
-                        <label for="identityNum">身分證字號<span>(必填)</span></label>
-                        <input type="text" class="form-control" id="identityNum" name="identityNum" autofocus required>
-                        <small class="form-text error"></small>
+                        <label for="position">職稱： </label>
+                        <span type="text" id="position"><?= $_SESSION['staff']['role'] ?></span>
                     </div>
                     <div class="form-group">
-                        <label for="email">email <span>(必填)</span></label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="example@gmail.com" autofocus required>
-                        <small class="form-text error"></small>
+                        <label for="fullname">姓名</label>
+                        <input required type="text" class="form-control" name="fullname" id="fullname" placeholder="林小花" autofocus value="<?= $_SESSION['staff']['fullname'] ?>">
                     </div>
                     <div class="form-group">
-                        <label for="fullname">姓名<span>(必填)</span></label>
-                        <input type="text" class="form-control" name="fullname" id="fullname" value="<?= $_GET['fullname'] ?? '' ?>" placeholder="林小花"></input>
-                        <small class="form-text error"></small>
+                        <label for="identityNum">身分證字號</label>
+                        <input required type="text" class="form-control" id="identityNum" name="identityNum"  required value="<?= $_SESSION['staff']['identityNum'] ?>">
                     </div>
                     <div class="form-group">
-                        <label for="birthday">生日 <span>(必填)</span></label>
-                        <input type="date" class="form-control" id="birthday" name="birthday" required>
-                        <small class="form-text error"></small>
+                        <label for="birthday">生日 </label>
+                        <input required type="date" class="form-control" id="birthday" name="birthday" required value="<?= $_SESSION['staff']['birthday'] ?>">
                     </div>
                     <div class="form-group">
-                        <label for="mobile">手機<span>(必填)</span></label>
-                        <input type="text" class="form-control" id="mobile" name="mobile" pattern="09\d{2}-?\d{3}-?\d{3}" placeholder="0987-654-321">
-                        <small class="form-text error"></small>
+                        <label for="mobile">手機</label>
+                        <input required type="text" class="form-control" id="mobile" name="mobile" pattern="09\d{2}-?\d{3}-?\d{3}" placeholder="0987-654-321" value="<?= $_SESSION['staff']['mobile'] ?>">
                     </div>
                     <div class="form-group">
-                        <label for="zipcode">郵遞區號<span>(必填)</span></label>
-                        <input type="text" class="form-control" name="zipcode" id="zipcode" placeholder="236"></input>
+                        <label for="email">email </label>
+                        <input required type="email" class="form-control" id="email" name="email" placeholder="example@gmail.com" required value="<?= $_SESSION['staff']['email'] ?>">
                     </div>
                     <div class="form-group">
-                        <label for="city">縣市<span>(必填)</span></label>
-                        <input type="text" class="form-control" name="city" id="city" placeholder="新北市"></input>
+                        <label for="county">縣市</label>
+                        <select class="form-control" name="county" id="county"></select>
                     </div>
                     <div class="form-group">
-                        <label for="address">區域及地址<span>(必填)</span></label>
-                        <input type="text" class="form-control" name="address" id="address" placeholder="＊＊區＊＊路＊＊巷＊＊號＊＊樓"></input>
+                        <label for="district">鄉鎮市區</label>
+                        <select class="form-control" name="district" id="district"></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="zipcode">郵遞區號</label>
+                        <input required type="text" class="form-control" name="zipcode" id="zipcode" placeholder="236" value="<?= $_SESSION['staff']['zipcode'] ?>" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">地址</label>
+                        <input required type="text" class="form-control" name="address" id="address" placeholder="＊＊區＊＊路＊＊巷＊＊號＊＊樓" value="<?= $_SESSION['staff']['address'] ?>">
                     </div>
                     <div class="button m-4"><button type="submit" class="custom-btn btn-4 t_shadow ">送出</button></div>
                     <hr>
@@ -176,9 +155,10 @@ $pageName ='staff_register';
         //     alert("t6");
         // }
         if (isPass) {
+            var data = $(document.form1).serialize() + "&zipcode=" + $("#zipcode").val();
             $.post(
                 'staff-api.php',
-                $(document.form1).serialize(),
+                data,
                 function(data) {
                     console.log(data);
                     if (data.success) {
@@ -202,4 +182,27 @@ $pageName ='staff_register';
 
     }
 </script>
+<script>
+// 設定birthday日期max為今日
+var d = new Date();
+var max = d.toISOString().split("T")[0];
+$("#birthday").attr("max", max);
+</script>
+<script>
+  erTWZipcode({
+    defaultCountyText: "請選擇",
+    defaultDistrictText: "請選擇"
+  });
+  var distEl = document.querySelector('#myForm select[name=district]');
+  document.querySelector('#myForm select[name=county]')
+    .addEventListener("change", function(evt){
+      //refresh district element
+    //   M.FormSelect.init(distEl);
+    });
+  //first time init all select elements in #myForm
+//   M.FormSelect.init(document.querySelectorAll('#myForm select'));
+  document.querySelector('#myForm select[name=county]').value = "<?= $_SESSION['staff']['county'] ?>";
+  document.querySelector('#myForm select[name=district]').value = "<?= $_SESSION['staff']['district'] ?>";
+</script>
+<?php // unset($_SESSION['staff'])?>
 <?php include __DIR__. '/parts/staff_html-foot.php'; ?>

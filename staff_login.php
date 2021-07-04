@@ -13,7 +13,6 @@ $pageName ='staff_login';
 
   .con_01 {
     border-radius: 0.25rem;
-
     box-shadow: 0px 0px 15px #666e9c;
     -webkit-box-shadow: 0px 0px 15px #666e9c;
     -moz-box-shadow: 0px 0px 15px #666e9c;

@@ -22,6 +22,9 @@
   .m-sm-0 {
     margin: 0 !important;
   }
+  .p-sm-2 {
+    padding: 1rem !important;
+  }
   .pt-sm-0 {
     padding-top: 0;
   }

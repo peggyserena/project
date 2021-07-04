@@ -24,7 +24,7 @@ switch ($action){
                 }
                 break;
         case 'changeProfile':
-                $columns = ['address', 'city', 'zipcode', 'mobile', 'birthday', 'identityNum', 'email', 'fullname'];
+                $columns = ['address', 'county', 'district', 'zipcode', 'mobile', 'birthday', 'identityNum', 'email', 'role','fullname'];
                 $fill_count = 0;
                 $update_data = [];
                 foreach($columns as $col){
@@ -36,7 +36,7 @@ switch ($action){
                 }
                 if ($fill_count == count($columns)){
                         $a_sql = "UPDATE `staff` SET ".implode(' = ?,', $columns)." = ? WHERE `staff_id` = ?";
-                        // address = ?, city = ?
+                        // address = ?, county = ?
                         $a_stmt = $pdo->prepare($a_sql);
                         array_push($update_data, $staff['staff_id']);
                         $a_stmt->execute($update_data);
