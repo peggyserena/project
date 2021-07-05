@@ -63,7 +63,7 @@ if (empty($row)) {
         <div class="col-md-6">
             <h2 class="title m-0 ">修改資料</h2>
             <div class="card">
-                <form name="form1" action="editMember-api.php" method="post" novalidate onsubmit="checkForm(); return false;">
+                <form name="form1" action="memberEditor-api.php" method="post" novalidate onsubmit="checkForm(); return false;">
                     <div class="form-group">
                         <label for="fullname autofocus ">姓名</label>
                         <input type="text" class="form-control" name="fullname" id="fullname" value="<?= htmlentities($row['fullname']) ?>"></input>
@@ -137,7 +137,7 @@ if (empty($row)) {
 
         if (isPass) {
             $.post(
-                'editMember-api.php',
+                'memberEditor-api.php',
                 $(document.form1).serialize(),
                 function(data) {
                     if (data.success) {

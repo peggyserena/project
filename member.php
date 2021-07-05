@@ -264,7 +264,7 @@ Toggle - knob button style
                                         <label for="zipcode">地址： </label><span><?= $r['zipcode'] ?></span><span><?= $r['county'] ?></span><span><?= $r['district'] ?></span><span><?= htmlentities($r['address']) ?></span>
                                     </div>
 
-                                    <div  class="text-center"><a href="editMember.php" class="custom-btn btn-4 t_shadow text-center">修改</a>
+                                    <div  class="text-center"><a href="memberEditor.php" class="custom-btn btn-4 t_shadow text-center">修改</a>
                                     </div>
                                 </form>
                             </div>

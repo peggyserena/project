@@ -117,7 +117,7 @@ hr {
                     <div class="m-2">
                         <input id="buyer1" type="radio" name="name" value="buyer1" /><label for="buyer1 ">同會員</label>
                         <input id="buyer2" type="radio" name="name" value="buyer2" /><label for="buyer2"> 其他參訪者</label>
-                        <span class="text-center m-2 form-container buyer1 "><a href="editMember.php" class="custom-btn btn-4 text-center text-white c_1" style="width:90px">資料修改</a></span>
+                        <span class="text-center m-2 form-container buyer1 "><a href="memberEditor.php" class="custom-btn btn-4 text-center text-white c_1" style="width:90px">資料修改</a></span>
 
                     </div>
                     <div class="form-container buyer1 ">

@@ -369,7 +369,7 @@ font-weight: 700;
                     </div>
                     <textarea style="width:100%; padding-left:1rem" type="text" name="notes" autocomplete="on" placeholder="需求備註"></textarea>
                 </form>
-                <div class="text-center m-2"><a href="editMember.php" class="custom-btn btn-4 text-center text-white c_1" style="width:150px">會員資料修改</a></div>
+                <div class="text-center m-2"><a href="memberEditor.php" class="custom-btn btn-4 text-center text-white c_1" style="width:150px">會員資料修改</a></div>
             <?php
             }
             ?>
@@ -504,7 +504,7 @@ font-weight: 700;
     <div class="row mb-5">
         <div class="col-12 mb-3 ">
             <div class="alert alert-danger text-center p-0 m-0 " id="warning_msg_payway" role="alert" style="display: none;">
-                <a class="nav-link" href="editMember.php">
+                <a class="nav-link" href="memberEditor.php">
                     <h4 class=" m-0  text-danger">請完成收件人資料、寄送方式、付款方式填寫，及 <img src="./images/icon/checked.svg" alt=""> 同意網站服務條款及隱私政策</h4>
                 </a>
             </div>
