@@ -50,11 +50,11 @@ $pageName = 'staff_event.php';
                 <input type="number" class="form-control" id="price" name="price" min=0 autofocus required>
             </div>
             <div class="form-group">
-                <label for="limitNum">人數限制</label>
+                <label for="limitNum">開放人數</label>
                 <input type="number" class="form-control" id="limitNum" name="limitNum" min=1 autofocus required>
             </div>
             <div class="form-group">
-                <label for="description">商品簡介</label>
+                <label for="description">活動簡介</label>
                 <textarea type="text" class="form-control" id="description" name="description" autofocus required></textarea>
             </div>
             <div class="form-group">
@@ -70,11 +70,11 @@ $pageName = 'staff_event.php';
                 <textarea type="text" class="form-control" id="location" name="location" autofocus required></textarea>
             </div>
             <div class="form-group">
-                <label for="content">活動行程</label>
+                <label for="content">活動內容</label>
                 <textarea type="text" class="form-control" id="content" name="content" autofocus required></textarea>
             </div>
             <div class="form-group">
-                <label for="info">活動資訊</label>
+                <label for="info">活動任務</label>
                 <textarea type="text" class="form-control" id="info" name="info" autofocus required></textarea>
             </div>
             <div class="form-group">

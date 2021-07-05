@@ -23,16 +23,16 @@ if (!isset($pageName)) {
     <div class="collapse navbar-collapse  " id="navbarSupportedContent">
       <ul class="navbar-nav m-auto  " style="flex-wrap: wrap">
         <li class="nav-item <?= $pageName == 'index_staff' ? 'active' : '' ?>">
-          <a class="nav-link" href="staff_event.php" role="button" aria-haspopup="true" aria-expanded="false"> 森林體驗新增</a>
+          <a class="nav-link" href="staff_event.php" role="button" aria-haspopup="true" aria-expanded="false" target="blank"> 森林體驗新增</a>
         </li>
-        <li class="nav-item <?= $pageName == 'event_editor' ? 'active' : '' ?>">
-          <a class="nav-link" href="staff_event_editor.php" role="button" aria-haspopup="true" aria-expanded="false"> 森林體驗修改 </a>
+        <li class="nav-item <?= $pageName == 'staff_event_check.php' ? 'active' : '' ?>">
+          <a class="nav-link" href="staff_event_check.php" role="button" aria-haspopup="true" aria-expanded="false" target="blank"> 森林體驗查詢 </a>
         </li>
         <li class="nav-item <?= $pageName == 'event' ? 'active' : '' ?>">
           <a class="nav-link" href="event.php" role="button" aria-haspopup="true" aria-expanded="false" target="blank"> 森林體驗 </a>
         </li>
         <li class="nav-item <?= $pageName == 'staff_register' ? 'active' : '' ?>">
-          <a class="nav-link" href="staff_register.php" role="button" aria-haspopup="true" aria-expanded="false"> 新增員工編號 </a>
+          <a class="nav-link" href="staff_register.php" role="button" aria-haspopup="true" aria-expanded="false" > 新增員工編號 </a>
         </li>
       </ul>
  

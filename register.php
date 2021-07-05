@@ -124,17 +124,22 @@ $pageName = 'register';
                         <input type="email" class="form-control" id="email2" name="email2" placeholder="example@gmail.com" >
                     </div>
                     <div class="form-group">
+                        <label for="county">縣市</label>
+                        <select class="form-control" name="county" id="county"></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="district">鄉鎮市區</label>
+                        <select class="form-control" name="district" id="district"></select>
+                    </div>
+                    <div class="form-group">
                         <label for="zipcode">郵遞區號</label>
-                        <input type="text" class="form-control" name="zipcode" id="zipcode" placeholder="236"></input>
+                        <input required type="text" class="form-control" name="zipcode" id="zipcode" placeholder="236"  disabled>
                     </div>
                     <div class="form-group">
-                        <label for="city">縣市</label>
-                        <input type="text" class="form-control" name="city" id="city" placeholder="新北市"></input>
+                        <label for="address">地址</label>
+                        <input required type="text" class="form-control" name="address" id="address" placeholder="＊＊區＊＊路＊＊巷＊＊號＊＊樓" >
                     </div>
-                    <div class="form-group">
-                        <label for="address">區域及地址</label>
-                        <input type="text" class="form-control" name="address" id="address" placeholder="＊＊區＊＊路＊＊巷＊＊號＊＊樓"></input>
-                    </div>
+
                     <div class="button m-4"><button type="submit" class="custom-btn btn-4 t_shadow ">註冊</button></div>
                     <hr>
                     <p class="text-center m-4">＊其他註冊方式＊</p>
@@ -152,6 +157,8 @@ $pageName = 'register';
 
 </main>
 <?php include __DIR__ . '/parts/scripts.php'; ?>
+<script src="erTWZipcode-master/js/er.twzipcode.data.js"></script>
+<script src="erTWZipcode-master/js/er.twzipcode.min.js"></script>
 <script>
     const email_re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
     const mobile_re = /^09\d{2}-?\d{3}-?\d{3}$/;
@@ -214,10 +221,7 @@ $pageName = 'register';
 
     }
 </script>
-<script>
-    
 
-</script>
 <script>
     //眼睛
     $(".toggle-password").click(function() {
@@ -230,6 +234,28 @@ $pageName = 'register';
         input.attr("type", "password");
         }
     });
+</script>
+<script>
+// 設定birthday日期max為今日
+var d = new Date();
+var max = d.toISOString().split("T")[0];
+$("#birthday").attr("max", max);
+</script>
+<script>
+  erTWZipcode({
+    defaultCountyText: "請選擇",
+    defaultDistrictText: "請選擇"
+  });
+  var distEl = document.querySelector('#myForm select[name=district]');
+  document.querySelector('#myForm select[name=county]')
+    .addEventListener("change", function(evt){
+      //refresh district element
+    //   M.FormSelect.init(distEl);
+    });
+  //first time init all select elements in #myForm
+//   M.FormSelect.init(document.querySelectorAll('#myForm select'));
+  document.querySelector('#myForm select[name=county]').value = "<?= $_SESSION['staff']['county'] ?>";
+  document.querySelector('#myForm select[name=district]').value = "<?= $_SESSION['staff']['district'] ?>";
 </script>
 
 <?php include __DIR__ . '/parts/html-foot.php'; ?>

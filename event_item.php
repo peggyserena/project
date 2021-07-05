@@ -55,7 +55,6 @@ foreach ($quantity_list as $value) {
 /* ====================================== event ====================================== */
     body {
         background: linear-gradient(45deg,#e8ddf1 0%,  #e1ebdc 100%);
-        color:gray;
         text-align:justify;
     }
 
@@ -145,6 +144,9 @@ foreach ($quantity_list as $value) {
         background-size: cover;
         background-position:center;
     }
+    .eventContent span{
+      font-weight: 700;
+    }
 
 
 /* ====================================== event ====================================== */
@@ -171,25 +173,14 @@ foreach ($quantity_list as $value) {
             <div class='d-flex col-12 p-0 m-0'>
                 <img src='<?= WEB_ROOT."/".$event_img[0]['path'] ?>' alt=''>
             </div>
-            <div class='col-12 p-0 m-0'>
-                <div class='fancybox d-flex  p-0 m-0'>
-                    <a href='<?= $event['video'] ?>' data-fancybox='F_box1' data-caption='qwe'>
-                        <img src='<?= WEB_ROOT ?>/<?= $event['video_img'] ?>' alt=''>
-                    </a>
-                    <?php for ($i = 1; $i < count($event_img); $i++) : ?>
-                        <a href='<?= WEB_ROOT."/".$event_img[$i]['path'] ?>' data-fancybox='F_box1' data-caption='qwe'>
-                            <img src='<?= WEB_ROOT."/".$event_img[$i]['path'] ?>' alt=''>
-                        </a>
-                    <?php endfor; ?>
-
-                </div>
-            </div>
         </div>
-        <div class='col-lg-4 col-md-12 col-sm-12 row m-0 p-0 pop '  id="event_<?= $event['id'] ?>">
+        <div class='col-lg-4 col-md-12 col-sm-12 row m-0 p-0 pop ' style="background-color: whitesmoke;" id="event_<?= $event['id'] ?>">
             <div>
 
                 <div class='col-12 p-3 mt-0 ml-0 mr-0 'style="margin-bottom:75px">
                     <div >
+                        <p class="text-success">累積銷售數量： <?= $quantity_map[$event['name']] ?></p>
+
                         <p>活動類別：<span style="font-size:1.2rem">
                             <?= $event["ec_name"] ?></span>
                         </p>
@@ -203,16 +194,9 @@ foreach ($quantity_list as $value) {
                                 <?= $event["price"]  ?>
                                 </span>
                         </p>
-                        <br>
-                        <p >
-                            <?= $event["description"] ?>
-                        </p>
                     </div>
                 </div>
                 <div class='col-12 p-0 m-0 priceBar01'>
-                    <div>
-                        <p class="pt-2 pb-2 pl-3 pr-3 text-muted">累積銷售數量： <?= $quantity_map[$event['name']] ?></p>
-                    </div>
 
                     <form class='' action='' method=''>
                         <div class='d-flex c_pink justify-content-around pt-2 pb-2 pl-4 pr-4 '>
@@ -229,15 +213,46 @@ foreach ($quantity_list as $value) {
                 </div>
             </div>
         </div>
-        <div class='m-0 p-3  '>
-            <div <?= $event['id'] ?>>
-                <h4 class=' m-0 text-center' style="color:blue; font-weight:600">
-                    <?= $event['title'] ?>
-                </h4>
+        <div class='m-0  '>
+            <div class="m-0" <?= $event['id'] ?>>
+                <h4 class=' m-0 text-center p-2 c_1 b-green rot-135' style="color:white; font-weight:600"> <?= $event['title'] ?> </h4>
             </div>
-            <pre class="text-secondary">
-                <p class=''><?= $event['info'] ?><?= $event['other'] ?></p>
-            </pre>
+
+
+            <div class='fancybox d-flex row p-0 m-0'>
+                <a href='<?= $event['video'] ?>' data-fancybox='F_box1' data-caption='qwe'>
+                    <img src='<?= WEB_ROOT ?>/<?= $event['video_img'] ?>' alt=''>
+                </a>
+                <?php for ($i = 1; $i < count($event_img); $i++) : ?>
+                    <a href='<?= WEB_ROOT."/".$event_img[$i]['path'] ?>' data-fancybox='F_box1' data-caption='qwe'>
+                        <img src='<?= WEB_ROOT."/".$event_img[$i]['path'] ?>' alt=''>
+                    </a>
+                <?php endfor; ?>
+            </div>
+
+
+            <div class="eventContent m-0 p-5">
+                <p><span>活動類別：</span><?= $event["ec_name"] ?></p>
+                <p><span>合適年齡：</span><?= $event['age'] ?></p>
+                <p><span>集合地點：</span><?= $event['location'] ?></p>
+                <p><span>活動日期：</span><?= $event["date"] . '&emsp;' . substr($event["time"], 0, 5) ?></p>
+                <p><span>開放人數：</span><?= $event['limitNum'] ?>人</p>
+                <p><span>尚有名額：</span><?= $event["limitNum"] - $event["quantity"]  ?>人</p>
+                <p><span>活動費用：</span><span class="c_pink_t" ><?= $event["price"]  ?></span> 元/人，現場報名、線上報名</p>
+                <p><span>活動內容：</span><?= $event['content'] ?></p>
+                <pre>
+                  <p><span><?= $event["description"] ?></span></p>
+                  <p><span>活動任務：<br></span><?= $event['info'] ?></p>
+                  <p><span>注意事項：<br></span><?= $event['notice'] ?></p>
+                </pre>
+            </div>
+              
+
+
+
+
+
+
         </div>
     </div>
 

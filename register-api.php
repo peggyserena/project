@@ -43,11 +43,11 @@ switch ($action){
             if (isset($_POST['fb_id'])){
                 $sql = "INSERT INTO `members`(
                     `fb_id`, `email`, `fullname`, `birthday`, 
-                    `mobile`, `zipcode`,`city`, 
+                    `mobile`, `zipcode`,`county`, `district`,
                     `address`, `hash`,`created_at`
                     ) VALUES (
                                 ?, ?, ?, ?,
-                                ?, ?, ?,
+                                ?, ?, ?, ?,
                                 ?, ?, NOW()
                     )";
 
@@ -59,7 +59,8 @@ switch ($action){
                 $_POST['birthday'],
                 $_POST['mobile'],
                 $_POST['zipcode'],
-                $_POST['city'],
+                $_POST['county'],
+                $_POST['district'],
                 $_POST['address'],
                 password_hash($_POST['password'], PASSWORD_DEFAULT),
 
@@ -67,11 +68,11 @@ switch ($action){
             }else{
                 $sql = "INSERT INTO `members`(
                     `email`, `fullname`, `birthday`, 
-                    `mobile`, `zipcode`,`city`, 
+                    `mobile`, `zipcode`,`county`,  `district`,
                     `address`, `hash`,`created_at`
                     ) VALUES (
                                 ?, ?, ?,
-                                ?, ?, ?,
+                                ?, ?, ?, ?,
                                 ?, ?, NOW()
                     )";
 
@@ -82,7 +83,8 @@ switch ($action){
                 $_POST['birthday'],
                 $_POST['mobile'],
                 $_POST['zipcode'],
-                $_POST['city'],
+                $_POST['county'],
+                $_POST['district'],
                 $_POST['address'],
                 password_hash($_POST['password'], PASSWORD_DEFAULT),
 
@@ -189,87 +191,5 @@ function login($pdo, $output){
         }
     }
 }
-// if (isset($_POST['staff_id'])) {
 
-//     // TODO: 欄位資料檢查
-//     $a_sql = "SELECT `email` FROM `staff` WHERE `email`=?";
-//     $a_stmt = $pdo->prepare($a_sql);
-//     $a_stmt->execute([$_POST['email']]);
-
-//     if ($a_stmt->rowCount()) {
-//         $output['error'] = '此 email 已經註冊過';
-//         echo json_encode($output, JSON_UNESCAPED_UNICODE);
-//         exit;  // 程式結束
-//     }
-
-//     $a_sql = "SELECT `staff_id` FROM `staff` WHERE `staff_id`=?";
-//     $a_stmt = $pdo->prepare($a_sql);
-//     $a_stmt->execute([$_POST['staff_id']]);
-
-//     if ($a_stmt->rowCount()) {
-//         $output['error'] = '此員工編號已經註冊過';
-//         echo json_encode($output, JSON_UNESCAPED_UNICODE);
-//         exit;  // 程式結束
-//     }
-
-    
-//     $sql = "INSERT INTO `staff`(
-//         `staff_id`, `identityNum`, `email`, `fullname`, `birthday`, 
-//         `mobile`, `zipcode`,`city`, 
-//         `address`, `hash`,`created_at`
-//         ) VALUES (
-//                     ?, ?, ?, ?, ?,
-//                     ?, ?, ?,
-//                     ?, ?, NOW()
-//         )";
-
-//     $stmt = $pdo->prepare($sql);
-//     $stmt->execute([
-//     $_POST['staff_id'],
-//     $_POST['identityNum'],
-//     $_POST['email'],
-//     $_POST['fullname'],
-//     $_POST['birthday'],
-//     $_POST['mobile'],
-//     $_POST['zipcode'],
-//     $_POST['city'],
-//     $_POST['address'],
-//     password_hash($_POST['password'], PASSWORD_DEFAULT),
-
-//     ]);
-
-//     if ($stmt->rowCount()) {
-//         $output['success'] = true;
-//         $output['error'] = '';
-//         login_staff($pdo, $output);
-
-//     } else {
-//         $output['error'] = '註冊發生錯誤';
-//     }
-// }
-// break;
-// function login_staff($pdo, $output){
-//     if (isset($_POST['staff_id'])) {
-
-//         // TODO: 欄位資料檢查
-
-//         $a_sql = "SELECT * FROM `staff` WHERE `staff_id`=?";
-//         $a_stmt = $pdo->prepare($a_sql);
-//         $a_stmt->execute([$_POST['staff_id']]);
-//         $row = $a_stmt->fetch();
-
-//         if (empty($row)) {
-//             echo json_encode($output, JSON_UNESCAPED_UNICODE);
-//             exit;  // 程式結束
-//         }
-
-//         if (password_verify($_POST['password'], $row['hash'])) {
-//             unset($row['password']);
-//             unset($row['hash']);
-//             $_SESSION['user'] = $row;
-//             $output['success'] = true;
-//             $output['error'] = '';
-//         }
-//     }
-// }
 echo json_encode($output, JSON_UNESCAPED_UNICODE);

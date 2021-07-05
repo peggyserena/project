@@ -58,7 +58,7 @@ $staff_role_category = $stmt->fetchAll();
                     <span type="text" id="staff_id"><?= $_SESSION['staff']['staff_id'] ?></span>
                 </div>
                 <div class="form-group">
-                    <label for="position">職稱： </label><span> <?= $r["sc_role"] ?></span></span>
+                    <label for="position">職稱： </label><span> <?= $r["role"] ?></span></span>
                 </div>
                 <div class="form-group">
                     <label for="identityNum">身分證字號： </label><span><?= $r['identityNum'] ?></span>
@@ -76,17 +76,9 @@ $staff_role_category = $stmt->fetchAll();
                     <label for="mobile">手機： </label><span><?= $r['mobile'] ?></span>
                 </div>
                 <div class="form-group">
-                    <label for="county">縣市： </label><span><?= $r['county'] ?></span></span>
+                    <label for="county">地址： </label><span><?= $r['zipcode'] ?></span><span><?= $r['county'] ?></span><span><?= $r['district'] ?></span><span><?= htmlentities($r['address']) ?></span>
                 </div>
-                <div class="form-group">
-                    <label for="district">鄉鎮市區： </label><span><?= $r['district'] ?></span>
-                </div>
-                <div class="form-group">
-                    <label for="zipcode">郵遞區號： </label><span><?= $r['zipcode'] ?></span>
-                </div>
-                <div class="form-group">
-                    <label for="address">地址： </label><span><?= htmlentities($r['address']) ?></span>
-                </div>
+     
                 <div  class="text-center"><a href="staff_info_editor.php" class="custom-btn btn-4 text-center t_shadow">修改</a>
                 </div>
             </div>

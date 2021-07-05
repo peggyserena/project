@@ -26,7 +26,7 @@ $pageName = 'staff_event.php';
   <main>
   <div class="container my-5 ">
     <div class="con_01 row ">
-        <h2 class="title b-green rot-135 col-sm-12">新增活動</h2>
+        <h2 class="title b-green rot-135 col-sm-12">修改活動</h2>
         <form class="p-5 col-sm-12" name="form1" id="myForm" method="post" onsubmit="create(); return false;" enctype="multipart/form-data">
             <input type="hidden" name="type" value="add"/>
             <div class="form-group">
@@ -54,7 +54,7 @@ $pageName = 'staff_event.php';
                 <input type="number" class="form-control" id="limitNum" name="limitNum" min=1 autofocus required>
             </div>
             <div class="form-group">
-                <label for="description">商品簡介</label>
+                <label for="description">活動簡介</label>
                 <textarea type="text" class="form-control" id="description" name="description" autofocus required></textarea>
             </div>
             <div class="form-group">
@@ -70,11 +70,11 @@ $pageName = 'staff_event.php';
                 <textarea type="text" class="form-control" id="location" name="location" autofocus required></textarea>
             </div>
             <div class="form-group">
-                <label for="content">活動行程</label>
+                <label for="content">活動內容</label>
                 <textarea type="text" class="form-control" id="content" name="content" autofocus required></textarea>
             </div>
             <div class="form-group">
-                <label for="info">活動資訊</label>
+                <label for="info">活動任務</label>
                 <textarea type="text" class="form-control" id="info" name="info" autofocus required></textarea>
             </div>
             <div class="form-group">

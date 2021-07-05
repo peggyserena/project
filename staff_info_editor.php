@@ -5,8 +5,7 @@ $pageName ='staff_register';
 // print_r($_SESSION['staff']);
 ?>
 <?php include __DIR__. '/parts/staff_html-head.php'; ?>
-<script src="erTWZipcode-master/js/er.twzipcode.data.js"></script>
-<script src="erTWZipcode-master/js/er.twzipcode.min.js"></script>
+
 <style>
     body {
         background: linear-gradient(45deg, #e1ebdc 0%, #e8ddf1 100%);
@@ -112,6 +111,8 @@ $pageName ='staff_register';
 
 </main>
 <?php include __DIR__. '/parts/staff_scripts.php'; ?>
+<script src="erTWZipcode-master/js/er.twzipcode.data.js"></script>
+<script src="erTWZipcode-master/js/er.twzipcode.min.js"></script>
 <script>
     const email_re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
     const mobile_re = /^09\d{2}-?\d{3}-?\d{3}$/;

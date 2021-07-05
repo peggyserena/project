@@ -9,7 +9,8 @@ $fullname = $_POST['fullname'];
 $email_2nd = $_POST['email_2nd'];
 $mobile = $_POST['mobile'];
 $zipcode = $_POST['zipcode'];
-$city = $_POST['city'];
+$county = $_POST['county'];
+$district = $_POST['district'];
 $address = $_POST['address'];
 $email_2nd = $_POST['email_2nd'];
 
@@ -18,11 +19,12 @@ $a_sql = "UPDATE `members` SET
             `email_2nd`= '$email_2nd',
             `mobile`='$mobile',
             `zipcode`='$zipcode',
-            `city`='$city',
+            `county`='$county',
+            `district`='$district',
             `address`='$address'
             WHERE id = $member_id";
 $a_stmt = $pdo->prepare($a_sql);
-// $a_stmt->execute([$fullname, $mobile, $zipcode, $city, $address]);
+// $a_stmt->execute([$fullname, $mobile, $zipcode, $county, $address]);
 $a_stmt->execute();
 
 

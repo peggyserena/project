@@ -261,14 +261,9 @@ Toggle - knob button style
                                         <label for="email_2nd">備用email： </label><span><?= $r['email_2nd'] ?></span>
                                     </div>
                                     <div class="form-group">
-                                        <label for="zipcode">郵遞區號： </label><span><?= $r['zipcode'] ?></span>
+                                        <label for="zipcode">地址： </label><span><?= $r['zipcode'] ?></span><span><?= $r['county'] ?></span><span><?= $r['district'] ?></span><span><?= htmlentities($r['address']) ?></span>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="city">縣市： </label><span><?= $r['city'] ?></span></span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="address">區域及地址： </label><span><?= htmlentities($r['address']) ?></span>
-                                    </div>
+
                                     <div  class="text-center"><a href="editMember.php" class="custom-btn btn-4 t_shadow text-center">修改</a>
                                     </div>
                                 </form>
