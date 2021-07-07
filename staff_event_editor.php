@@ -25,69 +25,69 @@ $pageName = 'staff_event.php';
 
   <main>
   <div class="container my-5 ">
-    <div class="con_01 row ">
+    <div class="con_01 row mx-0 ">
         <h2 class="title b-green rot-135 col-sm-12">修改活動</h2>
-        <form class="p-5 col-sm-12" name="form1" id="myForm" method="post" onsubmit="create(); return false;" enctype="multipart/form-data">
+        <form action="event-api.php" class="p-5 col-sm-12" name="form1" id="myForm" method="post" onsubmit="create(); return false;" enctype="multipart/form-data">
             <input type="hidden" name="type" value="add"/>
             <div class="form-group">
                 <label for="cat_id">分類</label>
-                <select type="text" class="form-control" id="cat_id" name="cat_id" autofocus required></select>
+                <select type="text" class="form-control" id="cat_id" name="cat_id"  required> value="<?= htmlentities($row['cat_id']) ?>"</select>
             </div>
             <div class="form-group">
                 <label for="name">活動名稱</label>
-                <input type="text" class="form-control" id="name" name="name" autofocus required>
+                <input type="text" class="form-control" id="name" name="name" autofocus required value="<?= htmlentities($row['name']) ?>">
             </div>
             <div class="form-group">
                 <label for="date">活動日期</label>
-                <input type="date" class="form-control" id="date" name="date" autofocus required>
+                <input type="date" class="form-control" id="date" name="date"  required value="<?= htmlentities($row['date']) ?>">
             </div>
             <div class="form-group">
                 <label for="time">活動時間</label>
-                <input type="time" class="form-control" id="time" name="time" autofocus required>
+                <input type="time" class="form-control" id="time" name="time"  required value="<?= htmlentities($row['time']) ?>">
             </div>
             <div class="form-group">
                 <label for="price">金額</label>
-                <input type="number" class="form-control" id="price" name="price" min=0 autofocus required>
+                <input type="number" class="form-control" id="price" name="price" min=0  required value="<?= htmlentities($row['price']) ?>">
             </div>
             <div class="form-group">
                 <label for="limitNum">人數限制</label>
-                <input type="number" class="form-control" id="limitNum" name="limitNum" min=1 autofocus required>
+                <input type="number" class="form-control" id="limitNum" name="limitNum" min=1  required value="<?= htmlentities($row['limitNum']) ?>">
             </div>
             <div class="form-group">
                 <label for="description">活動簡介</label>
-                <textarea type="text" class="form-control" id="description" name="description" autofocus required></textarea>
+                <textarea type="text" class="form-control" id="description" name="description"  required value="<?= htmlentities($row['description']) ?>"></textarea>
             </div>
             <div class="form-group">
                 <label for="des_title">詳情標題</label>
-                <input type="text" class="form-control" id="title" name="title" autofocus required>
+                <input type="text" class="form-control" id="title" name="title"  required value="<?= htmlentities($row['des_title']) ?>">
             </div>
             <div class="form-group">
                 <label for="age">年齡/參加者條件</label>
-                <textarea type="text" class="form-control" id="age" name="age" autofocus required></textarea>
+                <textarea type="text" class="form-control" id="age" name="age"  required value="<?= htmlentities($row['age']) ?>"></textarea>
             </div>
             <div class="form-group">
                 <label for="location">集合地點</label>
-                <textarea type="text" class="form-control" id="location" name="location" autofocus required></textarea>
+                <textarea type="text" class="form-control" id="location" name="location"  required value="<?= htmlentities($row['location']) ?>"></textarea>
             </div>
             <div class="form-group">
                 <label for="content">活動內容</label>
-                <textarea type="text" class="form-control" id="content" name="content" autofocus required></textarea>
+                <textarea type="text" class="form-control" id="content" name="content"  required value="<?= htmlentities($row['content']) ?>"></textarea>
             </div>
             <div class="form-group">
                 <label for="info">活動任務</label>
-                <textarea type="text" class="form-control" id="info" name="info" autofocus required></textarea>
+                <textarea type="text" class="form-control" id="info" name="info"  required value="<?= htmlentities($row['info']) ?>"></textarea>
             </div>
             <div class="form-group">
                 <label for="notice">注意事項</label>
-                <textarea type="text" class="form-control" id="notice" name="notice" autofocus required></textarea>
+                <textarea type="text" class="form-control" id="notice" name="notice"  required value="<?= htmlentities($row['notice']) ?>"></textarea>
             </div>
 
             <div class="form-group">
                 <label for="video">影片網址</label>
-                <input type="text" class="form-control" id="video" name="video" autofocus required>
+                <input type="text" class="form-control" id="video" name="video"  required value="<?= htmlentities($row['video']) ?>">
             </div>
             <div class="form-group">
-                <label for="limitNum">影片縮圖</label>
+                <label for="video_img">影片縮圖</label>
                 <input type="file" id="video_img" name="video_img" accept=".png,.jpeg,.jpg">
             </div>
 
@@ -96,12 +96,15 @@ $pageName = 'staff_event.php';
                 <label for="limitNum">圖片</label>
                 <input type="file" id="img" name="img[]" accept=".png,.jpeg,.jpg" multiple>
             </div>
-            <div class="button m-4 text-center"><button type="submit" class="custom-btn btn-4 t_shadow ">送出</button></div>
             <hr>
         </form>
 
+
         </div>
+        <div class="button my-4  text-center" ><button type="submit" class="custom-btn btn-4 t_shadow " style="width: 100%;">送出</button></div>
+
     </div>
+
   </main>
 
 <?php include __DIR__. '/parts/staff_scripts.php'; ?>

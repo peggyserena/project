@@ -1,9 +1,6 @@
-<?php include __DIR__ . '/parts/config.php'; ?>
 <?php
-$title = '薰衣草森林 Lavender Forest';
-$pageName = 'staff_event.php';
 
-
+require __DIR__ . '/parts/config.php';
 
 
 $month = "";
@@ -63,6 +60,7 @@ $events = $stmt->fetchAll();
 // $stmt->execute([]);
 // $event_img = $stmt->fetchAll();
 
+
 // 活動類別
 $sql = "SELECT * FROM `event_category`";
 
@@ -70,50 +68,36 @@ $stmt = $pdo->query($sql);
 $event_category = $stmt->fetchAll();
 
 
-
 ?>
 
-<?php include __DIR__. '/parts/staff_html-head.php'; ?>
+<?php
+$title = '活動體驗';
+$pageName = 'event';
+?>
+<?php include __DIR__ . '/parts/staff_html-head.php'; ?>
+<?php include __DIR__ . '/parts/staff_navbar.php'; ?>
 <style>
 
-  body {
-      background: linear-gradient(45deg, #e8ddf1 0%,  #e1ebdc 100%);
-    }
-
-  .con_01 {
-    background-color: whitesmoke;
-    border-radius: 0.25rem;
-    box-shadow: 0px 0px 15px #666e9c;
-    -webkit-box-shadow: 0px 0px 15px #666e9c;
-    -moz-box-shadow: 0px 0px 15px #666e9c;
-  }
-
-  .eventContent span{
-      font-weight: 700;
-    }
 </style>
-<?php include __DIR__. '/parts/staff_navbar.php'; ?>
 
-  <main>
-    <div class="container my-5 p-0 ">
-      <h2 class="title b-green rot-135 col-sm-12">活動查詢</h2>
 
-      <div class="con_01 p-5">
 
-          <div class="form-group ">
-
-            <form action="event.php" method="get">
-                <ul class="list-unstyled row">
-                    <li>
+<body>
+ 
+    <div class="container">
+        <div class=" " id="event">
+            <form action="staff_event_check.php" method="get">
+                <ul div class="row list-unstyled ">
+                    <li class=" ">
                         <select name='cat_id'>
                             <option value="">活動類別</option>
-
+              
                             <?php foreach ($event_category as $cat) { ?>
                                 <option value='<?= $cat['id'] ?>'><?= $cat['name'] ?></option>
                             <?php } ?>
                         </select>
                     </li>
-                    <li>
+                    <li class="">
                         <select id="select_month" name="month">
                             <option value="">月份</option>
                             <option value=""></option>
@@ -121,7 +105,7 @@ $event_category = $stmt->fetchAll();
                             <option value=""></option>
                         </select>
                     </li>
-                    <li>
+                    <li class=" ">
                         <select name="time">
                             <option value="">時段</option>
                             <option value="10:00">10:00</option>
@@ -130,7 +114,7 @@ $event_category = $stmt->fetchAll();
                             <option value="16:00">16:00</option>
                         </select>
                     </li>
-                    <li>
+                    <li class="bg-green">
                         <select name="order">
                             <option value="">排序</option>
                             <option value="1" <?= $order == 1 ? "selected" : "" ?>>暢銷度由高至低</option>
@@ -141,102 +125,63 @@ $event_category = $stmt->fetchAll();
                     <button type="submit" class="custom-btn btn-4 m-0 p-0" style="width:3rem; ">送出</button>
                 </ul>
             </form>
-          </div>
-
-          <div class="eventItem  my-5">
-
-
-            <?php foreach ($events as $event) : ?>
-              <div class="row">
-                    <img src='<?= WEB_ROOT."/".$event_img[0]['path'] ?>' alt=''>
-                    <a href='<?= $event['video'] ?>' data-fancybox='F_box1' data-caption='qwe'>
-                        <img src='<?= WEB_ROOT ?>/<?= $event['video_img'] ?>' alt=''>
-                    </a>
-                    <?php for ($i = 1; $i < count($event_img); $i++) : ?>
-                        <a href='<?= WEB_ROOT."/".$event_img[$i]['path'] ?>' data-fancybox='F_box1' data-caption='qwe'>
-                            <img src='<?= WEB_ROOT."/".$event_img[$i]['path'] ?>' alt=''>
-                        </a>
-                    <?php endfor; ?>
-                </div>
-
-                <div class='' id="event_<?= $event['id'] ?>">
-                  <h4 class='mt-5'>活動名稱：<?= $event['name'] ?></h4>
-                  <div class="eventContent m-0 pX-3">
-                      <p><span>詳情標題：</span><?= $event['title'] ?> </p>
-                      <p><span>活動類別：</span><?= $event["ec_name"] ?></p>
-                      <p><span>合適年齡：</span><?= $event['age'] ?></p>
-                      <p><span>集合地點：</span><?= $event['location'] ?></p>
-                      <p><span>活動日期：</span><?= $event["date"] . '&emsp;' . substr($event["time"], 0, 5) ?></p>
-                      <p><span>開放人數：</span><?= $event['limitNum'] ?>人</p>
-                      <p><span>尚有名額：</span><?= $event["limitNum"] - $event["quantity"]  ?>人</p>
-                      <p><span>活動費用：</span><span class="c_pink_t" ><?= $event["price"]  ?></span> 元/人，現場報名、線上報名</p>
-                      <p><span>活動內容：</span><?= $event['content'] ?></p>
-                      <pre>
-                        <p><span>活動簡介：</span><br><?= $event["description"] ?></p>
-                        <p><span>活動任務：</span><br><?= $event['info'] ?></p>
-                        <p><span>注意事項：</span><br><?= $event['notice'] ?></p>
-                      </pre>
-                  </div>
-                </div>
-                <div class="text-center">
-                  <a class="text-center c_1 custom-btn btn-4" href="staff_event_editor.php" target="blank">修改</a>
-                </div>
-                <?php endforeach; ?>
         </div>
+
+      <div class="eventItem  p-0 my-5">
+            <table id="result" class="table table-bordered table-Primary table-hover text-center">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>序號</th>
+                            <th>主圖片</th>
+                            <th>活動名稱</th>
+                            <th>活動類別</th>
+                            <th>日期</th>
+                            <th>人數</th>
+                            <th>費用</th>
+                            <th>詳情</th>
+                            <th>修改</th>
+        
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($events as $event) : ?>
+                      <div class=''  id="event_<?= $event['id'] ?>"></div>
+                        <tr>
+                            <td>序號</td>
+                            <td><img src='<?= WEB_ROOT."/".$event_img[0]['patd'] ?>' alt=''></td>
+                            <td><span><?= $event['name'] ?></span></td>
+                            <td><span><?= $event["ec_name"] ?></span></td>
+                            <td><span><?= $event["date"] . '&emsp;' . substr($event["time"], 0, 5) ?></span></td>
+                            <td><span><?= $event["limitNum"] ?></span></td>
+                            <td><span><?= $event["price"]  ?></span></td>
+                            <td><a href="staff_event_item.php" target="blank">查詢</a></td>
+                            <td><a href="staff_event_editor.php" target="blank">修改</a></td>
+                        </tr>
+ 
+                    </tbody>
+                </table>
+
+          <?php endforeach; ?>
       </div>
-    </div>
-  </main>
+  </div>
 
-<?php include __DIR__. '/parts/staff_scripts.php'; ?>
-<script>
-  $.post('event-api.php', {
-    'type': 'readCat',
-  }, function(data){
-    var output = `<option value="" disabled hidden selected>請選擇</option>`;
-    $("#cat_id").append(output);
-    data.forEach(function (cat){
-      var output = `<option value="${cat['id']}">${cat['name']}</option>`;
-      $("#cat_id").append(output);
-    });
-  }, 'json').fail(function(data){
-    console.log(data);
-  })
-  function create(){
-    $.ajax({
-        url: 'event-api.php',
-        data: new FormData($("#myForm")[0]),
-        cache: false,
-        contentType: false,
-        processData: false,
-        method: 'POST',
-        type: 'POST', // For jQuery < 1.9
-        success: function(data){
-            alert(data);
-        }
-    });
-  }
+    <?php include __DIR__ . '/parts/staff_scripts.php'; ?>
 
-  // 設定date日期min為今日
-  var d = new Date();
-  var min = d.toISOString().split("T")[0];
-  $("#date").attr("min", min);
-</script>
-
-<script>
-  var date = new Date();
-  var month = date.getMonth() + 1;
-  $("#select_month option").each(function(ind, elem) {
-      if (ind > 0) {
-          elem.text = month;
-          elem.value = month;
-          month++;
-      }
-      if (month > 12) {
-          month = 1;
-      }
-  });
-  </script>
-      <script>
+    <script>
+        var date = new Date();
+        var month = date.getMonth() + 1;
+        $("#select_month option").each(function(ind, elem) {
+            if (ind > 0) {
+                elem.text = month;
+                elem.value = month;
+                month++;
+            }
+            if (month > 12) {
+                month = 1;
+            }
+        });
+    </script>
+    <script>
         function scroll(){
             console.log('test' + window.scrollY);
             if (location.href.indexOf("#event") > -1){
@@ -254,4 +199,5 @@ $event_category = $stmt->fetchAll();
         });
         scroll();
     });
-<?php include __DIR__. '/parts/staff_html-foot.php'; ?>
+    </script>
+    <?php include __DIR__ . '/parts/staff_html-foot.php'; ?>
