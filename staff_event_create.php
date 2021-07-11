@@ -1,33 +1,29 @@
 <?php include __DIR__ . '/parts/config.php'; ?>
 <?php
-$title = '薰衣草森林 Lavender Forest';
-$pageName = 'staff_event.php';
+$title = '新增森林體驗';
+$pageName = 'staff_event_create';
 // $stmt = $pdo->query($sql); // $events = $stmt->fetchAll(); // $sql = "SELECT * FROM `index`"; ?>
 
 <?php include __DIR__. '/parts/staff_html-head.php'; ?>
 <style>
 
-  body {
-      background: linear-gradient(45deg, #e8ddf1 0%,  #e1ebdc 100%);
-    }
+
 
   .con_01 {
     background-color: whitesmoke;
-    border-radius: 0.25rem;
-    box-shadow: 0px 0px 15px #666e9c;
-    -webkit-box-shadow: 0px 0px 15px #666e9c;
-    -moz-box-shadow: 0px 0px 15px #666e9c;
-  }
+    }
 
 
 </style>
 <?php include __DIR__. '/parts/staff_navbar.php'; ?>
 
   <main>
+  <?php include "parts/modal.php"?>
+
   <div class="container my-5 ">
     <div class="con_01 row ">
         <h2 class="title b-green rot-135 col-sm-12">新增活動</h2>
-        <form class="p-5 col-sm-12" name="form1" id="myForm" method="post" onsubmit="create(); return false;" enctype="multipart/form-data">
+        <form class="p-5 col-sm-12" name="form" id="myForm" method="post" onsubmit="create(); return false;" enctype="multipart/form-data">
             <input type="hidden" name="type" value="add"/>
             <div class="form-group">
                 <label for="cat_id">分類</label>
@@ -87,13 +83,13 @@ $pageName = 'staff_event.php';
                 <input type="text" class="form-control" id="video" name="video" autofocus required>
             </div>
             <div class="form-group">
-                <label for="limitNum">影片縮圖</label>
+                <label for="video_img">影片縮圖</label>
                 <input type="file" id="video_img" name="video_img" accept=".png,.jpeg,.jpg">
             </div>
 
 
             <div class="form-group">
-                <label for="limitNum">圖片</label>
+                <label for="img">圖片</label>
                 <input type="file" id="img" name="img[]" accept=".png,.jpeg,.jpg" multiple>
             </div>
             <div class="button m-4 text-center"><button type="submit" class="custom-btn btn-4 t_shadow ">送出</button></div>
@@ -128,7 +124,20 @@ $pageName = 'staff_event.php';
         method: 'POST',
         type: 'POST', // For jQuery < 1.9
         success: function(data){
-            alert(data);
+          modal_init();
+          insertPage("#modal_img", "animation_success.html");
+          insertText("#modal_content", "森林體驗新增成功!");
+          $("#modal_alert").modal("show");
+          setTimeout(function(){window.history.back();}, 2000);
+
+        },
+        error: function(data){
+          console.log(data);
+          modal_init();
+          insertPage("#modal_img", "animation_error.html");
+          insertText("#modal_content", "資料傳輸失敗");
+          $("#modal_alert").modal("show");
+          setTimeout(function(){window.history.back();}, 2000);
         }
     });
   }

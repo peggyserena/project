@@ -21,11 +21,7 @@ $sum = 0;
 
     }
 
-     .con_01{
-        box-shadow: 0px 0px 15px #666E9C;
-        -webkit-box-shadow: 0px 0px 15px #666E9C;
-        -moz-box-shadow: 0px 0px 15px #666E9C;
-    }
+
 
     .card img{
         width:2.5rem;
@@ -34,7 +30,7 @@ $sum = 0;
         margin:1rem;
     }
     .orderStatus span{
-        color:#0000e3;
+        color:#007bff;
     }
     .discountTip{
         background-color:#fff1ab; 
@@ -53,6 +49,22 @@ $sum = 0;
     .cardContent span{
         line-height:2rem;
     }
+    .track img{
+      width: auto;
+      height: 12.8px;
+      margin: 0.5rem 0.3rem 0.5rem 0rem ;
+    }
+    .track li {
+      margin: 0 1rem  ;
+      transition: 0.5s ease;
+    }
+    .track li:hover{
+    transform: translateY(-0.5rem);
+    }
+    .track li a:hover{
+    color:#83a573;
+    font-weight: 700;
+    }
 
     </style>
 <?php include __DIR__ . '/parts/navbar.php'; ?>
@@ -67,8 +79,8 @@ $sum = 0;
                         <span class="col-8 px-2" >&emsp;感謝您的訂購！<br> 期待與您在薰衣草相見喔！&emsp;</span>
                         <img class="co1-1" src="./images/icon/leaf_R.svg" alt="">
                     </h3> 
-                    <h4 class="pt-4 text-secondary text-center">⚠️ 提醒您 ⚠️</h4> 
-                    <p class="p-4 text-secondary">最近網路詐騙猖獗，您完成下訂後（或是從沒下訂過），我們都不會以電話通知您更改付款方式、 或是要求給予銀行帳號及密碼。若有接到此類電話且非薰衣草森林的客服專線02-25962996撥打，則請勿理會！或撥打165反詐騙專線、165反詐騙APP報案！<br><br>若有任何問題請私訊薰衣草森林粉絲團或官方LINE詢問，也可於上班時間（週一至週日9:30-18:00）撥打客服電話詢問：</p>
+                    <h4 class="pt-4 text-dark text-center">⚠️ 提醒您 ⚠️</h4> 
+                    <p class="p-4 text-dark">最近網路詐騙猖獗，您完成購買後（或是未曾購買過），我們都不會以電話通知您更改付款方式、 或是要求給予銀行帳號及密碼。<br>若有接到此類電話且，非薰衣草森林的客服專線02-25962996撥打，則請勿理會！或撥打165反詐騙專線、165反詐騙APP報案！<br>如有任何問題，歡迎私訊薰衣草森林粉絲團或官方LINE詢問，也可於上班時間（週一至週日9:30-18:00）撥打客服電話詢問</p>
                 </div>
             <?php endif; ?>
 
@@ -79,114 +91,123 @@ $sum = 0;
             <h4>訂單編號：<span id="order_id"></span></h4> 
         </div>
         <div class="col-12  ">
-           
-                    <table class="table table-striped table-bordered" id="restaurant_table" style="display: none;">
-                        <thead>
-                            <tr class=" title b-green rot-135">
-                                <td colspan="100%"><h4 class=" title b-green rot-135 p-1">訂單明細 - 森林咖啡館</h4></td>
-                            </tr>
-                            <tr class="b-green rot-135 text-white">
-                                <th scope="col" class="m-0 t_shadow text-center">
-                                    訂位日期
-                                </th>
-                                <th scope="col" class="m-0 t_shadow text-center">時段</th>
-                                <th scope="col" class="m-0 t_shadow text-center">人數</th>
-                                <th scope="col" class="m-0 t_shadow text-center">桌號</th>
-                                <th scope="col" class="m-0 t_shadow text-center">單價</th>
-                                <th scope="col" class="m-0 t_shadow text-center">小計</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-
-                    <table class="table table-striped table-bordered" id="event_table" style="display: none;">
-                        <thead>
-                            
-                            <tr class=" title b-green rot-135">
-                                <td colspan="100%"><h4 class=" title b-green rot-135 p-1">訂單明細 - 森林體驗</h4></td>
-                            </tr>
-                            
-                            <tr class="b-green rot-135 text-white">
-                                <th scope="col" class="m-0 t_shadow text-center">
-                                    項目名稱
-                                </th>
-                                <th scope="col" class="m-0 t_shadow text-center">日期／時間</th>
-                                <th scope="col" class="m-0 t_shadow text-center">人數</th>
-                                <th scope="col" class="m-0 t_shadow text-center">單價</th>
-                                <th scope="col" class="m-0 t_shadow text-center">小計</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                    <table class="table table-striped table-bordered" id="hotel_table" style="display: none;">
-                        <thead>
-                            
-                            <tr class=" title b-green rot-135">
-                                <td colspan="100%"><h4 class=" title b-green rot-135 p-1">訂單明細 - 夜宿薰衣草</h4></td>
-                            </tr>
-                            <tr class="b-green rot-135 text-white">
-                                <th scope="col" class="m-0 t_shadow text-center">
-                                    項目名稱
-                                </th>
-                                <th scope="col" class="m-0 t_shadow text-center">住宿日期</th>
-                                <th scope="col" class="m-0 t_shadow text-center">房數</th>
-                                <th scope="col" class="m-0 t_shadow text-center">人數</th>
-                                <th scope="col" class="m-0 t_shadow text-center">單價</th>
-                                <th scope="col" class="m-0 t_shadow text-center">小計</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                <div class="finalPrice alert  text-center m-0" role="alert">
+            <table class="table table-striped table-bordered" id="restaurant_table" style="display: none;">
+                <thead>
+                    <tr class=" title b-green rot-135">
+                        <td colspan="100%"><h4 class=" title b-green rot-135 p-1">訂單明細 - 森林咖啡館</h4></td>
+                    </tr>
+                    <tr class="b-green rot-135 text-white">
+                        <th scope="col" class="m-0 t_shadow text-center">
+                            訂位日期
+                        </th>
+                        <th scope="col" class="m-0 t_shadow text-center">時段</th>
+                        <th scope="col" class="m-0 t_shadow text-center">人數</th>
+                        <th scope="col" class="m-0 t_shadow text-center">桌號</th>
+                        <th scope="col" class="m-0 t_shadow text-center">單價</th>
+                        <th scope="col" class="m-0 t_shadow text-center">小計</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <table class="table table-striped table-bordered" id="event_table" style="display: none;">
+                <thead>
+                    
+                    <tr class=" title b-green rot-135">
+                        <td colspan="100%"><h4 class=" title b-green rot-135 p-1">訂單明細 - 森林體驗</h4></td>
+                    </tr>
+                    
+                    <tr class="b-green rot-135 text-white">
+                        <th scope="col" class="m-0 t_shadow text-center">
+                            項目名稱
+                        </th>
+                        <th scope="col" class="m-0 t_shadow text-center">日期／時間</th>
+                        <th scope="col" class="m-0 t_shadow text-center">人數</th>
+                        <th scope="col" class="m-0 t_shadow text-center">單價</th>
+                        <th scope="col" class="m-0 t_shadow text-center">小計</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <table class="table table-striped table-bordered" id="hotel_table" style="display: none;">
+                <thead>
+                    
+                    <tr class=" title b-green rot-135">
+                        <td colspan="100%"><h4 class=" title b-green rot-135 p-1">訂單明細 - 夜宿薰衣草</h4></td>
+                    </tr>
+                    <tr class="b-green rot-135 text-white">
+                        <th scope="col" class="m-0 t_shadow text-center">
+                            項目名稱
+                        </th>
+                        <th scope="col" class="m-0 t_shadow text-center">住宿日期</th>
+                        <th scope="col" class="m-0 t_shadow text-center">房數</th>
+                        <th scope="col" class="m-0 t_shadow text-center">人數</th>
+                        <th scope="col" class="m-0 t_shadow text-center">單價</th>
+                        <th scope="col" class="m-0 t_shadow text-center">小計</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <div class="finalPrice alert  text-center mx-0 my-5" role="alert">
                 <h4 class="m-0">原價 : <span class="originalPrice"></span> - 折扣: <span class="discountPrice"></span> = 總計: <span class="totalPrice c_pink_t"></span></h4>
                 <hr>
                 <div class="row ">
-                    <div class="col ">
-                        <div class="discountTip col">
-                            <h4 class="alert text-center m-0 p-0 "　 role="alert"> </h4>
-                        </div>
+                    <div class="discountTip col">
+                        <h4 class="alert text-center m-0 p-0 "　 role="alert"> </h4>
                     </div>
                 </div>
             </div>
-
-                <div class="orderStatus text-secondary ">
-                    <div> 
-                        <h4>訂單狀態</h4>
-                        <span id="status"></span>
-                    </div>
-                    <div>
-                        <h4>收件人資料</h4>
-                        <span id="fullname"></span>
-                        <span id="mobile"></span>
-                        <span id="zipcode"></span>
-                        <span id="city"></span>
-                        <span id="address"></span>
-                    </div>
-                    <div>
-                    <h4>付款方式</h4>
-                        <span>顯示cart.php留的資訊</span>
-                    </div>
-                    <div>
-                        <h4>物流狀態</h4>
-                        <p>顯示備貨/出貨</p>
-                        <p><span>物流公司：</span></p>
-                        <p><span>物流編號：</span></p>
-                        <p><span>查詢網址：</span></p>
+            <div class="orderStatus text-secondary ">
+                <div> 
+                    <h4>訂單狀態</h4>
+                    <div><span id="status"></span></div>
+                </div>
+                <hr>
+                <div>
+                    <h4>收貨人資料</h4>
+                    <div class="">
+                        <p>收貨人：<span id="fullname"></span></p>
+                        <p>連絡電話：<span id="mobile"></span></p>
+                        <p>送貨地址：
+                          <span id="zipcode"></span>
+                          <span id="county"></span>
+                          <span id="district"></span>
+                          <span id="address"></span>
+                        </p>
                     </div>
                 </div>
+                <hr>
+                <div>
+                    <h4>物流狀態</h4>
+                    <p class="mb-3">顯示備貨/出貨</p>
+                    <p class="mb-3">物流編號：</p>
+                    <p class="">貨件追蹤查詢：
+                      <div>
+                        <ul class="row list-unstyled track ">
+                          <li><a href="https://eservice.7-11.com.tw/e-tracking/search.aspx" target="blank"><img src="./images/icon/arrow_g_r.svg" alt="">7-11</a></li>
+                          <li><a href="https://www.famiport.com.tw/Web_Famiport/page/process.aspx" target="blank"><img src="./images/icon/arrow_g_r.svg" alt="">全家</a></li>
+                          <li><a href="https://www.hilife.com.tw/serviceInfo_search.aspx" target="blank"><img src="./images/icon/arrow_g_r.svg" alt="">萊爾富</a></li>
+                          <li><a href="https://ecservice.okmart.com.tw/Tracking/Search" target="blank"><img src="./images/icon/arrow_g_r.svg" alt="">OK</a></li>
+                          <li><a href="http://postserv.post.gov.tw/pstmail/main_mail.html?targetTxn=EB500100" target="blank"><img src="./images/icon/arrow_g_r.svg" alt="">郵局</a></li>
+                          <li><a href="https://www.t-cat.com.tw/Inquire/Trace.aspx" target="blank"><img src="./images/icon/arrow_g_r.svg" alt="">黑貓宅急便</a></li>
+                        </ul>
+
+                      </div>
+                    </p>
+                </div>
+            </div>
+            <hr>
+
+        </div>
 
         <div class="mb-5 text-center">
             <a href="index.php" class="custom-btn btn-4 text-center m-3">回首頁</a>
             <a href="member.php?tab=tradeRecord"  class="custom-btn btn-4 text-center m-3">查詢訂單</a>
         </div>
     </div>
-
 </div>
-</div>
-
 
 <?php include __DIR__. '/parts/scripts.php'; ?>
 <script>
@@ -315,12 +336,13 @@ function fillTable(){
          $(".originalPrice").text( dallorCommas(data['order']['original_price']));
          $(".discountPrice").text( dallorCommas(data['order']['discount']));
          $(".totalPrice").text( dallorCommas(data['order']['price']));
-         $("#fullname").text( data['order']['fullname']);
-         $("#mobile").text( data['order']['mobile']);
-         $("#zipcode").text( data['order']['zipcode']);
-         $("#city").text( data['order']['city']);
-         $("#address").text( data['order']['address']);
-         $("#status").text( data['order']['status']);
+         $("#fullname").html(data['order']['fullname']);
+         $("#mobile").html( data['order']['mobile']);
+         $("#zipcode").html(data['order']['zipcode']);
+         $("#county").html(data['order']['county']);
+         $("#district").html(data['order']['district']);
+         $("#address").html(data['order']['address']);
+         $("#status").html("" +  data['order']['status']);
 
     }, 'json').fail(function(e){
         console.log("error");

@@ -1,6 +1,6 @@
 <?php include __DIR__ . '/parts/config.php'; ?>
 <?php
-$title = '活動體驗';
+$title = '森林體驗詳情';
 $pageName = 'event';
 
 
@@ -54,7 +54,6 @@ foreach ($quantity_list as $value) {
 <style>
 /* ====================================== event ====================================== */
     body {
-        background: linear-gradient(45deg,#e8ddf1 0%,  #e1ebdc 100%);
         text-align:justify;
     }
 
@@ -249,7 +248,7 @@ foreach ($quantity_list as $value) {
         </div>
     </div>
     <div class="text-center mt-5">
-      <a class="text-center c_1 custom-btn btn-4" href="staff_event_editor.php" target="blank">修改</a>
+      <a class="text-center c_1 custom-btn btn-4" href="staff_event_editor.php?id=<?= $event['id']?>" target="_blank">修改</a>
     </div>
 
 </div>

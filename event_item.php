@@ -1,6 +1,6 @@
 <?php include __DIR__ . '/parts/config.php'; ?>
 <?php
-$title = '活動體驗';
+$title = '森林體驗詳情';
 $pageName = 'event';
 
 

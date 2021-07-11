@@ -24,7 +24,7 @@ switch ($action){
                 }
                 break;
         case 'changeProfile':
-                $columns = ['address', 'county', 'district', 'zipcode', 'mobile', 'birthday', 'identityNum', 'email', 'role','fullname'];
+                $columns = ['address', 'county', 'district', 'zipcode', 'mobile', 'birthday', 'identityNum', 'email', 'fullname'];
                 $fill_count = 0;
                 $update_data = [];
                 foreach($columns as $col){
@@ -45,8 +45,34 @@ switch ($action){
                                 $output['success'] = "修改個人資料成功";
                         } else{
                                 $output['error'] = "修改個人資料失敗";
+                                // $output['error'] = $a_stmt;
                         }
                 }
+                $a_sql = "SELECT * FROM `staff` WHERE `staff_id` = ?";
+                // address = ?, county = ?
+                $a_stmt = $pdo->prepare($a_sql);
+                $a_stmt->execute([$staff['staff_id']]);
+                if ($a_stmt->rowCount()) {
+                        $_SESSION['staff'] = $a_stmt->fetch();
+                }
+                
+                break;
+                
+        case 'exportExcel':
+                $filename = "BeingAGoodRDisDifficult-" . date("Y-m-d-H-i-s") . ".csv";
+                header('Pragma: no-cache');
+                header('Expires: 0');
+                header('Content-Disposition: attachment;filename="' . $filename . '";');
+                header('Content-Type: application/csv; charset=UTF-8');
+                $data = json_decode($_POST['data']);
+                for ($j = 0; $j < count($data); $j++) {
+                        if ($j == 0) {
+                                //輸出 BOM 避免 Excel 讀取時會亂碼
+                                echo "\xEF\xBB\xBF";
+                        }
+                        echo join(",", $data[$j]) . PHP_EOL;
+                } 
+                die();
                 break;
 }
 echo json_encode($output, JSON_UNESCAPED_UNICODE);

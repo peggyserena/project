@@ -100,8 +100,8 @@ if (!isset($pageName)) {
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="#">一泊二食</a>
                     <a class="dropdown-item" href="#">一泊二食+下午茶</a>
-                    <a class="dropdown-item" href="#">一泊二食+活動體驗</a>
-                    <a class="dropdown-item" href="#">一泊二食+下午茶+活動體驗</a>
+                    <a class="dropdown-item" href="#">一泊二食+森林體驗</a>
+                    <a class="dropdown-item" href="#">一泊二食+下午茶+森林體驗</a>
                 </div>
             </li> -->
             <!-- <li class="nav-item dropdown">

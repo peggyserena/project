@@ -99,10 +99,6 @@ if (isset($_SESSION['user'])) {
         background-color: #cce5ff;
     }
 
-    textarea:focus {
-        background-color: #cce5ff;
-    }
-
     input:focus {
         outline: none !important;
         border-color: #719ECE;
@@ -124,27 +120,35 @@ if (isset($_SESSION['user'])) {
         color:darkblue;
         border-bottom:1px solid lightgray;
     }
-.shipway img{
-  width: auto;
-  height: 40px;
-  margin: 0.5rem 0.7rem 0.5rem 0.5rem ;
-}
-.shipway .track img{
-  width: auto;
-  height: 12.8px;
-  margin: 0.5rem 0.3rem 0.5rem 0rem ;
-}
-.shipway .track li {
-  margin: 0.5rem 1rem 0.5rem 0.3rem ;
-  transition: 0.5s ease;
-}
-.shipway .track li:hover{
-transform: translateX(0.5rem);
-}
-.shipway .track li a:hover{
-color:#83a573;
-font-weight: 700;
-}
+    .shipway img{
+      width: auto;
+      height: 40px;
+      margin: 0.5rem 0.7rem 0.5rem 0.5rem ;
+    }
+    .shipway .track img{
+      width: auto;
+      height: 12.8px;
+      margin: 0.5rem 0.3rem 0.5rem 0rem ;
+    }
+    .shipway .track li {
+      margin: 0.5rem 1rem 0.5rem 0.3rem ;
+      transition: 0.5s ease;
+    }
+    .shipway .track li:hover{
+    transform: translateX(0.5rem);
+    }
+    .shipway .track li a:hover{
+    color:#83a573;
+    font-weight: 700;
+    }
+    select, textarea{
+      margin: 1px 0;
+      border: none;
+    }
+    .form-control{
+      height: 40px;
+    }
+        
 
 </style>
 <!-- <?php var_dump($_SESSION['cart']); ?> -->
@@ -153,16 +157,17 @@ font-weight: 700;
     <div class="row mb-5">
         <div class="col">
             <?php if (isset($_SESSION['user'])) : ?>
+              
                 <!-- <h3><a href="cart-confirm.php" style="width:100%;" class="custom-btn btn-4 text-center c_1 ">確認結帳</a> </h3> -->
                 <!-- <a href="javascript:" onclick="checkOutCart()" >確認結帳</a> -->
             <?php else : ?>
-                <div class="alert alert-danger text-center p-0  mt-3 " role="alert">
+            <div class="alert alert-danger text-center p-0  mt-3 " role="alert">
 
-                    <?= $pageName == 'login' ? 'active' : '' ?>
-                    <a class="nav-link" href="login.php">
-                        <h4 class="p-1 m-0 text-danger">請登入會員後再結帳</h4>
-                    </a>
-                </div>
+                <?= $pageName == 'login' ? 'active' : '' ?>
+                <a class="nav-link" href="login.php">
+                    <h4 class="p-1 m-0 text-danger">請登入會員後再結帳</h4>
+                </a>
+            </div>
             <?php endif; ?>
         </div>
     </div>
@@ -178,7 +183,7 @@ font-weight: 700;
                     目前購物車裡沒有商品, 請至商品列表選購～
                 </div>
                 <div class="box_cellphone alert alert-danger" role="alert">
-                    目前購物車裡沒有商品, <br>請至商品列表選購～
+                    目前購物車裡沒有商品, 請至商品列表選購～
                 </div>
             </div>
         </div>
@@ -193,7 +198,7 @@ font-weight: 700;
                         <thead>
                             <tr class="b-green rot-135 text-white">
                                 <th scope="col" colspan="100%" class="m-0 t_shadow text-center">
-                                    <h3 class=" title b-green rot-135">購物車明細 - 森林體驗</h3>
+                                    <h3 class=" title2 b-green rot-135">購物車明細 - 森林體驗</h3>
                                 </th>
                             </tr>
                             <tr class="b-green rot-135 text-white">
@@ -233,7 +238,7 @@ font-weight: 700;
                         <thead>
                             <tr class="b-green rot-135 text-white">
                                 <th scope="col" colspan="100%" class="m-0 t_shadow text-center">
-                                    <h3 class=" title b-green rot-135">購物車明細 - 森林咖啡館</h3>
+                                    <h3 class=" title2 b-green rot-135">購物車明細 - 森林咖啡館</h3>
                                 </th>
                             </tr>
                             <tr class="b-green rot-135 text-white">
@@ -273,7 +278,7 @@ font-weight: 700;
                         <thead>
                             <tr class="b-green rot-135 text-white">
                                 <th scope="col" colspan="100%" class="m-0 t_shadow text-center">
-                                    <h3 class=" title b-green rot-135">購物車明細 - 夜宿薰衣草森林</h3>
+                                    <h3 class=" title2 b-green rot-135">購物車明細 - 夜宿薰衣草森林</h3>
                                 </th>
                             </tr>
                             <tr class="b-green rot-135 text-white">
@@ -353,21 +358,18 @@ font-weight: 700;
                         <label for="mobile">連絡電話： </label><span><?= $r['mobile'] ?></span>
                     </div>
                     <div class="form-group col-lg-6 col-sm-12">
-                        <label for="email">帳號 ( email )： </label><span><?= $r['email'] ?></span>
+                        <label for="email">email： </label><span><?= $r['email'] ?></span>
                     </div>
                     <div class="form-group col-lg-6 col-sm-12">
                         <label for="email_2nd">備用eamil： </label><span><?= $r['email_2nd'] ?></span>
                     </div>
-                    <div class="form-group col-lg-6 col-sm-12">
-                        <label for="zipcode">郵遞區號： </label><span><?= $r['zipcode'] ?></span>
+                    <div class="form-group col-sm-12">
+                        <label for="zipcode">地址： </label><span><?= $r['zipcode'] ?></span><span><?= $r['county'] ?></span><span><?= $r['district'] ?></span><span><?= htmlentities($r['address']) ?></span>
                     </div>
-                    <div class="form-group col-lg-6 col-sm-12">
-                        <label for="city">縣市： </label><span><?= $r['city'] ?></span>
+                    <div class="form-group col-sm-12 ">
+                      <textarea style="width:100%; " type="text" name="notes" autocomplete="on" placeholder="需求備註"></textarea>
                     </div>
-                    <div class="form-group col-lg-12 col-sm-12">
-                        <label for="address">區域及地址： </label><span><?= htmlentities($r['address']) ?></span>
-                    </div>
-                    <textarea style="width:100%; padding-left:1rem" type="text" name="notes" autocomplete="on" placeholder="需求備註"></textarea>
+
                 </form>
                 <div class="text-center m-2"><a href="memberEditor.php" class="custom-btn btn-4 text-center text-white c_1" style="width:150px">會員資料修改</a></div>
             <?php
@@ -376,18 +378,37 @@ font-weight: 700;
         </div>
         <div class="form-container buyer2">
             <form name="form2" class="row card-body " method="post">
-                <input id="input-field" type="text" name="name" placeholder="真實姓名" />
-                <input id="column-left" type="text" name="email" placeholder="Email" />
-                <input id="column-right" type="text" name="mobile" placeholder="連絡電話" />
-                <input id="column-right" type="text" name="city" required="required" autocomplete="on" maxlength="20" placeholder="縣市名稱" />
-                <input id="column-left" type="text" name="zipcode" autocomplete="on" pattern="[0-9]*" maxlength="5" placeholder="郵遞區號" />
-                <input id="input-field" type="text" name="address" required="required" autocomplete="on" placeholder="區域及地址" />
-                <input id="input-field" type="text" name="notes" required="required" autocomplete="on" placeholder="需求備註" />
+                <div class="form-group col-md-6 m-0 p-0">
+                    <input type="text" class="form-control" name="fullname" id="fullname" placeholder="真實姓名"></input>
+                </div>
+                <div class="form-group col-md-6 m-0 p-0">
+                    <input type="text" class="form-control" id="mobile" name="mobile" pattern="09\d{2}-?\d{3}-?\d{3}" placeholder="聯絡電話">
+                </div>
+                <div class="form-group col-md-6 m-0 p-0">
+                    <input class="form-control" name="email" placeholder=" Email"　></input>
+                </div>
+
+                <div class="form-group col-md-6 m-0 p-0">
+                    <select class="form-control" name="county" id="county" placeholder="縣市"　></select>
+                </div>
+                <div class="form-group col-md-6 m-0 p-0">
+                    <select class="form-control" name="district" id="district" placeholder="鄉鎮市區"></select>
+                </div>
+                <div class="form-group col-md-6 m-0 p-0">
+                    <input type="text" class="form-control" name="zipcode" id="zipcode" placeholder="郵遞區號" disabled>
+                </div>
+                <div class="form-group col-sm-12 m-0 p-0">
+                    <input type="text" class="form-control" name="address" id="address" placeholder="道路或街名" >
+                </div>
+                <div class="form-group col-sm-12 m-0 p-0">
+                  <textarea style="width:100%; padding-left:1rem" type="text" name="notes" autocomplete="on" placeholder="需求備註"></textarea>
+                </div>
+
             </form>
         </div>
         <div class="m-2 form-container buyer2">
-            <input id="newReceiver" type="checkbox"><label for="newReceiver"> 儲存這個送貨地址</label>
-            <input id="saveNewReceiver" type="checkbox"><label for="saveNewReceiver"> 設定為預設地址</label>
+            <input id="newReceiver" type="checkbox" class="mr-2"><label for="newReceiver"> 儲存這個送貨地址</label>
+            <input id="saveNewReceiver" type="checkbox"class="mr-2 ml-3"><label for="saveNewReceiver"> 設定為預設地址</label>
         </div>
     </div>
     <div class="mb-5">
@@ -404,13 +425,13 @@ font-weight: 700;
             <div class="mx-2 my-4">
               <h4>貨件追蹤查詢</h4>
               <div class="track">
-                <ul class="d-flex list-unstyled">
-                  <li><a href="https://www.t-cat.com.tw/Inquire/Trace.aspx" target="blank"><img src="./images/icon/arrow_g_r.svg" alt="">黑貓宅急便</a></li>
-                  <li><a href="http://postserv.post.gov.tw/pstmail/main_mail.html?targetTxn=EB500100" target="blank"><img src="./images/icon/arrow_g_r.svg" alt="">郵局</a></li>
+                <ul class=" ml-3 row list-unstyled">
                   <li><a href="https://eservice.7-11.com.tw/e-tracking/search.aspx" target="blank"><img src="./images/icon/arrow_g_r.svg" alt="">7-11</a></li>
                   <li><a href="https://www.famiport.com.tw/Web_Famiport/page/process.aspx" target="blank"><img src="./images/icon/arrow_g_r.svg" alt="">全家</a></li>
-                  <li><a href="https://ecservice.okmart.com.tw/Tracking/Search" target="blank"><img src="./images/icon/arrow_g_r.svg" alt="">OK</a></li>
                   <li><a href="https://www.hilife.com.tw/serviceInfo_search.aspx" target="blank"><img src="./images/icon/arrow_g_r.svg" alt="">萊爾富</a></li>
+                  <li><a href="https://ecservice.okmart.com.tw/Tracking/Search" target="blank"><img src="./images/icon/arrow_g_r.svg" alt="">OK</a></li>
+                  <li><a href="http://postserv.post.gov.tw/pstmail/main_mail.html?targetTxn=EB500100" target="blank"><img src="./images/icon/arrow_g_r.svg" alt="">郵局</a></li>
+                  <li><a href="https://www.t-cat.com.tw/Inquire/Trace.aspx" target="blank"><img src="./images/icon/arrow_g_r.svg" alt="">黑貓宅急便</a></li>
                 </ul>
 
               </div>
@@ -496,24 +517,27 @@ font-weight: 700;
         </div>
     </div>
     <div class="">
-        <input id="agree" type="checkbox" checked ><label for="agree"> <span>我同意<a href="privacyPolicy.php">網站服務條款及隱私權政策</a></span></label>
+        <input id="agree" class="mx-2 " type="checkbox" checked ><label for="agree"> <span>我同意<a href="privacyPolicy.php">網站服務條款及隱私權政策</a></span></label>
     </div>
 </div>
 
 <div class="container">
     <div class="row mb-5">
-        <div class="col-12 mb-3 ">
-            <div class="alert alert-danger text-center p-0 m-0 " id="warning_msg_payway" role="alert" style="display: none;">
-                <a class="nav-link" href="memberEditor.php">
-                    <h4 class=" m-0  text-danger">請完成收件人資料、寄送方式、付款方式填寫，及 <img src="./images/icon/checked.svg" alt=""> 同意網站服務條款及隱私政策</h4>
-                </a>
+        <div class="col-12 my-4">
+            <div class="alert alert-danger " id="warning_msg_payway" role="alert" style="display: none;">
+                    <ul><h4>請確認以下資料填寫完整 </h4>
+                      <li>收件人資料</li>
+                      <li>寄送方式</li>
+                      <li>付款方式</li>
+                      <li>勾選<img src="./images/icon/checked.svg" alt=""> 同意網站服務條款及隱私政策</li>
+                    </ul>
             </div>
         </div>
         <div class="col-12">
             <?php if (isset($_SESSION['user'])) : ?>
                 <!-- <a href="javascript:" id="checkOutBtn" style="width:100%;" class="custom-btn btn-4 text-center c_1" onclick="checkOutCart()" >確認結帳</a> -->
 
-                <h3 class="title  custom-btn btn-4 text-center c_1" style="width:100%;"><a href="javascript:" id="checkOutBtn" class="text-white" onclick="checkOutCart()">確認結帳</a></h3>
+                <h3 class="custom-btn btn-4 text-center c_1" style="width:100%;"><a href="javascript:" id="checkOutBtn" class="text-white" onclick="checkOutCart()">確認結帳</a></h3>
             <?php else : ?>
                 <div class="alert alert-danger text-center p-0 m-0 " role="alert">
 
@@ -533,6 +557,8 @@ font-weight: 700;
 <?php include __DIR__ . '/parts/scripts.php'; ?>
 <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/121761/card.js"></script>
 <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/121761/jquery.card.js"></script>
+<script src="erTWZipcode-master/js/er.twzipcode.data.js"></script>
+<script src="erTWZipcode-master/js/er.twzipcode.min.js"></script>
 
 <script>
     const quantity = $('select.quantity');
@@ -785,7 +811,7 @@ font-weight: 700;
             }
 
             if (empty(data['event']) && empty(data['hotel']) && !empty(data['restaurant'])) {
-                output = `<h4 class="m-0 text-left">加購<a href="event.php">「森林體驗」</a>或<a href="hotel.php">「夜宿薰衣草森林」</a>，出示「森林體驗」票券或房卡，可享有「森林咖啡館」用餐<span class="c_pink_t">9</span>折；<br> 如加購兩者，可享全面<span class="c_pink_t">85</span>折優惠喔！</h4>`;
+                output = `<h4 class="m-0 text-left">加購<a href="event.php">「森林體驗」</a>或<a href="hotel.php">「夜宿薰衣草森林」</a>，出示「森林體驗」票券或房卡，可享有「森林咖啡館」用餐<span class="c_pink_t">9</span>折； 如加購兩者，可享全面<span class="c_pink_t">85</span>折優惠喔！</h4>`;
             } else if (!empty(data['event']) && !empty(data['hotel']) && !empty(data['restaurant'])) {
                 output = `<h4 class="m-0">目前折扣為<span class="c_pink_t">85</span>折；出示房卡至「森林咖啡館」用餐，也享有<span class="c_pink_t">85</span>折優惠喔！</h4>`;
             } else if (empty(data['event']) && !empty(data['hotel']) && !empty(data['restaurant'])) {
@@ -814,5 +840,22 @@ font-weight: 700;
         });
     }
 </script>
+<script>
+  erTWZipcode({
+    defaultCountyText: "請選擇",
+    defaultDistrictText: "請選擇"
+  });
+  var distEl = document.querySelector('#myForm select[name=district]');
+  document.querySelector('#myForm select[name=county]')
+    .addEventListener("change", function(evt){
+      //refresh district element
+    //   M.FormSelect.init(distEl);
+    });
+  //first time init all select elements in #myForm
+//   M.FormSelect.init(document.querySelectorAll('#myForm select'));
+  document.querySelector('#myForm select[name=county]').value = "<?= $_SESSION['staff']['county'] ?>";
+  document.querySelector('#myForm select[name=district]').value = "<?= $_SESSION['staff']['district'] ?>";
+</script>
+
 
 <?php include __DIR__ . '/parts/html-foot.php'; ?>

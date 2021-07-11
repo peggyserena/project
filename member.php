@@ -31,192 +31,9 @@ $r = $pdo->query($sql)->fetch();
 
 
 <?php include __DIR__ . '/parts/html-head.php'; ?>
+<link rel="stylesheet" href="./css/member.css">
 <style>
-    body {
-        background: linear-gradient(45deg,#e8ddf1 0%,  #e1ebdc 100%);
-    }
-
-    h3 {
-        font-size: 1.2rem;
-        text-shadow: 0 0 0.2em #0000E3, 0 0 0.25em #9AFF02, -1px -1px white, 1px 1px rgb(26, 2, 94);
-    }
-
-    input{
-	text-align: center;
-}
-
-
-    .box {
-        margin: 5% 0;
-        color: gray;
-        font-weight: 600;
-        border-radius: 0.6rem;
-    }
-
-    #myTabContent {
-        padding: 5% 7.5%;
-        background-color: white;
-        box-shadow: 0px 0px 15px #666E9C;
-        -webkit-box-shadow: 0px 0px 15px #666E9C;
-        -moz-box-shadow: 0px 0px 15px #666E9C;
-        position: relative;
-    }
-
-    #profile .form-group span {
-        color: gray;
-        font-size: 1rem;
-    }
-
-    #myTab li {
-        box-shadow: 0px -4px 15px #666E9C;
-        -webkit-box-shadow: 0px -4px 15px #666E9C;
-        -moz-box-shadow: 0px -4px 15px #666E9C;
-        position: relative;
-        z-index: 9;
-    }
-
-    table {
-        width: 100%;
-    }
-
-    #profile .form-group {
-        padding-bottom:3px;
-        background: 
-        linear-gradient(45deg, #DCC5EF 0%, #adda9a 100%)
-        bottom
-        no-repeat; 
-        background-size:100% 3px ;
-    }
-
-    #myTabContent a:hover{
-	box-shadow: 0px 0px 20px rgb(0, 255, 191);
-	transform: scale(1.05);
-    text-decoration:none
-    }
-
-    #tradeRecord table tbody td{
-        font-weight:400;
-        font-size:1rem;
-        text-align: left
-    }
-
-    #setting ul li {
-        padding-bottom:3px;
-        background: 
-        linear-gradient(45deg, #DCC5EF 0%, #adda9a 100%)
-        bottom
-        no-repeat; 
-        background-size:100% 3px ;
-        list-style: none;
-    }
-
-    .custom-btn{
-        margin-top:1.5rem;
-    }
     
-/* =====================================================
-   Some defaults across all toggle demos
-   ===================================================== */
-    .toggle {
-        display: block;
-        text-align: center;
-        user-select: none;
-    }
-
-    .toggle-checkbox {
-        display: none;
-    }
-
-    .toggle-btn {
-        display: block;
-        font-size: 1.4em;
-        transition: all 350ms ease-in;
-    }
-    .toggle-btn:hover {
-        cursor: pointer;
-    }
-
-    .toggle-btn, .toggle-btn:before, .toggle-btn:after,
-    .toggle-checkbox,
-    .toggle-checkbox:before,
-    .toggle-checkbox:after,
-    .toggle-feature,
-    .toggle-feature:before,
-    .toggle-feature:after {
-        transition: all 250ms ease-in;
-    }
-    .toggle-btn:before, .toggle-btn:after,
-    .toggle-checkbox:before,
-    .toggle-checkbox:after,
-    .toggle-feature:before,
-    .toggle-feature:after {
-        content: "";
-        display: block;
-    }
-
-
-
-/* =====================================================
-Toggle - knob button style
-===================================================== */
-    .toggle-knob .toggle-btn {
-        position: relative;
-        width: 90px;
-        height: 25px;
-        text-transform: uppercase;
-        color: #fff;
-        background: #a4bf4d;
-        box-shadow: inset 0 20px 40px -10px #7b9d25;
-        border-radius: 40px;
-    }
-    .toggle-knob .toggle-btn:before {
-        display: block;
-        position: absolute;
-        top: 50%;
-        left: 67%;
-        transform: translateY(-50%);
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        background: #f1f1f1;
-        box-shadow: 0 4px 10px 0 #999, inset 0 10px 10px 8px rgba(241, 241, 241, 0.6), inset 0 0 8px 0px #333, inset 0 0 0 13px #ccc, inset 0 0 0 14px #f1f1f1;
-        text-indent: -100%;
-    }
-    .toggle-knob .toggle-feature {
-        position: relative;
-        display: block;
-        overflow: hidden;
-        height: 30px;
-        text-shadow: 0 1px 2px #666;
-    }
-    .toggle-knob .toggle-feature:before, .toggle-knob .toggle-feature:after {
-        position: absolute;
-        top: 42%;
-        transform: translateY(-50%);
-    }
-    .toggle-knob .toggle-feature:before {
-        content: attr(data-label-on);
-        left: 20%;
-    }
-    .toggle-knob .toggle-feature:after {
-        content: attr(data-label-off);
-        right: -60%;
-    }
-    .toggle-knob .toggle-checkbox:checked + .toggle-btn {
-        background: #a2a2a2;
-        box-shadow: inset 0 20px 40px -10px #7e7e7e;
-    }
-    .toggle-knob .toggle-checkbox:checked + .toggle-btn:before {
-        left: 0;
-    }
-    .toggle-knob .toggle-checkbox:checked + .toggle-btn .toggle-feature:before {
-        left: -60%;
-    }
-    .toggle-knob .toggle-checkbox:checked + .toggle-btn .toggle-feature:after {
-        right: 20%;
-    }
-
-
 </style>
 <?php include __DIR__ . '/parts/navbar.php'; ?>
 
@@ -243,7 +60,7 @@ Toggle - knob button style
 
 
                         <div id="profile" class="tab-pane fade in active">
-                            <div class="col-8 col-md-8 col-sm-12 con_01 m-0 p-0 m-auto ">
+                            <div class="col-md-8 col-sm-12  m-0 p-0 m-auto ">
                                 <form name="form1" method="post">
                                     <div class="form-group">
                                         <label for="email">帳號 ( email )： </label><span><?= $r['email'] ?></span>
@@ -277,10 +94,8 @@ Toggle - knob button style
 
 
                         <div id="tradeRecord" class="tab-pane fade">
-                            <label for="">
-                                <h4>交易期間</h4>
-                            </label>
-                            <div><input type="date" id="start_date">　～　<input type="date" id="end_date"><button type="submit" onclick="readOrder()" class="custom-btn btn-4 t_shadow ml-4">查詢</button> </div>
+                            
+                            <div><span style="font-size: 1.3rem;">交易期間：</span><input type="date" id="start_date">　～　<input type="date" id="end_date"><button type="submit" onclick="readOrder()" class="custom-btn btn-4 t_shadow ml-4">查詢</button> </div>
 
                             <div class="mt-4">
                                 <table class="table table-striped table-bordered">
@@ -323,7 +138,7 @@ Toggle - knob button style
                                     <tbody>
                                     </tbody>
                                 </table>
-                                <h3 class="title  custom-btn btn-4  c_1" ><a href="javascript:" id="" class="text-white"  onclick="deleteWishListAll()">清空</a></h3>
+                                <h3 class="custom-btn btn-4  c_1" ><a href="javascript:" id="" class="text-white"  onclick="deleteWishListAll()">清空</a></h3>
 
                             </div>
                         </div>

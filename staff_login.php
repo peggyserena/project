@@ -1,6 +1,6 @@
 <?php include __DIR__ . '/parts/config.php'; ?>
 <?php
-    if (isset($_SESSION['staff'])) header('Location: index_staff.php'); 
+    if (isset($_SESSION['staff'])) header('Location: staff_index.php'); 
 $title = '會員登入';
 $pageName ='staff_login';
 ?>
@@ -11,12 +11,6 @@ $pageName ='staff_login';
     background: linear-gradient(45deg, #e8ddf1 0%,  #e1ebdc 100%);
   }
 
-  .con_01 {
-    border-radius: 0.25rem;
-    box-shadow: 0px 0px 15px #666e9c;
-    -webkit-box-shadow: 0px 0px 15px #666e9c;
-    -moz-box-shadow: 0px 0px 15px #666e9c;
-  }
 
   form .form-group small.error {
     color: red;
@@ -50,9 +44,7 @@ $pageName ='staff_login';
     font-weight: 600;
   }
 
-  .form-group ::-webkit-input-placeholder {
-    color: #a4b0be;
-  }
+
 
 </style>
 
@@ -119,16 +111,19 @@ $pageName ='staff_login';
             // alert('資料修改成功');
             // swal('Title...', 'Hello World!', 'success');
             modal_init()
-            insertPage('#modal_img', 'animation_login.html')
+            insertPage('#modal_img', 'animation_success.html')
             insertText('#modal_content', '登入成功')
             $('#modal_alert').modal('show')
             setTimeout(function () {
               window.history.back()
             }, 2000)
-            // location.href = './index_staff.php';
+            // location.href = './staff_index.php';
           } else {
-            alert(data.error)
-            swal('登入失敗!', 'error')
+            modal_init();
+            insertPage("#modal_img", "animation_error.html");
+            insertText("#modal_content", "登入失敗，請確認員工編號和密碼！");
+            $("#modal_alert").modal("show");
+            setTimeout(function(){window.history.back();}, 2000);
           }
         },
         'json'
@@ -138,9 +133,6 @@ $pageName ='staff_login';
 </script>
 
 <script>
-  // Alert Modal Type
-  insertPage('modal_img', 'animation_login.html')
-  insertText('modal_content', '歡迎您登入薰衣草森林會員～')
 </script>
 <script>
     //眼睛

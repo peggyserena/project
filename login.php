@@ -11,13 +11,7 @@ $pageName = 'login';
         background: linear-gradient(45deg, #e1ebdc 0%, #e8ddf1 100%);
     }
 
-    .con_01 {
-        border-radius: 0.25rem;
 
-        box-shadow: 0px 0px 15px #666E9C;
-        -webkit-box-shadow: 0px 0px 15px #666E9C;
-        -moz-box-shadow: 0px 0px 15px #666E9C;
-    }
 
     form .form-group small.error {
         color: red;
@@ -50,10 +44,6 @@ $pageName = 'login';
         padding: 5% 7.5%;
         background: white;
         font-weight: 600;
-    }
-
-    .form-group ::-webkit-input-placeholder {
-        color: #a4b0be;
     }
 
     .form1 .form-group{
@@ -148,17 +138,17 @@ $pageName = 'login';
                         // swal('Title...', 'Hello World!', 'success');
                         // Alert Modal Type
                         modal_init();
-                        insertPage("#modal_img", "animation_login.html");
+                        insertPage("#modal_img", "animation_success.html");
                         insertText("#modal_content", "歡迎您登入薰衣草森林會員～");
                         $("#modal_alert").modal("show");
                         setTimeout(function(){window.history.back();}, 2000);
                         // location.href = './index.php';
                     } else {
-                        alert(data.error);
-                        swal(
-                            "登入失敗!",
-                            "error"
-                        );
+                        modal_init();
+                        insertPage("#modal_img", "animation_error.html");
+                        insertText("#modal_content", "登入失敗，請確認帳號和密碼～");
+                        $("#modal_alert").modal("show");
+                        setTimeout(function(){window.history.back();}, 2000);
                     }
                 },
                 'json'

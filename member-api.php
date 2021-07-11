@@ -11,7 +11,8 @@ switch ($action){
                 empty($user['birthday']) || 
                 empty($user['mobile']) || 
                 empty($user['zipcode']) || 
-                empty($user['city'])|| 
+                empty($user['county'])|| 
+                empty($user['district'])|| 
                 empty($user['address']);
                 
         $result = !$result;

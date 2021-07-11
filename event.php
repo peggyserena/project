@@ -54,11 +54,26 @@ switch ($order) {
 $stmt = $pdo->query($sql);
 $events = $stmt->fetchAll();
 
+// 抓活動的id
+$event_id_list = [];
+foreach($events as $event){
+    array_push($event_id_list, $event['id']);
+}
 // 抓圖片
-// $sql = "SELECT * FROM `event_image` WHERE event_id = ".$event['id'];
-// $stmt = $pdo->prepare($sql);
-// $stmt->execute([]);
-// $event_img = $stmt->fetchAll();
+$event_img = [];
+if (count($event_id_list) > 0){
+    $sql = "SELECT * FROM `event_image` WHERE event_id in (".implode(",", $event_id_list).")";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([]);
+    $result = $stmt->fetchAll();
+    foreach($result as $cover_img){
+        $event_img[$cover_img['event_id']] = $cover_img['path'];
+    }
+}
+print($event_img[$event['id']] ?? "" );
+
+
+
 
 
 // 活動歷年總數
@@ -224,7 +239,7 @@ $pageName = 'event';
                     </h2>
 
                     <div class='col-lg-8  m-0 p-0'>
-                    <img src='<?= WEB_ROOT."/".$event_img[0]['path'] ?>' alt=''>
+                    <img src='<?= WEB_ROOT."/".($event_img[$event['id']] ?? "") ?>' alt=''>
                     </div>
                     <div class='col-lg-4  row m-0 p-0 pop '  id="event_<?= $event['id'] ?>">
                         <div>

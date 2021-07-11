@@ -2,19 +2,25 @@
 <?php
 $title = '會員註冊';
 $pageName ='staff_register';
+$aceept_role = [1, 2];
+
+if (!in_array($_SESSION['staff']['role'], $aceept_role)){
+    header("Location: staff_index.php");
+}
+// role類別
+$sql = "SELECT * FROM `staff_role_category`";
+$stmt = $pdo->query($sql);
+$result = $stmt->fetchAll();
+$staff_role_category = [];
+//ArrayArray ( [1] => 管理者 [2] => 經理 [3] => 會計 [4] => 一般員工 )
+foreach($result as $role_cat){
+    $staff_role_category[$role_cat['id']] = $role_cat['position'];
+}
 ?>
 <?php include __DIR__ . '/parts/staff_html-head.php'; ?>
 <style>
     body {
         background: linear-gradient(45deg, #e8ddf1 0%,  #e1ebdc 100%);
-    }
-
-    .con_01 {
-        border-radius: 0.25rem;
-
-        box-shadow: 0px 0px 15px #666E9C;
-        -webkit-box-shadow: 0px 0px 15px #666E9C;
-        -moz-box-shadow: 0px 0px 15px #666E9C;
     }
 
     form .form-group small.error {
@@ -54,9 +60,7 @@ $pageName ='staff_register';
 
     }
 
-    .form-group ::-webkit-input-placeholder {
-        color: #a4b0be;
-    }
+
 /* =============================== modal =============================== */
 
 
@@ -89,17 +93,29 @@ $pageName ='staff_register';
                     </div>
                     <div class="form-group">
                         <label for="role">類型<span>(必填)</span></label>
-                        <select type="text" class="form-control" id="role" name="role" autofocus required>
+                        <select type="text" class="form-control" id="role" name="role_id" autofocus required>
                             <option value="">請選擇</option>
-                            <option value="1">管理者</option>
-                            <option value="2">經理</option>
-                            <option value="3">會計</option>
-                            <option value="3">一般員工</option>
+                            <?php foreach($staff_role_category as $id => $position): ?>
+                                <?php 
+                                if ($_SESSION['staff']['role'] == 2): 
+                                    if (!in_array($id, [3,4])):
+                                        continue;    
+                                    endif; 
+                                endif; 
+                                ?>
+                                <option value="<?=$id?>"><?=$position?></option>
+                            <?php endforeach;?>
                         </select>
                         <small class="form-text error"></small>
                     </div>
-                    <div class="button m-4"><button type="submit" class="custom-btn btn-4 t_shadow ">註冊</button></div>
+                    <span class="button m-4"><button type="submit" class="custom-btn btn-4 t_shadow ">註冊</button></span>
+                    <span class="button m-4"><button type="button" class="custom-btn btn-4 t_shadow" onclick="location.reload();">清除</button></span>
+                    <span class="button m-4"><button type="button" class="custom-btn btn-4 t_shadow" onclick="exportExcel();">匯出</button></span>
                     <hr>
+                </form>
+                <form name="form2" id="form2" method="post" action="staff-api.php" hidden>
+                    <input type="hidden" name="action" value="exportExcel"/>
+                    <input type="hidden" name="data" value=''/>
                 </form>
             </div>
         </div>
@@ -110,6 +126,7 @@ $pageName ='staff_register';
                     <thead class="thead-dark">
                         <tr>
                             <th>序號</th>
+                            <th>職稱</th>
                             <th>員工編號</th>
                             <th>密碼</th>
                         </tr>
@@ -132,23 +149,30 @@ $pageName ='staff_register';
             function(data) {
                 if (data.authError) {
                     modal_init();
-                    insertPage("#modal_img", "animation_login.html");
+                    insertPage("#modal_img", "animation_success.html");
                     insertText("#modal_content", data.authError);
                     $("#modal_alert").modal("show");
                 } else if (data.success) {
+                    var base = $("#result tbody tr").length;
                     data['data'].forEach(function(staff, index){
                     $("table#result tbody").append(`<tr>
-                            <td>${index + 1}</td>
+                            <td>${base + index + 1}</td>
+                            <td>${staff['position']}</td>
                             <td>${staff['staff_id']}</td>
                             <td>${staff['password']}</td>
                         </tr>`);
                     });
                     modal_init();
-                    insertPage("#modal_img", "animation_login.html");
+                    insertPage("#modal_img", "animation_success.html");
                     insertText("#modal_content", "新增員工成功");
                     $("#modal_alert").modal("show");
                 } else {
-                    alert(data.error);
+                    modal_init();
+                    insertPage("#modal_img", "animation_error.html");
+                    insertText("#modal_content", "資料傳輸失敗");
+                    $("#modal_alert").modal("show");
+                    setTimeout(function(){window.history.back();}, 2000);
+                     // alert(data.error);
                 }
             },
             'json'
@@ -157,6 +181,21 @@ $pageName ='staff_register';
             console.log(d);
         })
 
+    }
+    
+    function exportExcel(){
+        var form2 = $("#form2");
+        var dataElem = form2.find("input[name='data']");
+        var dataJSON = [["序號", "職稱", "員工編號", "密碼"]];
+        $("#result tbody tr").each(function(index, elem){
+            var row = [];
+            $(elem).find("td").each(function(index2, elem2){
+                row.push($(elem2).text());
+            });
+            dataJSON.push(row);
+        });
+        dataElem.val(JSON.stringify(dataJSON));
+        form2.submit();
     }
 </script>
 <?php include __DIR__ . '/parts/staff_html-foot.php'; ?>

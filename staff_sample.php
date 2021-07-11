@@ -1,7 +1,7 @@
 <?php include __DIR__ . '/parts/config.php'; ?>
 <?php
 $title = '薰衣草森林 Lavender Forest';
-$pageName = 'index_staff';
+$pageName = 'staff_index';
 // $stmt = $pdo->query($sql);
 // $events = $stmt->fetchAll();
 // $sql = "SELECT * FROM `index`";

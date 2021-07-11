@@ -9,14 +9,6 @@ $pageName = 'register';
       background: linear-gradient(45deg, #e8ddf1 0%,  #e1ebdc 100%);
     }
 
-    .con_01 {
-        border-radius: 0.25rem;
-
-        box-shadow: 0px 0px 15px #666E9C;
-        -webkit-box-shadow: 0px 0px 15px #666E9C;
-        -moz-box-shadow: 0px 0px 15px #666E9C;
-    }
-
     form .form-group small.error {
         color: red;
     }
@@ -54,9 +46,6 @@ $pageName = 'register';
 
     }
 
-    .form-group ::-webkit-input-placeholder {
-        color: #a4b0be;
-    }
     .form1 .form-group{
         position: relative;
     }
@@ -133,10 +122,10 @@ $pageName = 'register';
                     </div>
                     <div class="form-group">
                         <label for="zipcode">郵遞區號</label>
-                        <input required type="text" class="form-control" name="zipcode" id="zipcode" placeholder="236"  disabled>
+                        <input required type="text" class="form-control" name="zipcode" id="zipcode" placeholder="236" disabled>
                     </div>
                     <div class="form-group">
-                        <label for="address">地址</label>
+                        <label for="address">道路或街名</label>
                         <input required type="text" class="form-control" name="address" id="address" placeholder="＊＊區＊＊路＊＊巷＊＊號＊＊樓" >
                     </div>
 
@@ -196,9 +185,10 @@ $pageName = 'register';
         //     alert("t6");
         // }
         if (isPass) {
+            var data = $(document.form1).serialize() + "&zipcode=" + $("#zipcode").val();
             $.post(
                 'register-api.php',
-                $(document.form1).serialize(),
+                data,
                 function(data) {
                     console.log(data);
                     if (data.success) {
@@ -214,7 +204,11 @@ $pageName = 'register';
                 },
                 'json'
             ).fail(function(d){
-                alert(d);
+                modal_init();
+                insertPage("#modal_img", "animation_error.html");
+                insertText("#modal_content", "資料傳輸失敗");
+                $("#modal_alert").modal("show");
+                setTimeout(function(){window.history.back();}, 2000);
                 console.log(d);
             })
         }

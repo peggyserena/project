@@ -100,23 +100,29 @@ $title = '忘記密碼查詢';
 		remail();
 	}
 
+
+
+
+
 	function modal_load(){
-		modal_init();
-		insertPage("#modal_img", "X_loading3.html");
-		updateStyle('nobordertop');
-		$("#modal_alert").modal("show");
+    modal_init();
+    insertPage("#modal_img", "animation_success.html");
+    insertText("#modal_content", "信件已寄到您的信箱～");
+    updateStyle('nobordertop');
+    $("#modal_alert").modal("show");
 	}
 	function modal_msg(msg){
-		modal_init();
-		insertText("#modal_content", msg);
-		updateStyle('nobordertop');
-		$("#modal_alert").modal("show");
+    modal_init();
+    insertPage("#modal_img", "animation_error.html");
+    insertText("#modal_content", msg);
+    updateStyle('nobordertop');
+    $("#modal_alert").modal("show");
 	}
 	
 	function remail(){
 		$("#sendMailBtn").prop("disabled", true);
 		$("#sendMailBtn").addClass("disabled");
-		var time = 60 ;
+		var time = 120 ;
 		var id = setInterval(function(){
 			time -= 1;
 			$("#sendMailTime").html(`${time}秒後可以重新寄送`);
@@ -125,7 +131,7 @@ $title = '忘記密碼查詢';
 				$("#sendMailBtn").prop("disabled", false);
 				$("#sendMailBtn").removeClasss("disabled");
 			}
-		}, 1000);
+		}, 2000);
 	}
 </script>
 <?php include __DIR__. '/parts/html-foot.php'; ?>

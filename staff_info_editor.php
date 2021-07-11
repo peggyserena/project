@@ -2,6 +2,16 @@
 <?php
 $title = '會員註冊';
 $pageName ='staff_register';
+
+// role類別
+$sql = "SELECT * FROM `staff_role_category`";
+$stmt = $pdo->query($sql);
+$result = $stmt->fetchAll();
+$staff_role_category = [];
+//ArrayArray ( [1] => 管理者 [2] => 經理 [3] => 會計 [4] => 一般員工 )
+foreach($result as $role_cat){
+    $staff_role_category[$role_cat['id']] = $role_cat['position'];
+}
 // print_r($_SESSION['staff']);
 ?>
 <?php include __DIR__. '/parts/staff_html-head.php'; ?>
@@ -11,15 +21,7 @@ $pageName ='staff_register';
         background: linear-gradient(45deg, #e1ebdc 0%, #e8ddf1 100%);
     }
 
-    .con_01 {
-        border-radius: 0.25rem;
-
-        box-shadow: 0px 0px 15px #666E9C;
-        -webkit-box-shadow: 0px 0px 15px #666E9C;
-        -moz-box-shadow: 0px 0px 15px #666E9C;
-    }
-
-      .button {
+    .button {
         text-align: center;
     }
 
@@ -64,7 +66,7 @@ $pageName ='staff_register';
                     </div>
                     <div class="form-group">
                         <label for="position">職稱： </label>
-                        <span type="text" id="position"><?= $_SESSION['staff']['role'] ?></span>
+                        <span type="text" id="position"><?= $staff_role_category[$_SESSION['staff']['role']] ?></span>
                     </div>
                     <div class="form-group">
                         <label for="fullname">姓名</label>
@@ -164,7 +166,7 @@ $pageName ='staff_register';
                     console.log(data);
                     if (data.success) {
                         modal_init();
-                        insertPage("#modal_img", "animation_login.html");
+                        insertPage("#modal_img", "animation_success.html");
                         insertText("#modal_content", "修改成功");
                         $("#modal_alert").modal("show");
                         setTimeout(function(){window.history.back();}, 2000);
@@ -176,7 +178,11 @@ $pageName ='staff_register';
                 },
                 'json'
             ).fail(function(d){
-                alert(d);
+                modal_init();
+                insertPage("#modal_img", "animation_error.html");
+                insertText("#modal_content", "資料傳輸失敗");
+                $("#modal_alert").modal("show");
+                setTimeout(function(){window.history.back();}, 2000);
                 console.log(d);
             })
         }
@@ -203,7 +209,9 @@ $("#birthday").attr("max", max);
   //first time init all select elements in #myForm
 //   M.FormSelect.init(document.querySelectorAll('#myForm select'));
   document.querySelector('#myForm select[name=county]').value = "<?= $_SESSION['staff']['county'] ?>";
+  document.querySelector('#myForm select[name=county]').dispatchEvent(new Event("change"));
   document.querySelector('#myForm select[name=district]').value = "<?= $_SESSION['staff']['district'] ?>";
+  document.querySelector('#myForm select[name=district]').dispatchEvent(new Event("change"));
 </script>
 <?php // unset($_SESSION['staff'])?>
 <?php include __DIR__. '/parts/staff_html-foot.php'; ?>

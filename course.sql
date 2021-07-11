@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2021-07-06 00:36:05
+-- 產生時間： 2021-07-07 17:12:33
 -- 伺服器版本： 10.4.18-MariaDB
 -- PHP 版本： 7.3.27
 
@@ -68,11 +68,11 @@ CREATE TABLE `event` (
 --
 
 INSERT INTO `event` (`id`, `cat_id`, `video`, `video_img`, `name`, `date`, `time`, `price`, `description`, `title`, `age`, `location`, `content`, `info`, `notice`, `limitNum`) VALUES
-(1, 3, 'https://youtu.be/PygKllQxP-U', '', '森林探索家．來一趟自然的探索', '2021-08-31', '14:00:00', 1400, '今年的暑假，來薰衣草森林成為探索家吧。在海拔 700公尺的香草園與森林內，發掘平常不會注意到的事物；增加對這片土地的認識。一起探險、探索未知的世界。', '探索家的報名資訊&任務', '5歲以上喜歡森林的大小朋友們', '紫丘', '入園費、入山儀式、森林導覽、森林探索包租借費、手工餅乾、水果氣泡水、植物創作、結業證書', '來看看探索家要做什麼吧\r\na. 進入山之前，來一場入山儀式\r\nb. 讓探索小隊長帶你認識神秘的動植物、聽樹的聲音\r\nc. 摘取自己喜愛的香草植物來製作美味的水果氣泡水與手工餅乾\r\nd. 用大自然的產物創作獨一無二的作品，並獲頒結業證書\r\ne. 來一場結業式~感謝山所帶給你的勇氣\r\n', '⛔成為探索家的注意事項\r\na. 為維護活動品質，本活動5人成團，上限20人。若因未達開團人數，導致無法成團體驗，將協助併團或全額退款，謝謝。\r\nb. 如需退票請於活動結束前3日辦理，逾期恕不受理，並酌收票價10%退票手續費。\r\nc. 基於安全考量請穿適宜走路之球鞋、長褲。請勿穿高跟鞋、夾腳拖鞋或露趾涼鞋。\r\nd. 本活動包含入園門票150元，森林秘境探險導覽，水果氣泡水手作課程乙次，手工餅乾手作課程乙次，植物創作以及探索家結業證書', 20),
-(2, 3, 'https://www.youtube.com/watch?v=YGhxsr_WxVc', '', ' 螢河旅行 ', '2021-08-27', '18:00:00', 800, '星夜。螢河。森林。繡球花。\r\n\r\n踏進中部的後花園、台中最美的賞螢秘境，\r\n8000 棵樹的森林秘境，海拔 700 公尺的山中花園，\r\n\r\n螢河在黑暗中閃爍，那是寧靜而象徵生生不息的希望之光~出發吧，進入這座森林。為這個季節譜出最動人的旋律', '螢河旅行 －報名資訊', '5歲以上喜歡森林的大小朋友們', '森林平台', '本票券每張皆包含入園門票150元，森林、螢火蟲秘境探險導覽，紫丘冰淇淋乙盒，森林旋轉木馬體驗乙次、香草水手作課程乙次、明信片乙張、一人份螢光晚餐。', '15:15~15:30	螢河旅客集合，準時報到，記得攜帶電子票卷\r\n15:30~16:40	第一星系：森林時光，園區導覽及體驗，搭乘森林中的旋轉木馬，吃一球森林冰淇淋，寫一張明信片給重要的人\r\n16:40~17:45	第二星系：香草導覽及手作，香草手作，創作獨一無二的香草水\r\n17:45~18:50	第三星系：花園野餐，親近自然，療癒人心的香草野餐籃\r\n19:00~19:30	第四星系：螢河旅行，專屬賞螢導覽（螢火蟲復育生態故事、靜心賞螢） ', '➤賞螢時間大約是19:00-20:30。若遇到下雨而18點雨停止，螢火蟲還是會出現。(在雨天的狀況下，活動還是照常進行。只要做好心理與裝備上的準備，還是可以開心的來參加)\r\n\r\n1. 本活動有雨天備案，在賞螢活動前雨停，都還是看得到螢火蟲出現。 如果您是下雨天就完全不想出門的客人，請斟酌考慮是否報名！若天氣真的變化太大，導致行程無法走完。將致贈免費入園卷乙張，與免費賞螢乙次。(視報名人數發放)。 \r\n\r\n2. 基於安全考量請穿適宜走路之球鞋(需防滑)、長褲及輕便雨衣。請勿穿高跟鞋、夾腳拖鞋或露趾涼鞋。 \r\n\r\n3. 螢火蟲生態體驗的活動路線會行經較為陡峭的步道(此段路無法推嬰兒車或輪椅)，請參加者考量自身能力是否適合。 \r\n\r\n4. 本活動除了觀賞螢火蟲的生態外，也教育大眾如何保育螢火蟲，螢火蟲怕光。所以活動途中嚴禁攝影、拍照。若以拍攝為目的之朋友，請勿報名。 \r\n\r\n5. 為維護賞螢活動品質，本活動4人成團，上限20人。\r\n', 20),
-(3, 2, 'https://www.youtube.com/watch?v=YGhxsr_WxVc&t', '', '森林好朋友音樂會', '2021-08-19', '15:00:00', 200, '你聽過森林中的音樂會嗎？新社森林舉辦了一場小小的音樂會來療癒彼此的身心。\r\n\r\n創作歌手 王立言  將來到森林做客，為期四天，除了星期天下午的森林音樂會之外，其他三天來到森林的朋友，歡迎來森林捕捉唱歌、畫畫、創作的立言哦。\r\n\r\n薰衣草森林，誠摯邀請您來聽歌～', '好朋友音樂會－報名資訊', '所有喜歡森林的大小朋友們', '香草市集', '', '美好的點滴\r\n\r\n這幾天來森林的朋友，你有遇到立言嗎？\r\n創作歌手 王立言 為期四天的的森林駐村唱歌、創作，這場音樂會很特別，除了歌曲之外，立言還拿起繪本講故事，大家隨興的或坐或站，小朋友們受到音樂的吸引，一邊跳舞擺動手腳。\r\n\r\n接下來的幾天，立言不分早晚，只要是適合唱歌的地方，她就會拿起吉他。\r\n\r\n昨天立言跟我們分享她遇到的旅人的故事，有休假中的警察大哥跟她一起去吃早餐，有一起結伴來森林的學生們興奮跟她合照，有開心的爸媽說家中小小孩聽了歌聲就記得她，有寫了小卡片送給她的森林小夥伴們，令她淚流滿面。\r\n\r\n我們為什麼會在森林中感到幸福？我想除了美景之外，森林能放大所有美好的點滴，薰衣草森林，就是這樣一個令人自由自在的地方。', '', 200),
-(4, 4, '', '', ' 幸福花路香氛花圈課 ', '2021-09-30', '14:00:00', 800, '來一趟森林小旅行\r\n森林即將迎來繽紛浪漫的繡球花季，運用自然植物素材綑綁出屬於自己的花圈，替生活添加花與植物的浪漫氛圍。\r\n課程中將提供不同花材讓學員選擇自己喜歡的韻味花材，並可以搭配不同的心儀氣味，當一回小小調香師，組合成一組初夏粉嫩系的香氛花圈。', '幸福花路香氛花圈－課程內容', '5歲以上喜歡森林的大小朋友們', '初衷小屋', '費用包含 ＋ 課程裡的工具使用／師資／花器／植物花材 /香氛費用 ＋ 生動有趣的香草導覽 / 現場採集 ＋ 香草飲品', '▌ 活動行程  ▌  \r\n14:00~16:30 1400-1410	集合 | 緩心聞香、入森林  \r\n1410-1440	導覽 | 認識森林、香草導覽  \r\n1440-1500	迎賓 | 沏一壺手摘香草茶，讓這一刻慢下來  \r\n1500-1600	手作 | 紫色夢境花圈手作體驗、香氛體驗  \r\n1600-1630	野午茶 | 一起品味好吃的午茶吧', '森林即將迎來初夏，屬於夏天的花也登場亮相，美麗動人的繡球花便在此時悄然綻放，一顆顆五顏六色的花朵聚集，成為夏天必賞花海，在浪漫的繡球花丘裡，給自己一個花草時間享受悠閒時光吧。\r\n\r\n森林團隊為旅人打造，彷彿置身紫色夢境的花藝作品。課程中將提供不同的乾燥花材與園區內採集的自然素材，一起從自然中擷取元素，將這些祝福都作成花圈。\r\n\r\n課程中將提供不同花材讓學員選擇自己喜歡的韻味花材，並可以搭配不同的心儀氣味，當一回小小調香師，組合成一組初夏粉嫩系的香氛花圈。\r\n\r\n享受與植物、香氛相伴的小日子', 30),
-(38, 3, 'https://www.youtube.com/watch?v=YGhxsr_WxVc', 'images/event/video/bde11bd1051f54d1c59a602c5e725f59.jpg', '螢河旅行', '2021-07-31', '18:00:00', 800, '星夜。螢河。森林。繡球花。\r\n\r\n踏進中部的後花園、台中最美的賞螢秘境，\r\n8000 棵樹的森林秘境，海拔 700 公尺的山中花園，\r\n\r\n螢河在黑暗中閃爍，那是寧靜而象徵生生不息的希望之光~出發吧，進入這座森林。為這個季節譜出最動人的旋律', '螢河旅行 －報名資訊', '所有喜歡森林的大小朋友們', '森林平台', '本票券每張皆包含入園門票150元，森林、螢火蟲秘境探險導覽，紫丘冰淇淋乙盒，森林旋轉木馬體驗乙次、香草水手作課程乙次、明信片乙張、一人份螢光晚餐。', '15:15~15:30	螢河旅客集合，準時報到，記得攜帶電子票卷\r\n15:30~16:40	第一星系：森林時光，園區導覽及體驗，搭乘森林中的旋轉木馬，吃一球森林冰淇淋，寫一張明信片給重要的人\r\n16:40~17:45	第二星系：香草導覽及手作，香草手作，創作獨一無二的香草水\r\n17:45~18:50	第三星系：花園野餐，親近自然，療癒人心的香草野餐籃\r\n19:00~19:30	第四星系：螢河旅行，專屬賞螢導覽（螢火蟲復育生態故事、靜心賞螢） ', '➤賞螢時間大約是19:00-20:30。若遇到下雨而18點雨停止，螢火蟲還是會出現。(在雨天的狀況下，活動還是照常進行。只要做好心理與裝備上的準備，還是可以開心的來參加)\r\n\r\n1. 本活動有雨天備案，在賞螢活動前雨停，都還是看得到螢火蟲出現。 如果您是下雨天就完全不想出門的客人，請斟酌考慮是否報名！若天氣真的變化太大，導致行程無法走完。將致贈免費入園卷乙張，與免費賞螢乙次。(視報名人數發放)。 \r\n\r\n2. 基於安全考量請穿適宜走路之球鞋(需防滑)、長褲及輕便雨衣。請勿穿高跟鞋、夾腳拖鞋或露趾涼鞋。 \r\n\r\n3. 螢火蟲生態體驗的活動路線會行經較為陡峭的步道(此段路無法推嬰兒車或輪椅)，請參加者考量自身能力是否適合。 \r\n\r\n4. 本活動除了觀賞螢火蟲的生態外，也教育大眾如何保育螢火蟲，螢火蟲怕光。所以活動途中嚴禁攝影、拍照。若以拍攝為目的之朋友，請勿報名。 \r\n\r\n5. 為維護賞螢活動品質，本活動4人成團，上限20人。', 20);
+(1, 4, 'https://www.youtube.com/watch?v=YGhxsr_WxVc1', '', '螢河旅行12', '2021-07-07', '19:00:00', 8001, '星夜。螢河。森林。繡球花。1\r\n\r\n踏進中部的後花園、台中最美的賞螢秘境，\r\n8000 棵樹的森林秘境，海拔 700 公尺的山中花園，\r\n\r\n螢河在黑暗中閃爍，那是寧靜而象徵生生不息的希望之光~出發吧，進入這座森林。為這個季節譜出最動人的旋律', '螢河旅行 －報名資訊1', '所有喜歡森林的大小朋友們1', '森林平台1', '本票券每張皆包含入園門票150元，森林、螢火蟲秘境探險導覽，紫丘冰淇淋乙盒，森林旋轉木馬體驗乙次、香草水手作課程乙次、明信片乙張、一人份螢光晚餐。1', '15:15~15:30	螢河旅客集合，準時報到，記得攜帶電子票卷1\r\n15:30~16:40	第一星系：森林時光，園區導覽及體驗，搭乘森林中的旋轉木馬，吃一球森林冰淇淋，寫一張明信片給重要的人\r\n16:40~17:45	第二星系：香草導覽及手作，香草手作，創作獨一無二的香草水\r\n17:45~18:50	第三星系：花園野餐，親近自然，療癒人心的香草野餐籃\r\n19:00~19:30	第四星系：螢河旅行，專屬賞螢導覽（螢火蟲復育生態故事、靜心賞螢） ', '➤賞螢時間大約是19:00-20:30。若遇到下雨而18點雨停止，螢火蟲還是會出現。(在雨天的狀況下，活動還是照常進行。只要做好心理與裝備上的準備，還是可以開心的來參加)1\r\n\r\n1. 本活動有雨天備案，在賞螢活動前雨停，都還是看得到螢火蟲出現。 如果您是下雨天就完全不想出門的客人，請斟酌考慮是否報名！若天氣真的變化太大，導致行程無法走完。將致贈免費入園卷乙張，與免費賞螢乙次。(視報名人數發放)。 \r\n\r\n2. 基於安全考量請穿適宜走路之球鞋(需防滑)、長褲及輕便雨衣。請勿穿高跟鞋、夾腳拖鞋或露趾涼鞋。 \r\n\r\n3. 螢火蟲生態體驗的活動路線會行經較為陡峭的步道(此段路無法推嬰兒車或輪椅)，請參加者考量自身能力是否適合。 \r\n\r\n4. 本活動除了觀賞螢火蟲的生態外，也教育大眾如何保育螢火蟲，螢火蟲怕光。所以活動途中嚴禁攝影、拍照。若以拍攝為目的之朋友，請勿報名。 \r\n\r\n5. 為維護賞螢活動品質，本活動4人成團，上限20人。', 201),
+(2, 4, 'https://www.youtube.com/watch?v=YGhxsr_WxVc1', '', '螢河旅行12', '2021-07-07', '19:00:00', 8001, '星夜。螢河。森林。繡球花。1\r\n\r\n踏進中部的後花園、台中最美的賞螢秘境，\r\n8000 棵樹的森林秘境，海拔 700 公尺的山中花園，\r\n\r\n螢河在黑暗中閃爍，那是寧靜而象徵生生不息的希望之光~出發吧，進入這座森林。為這個季節譜出最動人的旋律', '螢河旅行 －報名資訊1', '所有喜歡森林的大小朋友們1', '森林平台1', '本票券每張皆包含入園門票150元，森林、螢火蟲秘境探險導覽，紫丘冰淇淋乙盒，森林旋轉木馬體驗乙次、香草水手作課程乙次、明信片乙張、一人份螢光晚餐。1', '15:15~15:30	螢河旅客集合，準時報到，記得攜帶電子票卷1\r\n15:30~16:40	第一星系：森林時光，園區導覽及體驗，搭乘森林中的旋轉木馬，吃一球森林冰淇淋，寫一張明信片給重要的人\r\n16:40~17:45	第二星系：香草導覽及手作，香草手作，創作獨一無二的香草水\r\n17:45~18:50	第三星系：花園野餐，親近自然，療癒人心的香草野餐籃\r\n19:00~19:30	第四星系：螢河旅行，專屬賞螢導覽（螢火蟲復育生態故事、靜心賞螢） ', '➤賞螢時間大約是19:00-20:30。若遇到下雨而18點雨停止，螢火蟲還是會出現。(在雨天的狀況下，活動還是照常進行。只要做好心理與裝備上的準備，還是可以開心的來參加)1\r\n\r\n1. 本活動有雨天備案，在賞螢活動前雨停，都還是看得到螢火蟲出現。 如果您是下雨天就完全不想出門的客人，請斟酌考慮是否報名！若天氣真的變化太大，導致行程無法走完。將致贈免費入園卷乙張，與免費賞螢乙次。(視報名人數發放)。 \r\n\r\n2. 基於安全考量請穿適宜走路之球鞋(需防滑)、長褲及輕便雨衣。請勿穿高跟鞋、夾腳拖鞋或露趾涼鞋。 \r\n\r\n3. 螢火蟲生態體驗的活動路線會行經較為陡峭的步道(此段路無法推嬰兒車或輪椅)，請參加者考量自身能力是否適合。 \r\n\r\n4. 本活動除了觀賞螢火蟲的生態外，也教育大眾如何保育螢火蟲，螢火蟲怕光。所以活動途中嚴禁攝影、拍照。若以拍攝為目的之朋友，請勿報名。 \r\n\r\n5. 為維護賞螢活動品質，本活動4人成團，上限20人。', 201),
+(3, 4, 'https://www.youtube.com/watch?v=YGhxsr_WxVc1', '', '螢河旅行12', '2021-07-07', '19:00:00', 8001, '星夜。螢河。森林。繡球花。1\r\n\r\n踏進中部的後花園、台中最美的賞螢秘境，\r\n8000 棵樹的森林秘境，海拔 700 公尺的山中花園，\r\n\r\n螢河在黑暗中閃爍，那是寧靜而象徵生生不息的希望之光~出發吧，進入這座森林。為這個季節譜出最動人的旋律', '螢河旅行 －報名資訊1', '所有喜歡森林的大小朋友們1', '森林平台1', '本票券每張皆包含入園門票150元，森林、螢火蟲秘境探險導覽，紫丘冰淇淋乙盒，森林旋轉木馬體驗乙次、香草水手作課程乙次、明信片乙張、一人份螢光晚餐。1', '15:15~15:30	螢河旅客集合，準時報到，記得攜帶電子票卷1\r\n15:30~16:40	第一星系：森林時光，園區導覽及體驗，搭乘森林中的旋轉木馬，吃一球森林冰淇淋，寫一張明信片給重要的人\r\n16:40~17:45	第二星系：香草導覽及手作，香草手作，創作獨一無二的香草水\r\n17:45~18:50	第三星系：花園野餐，親近自然，療癒人心的香草野餐籃\r\n19:00~19:30	第四星系：螢河旅行，專屬賞螢導覽（螢火蟲復育生態故事、靜心賞螢） ', '➤賞螢時間大約是19:00-20:30。若遇到下雨而18點雨停止，螢火蟲還是會出現。(在雨天的狀況下，活動還是照常進行。只要做好心理與裝備上的準備，還是可以開心的來參加)1\r\n\r\n1. 本活動有雨天備案，在賞螢活動前雨停，都還是看得到螢火蟲出現。 如果您是下雨天就完全不想出門的客人，請斟酌考慮是否報名！若天氣真的變化太大，導致行程無法走完。將致贈免費入園卷乙張，與免費賞螢乙次。(視報名人數發放)。 \r\n\r\n2. 基於安全考量請穿適宜走路之球鞋(需防滑)、長褲及輕便雨衣。請勿穿高跟鞋、夾腳拖鞋或露趾涼鞋。 \r\n\r\n3. 螢火蟲生態體驗的活動路線會行經較為陡峭的步道(此段路無法推嬰兒車或輪椅)，請參加者考量自身能力是否適合。 \r\n\r\n4. 本活動除了觀賞螢火蟲的生態外，也教育大眾如何保育螢火蟲，螢火蟲怕光。所以活動途中嚴禁攝影、拍照。若以拍攝為目的之朋友，請勿報名。 \r\n\r\n5. 為維護賞螢活動品質，本活動4人成團，上限20人。', 201),
+(4, 4, 'https://www.youtube.com/watch?v=YGhxsr_WxVc1', '', '螢河旅行12', '2021-07-07', '19:00:00', 8001, '星夜。螢河。森林。繡球花。1\r\n\r\n踏進中部的後花園、台中最美的賞螢秘境，\r\n8000 棵樹的森林秘境，海拔 700 公尺的山中花園，\r\n\r\n螢河在黑暗中閃爍，那是寧靜而象徵生生不息的希望之光~出發吧，進入這座森林。為這個季節譜出最動人的旋律', '螢河旅行 －報名資訊1', '所有喜歡森林的大小朋友們1', '森林平台1', '本票券每張皆包含入園門票150元，森林、螢火蟲秘境探險導覽，紫丘冰淇淋乙盒，森林旋轉木馬體驗乙次、香草水手作課程乙次、明信片乙張、一人份螢光晚餐。1', '15:15~15:30	螢河旅客集合，準時報到，記得攜帶電子票卷1\r\n15:30~16:40	第一星系：森林時光，園區導覽及體驗，搭乘森林中的旋轉木馬，吃一球森林冰淇淋，寫一張明信片給重要的人\r\n16:40~17:45	第二星系：香草導覽及手作，香草手作，創作獨一無二的香草水\r\n17:45~18:50	第三星系：花園野餐，親近自然，療癒人心的香草野餐籃\r\n19:00~19:30	第四星系：螢河旅行，專屬賞螢導覽（螢火蟲復育生態故事、靜心賞螢） ', '➤賞螢時間大約是19:00-20:30。若遇到下雨而18點雨停止，螢火蟲還是會出現。(在雨天的狀況下，活動還是照常進行。只要做好心理與裝備上的準備，還是可以開心的來參加)1\r\n\r\n1. 本活動有雨天備案，在賞螢活動前雨停，都還是看得到螢火蟲出現。 如果您是下雨天就完全不想出門的客人，請斟酌考慮是否報名！若天氣真的變化太大，導致行程無法走完。將致贈免費入園卷乙張，與免費賞螢乙次。(視報名人數發放)。 \r\n\r\n2. 基於安全考量請穿適宜走路之球鞋(需防滑)、長褲及輕便雨衣。請勿穿高跟鞋、夾腳拖鞋或露趾涼鞋。 \r\n\r\n3. 螢火蟲生態體驗的活動路線會行經較為陡峭的步道(此段路無法推嬰兒車或輪椅)，請參加者考量自身能力是否適合。 \r\n\r\n4. 本活動除了觀賞螢火蟲的生態外，也教育大眾如何保育螢火蟲，螢火蟲怕光。所以活動途中嚴禁攝影、拍照。若以拍攝為目的之朋友，請勿報名。 \r\n\r\n5. 為維護賞螢活動品質，本活動4人成團，上限20人。', 201),
+(38, 4, 'https://www.youtube.com/watch?v=YGhxsr_WxVc1', 'images/event/video/bde11bd1051f54d1c59a602c5e725f59.jpg', '螢河旅行12', '2021-07-07', '19:00:00', 8001, '星夜。螢河。森林。繡球花。1\r\n\r\n踏進中部的後花園、台中最美的賞螢秘境，\r\n8000 棵樹的森林秘境，海拔 700 公尺的山中花園，\r\n\r\n螢河在黑暗中閃爍，那是寧靜而象徵生生不息的希望之光~出發吧，進入這座森林。為這個季節譜出最動人的旋律', '螢河旅行 －報名資訊1', '所有喜歡森林的大小朋友們1', '森林平台1', '本票券每張皆包含入園門票150元，森林、螢火蟲秘境探險導覽，紫丘冰淇淋乙盒，森林旋轉木馬體驗乙次、香草水手作課程乙次、明信片乙張、一人份螢光晚餐。1', '15:15~15:30	螢河旅客集合，準時報到，記得攜帶電子票卷1\r\n15:30~16:40	第一星系：森林時光，園區導覽及體驗，搭乘森林中的旋轉木馬，吃一球森林冰淇淋，寫一張明信片給重要的人\r\n16:40~17:45	第二星系：香草導覽及手作，香草手作，創作獨一無二的香草水\r\n17:45~18:50	第三星系：花園野餐，親近自然，療癒人心的香草野餐籃\r\n19:00~19:30	第四星系：螢河旅行，專屬賞螢導覽（螢火蟲復育生態故事、靜心賞螢） ', '➤賞螢時間大約是19:00-20:30。若遇到下雨而18點雨停止，螢火蟲還是會出現。(在雨天的狀況下，活動還是照常進行。只要做好心理與裝備上的準備，還是可以開心的來參加)1\r\n\r\n1. 本活動有雨天備案，在賞螢活動前雨停，都還是看得到螢火蟲出現。 如果您是下雨天就完全不想出門的客人，請斟酌考慮是否報名！若天氣真的變化太大，導致行程無法走完。將致贈免費入園卷乙張，與免費賞螢乙次。(視報名人數發放)。 \r\n\r\n2. 基於安全考量請穿適宜走路之球鞋(需防滑)、長褲及輕便雨衣。請勿穿高跟鞋、夾腳拖鞋或露趾涼鞋。 \r\n\r\n3. 螢火蟲生態體驗的活動路線會行經較為陡峭的步道(此段路無法推嬰兒車或輪椅)，請參加者考量自身能力是否適合。 \r\n\r\n4. 本活動除了觀賞螢火蟲的生態外，也教育大眾如何保育螢火蟲，螢火蟲怕光。所以活動途中嚴禁攝影、拍照。若以拍攝為目的之朋友，請勿報名。 \r\n\r\n5. 為維護賞螢活動品質，本活動4人成團，上限20人。', 201);
 
 -- --------------------------------------------------------
 
@@ -272,7 +272,11 @@ INSERT INTO `members` (`id`, `fb_id`, `email`, `email_2nd`, `fullname`, `birthda
 (51, '', 'peichinxwxg46@gmail.com', NULL, '', '2021-06-02', '', '', '', '', '', '$2y$10$DJNcvxhMOvHfA80QS4Easeo6ht36vQDprojLrJFuD4aVHPee.Bck.', '', '2021-07-01 01:32:06'),
 (52, '', 'peidxwdwdching46@gmail.com', NULL, '', '2021-06-03', '', '', '', '', '', '$2y$10$TJonwktRd8V2SOfIIFo8N.wdTMQwnsjaGcm8yJhXv0hv..U3MTBjy', '', '2021-07-01 01:40:01'),
 (53, '', 'peggyserena@hotmail.com', NULL, '王小花', '2021-07-03', '0909936123', NULL, '基隆市', '仁愛區', '中正路', '$2y$10$9.Gbl7FhpuprmZnCYA6xE.2TFVLcJMlujFG.AhkdVI8wY7lsRMuRS', '', '2021-07-06 06:01:22'),
-(54, '', 'pe46@gmail.com', NULL, 'egerefer', '1978-01-05', '1234567890', NULL, '嘉義縣', '義竹鄉', 'qwwdeqeqe', '$2y$10$73T5ClsHycn94W6uQXeswe08GI0Ar58KhSkhNPdtwdzWpu1Qxd1OK', '', '2021-07-06 06:05:00');
+(54, '', 'pe46@gmail.com', NULL, 'egerefer', '1978-01-05', '1234567890', NULL, '嘉義縣', '義竹鄉', 'qwwdeqeqe', '$2y$10$73T5ClsHycn94W6uQXeswe08GI0Ar58KhSkhNPdtwdzWpu1Qxd1OK', '', '2021-07-06 06:05:00'),
+(55, '', 'user21112@mail.com', NULL, '', '2021-07-01', '', NULL, '宜蘭縣', '宜蘭市', '', '$2y$10$cw/Urucgv.hSLeRgbUcPOex.cc2DoKlcHHVml9LfKM7ocF8wM8ZPq', '', '2021-07-07 19:08:29'),
+(56, '', 'tt2346t@mail.com', NULL, '', '2021-07-05', '', NULL, '臺東縣', '成功鎮', '', '$2y$10$cexPn00WEWRAP1dMVz6Ok.N1fhLVl4IGFq1sjt0hW08KT8SoxlFbS', '', '2021-07-07 19:10:43'),
+(57, '', 'r32jio432532g@mail.com', NULL, '', '2021-07-01', '', '234', '新北市', '永和區', '', '$2y$10$XNfTB9fxUWjCqXshbzmeKuijGkKZHHF2rd/Cb8Ai17UxnG685wBjW', '', '2021-07-07 19:17:04'),
+(58, '', 'dewafe@mail.com', '', '', '2021-07-01', '', '817', '高雄市', '東沙群島', '', '$2y$10$ERKq2sG1ul8V6nSMee3QPuwyrOFQ3RDIONEkaX/P6WF/FXwy1QgHi', '', '2021-07-07 19:18:54');
 
 -- --------------------------------------------------------
 
@@ -560,14 +564,36 @@ CREATE TABLE `staff` (
 --
 
 INSERT INTO `staff` (`staff_id`, `role`, `identityNum`, `email`, `fullname`, `birthday`, `mobile`, `zipcode`, `county`, `district`, `address`, `hash`, `created_at`) VALUES
-('A00001', 1, 'F123456789', 'peggyserena46@gmail.com', '黃小桔', '2021-07-01', '0909123456', '401', '臺中市', '東區', '台北地區123', '$2y$10$SomDY8WI2bNT1yIyFRCdpO8BEV4lqqWEcCny2cijs5OQli1kdwneS', '2021-06-28 16:52:49'),
-('B00001', 2, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$XlchHoBnd4grbEC0kyPnA.ZAGfpLCMbfcs86NI5F5JrDvSWNqMB9y', '2021-07-01 21:20:04'),
+('A00001', 1, 'F123456789', 'peggyserena46@gmail.com', '黃小桔', '2021-07-01', '0909123456', '893', '金門縣', '金城鎮', '台北地區123', '$2y$10$SomDY8WI2bNT1yIyFRCdpO8BEV4lqqWEcCny2cijs5OQli1kdwneS', '2021-06-28 16:52:49'),
+('A00002', 1, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$.4rH.f7LKz36J7h5xf9j0OrCZerMb831mSZq0MnWMxwy.Kmg/0Lme', '2021-07-07 20:42:02'),
+('A00003', 1, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$UQs7NybCiXoP8SQ3eNG1Q./660R7EtSV.FUrHeKWIV.A33PMC8NWC', '2021-07-07 20:42:02'),
+('A00004', 1, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$wnvb3jFCaOXfk9iYgpyXpORQIVU/zQ8lijXO/fhzuiCiakxP6Dllq', '2021-07-07 20:42:02'),
+('A00005', 1, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$EuduJmcyPCSqRk5AeKYzbuNK1iCMW64pFwwnRTEb9gVO/NgT1oUtm', '2021-07-07 21:14:18'),
+('A00006', 1, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$iwKdPoU..WjfDjQjhPngXOSQWVRKpVw5l1ss8OYzwRXHXu4jVogrC', '2021-07-07 21:14:18'),
+('A00007', 1, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$c3rWX0dhBJNLzGyI1wiR5.9qWb2V5010n1P6nz/vpcnPaYZPR7s1S', '2021-07-07 22:00:50'),
+('A00008', 1, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$YjGlWbquQaIyMfr82S3NhOW5RS6h88KwZNhfA0bR3OlekepU3jCs.', '2021-07-07 22:00:50'),
+('B00001', 2, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$SomDY8WI2bNT1yIyFRCdpO8BEV4lqqWEcCny2cijs5OQli1kdwneS', '2021-07-01 21:20:04'),
 ('B00002', 2, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$afTuYwqEam2RwXLtQokNjeouPFPFNHty9G7lI8hfFvEM2xpCj2Ihi', '2021-07-01 21:20:04'),
 ('B00003', 2, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$mETKdFnCobtFFDIQA5fQ0OGJVNre6MkFkXe5PscGDtKDUer2r8Zs2', '2021-07-01 21:20:04'),
 ('B00004', 2, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$fncEUFbvPS.kBSdSAJOVU.uHue2lI1d.679/QNEDvFrBmJBREm3Oi', '2021-07-01 21:23:47'),
 ('B00005', 2, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$VeBxt7ZRlzeAgLtnP7GynuP7F7cbdfUBGBzcYBbQwQlOTu2TF3nO6', '2021-07-01 21:23:47'),
 ('B00006', 2, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$gZUU7pizC.ZGbvAoTR6u5u5a/feivPvVZJUj4Bgs/9P97z9/jropy', '2021-07-01 21:23:47'),
-('C00001', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$XDfpMeVVSt/3fIn2qmejJ.VYACHyv4pMp4VH0A0y.QPUT8q6E49.G', '2021-07-01 21:11:33'),
+('B00007', 2, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$ttb8cAHZOtuOagTbLbNn5ufMo/pB/zGjhGZUSzwH2cbkm7bQecpWa', '2021-07-07 20:25:22'),
+('B00008', 2, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$7TbccFZ6mXpn.Sh9co4DUeWMevxS80LmWF40R7R7ap7WjWtZNyPUa', '2021-07-07 20:25:22'),
+('B00009', 2, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$KlgxTNARHJYcYtXUI7zzC.MIkjBURGls6wHroBF.PgZ/1XfMgkRlW', '2021-07-07 20:26:54'),
+('B00010', 2, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$3ngHQ9IcPddsFnFFhp5o4enPwEiJRh19tLbdoEeRRE9ZGVTIONcsG', '2021-07-07 20:26:54'),
+('B00011', 2, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$FXN7ylljYBjotTMRBK5N2eXrY1luZ7BiXcnF93Fgb/hFzzakbCfYy', '2021-07-07 20:27:52'),
+('B00012', 2, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$c.rvuqX/msydE/PpCEt71.XzQso2lnbVhpsL9wzFoux1l9IZyxCYy', '2021-07-07 20:27:52'),
+('B00013', 2, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$mSITc41h0IFSl2q0PqUZXeKU0EWN9DjxgZNlSZWB5t0zjaw.7gUBm', '2021-07-07 20:27:54'),
+('B00014', 2, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$CRY6U1sgfTmVpzJWLjx8KOyFBL/u6i5AEU5t5ev6tkf.MQCgOhnBm', '2021-07-07 20:27:54'),
+('B00015', 2, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$cZJlKv7A08MVRFChaNe3He7VDVPbbYc2CGSyFbTSH85RP7B9lrVbC', '2021-07-07 20:41:02'),
+('B00016', 2, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$0weKo6TcRn2yRxNF53JnOeg5jZnurBR4dLVJFmmjD7CIA68gEDYpy', '2021-07-07 20:41:02'),
+('B00017', 2, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$.CLBq0dzP.KJ2OEOC4XFZerPFSsntEa/KZTdmIb6XdxTCiIQ5xPpC', '2021-07-07 21:24:30'),
+('B00018', 2, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$LoFz6HUP/jlyWxy4asEA8evDL3pPOrlzcZDhXMVjkcV9tRWY3E9cS', '2021-07-07 21:24:30'),
+('B00019', 2, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$/seQRBapv7L4qllAldHrRu8O0mXGHV6tp1E2cZOuIMUHZQ53vIr4i', '2021-07-07 21:24:30'),
+('B00020', 2, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$KecsJa.bpkPYHG1sahtBP.bVylxypxJHbZBQSQHZq9fL/aaHtFcKe', '2021-07-07 22:00:59'),
+('B00021', 2, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$I3fLMdyNvcNSWhbPWwpE5.jC.m3GjBrKDG/0d50J0mN6A4mWhtwea', '2021-07-07 22:00:59'),
+('C00001', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$SomDY8WI2bNT1yIyFRCdpO8BEV4lqqWEcCny2cijs5OQli1kdwneS', '2021-07-01 21:11:33'),
 ('C00002', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$nEZ8uQldM6QObXuxNep1O.IGmBVAvjIQVi3yrSghmJyoNGX4SjY4a', '2021-07-01 21:11:33'),
 ('C00003', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$hbHCt5cpWKwqA3YRmMQ7YuOgcePWrGBOAtsLhGNw958m6tR3.m6oe', '2021-07-01 21:11:33'),
 ('C00004', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$J6.eByjjPSMgiiOmvLdVT.bSUSZAul1LooPm4ByeAbL6o8VS82Y1O', '2021-07-01 21:11:33'),
@@ -576,7 +602,81 @@ INSERT INTO `staff` (`staff_id`, `role`, `identityNum`, `email`, `fullname`, `bi
 ('C00007', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$LJoiPg00VHfPRCntHBMiIOQW8ZINwkP46gTVsa4digJ.AMhpu3ad6', '2021-07-01 21:45:34'),
 ('C00008', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$kedauYAjIznYXvf6zfKQ7uuWNYk1IIMaHxmDeuzpILZxZqub.ru/e', '2021-07-01 21:45:34'),
 ('C00009', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$NJIpt1xBqiUkOHk8mmDAF.UZOPaOhL2LNj4F4X5PH2Bcep0xl/wR2', '2021-07-01 21:45:34'),
-('C00010', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$bhQnp4kAY1qOqpaPkWVXRuaWWY7M2s5uVT5sTAgizIJSyEyvVuS5C', '2021-07-01 21:45:34');
+('C00010', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$bhQnp4kAY1qOqpaPkWVXRuaWWY7M2s5uVT5sTAgizIJSyEyvVuS5C', '2021-07-01 21:45:34'),
+('C00011', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$nnHS0mzmzNVaxPQQ4P1zaeUWSv.SP/KpER55TeTZRpQZyFfTDkVuu', '2021-07-07 20:25:08'),
+('C00012', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$4arKHfouVaABhVgRjx2VqOxuTSoiwaPWRueI1FQ/5tCAkusgGfF1e', '2021-07-07 20:25:08'),
+('C00013', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$Tc7OXoDExdxkLij9vF1h1u8Vl0qeKJiornrMVow4tWIeoOJmM/Bi6', '2021-07-07 20:25:14'),
+('C00014', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$MxBR4IXfh8.Sh0lR2qfpqendfQsNkp6MK0AZuB9nLe9us/Te7gSym', '2021-07-07 20:25:14'),
+('C00015', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$ZeT7hDjwkqQO0naYQ9MeMOTxroPGKwSAFtSdpecZPi2g6Qjy9hjgu', '2021-07-07 20:27:58'),
+('C00016', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$pG.gA8VtvTMxEdsE0QkPduxyR22MFeRxp4.D5M4XpTJ.POO0vSUAm', '2021-07-07 20:27:58'),
+('C00017', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$Gc.Tl6dJ2j5X5aGBEFRbR.dadf8XJV5wUxEKmok928etIZzW86Bii', '2021-07-07 20:28:02'),
+('C00018', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$wsE9IA3hFJxlrTCUY5mBE.8pVtlo5dSGBoITim38hEOP.FUIoZAgi', '2021-07-07 20:28:02'),
+('C00019', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$zT.hN/tc5RkCEBdG4jCqDe.G35e4BYvNKlCKpuClajfqnym70Xswe', '2021-07-07 20:28:02'),
+('C00020', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$4quPsN2LL9191eQBkVrCiuUJbkqgsgKua5VFcECNZKxm3sfEf5uwO', '2021-07-07 20:28:02'),
+('C00021', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$BG6zBN6F0U8UmgS.Kp.WbuGSv1qdU9j2c/Hck1hppId/TCzOz09pC', '2021-07-07 20:28:02'),
+('C00022', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$WYOnE92qV.m5jGQqLHJh0uN1vEImcDK0PTHZckOwhxR5eXio3re6i', '2021-07-07 20:35:53'),
+('C00023', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$a1Xzi1ob279VtIgxON6UZ.ONvm8Wkie07OGbaYnYvj8Yznv3w4eWi', '2021-07-07 20:35:53'),
+('C00024', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$kCO7J/mw3nFOTwEB1Na32uLhTPuOEnQS4YK53OFRYOzPdnwZhgNuK', '2021-07-07 20:42:06'),
+('C00025', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$xCJkx8/ZDn/.zJvsY8Y9UePW/Xxj0naxHwaqB6kSMajBBuN1w2cEi', '2021-07-07 20:42:06'),
+('C00026', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$PgLdu6exHbjHNlJNq/Lvb.GxqfGonltYDqUM/Ru35SNuRq6AWa/Ya', '2021-07-07 20:42:06'),
+('C00027', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$ngTczgnqcEcgIaf8mIh7uuM3mD2aPSXEbvi00pmt7OH57tLUmBQwu', '2021-07-07 21:35:02'),
+('C00028', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$DX3GjhexWbiXmOyM.EtVcu5H9Dn7d4cCUyE3bjedRzmFN/YCfYytm', '2021-07-07 21:35:02'),
+('C00029', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$vzJGbfu4nEP/WP0BxqIuv.TK6Qasci9ym1FsEUR46nefrFg.qAQN6', '2021-07-07 21:35:02'),
+('C00030', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$nXeoKwpVRUtJPRnEUHfAYO2UQtkNpDmNYhPQ49fejmw216cDYOP2a', '2021-07-07 21:35:53'),
+('C00031', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$Cpnagwbd8NYuiLRxxgl6vO.Im9rpTzoxTjTK9HZXoGgbN/H8Lk4RS', '2021-07-07 21:35:53'),
+('C00032', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$DvtNsCm2gwH1fa0GRJ7z4OBuQ9VKC6oUkk..hyCk2jeZRcMZFRelG', '2021-07-07 21:35:53'),
+('C00033', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$PiGTCPIVd/Xd0xPSinmfIOquVaeWKj7YySGI5IZt4dMEqdPABJtXa', '2021-07-07 21:39:40'),
+('C00034', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$T.XWY4vgOrjHkbXb7qfCdepz7/4Q6HZDGZn4N85pyjYyrP5GH4Uda', '2021-07-07 21:39:40'),
+('C00035', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$ClBm5hKfKRmqsQvp.BWXkeQJIvNEb04Pe2bmbn1yVL188OJvt9QzK', '2021-07-07 21:39:40'),
+('C00036', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$VJOYZzpB5QB0GtBYbdBy2uz5kL9IegPu7HrZ2YXYEl2UZXDiUJMOO', '2021-07-07 21:39:40'),
+('C00037', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$.ZEEvNpO8C3Bb3nhvNwpNeb4uDSRJzwTPtdlK8dADSIlb3HZwZ2mm', '2021-07-07 21:39:40'),
+('C00038', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$KU61HhkEVzvOpB39mmvCHe88uOCqHTUG4Ep9K24EvxQljHMKfv9gq', '2021-07-07 21:39:40'),
+('C00039', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$7WiEI3HzxTQfzit08NSOjeQlUiiKfEjVQ8KvPcw7Nf97SR.3.0Fq.', '2021-07-07 21:39:40'),
+('C00040', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$le3mf9kMKAz1R7Z2vlG/GeDlZHDPIYt/Fdxdoj0LPWiXTXl/C76Q.', '2021-07-07 21:39:40'),
+('C00041', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$PgDAR8ade7hQda1BHxE7LOleD4rIq4o1rOKppF9fbixztVxvLOBna', '2021-07-07 21:39:40'),
+('C00042', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$SisvRXYJKJnp3lXY8dv6hObnK6dShH1dlV7nIPfCBNoS4i6ShGsDG', '2021-07-07 21:39:40'),
+('C00043', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$waWURaRPt4OUSnmMj.nIXuHwRyTEQ6U2hsSer6Q1INB2B1iACmuzS', '2021-07-07 21:39:40'),
+('C00044', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$t4HRYJKJPHvoQOIxW6ttgeIz0F.sUg5XuR.FwnqLyxeXR4BXGb02S', '2021-07-07 21:39:40'),
+('C00045', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$3oM2WLG8mj5skBItH5QvYuFvNysmp2kd6L6P2uwXybNvB2YyVpgAK', '2021-07-07 21:39:40'),
+('C00046', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$okfbzAkNTrPTS.9q7uAdvOJewKqjhJzioVogLc60.zZk8632DNeoS', '2021-07-07 21:39:40'),
+('C00047', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$rmcHzXdQHzO0.Kx69JP0eeMSsxiw6j3NGZduZ.Z6StHXbJbtV7Rru', '2021-07-07 21:39:40'),
+('C00048', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$3oG/ThrI7Q2oU1.Fs8jeVeVVCzMqVcIYdxgwqHEk5FZZWwuGewl..', '2021-07-07 21:39:40'),
+('C00049', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$dWcAx0wT4Ud9079eiYPDj.S6b5bfmqfS/Fd4Rv4Kqu41adcdwh046', '2021-07-07 21:39:40'),
+('C00050', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$j.DcVNC5ebh.VZmx6aapqu.6k0IAg8EXu.fcfkKxPyrdBB3cO/oQ2', '2021-07-07 21:39:40'),
+('C00051', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$QbO3Pls4/YoLfGdksGlt4.0kgrCtbFHaNGfAXrKL3xiJ1O7z8Ikuq', '2021-07-07 21:39:40'),
+('C00052', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$Gqe0MQFAxSHeipSDXkYe2ODuy5r5VhT5Zs21iLUm2lSMqcJdpQc8W', '2021-07-07 21:39:40'),
+('C00053', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$1PTZGEeZBFoL7VIyKskC0eLoxpJXmFaMpqBEtSHE2.CKGOziYbGSq', '2021-07-07 21:39:40'),
+('C00054', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$7nBA3Td1de9Gif6diYQ0wOGVHqG5HwF89OuagElwrGEEQ65fb8Yxa', '2021-07-07 21:39:40'),
+('C00055', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$EIAMlDUpA0xf1O1/o7C81.KaqCqmyhyAxc2nbW.5c29mpBU8Imtc.', '2021-07-07 21:39:40'),
+('C00056', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$.w/GMBQDgGyWj52pPrx2PO4p6U4WAkcQzrh5WuDfKfpXPlv5WTURe', '2021-07-07 21:39:40'),
+('C00057', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$qLNrNNjaQor/eNzR/NuDQe4KcaXTBf7vhQZ284it.3MvGAiZrchvu', '2021-07-07 21:39:40'),
+('C00058', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$R6P/5hECjUSlCXzhAu99yuDYvsH5732qLjXlnyGnXU4A7PVpsRUIa', '2021-07-07 21:39:40'),
+('C00059', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$03K9g0zWaeK.x4ueOror9OHuYcI2aD1DkkgQLRg4K/NSAs927RyZW', '2021-07-07 21:39:40'),
+('C00060', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$Ad9GJALTkR0xmkoA7L2zAOnRqmAj7YXCfKK0MbOsN.gL1dRcmKfOK', '2021-07-07 21:39:40'),
+('C00061', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$f4cnafRq/.UFS1HnvRlku.x.cT1pn/Wtr1Wvkcd2UTmrd0z93zO2i', '2021-07-07 21:39:40'),
+('C00062', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$V/sWGvqgDkAmw0Rwz6pRYunyEQI5YE8WPiTDuAAVG4L4zixEwyisK', '2021-07-07 21:39:40'),
+('C00063', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$7gCeMrgxXycttyGSSOYf0eRSz5WX.UvY1gtwF3GxcPx8/.5l6R64a', '2021-07-07 21:39:40'),
+('C00064', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$ckJZ/xMHtl6ga1isXzNTSObtePxeoFjDoXx2hz2bP7NlSgJ2XzmY2', '2021-07-07 21:39:40'),
+('C00065', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$w1IbmbpuyVkKyPp1rOpZu.Io7LNjaJzUc3bSEhrZBMRkgd65MKOo6', '2021-07-07 21:39:40'),
+('C00066', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$JRAgt2W7qy0Vkn3uqHda.OiXvb1S3CSUpqxM24LDrjS/TqOqFT3iW', '2021-07-07 21:39:40'),
+('C00067', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$arODrBTw72dgbryJlYoKXejOeVlKKaN66VNpadrWpZVu4YsMuieke', '2021-07-07 21:39:40'),
+('C00068', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$4kXGPUIMOCAVyR1UDrUdquCNOjHsfC/.u/8rdHskI5S2qrjZZcRXS', '2021-07-07 21:39:40'),
+('C00069', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$E9Q0Kf.ATljhAMCHDWTz1u6F3ZKLoEAMXazTJ/7A/C7nNzv2GSm7S', '2021-07-07 21:39:40'),
+('C00070', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$IHPIQKQkZeqp.qu/s3Aa/O5YR8MLwqcv1B9oVzLtiPdwr8BHQYOQ.', '2021-07-07 21:39:40'),
+('C00071', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$qQvRfkfnyRHOaITZhgKsHeSeqc9EZWbkwVSvShaPAz9n80qgymFLq', '2021-07-07 21:39:40'),
+('C00072', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$eEFAHaV54xLPcDkPH4dbNOjqFpLO8OiNJibCzzro1zSUYlu75pVb.', '2021-07-07 21:39:40'),
+('C00073', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$Kv5Fa1IJhAArukIQ/3liA.mGlGv9yD1D2Ad7ivqy5PoWEHR7LwL42', '2021-07-07 21:39:40'),
+('C00074', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$jSkhroVCcVADzdsZwy.oCuiwqwiqEeevoQy2P9eDpd9wnCdCxYdUu', '2021-07-07 21:39:40'),
+('C00075', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$Wf0jMZkhlRwizB5TV5VbYu3B0OS6IT86WICLts2qHmOO8gy8DLIp2', '2021-07-07 22:00:40'),
+('C00076', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$Ycg.DBW6zTUOY5fzAcpnj.XPyxf3hPRxnsGfIw8POaq1rdgqMEM5a', '2021-07-07 22:00:40'),
+('C00077', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$v4X.nTy9aJ9ou1AGVe0RruFOD126mAGHMQYDEEGXbS9XrNv7e8S62', '2021-07-07 22:00:40'),
+('C00078', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$KeSBtiXW27/dFzm4RnyJc.V3BxDGArl/l41NjgMtc/qkijCoa1Pji', '2021-07-07 22:00:56'),
+('C00079', 3, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$eZ0yutePK8f/C0Ju.AS9UOuJeQUgzBJEbqZb9KqDcid7kUoT5ab8.', '2021-07-07 22:00:56'),
+('D00001', 4, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$MPwVPNiCNmIn7pbIrdTVvO/L//uXDR5LOO606Cfo7UZE4wJmy/g0i', '2021-07-07 22:00:33'),
+('D00002', 4, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$rbqAJtXbzFOeOLiJ9lgFBOIj6iNaXU3YbBoXx4XNTho/t/AQ.UEcS', '2021-07-07 22:00:33'),
+('D00003', 4, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$xoRKgbMyex5YF.z.PpqDluHXXsCnm/.0FesQXK5.5FQ3PXwfzP9Iu', '2021-07-07 22:00:33'),
+('D00004', 4, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$xCaZ5JZrONvt7OjF0yR2s.xny8lEKibUOLgzistwnW61qno6wE.UC', '2021-07-07 22:01:02'),
+('D00005', 4, '', '', NULL, NULL, NULL, NULL, NULL, '', NULL, '$2y$10$lq6Q3bqQw7EowvJ2aJZFie8DJt9wjbGB38eWjBPq8pTxUTfVdvH5.', '2021-07-07 22:01:02');
 
 -- --------------------------------------------------------
 
@@ -586,7 +686,6 @@ INSERT INTO `staff` (`staff_id`, `role`, `identityNum`, `email`, `fullname`, `bi
 
 CREATE TABLE `staff_role_category` (
   `id` int(1) NOT NULL,
-  `role` int(1) NOT NULL,
   `position` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -594,11 +693,11 @@ CREATE TABLE `staff_role_category` (
 -- 傾印資料表的資料 `staff_role_category`
 --
 
-INSERT INTO `staff_role_category` (`id`, `role`, `position`) VALUES
-(1, 1, '管理者'),
-(2, 2, '經理'),
-(3, 3, '會計'),
-(4, 4, '一般員工');
+INSERT INTO `staff_role_category` (`id`, `position`) VALUES
+(1, '管理者'),
+(2, '經理'),
+(3, '會計'),
+(4, '一般員工');
 
 -- --------------------------------------------------------
 
@@ -907,7 +1006,7 @@ ALTER TABLE `index`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `members`
 --
 ALTER TABLE `members`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `order_event`

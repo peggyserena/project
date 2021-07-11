@@ -40,7 +40,7 @@ switch ($action){
 
             $hash = sha1($_POST['email'] . uniqid());
 
-            if (isset($_POST['fb_id'])){
+            if (!empty($_POST['fb_id'])){
                 $sql = "INSERT INTO `members`(
                     `fb_id`, `email`, `fullname`, `birthday`, 
                     `mobile`, `zipcode`,`county`, `district`,
@@ -58,9 +58,9 @@ switch ($action){
                 $_POST['fullname'],
                 $_POST['birthday'],
                 $_POST['mobile'],
-                $_POST['zipcode'],
-                $_POST['county'],
-                $_POST['district'],
+                $_POST['zipcode'] ?? "",
+                $_POST['county'] ?? "",
+                $_POST['district'] ?? "",
                 $_POST['address'],
                 password_hash($_POST['password'], PASSWORD_DEFAULT),
 
@@ -82,9 +82,9 @@ switch ($action){
                 $_POST['fullname'],
                 $_POST['birthday'],
                 $_POST['mobile'],
-                $_POST['zipcode'],
-                $_POST['county'],
-                $_POST['district'],
+                $_POST['zipcode'] ?? "",
+                $_POST['county'] ?? "",
+                $_POST['district'] ?? "",
                 $_POST['address'],
                 password_hash($_POST['password'], PASSWORD_DEFAULT),
 
@@ -104,16 +104,29 @@ switch ($action){
         break;
     case "admin_register": 
         $staff = $_SESSION['staff'] ?? null;
-        $auth_role = [1, 2];
+        $auth_role = [
+            1 => ["*"],
+            2 => [3, 4],
+        ];
+        $aceept_role = $auth_role[$staff['role']] ?? [];
         if (!empty($staff)){
-            if (in_array(intval($staff['role']), $auth_role)){
-                if (isset($_POST['quantity']) && isset($_POST['role'])) {
-                    $output = ['data' => []];
-                    $sql = "SELECT `staff_id` FROM `staff` WHERE `role` = ? ORDER BY `created_at` DESC LIMIT 1";
+            if (in_array("*", $aceept_role) || in_array($_POST['role_id'], $aceept_role)){
+            // if (in_array(intval($staff['role']), $auth_role) && in_array(intval($staff['role']), $auth_role)){
+                if (isset($_POST['quantity']) && isset($_POST['role_id'])) {
+                    // 抓取role的position職稱
+                    $sql = "SELECT `position` FROM `staff_role_category` WHERE `id` = ?";
                     $stmt = $pdo->prepare($sql);
-                    $stmt->execute([$_POST['role']]);
+                    $stmt->execute([$_POST['role_id']]);
+                    $position = $stmt->fetch();
+                    $position = $position['position'];
+
+                    // 抓取某職稱最後一筆員工，以計算新的staff_id
+                    $output = ['data' => []];
+                    $sql = "SELECT `staff_id` FROM `staff` WHERE `role` = ? ORDER BY `staff_id` DESC LIMIT 1";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute([$_POST['role_id']]);
                     $staff_id = $stmt->fetch();
-                    $role_code = chr(intval($_POST['role']) + 64); // 員工編號第一碼英文
+                    $role_code = chr(intval($_POST['role_id']) + 64); // 員工編號第一碼英文
                     if (empty($staff_id)){
                         $staff_id_num = intval("00001");
                     }else{
@@ -131,12 +144,13 @@ switch ($action){
                         $staff_id = $role_code.str_pad(strval($staff_id_num++), 5, "0", STR_PAD_LEFT);
                         $password = bin2hex(random_bytes(5));
                         array_push($output['data'], [
+                            'position' => $position,
                             'staff_id' => $staff_id,
                             'password' => $password,
                         ]);
                         $insert_value = array_merge($insert_value,[
                             $staff_id,
-                            $_POST['role'],
+                            $_POST['role_id'],
                             password_hash($password, PASSWORD_DEFAULT),
                         ]);
                     }

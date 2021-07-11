@@ -63,7 +63,7 @@ if (empty($row)) {
         <div class="col-md-6">
             <h2 class="title m-0 ">修改資料</h2>
             <div class="card">
-                <form name="form1" action="memberEditor-api.php" method="post" novalidate onsubmit="checkForm(); return false;">
+                <form name="form1" id="myForm" action="memberEditor-api.php" method="post" novalidate onsubmit="checkForm(); return false;">
                     <div class="form-group">
                         <label for="fullname autofocus ">姓名</label>
                         <input type="text" class="form-control" name="fullname" id="fullname" value="<?= htmlentities($row['fullname']) ?>"></input>
@@ -136,18 +136,23 @@ if (empty($row)) {
 
 
         if (isPass) {
+            var data = $(document.form1).serialize() + "&zipcode=" + $("#zipcode").val();
             $.post(
                 'memberEditor-api.php',
-                $(document.form1).serialize(),
+                data,
                 function(data) {
                     if (data.success) {
                         modal_init();
-                        insertPage("#modal_img", "animation_login.html");
+                        insertPage("#modal_img", "animation_success.html");
                         insertText("#modal_content", '資料修改成功');
                         $("#modal_alert").modal("show");
                         setTimeout(function(){window.history.back();}, 2000);
                     } else {
-                        alert(data.error);
+                        modal_init();
+                        insertPage("#modal_img", "animation_error.html");
+                        insertText("#modal_content", "資料傳輸失敗");
+                        $("#modal_alert").modal("show");
+                        setTimeout(function(){window.history.back();}, 2000);
                     }
                 },
                 'json'
@@ -177,7 +182,9 @@ $("#birthday").attr("max", max);
     });
   //first time init all select elements in #myForm
 //   M.FormSelect.init(document.querySelectorAll('#myForm select'));
-  document.querySelector('#myForm select[name=county]').value = "<?= $_SESSION['staff']['county'] ?>";
-  document.querySelector('#myForm select[name=district]').value = "<?= $_SESSION['staff']['district'] ?>";
+  document.querySelector('#myForm select[name=county]').value = "<?= $_SESSION['user']['county'] ?>";
+  document.querySelector('#myForm select[name=county]').dispatchEvent(new Event("change"));
+  document.querySelector('#myForm select[name=district]').value = "<?= $_SESSION['user']['district'] ?>";
+  document.querySelector('#myForm select[name=district]').dispatchEvent(new Event("change"));
 </script>
 <?php include __DIR__ . '/parts/html-foot.php'; ?>

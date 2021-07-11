@@ -1,20 +1,12 @@
 <?php include __DIR__ . '/parts/config.php'; ?>
 <?php
 $title = '會員註冊';
-$pageName ='staff_register';
+$pageName ='staff_password_editor';
 ?>
 <?php include __DIR__ . '/parts/staff_html-head.php'; ?>
 <style>
     body {
         background: linear-gradient(45deg, #e1ebdc 0%, #e8ddf1 100%);
-    }
-
-    .con_01 {
-        border-radius: 0.25rem;
-
-        box-shadow: 0px 0px 15px #666E9C;
-        -webkit-box-shadow: 0px 0px 15px #666E9C;
-        -moz-box-shadow: 0px 0px 15px #666E9C;
     }
 
     form .form-group small.error {
@@ -54,9 +46,7 @@ $pageName ='staff_register';
 
     }
 
-    .form-group ::-webkit-input-placeholder {
-        color: #a4b0be;
-    }
+
 /* =============================== modal =============================== */
 
 
@@ -87,7 +77,7 @@ $pageName ='staff_register';
                         <input type="password" class="form-control" id="password" name="password" placeholder="＊＊＊＊＊＊" required>
                         <small class="form-text error"></small>
                     </div>
-                    <div class="button m-4"><button type="submit" class="custom-btn btn-4 t_shadow ">註冊</button></div>
+                    <div class="button m-4"><button type="submit" class="custom-btn btn-4 t_shadow ">送出</button></div>
                     <hr>
                 </form>
             </div>
@@ -117,14 +107,19 @@ $pageName ='staff_register';
                     console.log(data);
                     if (data.success) {
                         modal_init();
-                        insertPage("#modal_img", "animation_login.html");
-                        insertText("#modal_content", "修改成功");
+                        insertPage("#modal_img", "animation_success.html");
+                        insertText("#modal_content", "密碼修改成功");
                         $("#modal_alert").modal("show");
                         setTimeout(function(){window.history.back();}, 2000);
-                        // alert('註冊成功');
-                        //window.history.back();
                     } else {
-                        alert(data.error);
+                        modal_init();
+                        insertPage("#modal_img", "animation_error.html");
+                        insertText("#modal_content", "資料傳輸失敗");
+                        $("#modal_alert").modal("show");
+                        setTimeout(function(){window.history.back();}, 2000);
+                        // alert(data.error);
+
+
                     }
                 },
                 'json'

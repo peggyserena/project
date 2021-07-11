@@ -271,7 +271,7 @@ switch ($action){
         where user_id = ? AND so.id = ?
         group by _or.`item_id`";
         
-        $sql_sales_order = "SELECT so.*, m.fullname, m.mobile, m.zipcode, m.city, m.address from `sales_order` as so JOIN `members` as m ON so.user_id = m.id where so.user_id = ? AND so.id = ?";
+        $sql_sales_order = "SELECT so.*, m.fullname, m.mobile, m.zipcode, m.county, m.district, m.address from `sales_order` as so JOIN `members` as m ON so.user_id = m.id where so.user_id = ? AND so.id = ?";
         
         $output = [];
         $stmt = $pdo->prepare($sql_hotel);

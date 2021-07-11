@@ -10,6 +10,12 @@ switch ($type) {
         $stmt->execute([]);
         $result = $stmt->fetchAll();
         break;
+    case 'read':
+        $sql = "SELECT * FROM `event` WHERE id = ?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$_POST['id']]);
+        $result = $stmt->fetch();
+        break;
     case 'add':
         // insert video image
         $name = uploadImg($_FILES['video_img'], "images/event/video/");
@@ -37,6 +43,37 @@ switch ($type) {
         // INSERT INTO `event` (`event_id`, `path`) VALUES  (1, ?), (1, ?), (1, ?)
         $stmt = $pdo->prepare($sql);
         $stmt->execute($name_list);
+
+        $result = ["success"];
+        break;
+    case 'edit':
+        // insert video image
+        // $name = uploadImg($_FILES['video_img'], "images/event/video/");
+        // $_POST['video_img'] = $name;
+
+        // insert event
+        $id = $_POST['id'];
+        $columns = ['cat_id', 'video', 'name', 'date', 'time', 'price', 'description', 'title', 'age', 'location', 'content', 'info', 'notice', 'limitNum'];
+        $sql = "UPDATE `event` SET ";
+        
+        $sql .= implode(" = ?, ", $columns)." = ? WHERE id = $id";
+        // INSERT INTO `event` (`cat_id`, `video`, `name`, `date`, `time`, `price`, `description`, `title`, `age`, `location`, `content`, `info`, `notice`, `limitNum`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)        
+        // UPDATE `event` `cat_id` = ?, `video` = ?,  `name` = ?,  `date` = ?,  `time` = ?,  `price` = ?,  `description` = ?,  `title` = ?,  `age` = ?,  `location` = ?,  `content` = ?,  `info` = ?,  `notice` = ?,  `limitNum` = ?    
+
+        $data = [];
+        foreach($columns as $col){
+            array_push($data, $_POST[$col]);
+        }
+        
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($data);
+        
+        // insert gallery image
+        // $name_list = uploadImgs($_FILES['img'], "images/event/gallery/");
+        // $sql = "INSERT INTO `event_image` (`event_id`, `path`) VALUES ".substr(str_repeat("($event_id, ?),", count($name_list)), 0, -1);    
+        // INSERT INTO `event` (`event_id`, `path`) VALUES  (1, ?), (1, ?), (1, ?)
+        // $stmt = $pdo->prepare($sql);
+        // $stmt->execute($name_list);
 
         $result = ["success"];
         break;
@@ -152,58 +189,3 @@ function uploadImg($img, $target_dir){
 echo json_encode($result, JSON_UNESCAPED_UNICODE);
 
 
-// $output = [];
-
-// $member_id = $_SESSION['staff']['staff_id'];
-// $video = $_POST['video'];
-// $video_img = $_POST['video_img'];
-// $name = $_POST['name'];
-// $date = $_POST['date'];
-// $time = $_POST['time'];
-// $price = $_POST['price'];
-// $title = $_POST['title'];
-// $description = $_POST['description'];
-// $age = $_POST['age'];
-// $location = $_POST['location'];
-// $content = $_POST['content'];
-// $info = $_POST['info'];
-// $notice = $_POST['notice'];
-// $limitNum = $_POST['limitNum'];
-
-// $a_sql = "UPDATE `event` SET 
-//             `fullname`= '$fullname',
-//             'video' = $'video',
-//             'video_img' = $'video_img',
-//             'name' = $'name',
-//             'date' = $'date',
-//             'time' = $'time',
-//             'price' = $'price',
-//             'title' = $'title',
-//             'description' = $'description',
-//             'age' = $'age',
-//             'location' = $'location',
-//             'content' = $'content',
-//             'info' = $'info',
-//             'notice' = $'notice',
-//             'limitNum' = $'limitNum',
-//             WHERE id = $event_id";
-// $a_stmt = $pdo->prepare($a_sql);
-// $a_stmt->execute();
-
-
-// $a_sql = "SELECT * FROM `staff` WHERE id = $staff_id";
-// $a_stmt = $pdo->prepare($a_sql);
-// $a_stmt->execute();
-// $row = $a_stmt->fetch();
-// unset($row['password']);
-// unset($row['hash']);
-// $_SESSION['user'] = $row;
-// $output['success'] = "資料修改成功";
-
-
-
-// $a_sql = "SELECT * FROM `members` WHERE id = $member_id";
-// $a_stmt = $pdo->prepare($a_sql);
-// $_SESSION['user'] = $a_stmt->execute()->fetch();
-// header('Location: member.php');
-echo json_encode($output, JSON_UNESCAPED_UNICODE);
