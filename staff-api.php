@@ -9,6 +9,39 @@ if (empty($staff)){
 }
 $output = [];
 switch ($action){
+        case 'readAll':
+                $condition = [];
+                $param = [];
+                $condition_map = [
+                'staff_id' => "`staff_id` = ?",
+                'fullname' => "`fullname` = ?",
+                'mobile' => "`mobile` = ?",
+                'identityNum' => "`identityNum` = ?",
+                'age' => "TIMESTAMPDIFF(YEAR, `birthday`, CURDATE()) BETWEEN ? AND ?",
+                ];
+                
+                foreach($condition_map as $key => $value){
+                        if (!empty($_POST[$key])){
+                                if ($key === 'age'){
+                                        $age_from = explode("-", $_POST['age'])[0];
+                                        $age_to = explode("-", $_POST['age'])[1];
+                                        array_push($param, $age_from);
+                                        array_push($param, $age_to);
+                                }else{
+                                        array_push($param, $_POST[$key]);
+                                }
+                                array_push($condition, $value);
+                        }
+                }
+                $sql ="SELECT staff.*, src.position as role_name FROM `staff` JOIN `staff_role_category` as src ON staff.role = src.id";
+                if (count($condition) > 0){
+                        $sql .= " WHERE ".implode(" AND ", $condition);
+                }
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute($param);
+                $output['result'] = $stmt->fetchAll();
+                $output['success'] = "讀取成功";
+                break;
         case 'changePassword':
                 if (isset($_POST['password'])){
                         $password = password_hash($_POST['password'], PASSWORD_DEFAULT);

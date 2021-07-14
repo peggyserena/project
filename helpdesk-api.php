@@ -1,14 +1,40 @@
 <?php include __DIR__ . '/parts/config.php';
 
-
+$user = $_SESSION['user'];
 $type = isset($_POST['type']) ? $_POST['type'] : ''; // 操作類型
-
 switch ($type) {
     case 'readCat':
         $sql = "SELECT * FROM helpdesk_category";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([]);
         $result = $stmt->fetchAll();
+        break;
+    case 'readAll':
+        $condition = ["`user_id` = ?"];
+        $param = [$user['id']];
+        $condition_map = [
+            'cat_id' => "h.`cat_id` = ?",
+            'year' => "YEAR(h.`create_datetime`) = ?",
+            'month' => "MONTH(h.`create_datetime`) = ?",
+        ];
+        foreach($condition_map as $key => $value){
+            if (!empty($_POST[$key])){
+                array_push($condition, $value);
+                array_push($param, $_POST[$key]);
+            }
+        }
+        $sql = "SELECT h.*, hc.name as `cat_name` FROM `helpdesk` as h JOIN `helpdesk_category` as hc on h.`cat_id` = hc.`id`";
+        if (count($condition) > 0){
+            $sql .= "WHERE ".implode(" AND ", $condition);
+        }
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($param);
+        $result = $stmt->fetchALL();
+        
+        // $sql = "SELECT * FROM `helpdesk_image` WHERE helpdesk_id = ? ORDER BY num_order";
+        // $stmt = $pdo->prepare($sql);
+        // $stmt->execute([$_POST['id']]);
+        // $result['img'] = $stmt->fetchAll();
         break;
     case 'read':
         $sql = "SELECT * FROM `helpdesk` WHERE id = ?";

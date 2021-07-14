@@ -2,14 +2,6 @@
 <?php
 $title = '相簿修改';
 $pageName = 'staff_gallery_editor';
-
-$sql = "SELECT * FROM `index`";
-$stmt = $pdo->query($sql);
-$indexs = $stmt->fetchAll();
-
-
-
-
 ?>
 
 <?php include __DIR__. '/parts/staff_html-head.php'; ?>
@@ -24,69 +16,99 @@ $indexs = $stmt->fetchAll();
 </style>
 <?php include __DIR__. '/parts/staff_navbar.php'; ?>
 <main>
-
-  <div class="galleryBar col-sm-12 mt-0 p-2 text-left ">
-    <ul class="row m-0 px-md-5 p-sm-1 py-0 ">
-        <?php foreach ($indexs as $ind) : ?>
-        <li class=" mx-2 list-unstyled">
-          <a  href="#<?= $ind['name']?>"><span class=" text-white" name="title" id="<?= $ind['id']?>" ><?= $ind["title"] ?></span></a>
-        </li>
-        <?php endforeach; ?>
-    </ul>
-  </div>
-
   <div class="container my-5">
-    <form class="" action="staff_gallery-api.php" name="formGallery" id="formGallery" method="post" onsubmit="create(); return false;" enctype="multipart/form-data">
+    <form class="" action="staff_gallery-api.php" name="formGallery" id="formGallery" method="post" onsubmit="edit(); return false;" enctype="multipart/form-data">
+      <input type="hidden" name="action" value="edit"/>
+      <input type="hidden" name="id" value="<?= $_GET['id'] ?>"/>
+      <div class="form-group con_01 my-5 row justify-content-center align-items-center">
 
-      <?php foreach ($indexs as $ind) : ?>
+      <h3 class="col-sm-12 p-1 "> <input class="form-control text-center text-white " style="background-color: #83a573;font-size:1.3rem;font-weight: 700; " type="text" id="gallery_title" value="" name="title"></h3>
 
-      <div id="<?= $ind['name']?>" class="form-group con_01 my-5 row justify-content-center align-items-center">
+        <label  class="col-sm-12 text-center custom-btn btn-4 t_shadow" style="width:100%;border-radius: 0;transform: none;"  for="img">
 
-       <h3 class="col-sm-12 p-1 "id="<?= $ind['id']?>"> <input class="form-control text-center text-white " style="background-color: #83a573;font-size:1.3rem;font-weight: 700; " type="text"  value="<?= $ind["title"] ?>"></h3>
-
-        <label  class="col-sm-12 text-center custom-btn btn-4 t_shadow" style="width:100%;border-radius: 0;transform: none;"  for="<?= $ind['name']?>">
-
-          <input class=" " style="display: none" type="file" id="<?= $ind['name']?>" name="<?= $ind['name']?>[]" accept=".png,.jpeg,.jpg" multiple /><h4 class="p-2">上傳圖片 </h4>
+          <input class=" " style="display: none" type="file" id="img" name="img[]" accept=".png,.jpeg,.jpg" multiple /><h4 class="p-2">上傳圖片 </h4>
+          <input type="hidden" id="img_order" name="img_order">
+          <input type="hidden" id="img_changed" name="img_changed" value="0">
 
         </label>
 
-        <div class=" col-sm-12" id="show_<?= $ind['name']?>">
-          <img src="./images/album/farm/farm_1.jpg" alt="" />
+        <div class=" col-sm-12" id="preview">
+            <ul id="sortable" class="row">
+            </ul>
         </div>
-
         <h4 class=" col-sm-12 m-0 p-2 bg-dark text-white text-center">圖片說明</h4>
 
-        <textarea class=" form-control col-sm-12 p-3 m-0 id="content_<?= $ind['name']?> name="content"  cols="30" rows="5" ><?= $ind["content"] ?></textarea>
+        <textarea class=" form-control col-sm-12 p-3 m-0" id="gallery_content" name="content"  cols="30" rows="5" ></textarea>
 
         <button type="submit" class="custom-btn btn-4 t_shadow" style="width:100%;border-radius: 0;transform: none;"> <h4 class="p-2">確認送出</h4></button>
 
       </div>
-
-      <?php endforeach; ?>
-
     </form>
 
   </div>
 
 </main>
 <?php include __DIR__. '/parts/staff_scripts.php'; ?>
+<script src="<?= WEB_ROOT ?>/js/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
 <script>
-
+fillData();
+$( function() {
+  $( "#sortable" ).sortable({
+    change: function( event, ui ) {
+      $("#img_changed").val(1);
+    }
+  });
+  // $( "#sortable" ).disableSelection();
+} );
+$("#img").change(() => {
+  $("#img_changed").val(1);
+  $("#preview #sortable").html("");
+  const files = $("#img")[0].files // [file1, file2]
+  for(var i = 0; i < files.length; i++){
+    var file = files[i];
+    if (file) {
+      var img = ` <li class="ui-state-default" data-order="${i}">
+                    <img class="preview_img" style="max-width: 120px; max-height: 120px" src="${URL.createObjectURL(file)}" alt="your image" />
+                  </li>`;
+      $("#preview #sortable").append(img);
+    }
+  }
+});
 function fillData(){
+      console.log("read");
     $.post('staff_gallery-api.php', {
-      'type': 'read',
-      'id': <?= $_GET['id']?>
+      'action': 'read',
+      'id': <?= $_GET['id']?>,
     }, function(data){
-      var columns = ['name','title','content']
-      columns.forEach(function(elem){
-        $(`#${elem}`).val(data[elem]);
-      });
+      $("#gallery_title").val(data['title']);
+      $("#gallery_content").text(data['content']);
+      // 圖片預覽
+      $("#preview #sortable").html("");
+      const files = data['img'];
+      for(var i = 0; i < files.length; i++){
+        var file = files[i];
+        if (file) {
+          var img = ` <li class="ui-state-default" data-order="${i}">
+                        <img class="preview_img" style="max-width: 120px; max-height: 120px" src="${file.path}" alt="your image" />
+                      </li>`;
+          $("#preview #sortable").append(img);
+        }
+      }
     }, 'json').fail(function(data){
       console.log(data);
     })
   }
   
-  function create(){
+  function edit(){
+    var img_order = []; 
+    // [1,2,3] 
+    // img_order[0] = 1
+    $("#preview #sortable li").each(function(ind, elem){
+      img_order[$(elem).data("order")] = ind + 1;
+    })
+    $("#img_order").val(JSON.stringify(img_order)); 
+    // "[1,2,3]" 
+    // $("#img_order").val()[0] = "["
     $.ajax({
         url: 'staff_gallery-api.php',
         data: new FormData($("#formGallery")[0]),
@@ -97,20 +119,20 @@ function fillData(){
         type: 'POST', // For jQuery < 1.9
         success: function(data){
             console.log(data);
-            modal_init();
-            insertPage("#modal_img", "animation_success.html");
-            insertText("#modal_content", "修改成功!");
-            $("#modal_alert").modal("show");
-            setTimeout(function(){window.history.back();}, 2000);
+            // modal_init();
+            // insertPage("#modal_img", "animation_success.html");
+            // insertText("#modal_content", "修改成功!");
+            // $("#modal_alert").modal("show");
+            // setTimeout(function(){window.history.back();}, 2000);
 
         },
         error: function(data){
             console.log(data);
-            modal_init();
-            insertPage("#modal_img", "animation_error.html");
-            insertText("#modal_content", "資料傳輸失敗");
-            $("#modal_alert").modal("show");
-            setTimeout(function(){window.history.back();}, 2000);
+            // modal_init();
+            // insertPage("#modal_img", "animation_error.html");
+            // insertText("#modal_content", "資料傳輸失敗");
+            // $("#modal_alert").modal("show");
+            // setTimeout(function(){window.history.back();}, 2000);
         }
     });
   }

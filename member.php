@@ -18,23 +18,22 @@ $sql = "SELECT * FROM `helpdesk`";
 $stmt = $pdo->query($sql);
 $helpdeskes = $stmt->fetchAll();
 
-
-// helpdesk類別
-// $sql = "SELECT * FROM `helpdesk_category`";
-// $stmt = $pdo->query($sql);
-// $result = $stmt->fetchAll();
-// $helpdesk_category = [];
-// //ArrayArray ( [1] => 管理者 [2] => 經理 [3] => 會計 [4] => 一般員工 )
-// foreach($result as $helpdesk_cat){
-//     $helpdesk_category[$helpdesk_cat['id']] = $helpdesk_cat['name'];
-// }
-
 //  helpdesk類別
 $sql = "SELECT * FROM `helpdesk_category`";
 $stmt = $pdo->query($sql);
 $helpdesk_category = $stmt->fetchAll();
-$sql .= " JOIN `helpdesk_category` as hc ON `cat_id` = hc.`id`";
 
+// 二維陣列
+// [
+//     [
+//         id => 1,
+//         name => "會員"
+//     ],
+//     [
+//         id => 2,
+//         name => "訂單"
+//     ],
+// ]
 
 
 // 抓圖片
@@ -68,7 +67,7 @@ if (!empty($helpdesk_id_list)){
     <main>
         <div class="container">
             <div class="row justify-content-center ">
-                <div class="box col-lg-9 col-md-9 col-sm-12 m-2   p-0 ">
+                <div class="box  col-md-9 col-sm-12 m-2   p-0 ">
                     <ul id="myTab" class="nav nav-tabs t_shadow ">
                         <li class="active b-green rot-135"><a data-toggle="tab" href="#profile"> <h3 class="m-0">會員中心</h3></a></li>
                         <li class="b-green rot-135"><a data-toggle="tab" href="#tradeRecord"><h3 class="m-0">交易訂單查詢</h3></a></li>
@@ -205,7 +204,7 @@ if (!empty($helpdesk_id_list)){
 
 
                         <div id="setting" class="tab-pane fade row mb-5">
-                            <ul class="m-auto col-lg-9 col-md-9 col-sm-12 ">
+                            <ul class="m-auto  col-md-9 col-sm-12 ">
                                     <li class="d-flex align-items-center justify-content-between mt-3 ">
                                         <p>訂閱電子報</p>
                                         <div class="toggle toggle-knob ">
@@ -243,25 +242,22 @@ if (!empty($helpdesk_id_list)){
 
 
                         <div id="helpdeskRecorde" class="tab-pane fade row mb-5">
-                            <form action="member.php" method="get" >
+                            <form action="member.php" method="get" onsubmit="helpdeskRecord(); return false;">
                                 <div id="searchBar" class="m-0 p-0">
 
                                 
                                     <ul class="p-2 m-auto row list-unstyled justify-content-center align-items-center ">
                                         <li class=" " >
-                                            <select id="select_id" name='cat_id'>
-                                                <option value="">問題類別</option>
-                                                <!-- <?php foreach($helpdesk_category as $id => $name): ?>
-                                                    <option value="<?=$id?>"><?=$name?></option>
-                                                    <?php endforeach;?> -->
+                                            <select id="helpdesk_select_id" name='cat_id'>
+                                                <option value=""disabled hidden selected>問題類別</option>
                                                 <?php foreach ($helpdesk_category as $cat) { ?>
                                                     <option value='<?= $cat['id'] ?>'><?= $cat['name'] ?></option>
                                                 <?php } ?>
                                             </select>
                                         </li>
                                         <li class="">
-                                            <select id="select_year" name="year">
-                                                <option value="">年份</option>
+                                            <select id="helpdesk_select_year" name="year">
+                                                <option value=""disabled hidden selected>年份</option>
                                                 <option value=""></option>
                                                 <option value=""></option>
                                                 <option value=""></option>
@@ -270,8 +266,8 @@ if (!empty($helpdesk_id_list)){
                                             </select>
                                         </li>
                                         <li class="">
-                                            <select id="select_month" name="month">
-                                                <option value="">月份</option>
+                                            <select id="helpdesk_select_month" name="month">
+                                                <option value=""disabled hidden selected>月份</option>
                                                 <option value=""></option>
                                                 <option value=""></option>
                                                 <option value=""></option>
@@ -291,20 +287,6 @@ if (!empty($helpdesk_id_list)){
                                 </div>
 
                                 <div class="hdItem  p-0 m-0">
-                                    <?php foreach ($helpdeskes as $hd) : ?>
-                                        <div class="row m-0">
-                                        <div class="col-md-3">圖片<img src='<?= WEB_ROOT."/".$helpdesk_img[$helpdesk['id']] ?>' alt='' style="width: 100%;"></div>
-                                        <div class="col-md-9">
-                                            <div>日期：<span><?= $hd['create_datetime'] ?></span></div>
-                                            <div>主題：<span><?= $hd["topic"]?> </span></div>
-                                            <div>問題類型：<span><?= $helpdesk_category[$hd["cat_id"]].[0] ?></span></div>
-                                            <div>訂單編號：<span><?= $hd["order_num"] ?></span></div>
-                                        </div>
-                                        <div class="col-md-12">內容<span><?= $hd["content"]  ?></span></div>
-
-                                        </div>
-                                  <?php endforeach; ?>
-
                                 </div>
                             </form>
                         </div>
@@ -537,15 +519,47 @@ if (!empty($helpdesk_id_list)){
             var formatted_date = `${d.getFullYear()}-${formatted_month}-${formatted_date}`;
             return formatted_date;
         }
+
+        // helpdesk
+
+        function helpdeskRecord(){
+            $.post('helpdesk-api.php', {
+                type: 'readAll',
+                cat_id: $("#helpdesk_select_id").val(),
+                year: $("#helpdesk_select_year").val(),
+                month: $("#helpdesk_select_month").val(),
+            },function(data) {
+                console.log(data);
+                $(".hdItem").html("");
+                data.forEach(function(hd){
+                    var output = `<div class="row m-0">
+                                    <div class="col-md-3">圖片<img src='#' alt='' style="width: 100%;"></div>
+                                    <div class="col-md-9">
+                                        <div>日期：<span>${ hd['create_datetime'] }</span></div>
+                                        <div>主題：<span>${ hd["topic"] } </span></div>
+                                        <div>問題類型：<span>${ hd["cat_name"] }</span></div>
+                                        <div>訂單編號：<span>${ hd["order_num"] }</span></div>
+                                    </div>
+                                    <div class="col-md-12">內容<span>${ hd["content"] }</span></div>
+                                    </div>`;
+                    $(".hdItem").append(output);
+                })
+            }, 'json')
+            .fail(
+                function(e) {
+                    alert( "error" );
+                    console.log(e.responseText);
+            });
+        }
     </script>
-        <script>
+    <script>
         var date = new Date();
         var year = date.getFullYear() - 3;
-        var month = date.getMonth() + 1;
+        var month = 1;
         var selectedMonth = "<?= $_GET['month'] ?? "" ?>";
         var selectedYear = "<?= $_GET['year'] ?? "" ?>";
         var selectedId = "<?= $_GET['cat_id'] ?? "" ?>";
-        $("#select_month option").each(function(ind, elem) {
+        $("#helpdesk_select_month option").each(function(ind, elem) {
             if (ind > 0) {
                 elem.text = month;
                 elem.value = month;
@@ -558,7 +572,7 @@ if (!empty($helpdesk_id_list)){
                 elem.selected = true;
             }
         });
-        $("#select_year option").each(function(ind, elem) {
+        $("#helpdesk_select_year option").each(function(ind, elem) {
             if (ind === 1){
                 elem.text = "之前";
                 elem.value = `~${year}`;
@@ -571,7 +585,7 @@ if (!empty($helpdesk_id_list)){
                 elem.selected = true;
             }
         });
-        $("#select_id").val(selectedId);
+        $("#helpdesk_select_id").val(selectedId);
     </script>
 
     <?php include __DIR__ . '/parts/html-foot.php'; ?>

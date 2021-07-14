@@ -41,6 +41,9 @@ body {
 
     <div class="collapse navbar-collapse  " id="navbarSupportedContent">
       <ul class="navbar-nav m-auto  " style="flex-wrap: wrap">
+        <li class="nav-item <?= $pageName == 'index' ? 'active' : '' ?>">
+          <a class="nav-link" href="index.php" target="_blank" role="button" aria-haspopup="true" aria-expanded="false"> 官網</a>
+        </li>
         <li class="nav-item <?= $pageName == 'staff_index' ? 'active' : '' ?>">
           <a class="nav-link" href="staff_index.php" role="button" aria-haspopup="true" aria-expanded="false"> 首頁</a>
         </li>
@@ -58,7 +61,6 @@ body {
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="staff_forestnews_create.php"> 森林體驗新增</a>
                 <a class="dropdown-item" href="staff_forestnews_search.php"> 森林體驗查詢&修改 </a>
-                <a class="dropdown-item" href="forestnews.php" target="_blank"> 官網－森林體驗 </a>
             </div>
         </li>
         <li class="nav-item dropdown<?= $pageName == '' ? 'active' : '' ?>">
@@ -66,7 +68,6 @@ body {
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="staff_event_create.php"> 森林快報新增</a>
                 <a class="dropdown-item" href="staff_event_search.php"> 森林快報查詢&修改 </a>
-                <a class="dropdown-item" href="event.php" target="_blank"> 官網－森林體驗 </a>
             </div>
         </li>
 

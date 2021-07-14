@@ -42,36 +42,6 @@ $indexs = $stmt->fetchAll();
   <div class="container">
 
     <form class="" action="" name="formGallery" id="formGallery" method="post" onsubmit="create(); return false;" enctype="multipart/form-data">
-
-      <?php foreach ($indexs as $ind) : ?>
-
-      <div id="<?= $ind['name']?>" class="form-group con_01 my-5 row justify-content-center align-items-center">
-        <h3 class="col-sm-12  text-center "id="<?= $ind['id']?>"><?= $ind["title"] ?></h3>
-
-        <h4 class="col-sm-12 m-0 p-2 bg-dark text-white text-center">圖片</h4>
-
-        <div class="col-sm-12" id="show_<?= $ind['name']?>">
-
-          <img src="./images/album/farm/farm_1.jpg" alt="" />
-          
-          <?php for ($i = 1; $i < count($index_img); $i++) : ?>
-                    <a href='<?= WEB_ROOT."/".$index_img[$i]['path'] ?>' data-fancybox='F_box1' data-caption=' <?= $ind['name'] ?>'>
-                        <img src='<?= WEB_ROOT."/".$index_img[$i]['path'] ?>' alt=''>
-                    </a>
-          <?php endfor; ?>
-        </div>
-
-        <h4 class="col-sm-12 m-0 p-2 bg-dark text-white text-center">圖片說明</h4>
-
-        <textarea class=" form-control col-sm-12 p-3 m-0" id="content_<?= $ind['name']?>" name="" disabled cols="30" rows="5" ><?= $ind["content"] ?></textarea>
-
-        <a class="text-center custom-btn btn-4 t_shadow" style="width:100%;border-radius: 0;transform: none;" href="staff_gallery_editor.php?id=<?= $ind['id']?>" target="_blank"><h4 class="m-2">修改</h4></a>
-
-
-      </div>
-
-      <?php endforeach; ?>
-
     </form>
 
   </div>
@@ -80,6 +50,58 @@ $indexs = $stmt->fetchAll();
 <?php include __DIR__. '/parts/staff_scripts.php'; ?>
 
 <script>
+  fillData();
+  function fillData(){
+    console.log("read");
+    $.post('staff_gallery-api.php', {
+      'action': 'readAll'
+    }, function(data){
+      var formGallery = $("#formGallery");
+      console.log(data);
+      data['data'].forEach(function(elem){
+        var img_output = "";
+        if (elem['id'] in data['img']){
+          data['img'][elem['id']].forEach(function(img_elem){
+            img_output += `<img src='<?= WEB_ROOT."/" ?>${img_elem['path']}' alt=''>`;
+          });
+        }
+        var output = `<div id="${elem['name']}" class="form-group con_01 my-5 row justify-content-center align-items-center">
+                        <h3 class="col-sm-12  text-center "id="${elem['id']}">${elem["title"] }</h3>
+
+                        <h4 class="col-sm-12 m-0 p-2 bg-dark text-white text-center">圖片</h4>
+
+                        <div class="col-sm-12" id="show_${elem['name']}">
+                            ${img_output}
+                        </div>
+
+                        <h4 class="col-sm-12 m-0 p-2 bg-dark text-white text-center">圖片說明</h4>
+
+                        <textarea class=" form-control col-sm-12 p-3 m-0" id="content_${elem['name']}" name="" disabled cols="30" rows="5" >${elem["content"] }</textarea>
+
+                        <a class="text-center custom-btn btn-4 t_shadow" style="width:100%;border-radius: 0;transform: none;" href="staff_gallery_editor.php?id=${elem['id']}" target="_blank"><h4 class="m-2">修改</h4></a>
+
+
+                      </div>`;
+          $("#formGallery").append(output);    
+      });
+      
+
+      // 圖片預覽
+      // $("#preview #sortable").html("");
+      // const files = data['img'];
+      // for(var i = 0; i < files.length; i++){
+      //   var file = files[i];
+      //   if (file) {
+      //     var img = ` <li class="ui-state-default" data-order="${i}">
+      //                   <img class="preview_img" style="max-width: 120px; max-height: 120px" src="${file.path}" alt="your image" />
+      //                 </li>`;
+      //     $("#preview #sortable").append(img);
+      //   }
+      // }
+    }, 'json').fail(function(data){
+      console.log(data);
+    })
+  }
   function scroll(){
       console.log('test' + window.scrollY);
       if (location.href.indexOf("#<?= $ind['name']?>") > -1){

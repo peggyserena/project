@@ -1,15 +1,40 @@
 <?php include __DIR__ . '/parts/config.php';
 
 
-$type = isset($_POST['type']) ? $_POST['type'] : ''; // 操作類型
-
-switch ($type) {
+$action = isset($_POST['action']) ? $_POST['action'] : ''; // 操作類型
+switch ($action) {
     
+    case 'readAll':
+        $result = [];
+        $sql = "SELECT * FROM `index`";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([]);
+        $result['data'] = $stmt->fetchAll();
+
+        $sql = "SELECT * FROM `index_image` ORDER BY num_order";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([]);
+        $index_image_list = $stmt->fetchAll();
+        $result['img'] = [];
+        $result['test'] = [];
+        foreach($index_image_list as $index_image){
+            if (!array_key_exists($index_image['index_id'], $result['img'])) {
+                $result['img'][$index_image['index_id']] = [];
+            }
+            array_push($result['img'][$index_image['index_id']], $index_image);
+        }
+        
+        break;
     case 'read':
         $sql = "SELECT * FROM `index` WHERE id = ?";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$_POST['id']]);
         $result = $stmt->fetch();
+
+        $sql = "SELECT * FROM `index_image` WHERE index_id = ? ORDER BY num_order";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$_POST['id']]);
+        $result['img'] = $stmt->fetchAll();
         break;
     case 'add':
         // insert index
@@ -20,7 +45,7 @@ switch ($type) {
         // INSERT INTO `index` ( 'title', 'content') VALUES (?, ?, ?)        
 
         // insert gallery image
-        $name_list = uploadImgs($_FILES['img'], "images/album/gallery/");
+        $name_list = uploadImgs($_FILES['img'], "images/album/");
         $sql = "INSERT INTO `index_image` (`index_id`, `path`) VALUES ".substr(str_repeat("($index_id, ?),", count($name_list)), 0, -1);    
         // INSERT INTO `index` (`index_id`, `path`) VALUES  (1, ?), (1, ?), (1, ?)
         $stmt = $pdo->prepare($sql);
@@ -29,30 +54,72 @@ switch ($type) {
         $result = ["success"];
         break;
     case 'edit':
-        // insert video image
-        // $name = uploadImg($_FILES['video_img'], "images/index/video/");
-        // $_POST['video_img'] = $name;
+        $id = $_POST['id'];
+         // get old index
+        $sql = "SELECT * FROM `index` WHERE id = ?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$id]);
+        $index = $stmt->fetch();
+        
+        $sql = "SELECT * FROM `index_image` WHERE index_id = ? ORDER BY num_order";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$id]);
+        $index['img'] = $stmt->fetchAll();
 
-        // insert index
+        // update index
         $columns = [ 'title', 'content'];
+        $img_changed = $_POST['img_changed'];
         $sql = "UPDATE `index` SET ";
         
-        $sql .= implode(" = ?, ", $columns)." = ?";
-        // INSERT INTO `index` ( 'title', 'content') VALUES (?, ?, ?)        
-        // UPDATE `index` `name` = ?, `title` = ?, `content` = ?  
+        $sql .= implode(" = ?, ", $columns)." = ? WHERE id = ?";
+        // UPDATE `index` `name` = ?, `title` = ?, `content` = ?  WHERE id = ?
 
         $data = [];
         foreach($columns as $col){
             array_push($data, $_POST[$col]);
         }
-        
+        array_push($data, $id);
+
         $stmt = $pdo->prepare($sql);
         $stmt->execute($data);
 
+
         // insert gallery image
-        // $name_list = uploadImgs($_FILES['img'], "images/index/gallery/");
-        // $sql = "INSERT INTO `index_image` (`index_id`, `path`) VALUES ".substr(str_repeat("($index_id, ?),", count($name_list)), 0, -1);    
-        // INSERT INTO `index` (`index_id`, `path`) VALUES  (1, ?), (1, ?), (1, ?)
+        if ($img_changed === "1"){
+            if ($_FILES['img']['size'][0] === 0){
+                $num_order = json_decode($_POST['img_order']);
+                $result = [];
+                $sql = "SELECT * FROM `index_image` WHERE `index_id` = ? ORDER BY num_order";
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute([$id]);
+                $index_image = $stmt->fetchAll();
+
+                foreach($num_order as $key => $value){
+                    $sql = "UPDATE `index_image` SET num_order = ? WHERE id = ?";    
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute([$value, $index_image[$key]['id']]);
+                }
+            } else{
+                foreach($index['img'] as $index_image){
+                    deleteImg($index_image['path']);
+                }
+                $sql = "DELETE FROM `index_image` WHERE `index_id` = ?";
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute([$id]);
+                $name_list = uploadImgs($_FILES['img'], "images/album/");
+                $sql = "INSERT INTO `index_image` (`index_id`, `path`) VALUES ".substr(str_repeat("($id, ?),", count($name_list)), 0, -1);    
+                // INSERT INTO `index` (`index_id`, `path`) VALUES  (1, ?), (1, ?), (1, ?)
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute($name_list);
+            }
+            
+        }
+
+
+        // // insert gallery image
+        // $name_list = uploadImgs($_FILES['img'], "images/album/");
+        // $sql = "INSERT INTO `index_image` (`index_id`, `path`) VALUES ".substr(str_repeat("($id, ?),", count($name_list)), 0, -1);    
+        // // INSERT INTO `index` (`index_id`, `path`) VALUES  (1, ?), (1, ?), (1, ?)
         // $stmt = $pdo->prepare($sql);
         // $stmt->execute($name_list);
 
@@ -171,6 +238,25 @@ function uploadImg($img, $target_dir){
     }
     return $name;
 }
-// echo json_encode($result, JSON_UNESCAPED_UNICODE);
+function deleteImg($img){
+    $target_file = $img;
+    $uploadOk = 1;
+    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+    if (!file_exists($target_file)) {
+        // echo "Sorry, file already exists.";
+        $uploadOk = 0;
+    }
+    // Allow certain file formats
+    if($imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "jpg") {
+        // echo "Sorry, only JPEG, PNG files are allowed.";
+        $uploadOk = 0;
+    }
+    if ($uploadOk == 0){
+
+    }else{
+        unlink($img);
+    }
+}
+echo json_encode($result, JSON_UNESCAPED_UNICODE);
 
 
