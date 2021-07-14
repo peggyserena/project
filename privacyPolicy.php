@@ -1,7 +1,7 @@
 <?php include __DIR__ . '/parts/config.php'; ?>
 <?php
 $title = '隱私權政策';
-$pageName = 'returnPolicy';
+$pageName = 'privacyPolicy';
 ?>
 <?php include __DIR__ . '/parts/html-head.php'; ?>
 <style>

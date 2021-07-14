@@ -1,7 +1,7 @@
 <?php include __DIR__ . '/parts/config.php'; ?>
 <?php
 $title = '會員方案 FＡQ & 折扣及優惠說明';
-$pageName = 'returnPolicy';
+$pageName = 'membership';
 ?>
 <?php include __DIR__ . '/parts/html-head.php'; ?>
 <style>

@@ -13,56 +13,11 @@ $indexs = $stmt->fetchAll();
 ?>
 
 <?php include __DIR__. '/parts/staff_html-head.php'; ?>
+<link rel="stylesheet" href="./css/staff_gallery.css">
 
 <style>
  
-  h3{
-    margin:0;
-    padding: 0.5rem 0;
-    background-color: #83a573;
-    color: white;
-    }
-    
-  h4{
-    font-weight: 500;
-  }
-
-
-  .form-group {
-    width: 100%;
-    height: auto;
-    margin: 1rem 0;
-    background-color: whitesmoke;
-    }
  
-
-  .form-group img {
-    width: 120px;
-    height: auto;
-    object-fit: cover;
-    margin: 0.5rem 0.25rem;
-  }
-  .btn-4{
-    box-shadow: none;
-  }
-
-  .galleryBar {
-    background-color: gray;
-    z-index: 99;
-    position: sticky;
-    top: 60px;
-    left: 0;
-    text-align: justify;
-  }
-
-  
-  .galleryBar ul li a:hover {
-      color: white;
-      text-shadow: 0px 0px 10px rgb(0, 255, 191);
-  }
-  a:hover {
-      color: white;
-  }
 
 
 

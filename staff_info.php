@@ -35,13 +35,9 @@ foreach($result as $role_cat){
 ?>
 <?php include __DIR__. '/parts/staff_html-head.php'; ?>
 <style>
-  body {
-      background: linear-gradient(45deg, #e8ddf1 0%,  #e1ebdc 100%);
-    }
 
-  .con_01 {
-    background-color: whitesmoke;
-   }
+
+ 
   #profile .form-group {
         padding-bottom:3px;
         background: 

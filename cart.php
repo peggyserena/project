@@ -22,8 +22,6 @@ if (isset($_SESSION['user'])) {
 
     }
 
-
-
     .card-wrapper {
         background-color: #FFFFDA;
         width: 100%;
@@ -110,41 +108,50 @@ if (isset($_SESSION['user'])) {
         border-color: #719ECE;
         box-shadow: 0 0 10px #719ECE;
     }
+    
     .discountTip{
         background-color:#fff1ab; 
         color:gray;
         padding:0;
     }
+
     .finalPrice{
         background-color:#fff1ab; 
         color:darkblue;
         border-bottom:1px solid lightgray;
     }
+
     .shipway img{
       width: auto;
       height: 40px;
       margin: 0.5rem 0.7rem 0.5rem 0.5rem ;
     }
+
     .shipway .track img{
       width: auto;
       height: 12.8px;
       margin: 0.5rem 0.3rem 0.5rem 0rem ;
     }
+
     .shipway .track li {
       margin: 0.5rem 1rem 0.5rem 0.3rem ;
       transition: 0.5s ease;
     }
+
     .shipway .track li:hover{
     transform: translateX(0.5rem);
     }
+
     .shipway .track li a:hover{
     color:#83a573;
     font-weight: 700;
     }
+
     select, textarea{
       margin: 1px 0;
       border: none;
     }
+
     .form-control{
       height: 40px;
     }

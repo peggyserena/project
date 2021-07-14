@@ -9,23 +9,49 @@ if(
 header('Location: login.php');
 exit;
 }
-// $total = 0;
 
-// $perPage = 5;
+
 $sql = "SELECT * FROM members WHERE id=" . $_SESSION['user']['id'];
-// $sql = "SELECT * FROM members WHERE `id`=$id";
-
-// $t_sql = "SELECT COUNT(1) FROM memebers";
-// $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
-// $totalPages = ceil($totalRows / $perPage);
-
-// $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
-// if ($page < 1) $page = 1;
-// if ($page > $totalPages) $page = $totalPages;
-
-// $sql = sprintf("SELECT * FROM memebers ORDER BY sid DESC LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
-
 $r = $pdo->query($sql)->fetch();
+
+$sql = "SELECT * FROM `helpdesk`";
+$stmt = $pdo->query($sql);
+$helpdeskes = $stmt->fetchAll();
+
+
+// helpdesk類別
+// $sql = "SELECT * FROM `helpdesk_category`";
+// $stmt = $pdo->query($sql);
+// $result = $stmt->fetchAll();
+// $helpdesk_category = [];
+// //ArrayArray ( [1] => 管理者 [2] => 經理 [3] => 會計 [4] => 一般員工 )
+// foreach($result as $helpdesk_cat){
+//     $helpdesk_category[$helpdesk_cat['id']] = $helpdesk_cat['name'];
+// }
+
+//  helpdesk類別
+$sql = "SELECT * FROM `helpdesk_category`";
+$stmt = $pdo->query($sql);
+$helpdesk_category = $stmt->fetchAll();
+$sql .= " JOIN `helpdesk_category` as hc ON `cat_id` = hc.`id`";
+
+
+
+// 抓圖片
+if (!empty($helpdesk_id_list)){
+    $sql = "SELECT * FROM `helpdesk_image` WHERE helpdesk_id in (".implode(",", $helpdesk_id_list).") ORDER BY num_order";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([]);
+    $result = $stmt->fetchAll();
+    $helpdesk_img = [];
+    foreach($result as $cover_img){
+        if (!array_key_exists($cover_img['helpdesk_id'], $helpdesk_img)){
+            $helpdesk_img[$cover_img['helpdesk_id']] = $cover_img['path'];
+        }
+    }
+}
+// print($helpdesk_img[$helpdesk['id']] ?? "" );
+
 
 ?>
 
@@ -49,6 +75,7 @@ $r = $pdo->query($sql)->fetch();
                         <li class="b-green rot-135"><a data-toggle="tab" href="#wishList"><h3 class="m-0">我的收藏</h3></a></li>
                         <li class="b-green rot-135"><a data-toggle="tab" href="#coupon"><h3 class="m-0">購物金查詢</h3></a></li>
                         <li class="b-green rot-135"><a data-toggle="tab" href="#setting"><h3 class="m-0">通知設定</h3></a></li>
+                        <li class="b-green rot-135"><a data-toggle="tab" href="#helpdeskRecorde"><h3 class="m-0">客服紀錄</h3></a></li>
                     </ul>
 
                     <div id="myTabContent" class="tab-content">
@@ -173,7 +200,7 @@ $r = $pdo->query($sql)->fetch();
 
 
 
-                        <!-- ================================ 其他設定 ================================ -->
+                        <!-- ================================ 通知設定 ================================ -->
 
 
 
@@ -211,6 +238,77 @@ $r = $pdo->query($sql)->fetch();
 
                         </div>
 
+                        <!-- ================================ 客服紀錄 ================================ -->
+
+
+
+                        <div id="helpdeskRecorde" class="tab-pane fade row mb-5">
+                            <form action="member.php" method="get" >
+                                <div id="searchBar" class="m-0 p-0">
+
+                                
+                                    <ul class="p-2 m-auto row list-unstyled justify-content-center align-items-center ">
+                                        <li class=" " >
+                                            <select id="select_id" name='cat_id'>
+                                                <option value="">問題類別</option>
+                                                <!-- <?php foreach($helpdesk_category as $id => $name): ?>
+                                                    <option value="<?=$id?>"><?=$name?></option>
+                                                    <?php endforeach;?> -->
+                                                <?php foreach ($helpdesk_category as $cat) { ?>
+                                                    <option value='<?= $cat['id'] ?>'><?= $cat['name'] ?></option>
+                                                <?php } ?>
+                                            </select>
+                                        </li>
+                                        <li class="">
+                                            <select id="select_year" name="year">
+                                                <option value="">年份</option>
+                                                <option value=""></option>
+                                                <option value=""></option>
+                                                <option value=""></option>
+                                                <option value=""></option>
+                                                <option value=""></option>
+                                            </select>
+                                        </li>
+                                        <li class="">
+                                            <select id="select_month" name="month">
+                                                <option value="">月份</option>
+                                                <option value=""></option>
+                                                <option value=""></option>
+                                                <option value=""></option>
+                                                <option value=""></option>
+                                                <option value=""></option>
+                                                <option value=""></option>
+                                                <option value=""></option>
+                                                <option value=""></option>
+                                                <option value=""></option>
+                                                <option value=""></option>
+                                                <option value=""></option>
+                                                <option value=""></option>
+                                            </select>
+                                        </li>
+                                        <li><button type="submit" class="custom-btn btn-4 m-0 p-0" style="width:3rem; ">送出</button></li>
+                                    </ul>
+                                </div>
+
+                                <div class="hdItem  p-0 m-0">
+                                    <?php foreach ($helpdeskes as $hd) : ?>
+                                        <div class="row m-0">
+                                        <div class="col-md-3">圖片<img src='<?= WEB_ROOT."/".$helpdesk_img[$helpdesk['id']] ?>' alt='' style="width: 100%;"></div>
+                                        <div class="col-md-9">
+                                            <div>日期：<span><?= $hd['create_datetime'] ?></span></div>
+                                            <div>主題：<span><?= $hd["topic"]?> </span></div>
+                                            <div>問題類型：<span><?= $helpdesk_category[$hd["cat_id"]].[0] ?></span></div>
+                                            <div>訂單編號：<span><?= $hd["order_num"] ?></span></div>
+                                        </div>
+                                        <div class="col-md-12">內容<span><?= $hd["content"]  ?></span></div>
+
+                                        </div>
+                                  <?php endforeach; ?>
+
+                                </div>
+                            </form>
+                        </div>
+
 
 
 
@@ -230,9 +328,9 @@ $r = $pdo->query($sql)->fetch();
     <script>
         const quantity = $('select.quantity');
 
-        const deleteItem = function(event, id) {
-            let t = $(event.currentTarget);
-            console.log('event:', event);
+        const deleteItem = function(hd, id) {
+            let t = $(hd.currentTarget);
+            console.log('hd:', hd);
             $.get('cart-api.php', {
                 action: 'delete',
                 id: id
@@ -268,8 +366,8 @@ $r = $pdo->query($sql)->fetch();
             $('.totalPrice').text('$ ' + dallorCommas(total));
         };
 
-        const changeQty = function(event) {
-            const el = $(event.currentTarget);
+        const changeQty = function(hd) {
+            const el = $(hd.currentTarget);
             const qty = el.val();
             const pid = el.closest('tr').attr('data-sid');
 
@@ -291,11 +389,11 @@ $r = $pdo->query($sql)->fetch();
                 console.log(data);
                 data.forEach(function(elem){
                     var output = "";
-                    var type_map = {restaurant: "森林咖啡館", event: "森林體驗", hotel: "夜宿薰衣草森林"};
+                    var type_map = {restaurant: "森林咖啡館", hd: "森林體驗", hotel: "夜宿薰衣草森林"};
                     var goToWhere = `${elem['type']}.php`;
                     switch (elem['type']){
-                        case 'event':
-                            goToWhere += `#event_${elem['id']}`;
+                        case 'hd':
+                            goToWhere += `#hd_${elem['id']}`;
                             break;
                         case "hotel":
                             goToWhere += `#reservation`;
@@ -309,16 +407,16 @@ $r = $pdo->query($sql)->fetch();
                     output += "<td>" + elem['date'] + "/" + elem['time'].slice(0, 5) + "</td>";
                     output += "<td>" + dallorCommas(elem['price']) + "</td>";
                     output += `<td><a href="${goToWhere}"><i class="fas fa-trash-alt"></i></a></td>`;
-                    output += '<td><a href="javascript:" onclick="deleteWishList(event,' + elem['wish_list_id'] + ')"><i class="fas fa-trash-alt"></i></a></td>';
+                    output += '<td><a href="javascript:" onclick="deleteWishList(hd,' + elem['wish_list_id'] + ')"><i class="fas fa-trash-alt"></i></a></td>';
                     output = '<tr>' + output + '</tr>';
                     $("#wishList table tbody").append(output);
                     console.log(output);
                 });
             }, 'json')
         }
-        function deleteWishList(event, id){
+        function deleteWishList(hd, id){
             console.log(id);
-            let t = $(event.currentTarget);
+            let t = $(hd.currentTarget);
             $.post('wishList-api.php', {
                 action: 'delete',
                 id: id,
@@ -439,6 +537,41 @@ $r = $pdo->query($sql)->fetch();
             var formatted_date = `${d.getFullYear()}-${formatted_month}-${formatted_date}`;
             return formatted_date;
         }
+    </script>
+        <script>
+        var date = new Date();
+        var year = date.getFullYear() - 3;
+        var month = date.getMonth() + 1;
+        var selectedMonth = "<?= $_GET['month'] ?? "" ?>";
+        var selectedYear = "<?= $_GET['year'] ?? "" ?>";
+        var selectedId = "<?= $_GET['cat_id'] ?? "" ?>";
+        $("#select_month option").each(function(ind, elem) {
+            if (ind > 0) {
+                elem.text = month;
+                elem.value = month;
+                month++;
+            }
+            if (month > 12) {
+                month = 1;
+            }
+            if (elem.value === selectedMonth){
+                elem.selected = true;
+            }
+        });
+        $("#select_year option").each(function(ind, elem) {
+            if (ind === 1){
+                elem.text = "之前";
+                elem.value = `~${year}`;
+            }else if (ind > 0) {
+                elem.text = year;
+                elem.value = year;
+                year++;
+            }
+            if (elem.value === selectedYear){
+                elem.selected = true;
+            }
+        });
+        $("#select_id").val(selectedId);
     </script>
 
     <?php include __DIR__ . '/parts/html-foot.php'; ?>

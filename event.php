@@ -60,17 +60,19 @@ foreach($events as $event){
     array_push($event_id_list, $event['id']);
 }
 // 抓圖片
-$event_img = [];
-if (count($event_id_list) > 0){
-    $sql = "SELECT * FROM `event_image` WHERE event_id in (".implode(",", $event_id_list).")";
+if (!empty($event_id_list)){
+    $sql = "SELECT * FROM `event_image` WHERE event_id in (".implode(",", $event_id_list).") ORDER BY num_order";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([]);
     $result = $stmt->fetchAll();
+    $event_img = [];
     foreach($result as $cover_img){
-        $event_img[$cover_img['event_id']] = $cover_img['path'];
+        if (!array_key_exists($cover_img['event_id'], $event_img)){
+            $event_img[$cover_img['event_id']] = $cover_img['path'];
+        }
     }
 }
-print($event_img[$event['id']] ?? "" );
+// print($event_img[$event['id']] ?? "" );
 
 
 
@@ -115,7 +117,7 @@ $event_category = $stmt->fetchAll();
 ?>
 
 <?php
-$title = '活動體驗';
+$title = '森林體驗';
 $pageName = 'event';
 ?>
 <?php include __DIR__ . '/parts/html-head.php'; ?>
@@ -183,9 +185,9 @@ $pageName = 'event';
                 <div id="calendar" class=""></div>
             </div>
         </div>
-        <div class=" " id="event">
+        <div class="m-0 p-0 " id="event">
             <form action="event.php" method="get">
-                <ul div class="row  m-0 p-2 ">
+            <ul class="row list-unstyled p-2 m-0 justify-content-center align-items-center ">
                     <li class=" ">
                         <select name='cat_id'>
                             <option value="">活動類別</option>
@@ -224,16 +226,17 @@ $pageName = 'event';
                             <option value="3" <?= $order == 3 ? "selected" : "" ?>>價錢由高至低</option>
                         </select>
                     </li>
-                    <button type="submit" class="custom-btn btn-4 m-0 p-0" style="width:3rem; ">送出</button>
+                    <li><button type="submit" class="custom-btn btn-4 m-0 p-0" style="width:3rem; ">送出</button></li>
 
 
                 </ul>
             </form>
         </div>
 
-        <div class="container con01 m-0 p-0 row  text-secondary">
-            <div class="eventItem  row p-0 m-0">
-                <?php foreach ($events as $event) : ?>
+        <div class="container  m-0  row  text-secondary">
+        <?php foreach ($events as $event) : ?>
+
+            <div class="eventItem con_01 row  p-0 mb-5">
                     <h2 class='text-center b-green rot-135 col-12 p-2 m-0' id="event_<?= $event['id']?>">
                         <?= $event['name'] ?>
                     </h2>
@@ -303,8 +306,9 @@ $pageName = 'event';
 
                         </div>
                     </div>
-                <?php endforeach; ?>
             </div>
+            <?php endforeach; ?>
+
         </div>
     </div>
 

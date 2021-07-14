@@ -7,11 +7,7 @@ $pageName ='staff_login';
 <?php include __DIR__ . '/parts/staff_html-head.php'; ?>
 <?php include __DIR__ . '/parts/staff_navbar.php'; ?>
 <style>
-  body {
-    background: linear-gradient(45deg, #e8ddf1 0%,  #e1ebdc 100%);
-  }
-
-
+ 
   form .form-group small.error {
     color: red;
   }

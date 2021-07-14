@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="<?= WEB_ROOT ?>/css/style_desktop.css">
     <link rel="stylesheet" href="<?= WEB_ROOT ?>/css/style_tablet.css">
     <link rel="stylesheet" href="<?= WEB_ROOT ?>/css/style_cellphone.css">
-
+    <link rel="stylesheet" href="<?= WEB_ROOT ?>/css/staff_style.css">
 
 </head>
 

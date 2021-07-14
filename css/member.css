@@ -73,6 +73,9 @@ table {
   margin-top: 1.5rem;
 }
 
+.hdItem div {
+  border: orange 1px solid;
+}
 /* =====================================================
 Some defaults across all toggle demos
 ===================================================== */

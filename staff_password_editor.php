@@ -5,9 +5,7 @@ $pageName ='staff_password_editor';
 ?>
 <?php include __DIR__ . '/parts/staff_html-head.php'; ?>
 <style>
-    body {
-        background: linear-gradient(45deg, #e1ebdc 0%, #e8ddf1 100%);
-    }
+ 
 
     form .form-group small.error {
         color: red;

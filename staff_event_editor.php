@@ -1,30 +1,20 @@
 <?php include __DIR__ . '/parts/config.php'; ?>
 <?php
-$title = '薰衣草森林 Lavender Forest';
-$pageName = 'staff_event.php';
+$title = '森林體驗查詢';
+$pageName = 'staff_event_editor';
 // $stmt = $pdo->query($sql); // $events = $stmt->fetchAll(); // $sql = "SELECT * FROM `index`"; ?>
 
 <?php include __DIR__. '/parts/staff_html-head.php'; ?>
+<link rel="stylesheet" href="<?= WEB_ROOT ?>/js/jquery-ui-1.12.1.custom/jquery-ui.structure.min.css">
+
 <style>
-
-  body {
-      background: linear-gradient(45deg, #e8ddf1 0%,  #e1ebdc 100%);
-    }
-
-  .con_01 {
-    background-color: whitesmoke;
-    border-radius: 0.25rem;
-    box-shadow: 0px 0px 15px #666e9c;
-    -webkit-box-shadow: 0px 0px 15px #666e9c;
-    -moz-box-shadow: 0px 0px 15px #666e9c;
-  }
 
 
 </style>
 <?php include __DIR__. '/parts/staff_navbar.php'; ?>
-
+<?php include "parts/modal.php" ?>
   <main>
-  <div class="container my-5 ">
+  <div class="container ">
     <div class="con_01 row mx-0 ">
         <h2 class="title b-green rot-135 col-sm-12">修改活動</h2>
         <form action="event-api.php" class="p-5 col-sm-12" name="form1" id="myForm" method="post" onsubmit="create(); return false;" enctype="multipart/form-data">
@@ -90,12 +80,19 @@ $pageName = 'staff_event.php';
             <div class="form-group">
                 <label for="video_img">影片縮圖</label>
                 <input type="file" id="video_img" name="video_img" accept=".png,.jpeg,.jpg">
+                <input type="hidden" id="video_img_changed" name="video_img_changed" value="0">
             </div>
-
+            <div class="form-group" id="preview_video_img"></div>
 
             <div class="form-group">
                 <label for="limitNum">圖片</label>
                 <input type="file" id="img" name="img[]" accept=".png,.jpeg,.jpg" multiple>
+                <input type="hidden" id="img_order" name="img_order">
+                <input type="hidden" id="img_changed" name="img_changed" value="0">
+            </div>
+            <div class="form-group" id="preview">
+              <ul id="sortable" class="row">
+              </ul>
             </div>
             <hr>
             
@@ -110,6 +107,45 @@ $pageName = 'staff_event.php';
   </main>
 
 <?php include __DIR__. '/parts/staff_scripts.php'; ?>
+<script src="<?= WEB_ROOT ?>/js/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+<script>
+$("#img")
+
+  $( function() {
+    $( "#sortable" ).sortable({
+      change: function( event, ui ) {
+        $("#img_changed").val(1);
+      }
+    });
+    // $( "#sortable" ).disableSelection();
+  } );
+
+  $("#img").change(() => {
+    $("#img_changed").val(1);
+    $("#preview #sortable").html("");
+    const files = $("#img")[0].files
+    for(var i = 0; i < files.length; i++){
+      var file = files[i];
+      if (file) {
+        var img = ` <li class="ui-state-default" data-order="${i}">
+                      <img class="preview_img" style="max-width: 120px; max-height: 120px" src="${URL.createObjectURL(file)}" alt="your image" />
+                    </li>`;
+        $("#preview #sortable").append(img);
+      }
+    }
+  });
+  $("#video_img").change(() => {
+    $("#video_img_changed").val(1);
+    $("#preview_video_img").html("");
+    const [file] = $("#video_img")[0].files
+    if (file) {
+      var img = `<img class="preview_img" style="max-width: 120px; max-height: 120px" src="${URL.createObjectURL(file)}" alt="your image" />`;
+      $("#preview_video_img").append(img);
+    }
+  });
+
+  
+</script>
 <script> 
   fillCat();
   function fillCat(){
@@ -132,16 +168,41 @@ $pageName = 'staff_event.php';
       'type': 'read',
       'id': <?= $_GET['id']?>
     }, function(data){
+      console.log(data);
       var columns = ['cat_id', 'name','date','time','price','limitNum','description','title','age','location','content','info','notice','video']
       columns.forEach(function(elem){
         $(`#${elem}`).val(data[elem]);
       });
+
+
+      $("#preview_video_img").html("");
+      if ('video_img' in data) {
+        var img = `<img class="preview_img" style="max-width: 120px; max-height: 120px" src="${data['video_img']}" alt="your image" />`;
+        $("#preview_video_img").append(img);
+      }
+
+      $("#preview #sortable").html("");
+      const files = data['img'];
+      for(var i = 0; i < files.length; i++){
+        var file = files[i];
+        if (file) {
+          var img = ` <li class="ui-state-default" data-order="${i}">
+                        <img class="preview_img" style="max-width: 120px; max-height: 120px" src="${file.path}" alt="your image" />
+                      </li>`;
+          $("#preview #sortable").append(img);
+        }
+      }
     }, 'json').fail(function(data){
       console.log(data);
     })
   }
   
   function create(){
+    var img_order = [];
+    $("#preview #sortable li").each(function(ind, elem){
+      img_order[$(elem).data("order")] = ind + 1;
+    })
+    $("#img_order").val(JSON.stringify(img_order));
     $.ajax({
         url: 'event-api.php',
         data: new FormData($("#myForm")[0]),
@@ -151,11 +212,12 @@ $pageName = 'staff_event.php';
         method: 'POST',
         type: 'POST', // For jQuery < 1.9
         success: function(data){
+          console.log(data);
           modal_init();
           insertPage("#modal_img", "animation_success.html");
           insertText("#modal_content", "修改成功!");
           $("#modal_alert").modal("show");
-          setTimeout(function(){window.history.back();}, 2000);
+          setTimeout(function(){location.href = "staff_event_search.php"}, 2000);
 
         },
         error: function(data){
@@ -164,7 +226,7 @@ $pageName = 'staff_event.php';
           insertPage("#modal_img", "animation_error.html");
           insertText("#modal_content", "資料傳輸失敗");
           $("#modal_alert").modal("show");
-          setTimeout(function(){window.history.back();}, 2000);
+          setTimeout(function(){location.href = "staff_event_search.php"}, 2000);
         }
     });
   }

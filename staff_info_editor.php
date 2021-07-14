@@ -17,9 +17,6 @@ foreach($result as $role_cat){
 <?php include __DIR__. '/parts/staff_html-head.php'; ?>
 
 <style>
-    body {
-        background: linear-gradient(45deg, #e1ebdc 0%, #e8ddf1 100%);
-    }
 
     .button {
         text-align: center;
@@ -40,13 +37,7 @@ foreach($result as $role_cat){
     }
 
 /* =============================== modal =============================== */
-
-    .bee svg{
-        width: 100px;
-        height:100px;
-        margin:1rem;
-    }
-
+ 
 </style>
 <?php include __DIR__. '/parts/staff_navbar.php'; ?>
 

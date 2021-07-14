@@ -6,10 +6,17 @@ require __DIR__ . '/parts/config.php';
 $month = "";
 $time = "";
 $cat_id = "";
-$date = date("Y-m-d");
+// $date = date("Y-m-d");
 
+$year = $_GET['year'] ?? "";
 $month = $_GET['month'] ?? "";
-$time = $_GET['time'] ?? "";
+$start_time = "00:00";
+$end_time = "23:59";
+if (array_key_exists('time', $_GET)){
+    $time = explode("-", $_GET['time']);
+    $start_time =  $time[0] ?? $start_time;
+    $end_time = $time[1] ?? $end_time;
+}
 $cat_id = $_GET['cat_id'] ?? "";
 $order = $_GET['order'] ?? "";
 
@@ -17,17 +24,22 @@ $order = $_GET['order'] ?? "";
 
 $sql = "SELECT `e`.*, ec.name as `ec_name`, SUM(`oe`.quantity) as quantity FROM `event` as e";
 $sql_condition = [];
+if ($year != "") {
+    if (strpos($year, '~')!== false){
+        $year = str_replace("~", "", $year);
+        array_push($sql_condition, "YEAR(`date`) < $year");
+    }else {
+        array_push($sql_condition, "YEAR(`date`) = $year");
+    }
+}
 if ($month != "") {
     array_push($sql_condition, "MONTH(`date`) = $month");
-}
-if ($time != "") {
-    array_push($sql_condition, "`time` = '$time'");
 }
 if ($cat_id != "") {
     array_push($sql_condition, "`cat_id` = $cat_id");
 }
-
-array_push($sql_condition, "`date` >= '$date'");
+array_push($sql_condition, "`time` BETWEEN '$start_time' AND '$end_time'");
+// array_push($sql_condition, "`date` >= '$date'");
 
 $sql .= " JOIN `event_category` as ec ON `cat_id` = ec.`id`";
 $sql .= " LEFT JOIN `order_event` as oe ON e.id = oe.event_id";
@@ -53,21 +65,25 @@ switch ($order) {
 }
 $stmt = $pdo->query($sql);
 $events = $stmt->fetchAll();
-
 // 抓活動的id
 $event_id_list = [];
 foreach($events as $event){
     array_push($event_id_list, $event['id']);
 }
 // 抓圖片
-$sql = "SELECT * FROM `event_image` WHERE event_id in (".implode(",", $event_id_list).")";
-$stmt = $pdo->prepare($sql);
-$stmt->execute([]);
-$result = $stmt->fetchAll();
-$event_img = [];
-foreach($result as $cover_img){
-    $event_img[$cover_img['event_id']] = $cover_img['path'];
+if (!empty($event_id_list)){
+    $sql = "SELECT * FROM `event_image` WHERE event_id in (".implode(",", $event_id_list).") ORDER BY num_order";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([]);
+    $result = $stmt->fetchAll();
+    $event_img = [];
+    foreach($result as $cover_img){
+        if (!array_key_exists($cover_img['event_id'], $event_img)){
+            $event_img[$cover_img['event_id']] = $cover_img['path'];
+        }
+    }
 }
+
 
 
 // 活動類別
@@ -80,7 +96,7 @@ $event_category = $stmt->fetchAll();
 ?>
 
 <?php
-$title = '活動體驗';
+$title = '森林體驗查詢';
 $pageName = 'event';
 ?>
 <?php include __DIR__ . '/parts/staff_html-head.php'; ?>
@@ -94,9 +110,6 @@ $pageName = 'event';
         list-style: none;
         padding: 0.5rem;
     }
-    #event{
-        background-color: #83a573;
-    }
     td{
         padding:0
     }
@@ -104,19 +117,21 @@ $pageName = 'event';
     .con_01 {
         background-color: whitesmoke;
     }
+
+
 </style>
 
 
 
 <body>
  
-<div class="container my-5">
+<div class="container">
         <div class="con_01">
-            <div class=" " id="event" >
+            <div class=" " id="searchBar" >
                 <form action="staff_event_search.php" method="get" >
-                    <ul class="row list-unstyled p-2 m-0 ">
+                    <ul class="row list-unstyled  row justify-content-center align-items-center p-2 m-0 ">
                         <li class=" ">
-                            <select name='cat_id'>
+                            <select id="select_id" name='cat_id'>
                                 <option value="">活動類別</option>
                 
                                 <?php foreach ($event_category as $cat) { ?>
@@ -130,6 +145,10 @@ $pageName = 'event';
                                 <option value=""></option>
                                 <option value=""></option>
                                 <option value=""></option>
+                                <option value=""></option>
+                                <option value=""></option>
+                                <option value=""></option>
+                                <option value=""></option>
                             </select>
                         </li>
                         <li class="">
@@ -138,28 +157,37 @@ $pageName = 'event';
                                 <option value=""></option>
                                 <option value=""></option>
                                 <option value=""></option>
+                                <option value=""></option>
+                                <option value=""></option>
+                                <option value=""></option>
+                                <option value=""></option>
+                                <option value=""></option>
+                                <option value=""></option>
+                                <option value=""></option>
+                                <option value=""></option>
+                                <option value=""></option>
                             </select>
                         </li>
                         <li class=" ">
                             <select  id="select_time" name="time">
                                 <option value="">時段</option>
-                                <option value="08:00">10:00~之前</option>
-                                <option value="10:00">10:00~12:00</option>
-                                <option value="12:00">12:00~14:00</option>
-                                <option value="14:00">14:00~16:00</option>
-                                <option value="16:00">16:00~18:00</option>
-                                <option value="18:00">18:00~之後</option>
+                                <option value="00:00-10:00">10:00~之前</option>
+                                <option value="10:00-12:00">10:00~12:00</option>
+                                <option value="12:00-14:00">12:00~14:00</option>
+                                <option value="14:00-16:00">14:00~16:00</option>
+                                <option value="16:00-18:00">16:00~18:00</option>
+                                <option value="18:00-23:59">18:00~之後</option>
                             </select>
                         </li>
                         <li class="bg-green">
-                            <select name="order">
+                            <select id="select_order" name="order">
                                 <option value="">排序</option>
                                 <option value="1" <?= $order == 1 ? "selected" : "" ?>>暢銷度由高至低</option>
                                 <option value="2" <?= $order == 2 ? "selected" : "" ?>>價錢由低至高</option>
                                 <option value="3" <?= $order == 3 ? "selected" : "" ?>>價錢由高至低</option>
                             </select>
                         </li>
-                        <button type="submit" class="custom-btn btn-4 m-0 p-0" style="width:3rem; ">送出</button>
+                        <li><button type="submit" class="custom-btn btn-4 m-0 p-0" style="width:3rem; ">送出</button></li>
                     </ul>
                 </form>
             </div>
@@ -177,6 +205,8 @@ $pageName = 'event';
                                     <th>費用</th>
                                     <th>詳情</th>
                                     <th>修改</th>
+                                    <th scope="col" class="m-0 t_shadow text-center"><i class="fas fa-trash-alt"></i></th>
+
                 
                                 </tr>
                             </thead>
@@ -192,6 +222,11 @@ $pageName = 'event';
                                     <td><span><?= $event["price"]  ?></span></td>
                                     <td><a href="staff_event_item.php?id=<?= $event['id'] ?>" target="blank">查詢</a></td>
                                     <td><a href="staff_event_editor.php?id=<?= $event['id'] ?>" target="blank">修改</a></td>
+                                    <td>
+                                        <a href="javascript:" onclick="deleteItem(event, 'event', '<?= $key ?>')">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                             </tbody>
@@ -200,14 +235,18 @@ $pageName = 'event';
             </div>
 
         </div>
-
   </div>
     <?php include __DIR__ . '/parts/staff_scripts.php'; ?>
 
     <script>
         var date = new Date();
-        var year = date.getFullYear();
+        var year = date.getFullYear() - 3;
         var month = date.getMonth() + 1;
+        var selectedMonth = "<?= $_GET['month'] ?? "" ?>";
+        var selectedYear = "<?= $_GET['year'] ?? "" ?>";
+        var selectedId = "<?= $_GET['cat_id'] ?? "" ?>";
+        var selectedTime = "<?= $_GET['time'] ?? "" ?>";
+        var selectedOrder = "<?= $_GET['order'] ?? "" ?>";
         $("#select_month option").each(function(ind, elem) {
             if (ind > 0) {
                 elem.text = month;
@@ -217,33 +256,49 @@ $pageName = 'event';
             if (month > 12) {
                 month = 1;
             }
+            if (elem.value === selectedMonth){
+                elem.selected = true;
+            }
         });
         $("#select_year option").each(function(ind, elem) {
-            if (ind > 0) {
+            if (ind === 1){
+                elem.text = "之前";
+                elem.value = `~${year}`;
+            }else if (ind > 0) {
                 elem.text = year;
                 elem.value = year;
                 year++;
             }
+            if (elem.value === selectedYear){
+                elem.selected = true;
+            }
         });
+        $("#select_id").val(selectedId);
+        $("#select_time").val(selectedTime);
+        $("#select_order").val(selectedOrder);
     </script>
 
     <script>
-        function scroll(){
-            console.log('test' + window.scrollY);
-            if (location.href.indexOf("#event") > -1){
-                window.scrollTo(0, window.scrollY - 70)
-            }
-        }
+        const deleteItem = function(event, type, key) {
+            let t = $(event.currentTarget);
+            console.log('event:', event);
+            $.get('event-api.php', {
+                action: 'delete',
+                type: type,
+                key: key
+            }, function(data) {
+                console.log(t);
+                console.log(data);
+                t.closest('tr').remove();
+                updateDiscountTip();
+                updateTable();
+                // location.reload();  // 刷頁面
+                if ($('tbody>tr').length < 1) { 
+                    location.reload(); // 重新載入
+                }
+            }, 'json');
+       };
     </script>
-    <script>
-    $(document).ready(function() {
-        if (location.search) {
-            $('html, body').scrollTop(910);
-        }
-        $(".c_pink_t").each(function(ind, elem){
-            $(elem).text(dallorCommas($(elem).text()) + "元"); 
-        });
-        scroll();
-    });
-    </script>
+
+
     <?php include __DIR__ . '/parts/staff_html-foot.php'; ?>

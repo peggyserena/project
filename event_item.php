@@ -33,7 +33,7 @@ $stmt->execute([$_GET['id']]);
 $event = $stmt->fetch();
 
 // 抓圖片
-$sql = "SELECT * FROM `event_image` WHERE event_id = ".$event['id'];
+$sql = "SELECT * FROM `event_image` WHERE event_id = ".$event['id']." ORDER BY num_order";
 $stmt = $pdo->prepare($sql);
 $stmt->execute([]);
 $event_img = $stmt->fetchAll();
@@ -50,6 +50,7 @@ foreach ($quantity_list as $value) {
 }
 ?>
 <?php include __DIR__ . '/parts/html-head.php'; ?>
+
 <?php include __DIR__ . '/parts/navbar.php'; ?>
 <style>
 /* ====================================== event ====================================== */
@@ -88,9 +89,9 @@ foreach ($quantity_list as $value) {
     }
 
     .eventItem .fancybox img {
-        width: 99.5%;
-        height: 100%;
+        height: 70%;
         object-fit: cover;
+        border:white solid 1px;
     }
 
 
@@ -162,7 +163,7 @@ foreach ($quantity_list as $value) {
 
 
 </style>
-<div class="container my-lg-5">
+<div class="container my-5 p-0 ">
     <?php include "parts/transaction.php"?>
     <div class="eventItem justify-content-center row box_shadow">
         <h2 class='text-center b-green rot-135 col-12 p-2 m-0' id="event_<?= $event['id']?>">
@@ -220,25 +221,26 @@ foreach ($quantity_list as $value) {
 
 
             <div class='fancybox d-flex row p-0 m-0'>
-                <a href='<?= $event['video'] ?>' data-fancybox='F_box1' data-caption='qwe'>
+                <a href='<?= $event['video'] ?>' data-fancybox='F_box1' data-caption= '<?= $event['name'] ?>e'>
                     <img src='<?= WEB_ROOT ?>/<?= $event['video_img'] ?>' alt=''>
                 </a>
                 <?php for ($i = 1; $i < count($event_img); $i++) : ?>
-                    <a href='<?= WEB_ROOT."/".$event_img[$i]['path'] ?>' data-fancybox='F_box1' data-caption='qwe'>
+                    <a href='<?= WEB_ROOT."/".$event_img[$i]['path'] ?>' data-fancybox='F_box1' data-caption=' <?= $event['name'] ?>'>
                         <img src='<?= WEB_ROOT."/".$event_img[$i]['path'] ?>' alt=''>
                     </a>
                 <?php endfor; ?>
             </div>
 
 
-            <div class="eventContent m-0 p-5">
+            <div class="eventContent m-0 p-md-5 p-sm-2">
                 <p><span>活動類別：</span><?= $event["ec_name"] ?></p>
                 <p><span>合適年齡：</span><?= $event['age'] ?></p>
                 <p><span>集合地點：</span><?= $event['location'] ?></p>
                 <p><span>活動日期：</span><?= $event["date"] . '&emsp;' . substr($event["time"], 0, 5) ?></p>
                 <p><span>開放人數：</span><?= $event['limitNum'] ?>人</p>
                 <p><span>尚有名額：</span><?= $event["limitNum"] - $event["quantity"]  ?>人</p>
-                <p><span>活動費用：</span><span class="c_pink_t" ><?= $event["price"]  ?></span> 元/人，現場報名、線上報名</p>
+                <p><span>活動費用：</span><span class="c_pink_t" ><?= $event["price"]  ?></span> 元/人</p>
+                <p><span>報名方式：</span>現場報名、線上報名</p>
                 <p><span>活動內容：</span><?= $event['content'] ?></p>
                 <pre>
                   <p><span><?= $event["description"] ?></span></p>
@@ -258,7 +260,6 @@ foreach ($quantity_list as $value) {
 
 </div>
     <?php include __DIR__ . '/parts/scripts.php'; ?>
-
 <script>
     $(document).ready(function() {
          $(".c_pink_t").each(function(ind, elem){

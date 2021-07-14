@@ -1,7 +1,7 @@
 <?php include __DIR__ . '/parts/config.php'; ?>
 <?php
 $title = '森林體驗確認';
-$pageName = 'event';
+$pageName = 'staff_event_confirm';
 
 
 
@@ -50,6 +50,7 @@ foreach ($quantity_list as $value) {
 }
 ?>
 <?php include __DIR__ . '/parts/staff_html-head.php'; ?>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
 <?php include __DIR__ . '/parts/staff_navbar.php'; ?>
 <style>
 /* ====================================== event ====================================== */
@@ -219,25 +220,26 @@ foreach ($quantity_list as $value) {
 
 
             <div class='fancybox d-flex row p-0 m-0'>
-                <a href='<?= $event['video'] ?>' data-fancybox='F_box1' data-caption='qwe'>
+                <a href='<?= $event['video'] ?>' data-fancybox='F_box1' data-caption=' <?= $event['name'] ?>'>
                     <img src='<?= WEB_ROOT ?>/<?= $event['video_img'] ?>' alt=''>
                 </a>
                 <?php for ($i = 1; $i < count($event_img); $i++) : ?>
-                    <a href='<?= WEB_ROOT."/".$event_img[$i]['path'] ?>' data-fancybox='F_box1' data-caption='qwe'>
+                    <a href='<?= WEB_ROOT."/".$event_img[$i]['path'] ?>' data-fancybox='F_box1' data-caption=' <?= $event['name'] ?>'>
                         <img src='<?= WEB_ROOT."/".$event_img[$i]['path'] ?>' alt=''>
                     </a>
                 <?php endfor; ?>
             </div>
 
 
-            <div class="eventContent m-0 p-5">
+            <div class="eventContent m-0 p-md-5 p-sm-2">
                 <p><span>活動類別：</span><?= $event["ec_name"] ?></p>
                 <p><span>合適年齡：</span><?= $event['age'] ?></p>
                 <p><span>集合地點：</span><?= $event['location'] ?></p>
                 <p><span>活動日期：</span><?= $event["date"] . '&emsp;' . substr($event["time"], 0, 5) ?></p>
                 <p><span>開放人數：</span><?= $event['limitNum'] ?>人</p>
                 <p><span>尚有名額：</span><?= $event["limitNum"] - $event["quantity"]  ?>人</p>
-                <p><span>活動費用：</span><span class="c_pink_t" ><?= $event["price"]  ?></span> 元/人，現場報名、線上報名</p>
+                <p><span>活動費用：</span><span class="c_pink_t" ><?= $event["price"]  ?></span> 元/人</p>
+                <p><span>報名方式：</span>現場報名、線上報名</p>
                 <p><span>活動內容：</span><?= $event['content'] ?></p>
                 <pre>
                   <p><span><?= $event["description"] ?></span></p>
@@ -253,6 +255,7 @@ foreach ($quantity_list as $value) {
 
 </div>
     <?php include __DIR__ . '/parts/staff_scripts.php'; ?>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
 
 <script>
     $(document).ready(function() {

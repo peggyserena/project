@@ -15,6 +15,11 @@ switch ($type) {
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$_POST['id']]);
         $result = $stmt->fetch();
+        
+        $sql = "SELECT * FROM `event_image` WHERE event_id = ? ORDER BY num_order";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$_POST['id']]);
+        $result['img'] = $stmt->fetchAll();
         break;
     case 'add':
         // insert video image
@@ -39,21 +44,50 @@ switch ($type) {
 
         // insert gallery image
         $name_list = uploadImgs($_FILES['img'], "images/event/gallery/");
-        $sql = "INSERT INTO `event_image` (`event_id`, `path`) VALUES ".substr(str_repeat("($event_id, ?),", count($name_list)), 0, -1);    
-        // INSERT INTO `event` (`event_id`, `path`) VALUES  (1, ?), (1, ?), (1, ?)
+        // json_decode() 字串變陣列
+        // json_encode() 陣列變字串
+        $img_order = json_decode($_POST['img_order']);
+        $sql = "INSERT INTO `event_image` (`event_id`, `path`, `num_order`) VALUES ".substr(str_repeat("($event_id, ?, ?),", count($name_list)), 0, -1);    
+        // INSERT INTO `event` (`event_id`, `path`) VALUES  (1, ?, ?), (1, ?, ?), (1, ?, ?)
         $stmt = $pdo->prepare($sql);
-        $stmt->execute($name_list);
+        $param = []; // [path1, order1, path2, order2]
+        foreach($name_list as $index => $name){
+            array_push($param, $name);
+            array_push($param, $img_order[$index]);
+        }
+        $stmt->execute($param);
 
         $result = ["success"];
         break;
     case 'edit':
+        $id = $_POST['id'];
+        // get old event
+        $sql = "SELECT * FROM `event` WHERE id = ?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$id]);
+        $event = $stmt->fetch();
+        
+        $sql = "SELECT * FROM `event_image` WHERE event_id = ? ORDER BY num_order";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$id]);
+        $event['img'] = $stmt->fetchAll();
+
         // insert video image
-        // $name = uploadImg($_FILES['video_img'], "images/event/video/");
-        // $_POST['video_img'] = $name;
+        $video_img_changed = $_POST['video_img_changed'];
+        $img_changed = $_POST['img_changed'];
+
+        if ($video_img_changed === "1"){
+            deleteImg($event['video_img']);
+            $name = uploadImg($_FILES['video_img'], "images/event/video/");
+            $_POST['video_img'] = $name;
+        }
+        
 
         // insert event
-        $id = $_POST['id'];
         $columns = ['cat_id', 'video', 'name', 'date', 'time', 'price', 'description', 'title', 'age', 'location', 'content', 'info', 'notice', 'limitNum'];
+        if ($video_img_changed === "1") {
+            array_push($columns, 'video_img');
+        }
         $sql = "UPDATE `event` SET ";
         
         $sql .= implode(" = ?, ", $columns)." = ? WHERE id = $id";
@@ -69,12 +103,36 @@ switch ($type) {
         $stmt->execute($data);
         
         // insert gallery image
-        // $name_list = uploadImgs($_FILES['img'], "images/event/gallery/");
-        // $sql = "INSERT INTO `event_image` (`event_id`, `path`) VALUES ".substr(str_repeat("($event_id, ?),", count($name_list)), 0, -1);    
-        // INSERT INTO `event` (`event_id`, `path`) VALUES  (1, ?), (1, ?), (1, ?)
-        // $stmt = $pdo->prepare($sql);
-        // $stmt->execute($name_list);
+        if ($img_changed === "1"){
+            if ($_FILES['img']['size'][0] === 0){
+                $num_order = json_decode($_POST['img_order']);
+                $result = [];
+                $sql = "SELECT * FROM `event_image` WHERE `event_id` = ? ORDER BY num_order";
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute([$id]);
+                $event_image = $stmt->fetchAll();
 
+                foreach($num_order as $key => $value){
+                    $sql = "UPDATE `event_image` SET num_order = ? WHERE id = ?";    
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute([$value, $event_image[$key]['id']]);
+                }
+            } else{
+                foreach($event['img'] as $event_image){
+                    deleteImg($event_image['path']);
+                }
+                $sql = "DELETE FROM `event_image` WHERE `event_id` = ?";
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute([$id]);
+                $name_list = uploadImgs($_FILES['img'], "images/event/gallery/");
+                $sql = "INSERT INTO `event_image` (`event_id`, `path`) VALUES ".substr(str_repeat("($id, ?),", count($name_list)), 0, -1);    
+                // INSERT INTO `event` (`event_id`, `path`) VALUES  (1, ?), (1, ?), (1, ?)
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute($name_list);
+            }
+            
+        }
+        
         $result = ["success"];
         break;
 }
@@ -133,7 +191,6 @@ function uploadImgs($img, $target_dir){
     }
     return $name_list;
 }
-
 function uploadImg($img, $target_dir){
     $name = "";
     $filename = md5(uniqid());
@@ -185,6 +242,26 @@ function uploadImg($img, $target_dir){
         }
     }
     return $name;
+}
+
+function deleteImg($img){
+    $target_file = $img;
+    $uploadOk = 1;
+    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+    if (!file_exists($target_file)) {
+        // echo "Sorry, file already exists.";
+        $uploadOk = 0;
+    }
+    // Allow certain file formats
+    if($imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "jpg") {
+        // echo "Sorry, only JPEG, PNG files are allowed.";
+        $uploadOk = 0;
+    }
+    if ($uploadOk == 0){
+
+    }else{
+        unlink($img);
+    }
 }
 echo json_encode($result, JSON_UNESCAPED_UNICODE);
 

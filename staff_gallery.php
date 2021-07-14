@@ -18,58 +18,10 @@ $indexs = $stmt->fetchAll();
 ?>
 
 <?php include __DIR__. '/parts/staff_html-head.php'; ?>
+<link rel="stylesheet" href="./css/staff_gallery.css">
+
 
 <style>
-
-
-  h3{
-    margin:0;
-    padding: 0.5rem 0;
-    background-color: #83a573;
-    color: white;
-  
-  }
-  h4{
-    font-weight: 500;
-  }
-  
-
-  .form-group {
-    width: 100%;
-    height: auto;
-    margin: 1rem 0;
-    background-color: whitesmoke;
-    }
- 
-
-  .form-group img {
-    width: 120px;
-    height: auto;
-    object-fit: cover;
-    margin: 0.5rem 0.25rem;
-  }
-  .btn-4{
-    box-shadow: none;
-  }
-
-  .galleryBar {
-    background-color: gray;
-    z-index: 99;
-    position: sticky;
-    top: 60px;
-    left: 0;
-    text-align: justify;
-  }
-
-  
-  .galleryBar ul li a:hover {
-      color: white;
-      text-shadow: 0px 0px 10px rgb(0, 255, 191);
-  }
-  a:hover {
-      color: white;
-  }
-
 
 
 
@@ -87,7 +39,7 @@ $indexs = $stmt->fetchAll();
     </ul>
   </div>
 
-  <div class="container my-5">
+  <div class="container">
 
     <form class="" action="" name="formGallery" id="formGallery" method="post" onsubmit="create(); return false;" enctype="multipart/form-data">
 
@@ -103,17 +55,17 @@ $indexs = $stmt->fetchAll();
           <img src="./images/album/farm/farm_1.jpg" alt="" />
           
           <?php for ($i = 1; $i < count($index_img); $i++) : ?>
-                    <a href='<?= WEB_ROOT."/".$index_img[$i]['path'] ?>' data-fancybox='F_box1' data-caption='qwe'>
+                    <a href='<?= WEB_ROOT."/".$index_img[$i]['path'] ?>' data-fancybox='F_box1' data-caption=' <?= $ind['name'] ?>'>
                         <img src='<?= WEB_ROOT."/".$index_img[$i]['path'] ?>' alt=''>
                     </a>
-                <?php endfor; ?>
+          <?php endfor; ?>
         </div>
 
         <h4 class="col-sm-12 m-0 p-2 bg-dark text-white text-center">圖片說明</h4>
 
         <textarea class=" form-control col-sm-12 p-3 m-0" id="content_<?= $ind['name']?>" name="" disabled cols="30" rows="5" ><?= $ind["content"] ?></textarea>
 
-        <a class="text-center custom-btn btn-4 t_shadow" style="width:100%;border-radius: 0;transform: none;" href="staff_gallery_editor.php?id=<?= $indexs['id']?>" target="_blank"><h4 class="m-2">修改</h4></a>
+        <a class="text-center custom-btn btn-4 t_shadow" style="width:100%;border-radius: 0;transform: none;" href="staff_gallery_editor.php?id=<?= $ind['id']?>" target="_blank"><h4 class="m-2">修改</h4></a>
 
 
       </div>
