@@ -1,7 +1,7 @@
 <?php include __DIR__ . '/parts/config.php'; ?>
 <?php
-$title = '薰衣草森林-管理系統';
-$pageName = 'staff_info';
+$title = '員工資料查詢';
+$pageName = 'staff_info_search';
 
 if(
   ! isset($_SESSION['staff'])
@@ -14,14 +14,14 @@ exit;
 
 
 // role類別
-$sql = "SELECT * FROM `staff_role_category`";
-$stmt = $pdo->query($sql);
-$result = $stmt->fetchAll();
-$staff_role_category = [];
+// $sql = "SELECT * FROM `staff_role_category`";
+// $stmt = $pdo->query($sql);
+// $result = $stmt->fetchAll();
+// $staff_role_category = [];
 //ArrayArray ( [1] => 管理者 [2] => 經理 [3] => 會計 [4] => 一般員工 )
-foreach($result as $role_cat){
-    $staff_role_category[$role_cat['id']] = $role_cat['position'];
-}
+// foreach($result as $role_cat){
+//     $staff_role_category[$role_cat['id']] = $role_cat['position'];
+// }
 // 陣列
 // print_r, var_dump
 
@@ -37,7 +37,7 @@ foreach($result as $role_cat){
 <style>
 
 .box{
-    width: 80%;
+    width: 95%;
     margin: 100px auto;
 }
   #profile .form-group {
@@ -60,16 +60,17 @@ foreach($result as $role_cat){
     <div class="box">
         <div class="con_01  p-0  m-auto">
             <div id="searchBar"  class=" " >
-                <h2 class="title b-green rot-135  ">員工個人資料</h2>
+                <h2 class="title b-green rot-135  ">員工資料查詢</h2>
 
                 <form action="staff_info_search.php" method="post" onsubmit="staffIntoSearch(); return false;">
-                    <ul class="row list-unstyled p-2 m-0 justify-content-center align-items-center">
+                    <ul class="row list-unstyled p-2 m-0  justify-content-center align-items-center">
                         <li class=" ">
                             <input type="text" id="staff_id" value="" placeholder="員工編號">          
                         </li>
                         <li class=" ">
                             <input type="text" id="fullname" value="" placeholder="姓名">          
                         </li>
+
                         <li class=" ">
                             <input type="text"  id="mobile" value="" placeholder="手機">          
                         </li>
@@ -77,9 +78,19 @@ foreach($result as $role_cat){
                             <input type="text"  id="identityNum" value="" placeholder="身分證">          
                         </li>
                         <li class="">
-                            <select id="birthday_month" name="month">
+                            <select id="gender" name="gender">
+                                <option disabled hidden selected value="">性別</option>
+                                <option value="male">男性</option>
+                                <option value="female">女性</option>
+                                <option value="none">不填</option>
+                            </select>
+                        </li>
+
+
+                        <li class="">
+                            <select id="select_month" name="birthmonth" class="text-center">
                                 <option disabled hidden selected >生日月份</option>
-                                <option value=""></option>
+                                <option value="" class="text-center"></option>
                                 <option value=""></option>
                                 <option value=""></option>
                                 <option value=""></option>
@@ -93,7 +104,6 @@ foreach($result as $role_cat){
                                 <option value=""></option>
                             </select>
                         </li>
-
                         <li class="">
                             <select id="age" name="age">
                                 <option value="" disabled hidden selected>年齡區間</option>
@@ -111,19 +121,21 @@ foreach($result as $role_cat){
             </div>
 
             <div id="profile" class="  p-0  m-0">
-                <div class="p-md-5 p-sm-2">
-                <table class="table table-striped table-bordered text-center">
-                        <thead>
+                <div class="">
+                <table class="table table-bordered table-Primary table-hover text-center">
+                        <thead class="bg-dark text-white">
                             <tr>
                                 <td>序號</td>
                                 <td>員工編號</td>
                                 <td>職稱</td>
                                 <td>姓名</td>
+                                <td>性別</td>
                                 <td>生日</td>
                                 <td>身分證字號</td>
-                                <td>mail</td>
+                                <td>E-mail</td>
                                 <td>手機</td>
                                 <td>地址</td>
+                                <td>就職日</td>
                             </tr>
                         </thead>
                         <tbody>
@@ -147,6 +159,7 @@ foreach($result as $role_cat){
         fullname: $("#fullname").val(),
         mobile: $("#mobile").val(),
         identityNum: $("#identityNum").val(),
+        // select_month: $("#select_month").val(),
         age: $("#age").val(),
     },function(data) {
         console.log(data);
@@ -154,15 +167,18 @@ foreach($result as $role_cat){
         $("#profile table tbody").html("");
         staff_list.forEach(function(staff, index){
             var output = `<tr>
-                            <td>${index + 1}</td>
+                            <td class="bg-dark text-white" style="border: #454d55 1px solid ;">${index + 1}</td>
                             <td>${nullTo(staff['staff_id'])}</td>
                             <td>${nullTo(staff['role_name'])}</td>
                             <td>${nullTo(staff['fullname'])}</td>
+                            <td>${nullTo(staff['gender'])}</td>
                             <td>${nullTo(staff['birthday'])}</td>
                             <td>${nullTo(staff['identityNum'])}</td>
                             <td>${nullTo(staff['email'])}</td>
                             <td>${nullTo(staff['mobile'])}</td>
                             <td>${nullTo(staff['zipcode']) + nullTo(staff['county']) + nullTo(staff['district']) + nullTo(staff['address'])}</td>
+                            <td>${nullTo(staff['created_at'])}</td>
+
                             </tr>`;
             $("#profile table tbody").append(output);
         })
@@ -180,7 +196,7 @@ foreach($result as $role_cat){
 <script>
     var month = 1;
     var selectedMonth = "<?= $_GET['month'] ?? "" ?>";
-    $("#birthday_month option").each(function(ind, elem) {
+    $("#select_month option").each(function(ind, elem) {
         if (ind > 0) {
             elem.text = month;
             elem.value = month;

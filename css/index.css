@@ -82,9 +82,6 @@ table {
   font-size: 1.2rem;
   font-weight: 400;
 }
-.box_cellphone p {
-  color: gray;
-}
 
 .tableTwo {
   width: 100%;
@@ -95,11 +92,14 @@ table {
   vertical-align: middle;
 }
 
-.tableTwo th,
+.tableTwo,
+h4,
+th,
 td,
 p {
-  padding: 3px;
+  /* padding: 3px; */
   font-size: 0.9rem;
+  color: white;
 }
 
 .tableTwo th,
@@ -116,12 +116,9 @@ td {
   width: 35%;
 }
 
-.tableTwo li {
-  list-style: none;
-}
-
-.c_1 h1,
+h1,
 h3 {
+  color: white;
   text-shadow: 0 0 0.2em #0000e3, 0 0 0.25em #9aff02, -1px -1px white, 1px 1px rgb(26, 2, 94);
 }
 
@@ -132,67 +129,67 @@ h3 {
   grid-template-rows: 17.5% 17.5% 17.5% 17.5% 17.5%;
   gap: 0px 0px;
   grid-template-areas:
-    'grid_01 grid_02 grid_03 grid_04'
-    'grid_14 map map grid_05'
-    'grid_13 map map grid_06'
-    'grid_12 map map grid_07'
-    'grid_11 grid_10 grid_09 grid_08';
+    'farm craft forest gallery'
+    'tree map map carousel'
+    'island map map hill'
+    'garden map map post'
+    'entrance shop shower cafe';
 }
 
-.grid_01 {
-  grid-area: grid_01;
+.farm {
+  grid-area: farm;
 }
 
-.grid_02 {
-  grid-area: grid_02;
+.craft {
+  grid-area: craft;
 }
 
-.grid_03 {
+.forest {
   grid-area: grid_03;
 }
 
-.grid_04 {
-  grid-area: grid_04;
+.gallery {
+  grid-area: gallery;
 }
 
-.grid_05 {
-  grid-area: grid_05;
+.carousel {
+  grid-area: carousel;
 }
 
-.grid_06 {
-  grid-area: grid_06;
+.hill {
+  grid-area: hill;
 }
 
-.grid_07 {
-  grid-area: grid_07;
+.post {
+  grid-area: post;
 }
 
-.grid_08 {
-  grid-area: grid_08;
+.cafe {
+  grid-area: cafe;
 }
 
-.grid_09 {
-  grid-area: grid_09;
+.shower {
+  grid-area: shower;
 }
 
-.grid_10 {
-  grid-area: grid_10;
+.shop {
+  grid-area: shop;
 }
 
-.grid_11 {
-  grid-area: grid_11;
+.entrance {
+  grid-area: entrance;
 }
 
-.grid_12 {
-  grid-area: grid_12;
+.garden {
+  grid-area: garden;
 }
 
-.grid_13 {
-  grid-area: grid_13;
+.island {
+  grid-area: island;
 }
 
-.grid_14 {
-  grid-area: grid_14;
+.tree {
+  grid-area: tree;
 }
 
 .map {
@@ -220,6 +217,7 @@ h3 {
   border: white 5px solid;
   text-align: center;
   position: relative;
+  cursor: pointer;
 }
 /* ====================== push ====================== */
 
@@ -264,7 +262,8 @@ input[type='radio']:after {
   content: '';
   display: inline-block;
   visibility: visible;
-  border: 2px solid orange;
+  border: 5px solid orange;
+  cursor: pointer;
 }
 
 input[type='radio']:checked:after {
@@ -278,7 +277,7 @@ input[type='radio']:checked:after {
   content: '';
   display: inline-block;
   visibility: visible;
-  border: 2px solid #9aff02;
+  border: 5px solid #9aff02;
 }
 
 .radioArea > input:nth-child(1) {
@@ -365,19 +364,19 @@ input[type='radio']:checked:after {
   left: 25%;
 }
 
-.box_desktop #myCarousel .carousel-inner img {
+.box_desktop #demo .carousel-inner img {
   width: 100%;
-  height: 500px;
+  max-height: 500px;
   object-fit: contain;
 }
-.box_tablet #myCarousel .carousel-inner img {
+.box_tablet #demo .carousel-inner img {
   width: 100%;
-  height: 300px;
+  max-height: 300px;
   object-fit: contain;
 }
-.box_cellphone #myCarousel .carousel-inner img {
+.box_cellphone #demo .carousel-inner img {
   width: 100%;
-  /* height:100%; */
+  max-height: 300px;
   object-fit: contain;
 }
 /* ================================================================ */
@@ -426,7 +425,7 @@ input[type='radio']:checked:after {
   background: none;
   background-color: white;
 }
-.map1 img {
+.map img {
   width: 100%;
   height: 100%;
 }

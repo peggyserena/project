@@ -152,6 +152,7 @@ $("#img")
   }, 'json').fail(function(data){
     console.log(data);
   })
+  
   function create(){
     var img_order = [];
     $("#preview #sortable li").each(function(ind, elem){

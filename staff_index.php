@@ -23,14 +23,15 @@ $aceept_role = [1, 2];
     .box a {
         text-align: center;
         border-radius: 5px;
-        margin: 2rem;
-        padding: 40px 40px;
+        margin:1rem;
+        padding: 30px;
         background-image: linear-gradient(315deg, #adda9a 0%, #dcc5ef 74%);
         cursor: pointer;
-        transition: all 0.3s ease-in-out;
+        transition: all 0.2s ease-in-out;
         box-shadow: 3px 3px 5px rgba(119, 119, 119, 0.5);
         letter-spacing: 3px;
-        font-size: 200%;
+        font-size: 1.5rem;
+        /* filter: grayscale(100%); */
     }
     .box a {
         color: #fff;
@@ -41,27 +42,39 @@ $aceept_role = [1, 2];
     /* button */
 
     .box a:hover {
-        /* box-shadow: 0px 0px 10px rgb(0, 255, 191); */
-        transform: scale(0.975);
-        /* filter: hue-rotate(45deg); */
+        /* box-shadow: none; */
+        transform: scale(0.95);
+        cursor: pointer;
+        color: white;
+        font-weight: 900;
+        text-shadow: none;
+        background-image: linear-gradient(315deg, #79b65f 10%, #7d30bd 30%);
     }
+
+    
 </style>
 <?php include __DIR__. '/parts/staff_navbar.php'; ?>
 
-<main>
+<main class="box">
 
     <!-- (div>a[href=#]{Link})*6 -->
-    <div class="box row justify-content-center align-items-center">
-        <a class="col-md-3 col-sm-12 " href="staff_helpdesk.php"><div >客服信箱回覆</div></a>
-        <a class="col-md-3 col-sm-12 " href="staff_gallery.php"><div >相簿維護</div></a>
-        <a class="col-md-3 col-sm-12 " href="staff_forestnews.php"> <div >森林快報</div></a>
-        <a class="col-md-3 col-sm-12 " href="staff_event_create.php"> <div >森林體驗新增</div></a>
-        <a class="col-md-3 col-sm-12 " href="staff_event_search.php"> <div >森林體驗維護</div></a>
-        <a class="col-md-3 col-sm-12 " href="staff_member_order_search.php"> <div >交易訂單查詢</div></a>
-        <a class="col-md-3 col-sm-12 " href="staff_member_info_search.php"> <div >會員資料查詢</div></a>
+    <div class=" row justify-content-center align-items-center">
+        <a class="col-lg-2 col-md-3 col-sm-12 " href="staff_helpdesk.php"><div >客服信箱回覆</div></a>
+        <a class="col-lg-2 col-md-3 col-sm-12 " href="staff_member_info_search.php"> <div >會員資料查詢</div></a>
+        <a class="col-lg-2 col-md-3 col-sm-12 " href="staff_member_order_search.php"> <div >交易訂單查詢</div></a>
+        <a class="col-lg-2 col-md-3 col-sm-12 " href="staff_forestnews_create.php"> <div >森林快報新增</div></a>
+        <a class="col-lg-2 col-md-3 col-sm-12 " href="staff_forestnews_editor.php"> <div >森林快報維護</div></a>
+        <a class="col-lg-2 col-md-3 col-sm-12 " href="staff_madol_create.php"><div >彈跳視窗新增</div></a>
+        <a class="col-lg-2 col-md-3 col-sm-12 " href="staff_madol_editor.php"><div >彈跳視窗維護</div></a>
+        <a class="col-lg-2 col-md-3 col-sm-12 " href="staff_event_create.php"> <div >森林體驗新增</div></a>
+        <a class="col-lg-2 col-md-3 col-sm-12 " href="staff_event_search.php"> <div >森林體驗維護</div></a>
+        <a class="col-lg-2 col-md-3 col-sm-12 " href="staff_gallery.php"><div >園區相簿維護</div></a>
+    </div>
+    <hr>
+    <div class=" row justify-content-center align-items-center">
         <?php if (in_array($_SESSION['staff']['role'] ?? "", $aceept_role)): ?>
-        <a class="col-md-3 col-sm-12 " href="staff_info_search.php"> <div >員工資料查詢</div></a>
-        <a class="col-md-3 col-sm-12 " href="staff_register.php"> <div >新增員工帳密</div></a>
+        <a class="col-lg-2 col-md-3 col-sm-12 " href="staff_info_search.php"> <div >員工資料查詢</div></a>
+        <a class="col-lg-2 col-md-3 col-sm-12 " href="staff_register.php"> <div >新增員工帳密</div></a>
         <?php endif?>
 
     </div>

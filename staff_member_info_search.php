@@ -1,6 +1,6 @@
 <?php include __DIR__ . '/parts/config.php'; ?>
 <?php
-$title = '訂單查詢';
+$title = '會員資料查詢';
 $pageName = 'staff_member_info_search';
 
 if(
@@ -10,53 +10,6 @@ header('Location: staff_login.php');
 exit;
 }
 
-$sql = "SELECT * FROM staff WHERE staff_id='" . $_SESSION['staff']['staff_id']."'";
-$stamt = $pdo->query($sql)->fetch();
-
-
-
-$sql = "SELECT * FROM `members` WHERE id=id";
-$r = $pdo->query($sql)->fetchAll();
-
-
-
-$year = "";
-$month = "";
-$age = "";
-
-// $date = date("Y-m-d");
-
-$year = $_GET['year'] ?? "";
-$month = $_GET['month'] ?? "";
-$order = $_GET['order'] ?? "";
-
-
-
-// $sql = "SELECT `e`.*, ec.name as `ec_name`, SUM(`oe`.quantity) as quantity FROM `event` as e";
-$sql_condition = [];
-if ($year != "") {
-    if (strpos($year, '~')!== false){
-        $year = str_replace("~", "", $year);
-        array_push($sql_condition, "YEAR(`date`) < $year");
-    }else {
-        array_push($sql_condition, "YEAR(`date`) = $year");
-    }
-}
-if ($month != "") {
-    array_push($sql_condition, "MONTH(`date`) = $month");
-}
-
-
-
-
-if (sizeof($sql_condition) > 0) {
-    $sql .= " WHERE ";
-}
-$sql .= implode(" AND ", $sql_condition);
-
-
-
-
 
 ?>
 
@@ -64,47 +17,45 @@ $sql .= implode(" AND ", $sql_condition);
 
 <?php include __DIR__. '/parts/staff_html-head.php'; ?>
 <style>
-
+.box{
+    width: 100%;
+    margin: 100px auto;
+}
  
-  #profile .form-group {
-    padding-bottom:3px;
-    background: 
-    linear-gradient(45deg, #DCC5EF 0%, #adda9a 100%)
-    bottom
-    no-repeat; 
-    background-size:100% 3px ;
-  }
   select{
       height: 30px;
   }
   li{
       margin: 0 0.5rem;
   }
+  td{
+      font-size: 0.8rem;
+  }
 
 </style>
 <?php include __DIR__. '/parts/staff_navbar.php'; ?>
 <main>
-    <div class="container">
+    <div class="box">
         <div class="con_01  col-sm-12  p-0  m-auto">
             <h3 class="text-center title1 b-green rot-135">會員資料查詢</h3>
             <div class=" " id="searchBar" >
+                <form action="staff_member_info_search.php" method="post" onsubmit="memberIntoSearch(); return false;">
+
                 <form action="staff_member_info_search.php" method="post" >
-                    <ul class="row list-unstyled p-2 m-0 justify-content-center align-items-center">
+                    <ul class="row list-unstyled p-2 m-0 text-center justify-content-center align-items-center">
                         <li class=" ">
                             <input type="text" value="" placeholder="帳號(E-mail)">          
                         </li>
                         <li class=" ">
                             <input type="text" value="" placeholder="姓名">          
                         </li>
-                        <li class=" ">
-                            <input type="text" value="" placeholder="性別">          
-                        </li>
+
                         <li class=" ">
                             <input type="text" value="" placeholder="手機">          
                         </li>
                         <li class="">
-                            <select id="select_month" name="month">
-                                <option value="">生日月份</option>
+                            <select id="select_month" name="birthmonth">
+                                <option disabled hidden selected value="">生日月份</option>
                                 <option value=""></option>
                                 <option value=""></option>
                                 <option value=""></option>
@@ -117,6 +68,14 @@ $sql .= implode(" AND ", $sql_condition);
                                 <option value=""></option>
                                 <option value=""></option>
                                 <option value=""></option>
+                            </select>
+                        </li>
+                        <li class="">
+                            <select id="gender" name="gender">
+                                <option disabled hidden selected value="">性別</option>
+                                <option value="male">男性</option>
+                                <option value="female">女性</option>
+                                <option value="none">不填</option>
                             </select>
                         </li>
                         <li class="">
@@ -133,56 +92,37 @@ $sql .= implode(" AND ", $sql_condition);
                                 <option value="51-100">51歲以上</option>
                             </select>
                         </li>
-                        <div  class="text-center"><a href="staff_member_info_editor.php" class="custom-btn btn-4 text-center t_shadow">修改</a>
-
+                        <li><button type="submit" class="custom-btn btn-4 m-0 p-0" style="width:3rem; ">送出</button></li>                    
                     </ul>
 
                 </form>
             </div>
 
-            
-            <table class="table table-striped table-bordered" id="memberInfo_table">
-                <thead>
-                    <tr class="b-green rot-135 text-white">
-                        <th scope="col" class="m-0 t_shadow text-center">會員編號</th>
-                        <th scope="col" class="m-0 t_shadow text-center">帳號(e-mail)</th>
-                        <th scope="col" class="m-0 t_shadow text-center">FB帳號</th>
-                        <th scope="col" class="m-0 t_shadow text-center">姓名</th>
-                        <th scope="col" class="m-0 t_shadow text-center">生日</th>
-                        <th scope="col" class="m-0 t_shadow text-center">手機</th>
-                        <th scope="col" class="m-0 t_shadow text-center">地址</th>
-                        <th scope="col" class="m-0 t_shadow text-center">加入會員時間</th>
-                        <th scope="col" class="m-0 t_shadow text-center">修改</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
+            <div id="profile" class="  p-0  m-0">
+                <div class="">
+                    <table class="table table-bordered table-Primary table-hover text-center">
+                        <thead class="bg-dark text-white">
+                            <tr class="">
+                                <th scope="col" class="m-0  ">S/N</th>
+                                <th scope="col" class="m-0  ">ID</th>
+                                <th scope="col" class="m-0  ">姓名</th>
+                                <th scope="col" class="m-0  ">FB帳號</th>
+                                <th scope="col" class="m-0  ">帳號(e-mail)</th>
+                                <th scope="col" class="m-0  ">備用信箱</th>
+                                <th scope="col" class="m-0  ">性別</th>
+                                <th scope="col" class="m-0  ">生日</th>
+                                <th scope="col" class="m-0  ">手機</th>
+                                <th scope="col" class="m-0  ">地址</th>
+                                <th scope="col" class="m-0  ">加入時間</th>
+                                <th scope="col" class="m-0  ">訂單紀錄</th>
+                            </tr>
+                        </thead>
 
-
-            <div id="profile" class="p-5">
-                <form name="form1" method="post">
-                    <div class="form-group">
-                        <label for="email">帳號 ( email )： </label><span><?= $r['email'] ?></span>
-                    </div>
-                    <div class="form-group">
-                        <label for="fullname">姓名： </label><span><?= $r['fullname'] ?></span>
-                    </div>
-                    <div class="form-group">
-                        <label for="birthday">生日： </label><span><?= $r['birthday'] ?></span>
-                    </div>
-                    <div class="form-group">
-                        <label for="mobile">手機： </label><span><?= $r['mobile'] ?></span>
-                    </div>
-                    <div class="form-group">
-                        <label for="email_2nd">備用email： </label><span><?= $r['email_2nd'] ?></span>
-                    </div>
-                    <div class="form-group">
-                        <label for="zipcode">地址： </label><span><?= $r['zipcode'] ?></span><span><?= $r['county'] ?></span><span><?= $r['district'] ?></span><span><?= htmlentities($r['address']) ?></span>
-                    </div>
-                </form>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-
         </div>
     </div>
 
@@ -192,28 +132,66 @@ $sql .= implode(" AND ", $sql_condition);
 <?php include __DIR__. '/parts/staff_scripts.php'; ?>
 
 <script>
-        var date = new Date();
-        var year = date.getFullYear() - 3;
-        var month = date.getMonth() + 1;
-        var selectedMonth = "<?= $_GET['month'] ?? "" ?>";
-        var selectedYear = "<?= $_GET['year'] ?? "" ?>";
-          var selectedOrder = "<?= $_GET['order'] ?? "" ?>";
-        $("#select_month option").each(function(ind, elem) {
-            if (ind > 0) {
-                elem.text = month;
-                elem.value = month;
-                month++;
-            }
-            if (month > 12) {
-                month = 1;
-            }
-            if (elem.value === selectedMonth){
-                elem.selected = true;
-            }
-        });
-    
-        $("#select_order").val(selectedOrder);
-    </script>
+  function memberIntoSearch(){
+    $.post('member-api.php', {
+        action: 'readAll',
+        id: $("#id").val(),
+        fullname: $("#fullname").val(),
+        gender: $("#gender").val(),
+        mobile: $("#mobile").val(),
+        // select_month: $("#select_month").val(),
+        age: $("#age").val(),
+    },function(data) {
+        console.log(data);
+        members_list = data['result'];
+        $("#profile table tbody").html("");
+        members_list.forEach(function(members, index){
+            var output = `<tr>
+                            <td class="bg-dark text-white" style="border: #454d55 1px solid ;">${index + 1}</td>
+                            <td>${nullTo(members['id'])}</td>
+                            <td>${nullTo(members['fullname'])}</td>
+                            <td style="font-size:0.8rem">${nullTo(members['fb_id'])}</td>
+                            <td style="font-size:0.8rem">${nullTo(members['email'])}</td>
+                            <td style="font-size:0.8rem">${nullTo(members['email_2nd'])}</td>
+                            <td>${nullTo(members['gender'])}</td>
+                            <td>${nullTo(members['birthday'])}</td>
+                            <td>${nullTo(members['mobile'])}</td>
+                            <td>${nullTo(members['zipcode']) + nullTo(members['county']) + nullTo(members['district']) + nullTo(members['address'])}</td>
+                            <td>${nullTo(members['created_at'])}</td>
+                            <td><a hreef="staff_member_order_item.php"> </td>
+
+                            </tr>`;
+            $("#profile table tbody").append(output);
+        })
+    }, 'json')
+    .fail(
+        function(e) {
+            alert( "error" );
+            console.log(e.responseText);
+    });
+  }
+  function nullTo(str){
+    return str === null ? "" : str; 
+  }
+</script>
+<script>
+    var month = 1;
+    var selectedMonth = "<?= $_GET['month'] ?? "" ?>";
+    $("#select_month option").each(function(ind, elem) {
+        if (ind > 0) {
+            elem.text = month;
+            elem.value = month;
+            month++;
+        }
+        if (month > 12) {
+            month = 1;
+        }
+        if (elem.value === selectedMonth){
+            elem.selected = true;
+        }
+    });
+</script>
+
 
 <?php include __DIR__. '/parts/staff_html-foot.php'; ?>
 

@@ -4,14 +4,14 @@ $title = '會員註冊';
 $pageName ='staff_register';
 
 // role類別
-$sql = "SELECT * FROM `staff_role_category`";
-$stmt = $pdo->query($sql);
-$result = $stmt->fetchAll();
-$staff_role_category = [];
+// $sql = "SELECT * FROM `staff_role_category`";
+// $stmt = $pdo->query($sql);
+// $result = $stmt->fetchAll();
+// $staff_role_category = [];
 //ArrayArray ( [1] => 管理者 [2] => 經理 [3] => 會計 [4] => 一般員工 )
-foreach($result as $role_cat){
-    $staff_role_category[$role_cat['id']] = $role_cat['position'];
-}
+// foreach($result as $role_cat){
+//     $staff_role_category[$role_cat['id']] = $role_cat['position'];
+// }
 // print_r($_SESSION['staff']);
 ?>
 <?php include __DIR__. '/parts/staff_html-head.php'; ?>

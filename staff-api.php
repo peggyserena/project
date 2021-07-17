@@ -15,8 +15,10 @@ switch ($action){
                 $condition_map = [
                 'staff_id' => "`staff_id` = ?",
                 'fullname' => "`fullname` = ?",
+                'gender' => "`gender` = ?",
                 'mobile' => "`mobile` = ?",
                 'identityNum' => "`identityNum` = ?",
+                'birthmonth'=>"TIMESTAMPDIFF(MOTH, `birthday`, CURDATE()) ",
                 'age' => "TIMESTAMPDIFF(YEAR, `birthday`, CURDATE()) BETWEEN ? AND ?",
                 ];
                 
@@ -57,7 +59,7 @@ switch ($action){
                 }
                 break;
         case 'changeProfile':
-                $columns = ['address', 'county', 'district', 'zipcode', 'mobile', 'birthday', 'identityNum', 'email', 'fullname'];
+                $columns = ['address', 'county', 'district', 'zipcode', 'mobile', 'birthday', 'identityNum', 'email', 'fullname', 'gender', 'created_at'];
                 $fill_count = 0;
                 $update_data = [];
                 foreach($columns as $col){

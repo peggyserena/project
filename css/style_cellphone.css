@@ -225,10 +225,11 @@
     display: none;
   }
   .poetry2 {
-    font-size: 1rem;
-    line-height: 2rem;
+    font-size: 1.2rem;
     font-weight: 600;
     letter-spacing: 3px;
+    color: white;
+    text-align: center;
   }
 
   #myTab li {

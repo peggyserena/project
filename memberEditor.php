@@ -69,6 +69,11 @@ if (empty($row)) {
                         <input type="text" class="form-control" name="fullname" id="fullname" value="<?= htmlentities($row['fullname']) ?>"></input>
                     </div>
                     <div class="form-group">
+                        <label for="fullname autofocus ">性別</label>
+                        <input type="radio"  name="gender" value="<?= htmlentities($row['gender']) ?>"required>
+                        <input type="radio"  name="gender" value="<?= htmlentities($row['gender']) ?>"required>
+                    </div>
+                    <div class="form-group">
                         <label for="mobile">手機</label>
                         <input type="text" class="form-control" id="mobile" name="mobile" pattern="09\d{2}-?\d{3}-?\d{3}" value="<?= htmlentities($row['mobile']) ?>">
                         <small class="form-text error"></small>

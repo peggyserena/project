@@ -36,6 +36,7 @@ switch ($type) {
         // $stmt->execute([$_POST['id']]);
         // $result['img'] = $stmt->fetchAll();
         break;
+
     case 'read':
         $sql = "SELECT * FROM `helpdesk` WHERE id = ?";
         $stmt = $pdo->prepare($sql);
@@ -47,6 +48,7 @@ switch ($type) {
         $stmt->execute([$_POST['id']]);
         $result['img'] = $stmt->fetchAll();
         break;
+
     case 'add':
         
         // insert helpdesk
@@ -76,6 +78,7 @@ switch ($type) {
 
         $result = ["success"];
         break;
+
     case 'edit':
         $id = $_POST['id'];
         // get old helpdesk
@@ -101,15 +104,12 @@ switch ($type) {
         
 
         // insert helpdesk
-        $columns = ['cat_id', 'video', 'name', 'date', 'time', 'price', 'description', 'title', 'age', 'location', 'content', 'info', 'notice', 'limitNum'];
-        if ($video_img_changed === "1") {
-            array_push($columns, 'video_img');
-        }
+        $columns = ['user_id', 'g_name', 'g_mobile', 'g_email', 'order_num', 'content', 'create_datetime'];
         $sql = "UPDATE `helpdesk` SET ";
         
         $sql .= implode(" = ?, ", $columns)." = ? WHERE id = $id";
-        // INSERT INTO `helpdesk` (`cat_id`, `video`, `name`, `date`, `time`, `price`, `description`, `title`, `age`, `location`, `content`, `info`, `notice`, `limitNum`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)        
-        // UPDATE `helpdesk` `cat_id` = ?, `video` = ?,  `name` = ?,  `date` = ?,  `time` = ?,  `price` = ?,  `description` = ?,  `title` = ?,  `age` = ?,  `location` = ?,  `content` = ?,  `info` = ?,  `notice` = ?,  `limitNum` = ?    
+        // INSERT INTO `helpdesk` (`'user_id', 'g_name', 'g_mobile', 'g_email', 'order_num', 'content', 'create_datetime') VALUES (?, ?, ?, ?, ?, ?, ?)        
+        // UPDATE `helpdesk` `user_id` = ?, `g_name` = ?,  `g_mobile` = ?,  `g_email` = ?,  `order_num` = ?,  `content` = ?,  `create_datetime` = ?   
 
         $data = [];
         foreach($columns as $col){

@@ -6,6 +6,7 @@ $output = [];
 $member_id = $_SESSION['user']['id'];
 
 $fullname = $_POST['fullname'];
+$gender = $_POST['gender'];
 $email_2nd = $_POST['email_2nd'];
 $mobile = $_POST['mobile'];
 $zipcode = $_POST['zipcode'];
@@ -16,6 +17,7 @@ $email_2nd = $_POST['email_2nd'];
 
 $a_sql = "UPDATE `members` SET 
             `fullname`= '$fullname',
+            `gender`= '$gender',
             `email_2nd`= '$email_2nd',
             `mobile`='$mobile',
             `zipcode`='$zipcode',
@@ -24,7 +26,7 @@ $a_sql = "UPDATE `members` SET
             `address`='$address'
             WHERE id = $member_id";
 $a_stmt = $pdo->prepare($a_sql);
-// $a_stmt->execute([$fullname, $mobile, $zipcode, $county, $address]);
+// $a_stmt->execute([$fullname,$gender, $mobile, $zipcode, $county, $address]);
 $a_stmt->execute();
 
 

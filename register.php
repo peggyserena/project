@@ -104,6 +104,13 @@ $pageName = 'register';
                         <small class="form-text error"></small>
                     </div>
                     <div class="form-group">
+                        <label for="gender">性別 </label>
+                        <input type="radio"  name="gender" value="male">男
+                        <input type="radio"  name="gender" value="female">女
+                        <input type="radio"  name="gender" value="none">不填
+                        <small class="form-text error"></small>
+                    </div>
+                    <div class="form-group">
                         <label for="mobile">手機</label>
                         <input type="text" class="form-control" id="mobile" name="mobile" pattern="09\d{2}-?\d{3}-?\d{3}" placeholder="0987-654-321">
                         <small class="form-text error"></small>
@@ -248,8 +255,8 @@ $("#birthday").attr("max", max);
     });
   //first time init all select elements in #myForm
 //   M.FormSelect.init(document.querySelectorAll('#myForm select'));
-  document.querySelector('#myForm select[name=county]').value = "<?= $_SESSION['staff']['county'] ?>";
-  document.querySelector('#myForm select[name=district]').value = "<?= $_SESSION['staff']['district'] ?>";
+  document.querySelector('#myForm select[name=county]').value = "<?= $_SESSION['member']['county'] ?>";
+  document.querySelector('#myForm select[name=district]').value = "<?= $_SESSION['member']['district'] ?>";
 </script>
 
 <?php include __DIR__ . '/parts/html-foot.php'; ?>

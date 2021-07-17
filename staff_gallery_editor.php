@@ -16,13 +16,15 @@ $pageName = 'staff_gallery_editor';
 </style>
 <?php include __DIR__. '/parts/staff_navbar.php'; ?>
 <main>
+  <?php include "parts/modal.php"?>
   <div class="container my-5">
     <form class="" action="staff_gallery-api.php" name="formGallery" id="formGallery" method="post" onsubmit="edit(); return false;" enctype="multipart/form-data">
       <input type="hidden" name="action" value="edit"/>
       <input type="hidden" name="id" value="<?= $_GET['id'] ?>"/>
+
       <div class="form-group con_01 my-5 row justify-content-center align-items-center">
 
-      <h3 class="col-sm-12 p-1 "> <input class="form-control text-center text-white " style="background-color: #83a573;font-size:1.3rem;font-weight: 700; " type="text" id="gallery_title" value="" name="title"></h3>
+        <h3 class="col-sm-12 p-1 "> <input class="form-control text-center text-white " style="background-color: #83a573;font-size:1.3rem;font-weight: 700; " type="text" id="gallery_title" value="" name="title"></h3>
 
         <label  class="col-sm-12 text-center custom-btn btn-4 t_shadow" style="width:100%;border-radius: 0;transform: none;"  for="img">
 
@@ -33,12 +35,13 @@ $pageName = 'staff_gallery_editor';
         </label>
 
         <div class=" col-sm-12" id="preview">
-            <ul id="sortable" class="row">
+            <ul id="sortable" class="row list-unstyled">
             </ul>
         </div>
         <h4 class=" col-sm-12 m-0 p-2 bg-dark text-white text-center">圖片說明</h4>
-
-        <textarea class=" form-control col-sm-12 p-3 m-0" id="gallery_content" name="content"  cols="30" rows="5" ></textarea>
+        <textarea class=" form-control col-sm-12 p-3 m-0" id="gallery_content1" name="content"  cols="30" rows="5" ></textarea>
+        <textarea class=" form-control col-sm-12 p-3 m-0" id="gallery_content2" name="content_tablet"  cols="30" rows="5" ></textarea>
+        <textarea class=" form-control col-sm-12 p-3 m-0" id="gallery_content3" name="content_cellphone"  cols="30" rows="5" ></textarea>
 
         <button type="submit" class="custom-btn btn-4 t_shadow" style="width:100%;border-radius: 0;transform: none;"> <h4 class="p-2">確認送出</h4></button>
 
@@ -75,13 +78,15 @@ $("#img").change(() => {
   }
 });
 function fillData(){
-      console.log("read");
     $.post('staff_gallery-api.php', {
       'action': 'read',
       'id': <?= $_GET['id']?>,
     }, function(data){
       $("#gallery_title").val(data['title']);
-      $("#gallery_content").text(data['content']);
+      $("#gallery_content1").text(data['content']);
+      $("#gallery_content2").text(data['content_tablet']);
+      $("#gallery_content3").text(data['content_cellphone']);
+
       // 圖片預覽
       $("#preview #sortable").html("");
       const files = data['img'];
@@ -119,20 +124,20 @@ function fillData(){
         type: 'POST', // For jQuery < 1.9
         success: function(data){
             console.log(data);
-            // modal_init();
-            // insertPage("#modal_img", "animation_success.html");
-            // insertText("#modal_content", "修改成功!");
-            // $("#modal_alert").modal("show");
-            // setTimeout(function(){window.history.back();}, 2000);
+            modal_init();
+            insertPage("#modal_img", "animation_success.html");
+            insertText("#modal_content", "修改成功!");
+            $("#modal_alert").modal("show");
+            setTimeout(location.href = "staff_gallery.php", 2000);
 
         },
         error: function(data){
             console.log(data);
-            // modal_init();
-            // insertPage("#modal_img", "animation_error.html");
-            // insertText("#modal_content", "資料傳輸失敗");
-            // $("#modal_alert").modal("show");
-            // setTimeout(function(){window.history.back();}, 2000);
+            modal_init();
+            insertPage("#modal_img", "animation_error.html");
+            insertText("#modal_content", "資料傳輸失敗");
+            $("#modal_alert").modal("show");
+            setTimeout(function(){window.history.back();}, 2000);
         }
     });
   }

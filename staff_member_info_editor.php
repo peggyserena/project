@@ -69,6 +69,13 @@ $r = $pdo->query($sql)->fetchAll();
                         <input required type="text" class="form-control" name="fullname" id="fullname" placeholder="林小花" autofocus value="<?= ['member']['fullname'] ?>">
                     </div>
                     <div class="form-group">
+                        <label for="gender">性別 </label>
+                        <input type="radio"  name="gender" value="male">男
+                        <input type="radio"  name="gender" value="female">女
+                        <input type="radio"  name="gender" value="none">不填
+                        <small class="form-text error"></small>
+                    </div>
+                    <div class="form-group">
                         <label for="birthday">生日 </label>
                         <input required type="date" class="form-control" id="birthday" name="birthday" required value="<?= ['member']['birthday'] ?>">
                     </div>

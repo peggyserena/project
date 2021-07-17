@@ -30,9 +30,9 @@ $indexs = $stmt->fetchAll();
 <main>
 
   <div class="galleryBar col-sm-12 mt-0 p-2 text-left ">
-    <ul class="row m-0 px-md-5 p-sm-1 py-0 ">
+    <ul class="row m-0 px-md-5 p-sm-1 py-0 list-unstyled ">
         <?php foreach ($indexs as $ind) : ?>
-        <li class=" mx-2 list-unstyled">
+        <li class=" mx-2 ">
           <a  href="#<?= $ind['name']?>"><span class=" text-white"  id="<?= $ind['id']?>" ><?= $ind["title"] ?></span></a>
         </li>
         <?php endforeach; ?>
@@ -41,7 +41,7 @@ $indexs = $stmt->fetchAll();
 
   <div class="container">
 
-    <form class="" action="" name="formGallery" id="formGallery" method="post" onsubmit="create(); return false;" enctype="multipart/form-data">
+    <form class="" action="" name="formGallery" id="formGallery" method="post"  enctype="multipart/form-data">
     </form>
 
   </div>
@@ -57,7 +57,6 @@ $indexs = $stmt->fetchAll();
       'action': 'readAll'
     }, function(data){
       var formGallery = $("#formGallery");
-      console.log(data);
       data['data'].forEach(function(elem){
         var img_output = "";
         if (elem['id'] in data['img']){
@@ -77,6 +76,8 @@ $indexs = $stmt->fetchAll();
                         <h4 class="col-sm-12 m-0 p-2 bg-dark text-white text-center">圖片說明</h4>
 
                         <textarea class=" form-control col-sm-12 p-3 m-0" id="content_${elem['name']}" name="" disabled cols="30" rows="5" >${elem["content"] }</textarea>
+                        <textarea class=" form-control col-sm-12 p-3 m-0" id="content_${elem['name']}" name="" disabled cols="30" rows="5" >${elem["content_tablet"] }</textarea>
+                        <textarea class=" form-control col-sm-12 p-3 m-0" id="content_${elem['name']}" name="" disabled cols="30" rows="5" >${elem["content_cellphone"] }</textarea>
 
                         <a class="text-center custom-btn btn-4 t_shadow" style="width:100%;border-radius: 0;transform: none;" href="staff_gallery_editor.php?id=${elem['id']}" target="_blank"><h4 class="m-2">修改</h4></a>
 
@@ -99,7 +100,6 @@ $indexs = $stmt->fetchAll();
       //   }
       // }
     }, 'json').fail(function(data){
-      console.log(data);
     })
   }
   function scroll(){

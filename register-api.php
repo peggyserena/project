@@ -42,11 +42,11 @@ switch ($action){
 
             if (!empty($_POST['fb_id'])){
                 $sql = "INSERT INTO `members`(
-                    `fb_id`, `email`, `fullname`, `birthday`, 
+                    `fb_id`, `email`, `fullname`, `gender`, `birthday`, 
                     `mobile`, `zipcode`,`county`, `district`,
                     `address`, `hash`,`created_at`
                     ) VALUES (
-                                ?, ?, ?, ?,
+                                ?, ?, ?, ?, ?,
                                 ?, ?, ?, ?,
                                 ?, ?, NOW()
                     )";
@@ -56,6 +56,7 @@ switch ($action){
                 $_POST['fb_id'],
                 $_POST['email'],
                 $_POST['fullname'],
+                $_POST['gender'],
                 $_POST['birthday'],
                 $_POST['mobile'],
                 $_POST['zipcode'] ?? "",
@@ -67,11 +68,11 @@ switch ($action){
                 ]);
             }else{
                 $sql = "INSERT INTO `members`(
-                    `email`, `fullname`, `birthday`, 
+                    `email`, `fullname`,'gender', `birthday`, 
                     `mobile`, `zipcode`,`county`,  `district`,
                     `address`, `hash`,`created_at`
                     ) VALUES (
-                                ?, ?, ?,
+                                ?, ?, ?, ?, ?,
                                 ?, ?, ?, ?,
                                 ?, ?, NOW()
                     )";
@@ -80,6 +81,7 @@ switch ($action){
                 $stmt->execute([
                 $_POST['email'],
                 $_POST['fullname'],
+                $_POST['gender'],
                 $_POST['birthday'],
                 $_POST['mobile'],
                 $_POST['zipcode'] ?? "",

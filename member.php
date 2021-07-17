@@ -14,15 +14,7 @@ exit;
 $sql = "SELECT * FROM members WHERE id=" . $_SESSION['user']['id'];
 $r = $pdo->query($sql)->fetch();
 
-$sql = "SELECT * FROM `helpdesk`";
-$stmt = $pdo->query($sql);
-$helpdeskes = $stmt->fetchAll();
-
-//  helpdesk類別
-$sql = "SELECT * FROM `helpdesk_category`";
-$stmt = $pdo->query($sql);
-$helpdesk_category = $stmt->fetchAll();
-
+// 
 // 二維陣列
 // [
 //     [
@@ -93,6 +85,9 @@ if (!empty($helpdesk_id_list)){
                                     </div>
                                     <div class="form-group">
                                         <label for="fullname">姓名： </label><span><?= $r['fullname'] ?></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="gender">性別： </label><span><?= $r['gender'] ?></span>
                                     </div>
                                     <div class="form-group">
                                         <label for="birthday">生日： </label><span><?= $r['birthday'] ?></span>

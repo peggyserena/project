@@ -38,11 +38,11 @@ switch ($action) {
         break;
     case 'add':
         // insert index
-        $columns = [ 'title', 'content'];
+        $columns = [ 'title', 'content', 'content_tablet', 'content_cellphone'];
         $sql = "INSERT INTO `index` ";
 
         $sql .= "(`".implode("`,`", $columns)."`) VALUES (".substr(str_repeat("?,", count($columns)), 0, -1).")";
-        // INSERT INTO `index` ( 'title', 'content') VALUES (?, ?, ?)        
+        // INSERT INTO `index` ( 'title', 'content', 'content_tablet', 'content_cellphone') VALUES (?, ?, ?)        
 
         // insert gallery image
         $name_list = uploadImgs($_FILES['img'], "images/album/");
@@ -67,7 +67,7 @@ switch ($action) {
         $index['img'] = $stmt->fetchAll();
 
         // update index
-        $columns = [ 'title', 'content'];
+        $columns = [ 'title', 'content', 'content_tablet', 'content_cellphone'];
         $img_changed = $_POST['img_changed'];
         $sql = "UPDATE `index` SET ";
         
@@ -159,7 +159,7 @@ function uploadImgs($img, $target_dir){
         }
     
         // Check file size (bytes)
-        if ($img["size"][$i] > 2000000) {
+        if ($img["size"][$i] > 5000000) {
         // echo "Sorry, your file is too large.";
         $uploadOk = 0;
         }
