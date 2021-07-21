@@ -775,7 +775,7 @@ ul{list-style:none;}
             startDate = getFormattedDate(d);
             d.setTime(d.getTime() + aDayTime * 6)
             endDate = getFormattedDate(d);
-            $.post("hotel-api.php", {
+            $.post("<?= WEB_API ?>/hotel-api.php", {
                 type: "read",
                 startDate,
                 endDate,

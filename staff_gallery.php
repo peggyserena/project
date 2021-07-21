@@ -3,9 +3,9 @@
 $title = '相簿';
 $pageName = 'staff_gallery';
 
-$sql = "SELECT * FROM `index`";
-$stmt = $pdo->query($sql);
-$indexs = $stmt->fetchAll();
+// $sql = "SELECT * FROM `index`";
+// $stmt = $pdo->query($sql);
+// $indexs = $stmt->fetchAll();
 
 
 
@@ -53,7 +53,7 @@ $indexs = $stmt->fetchAll();
   fillData();
   function fillData(){
     console.log("read");
-    $.post('staff_gallery-api.php', {
+    $.post('<?= WEB_API ?>/staff_gallery-api.php', {
       'action': 'readAll'
     }, function(data){
       var formGallery = $("#formGallery");

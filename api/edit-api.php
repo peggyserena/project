@@ -1,4 +1,4 @@
-<?php include __DIR__ . '/parts/config.php';
+<?php include __DIR__ . '/../parts/config.php';
 
 $output = [
     'success' => false,

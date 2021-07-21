@@ -1,5 +1,5 @@
 <?php
-include __DIR__ . '/parts/config.php';
+include __DIR__ . '/../parts/config.php';
 
 $action = $_POST['action'];
 $user_id = $_SESSION['user']['id'] ?? 0;

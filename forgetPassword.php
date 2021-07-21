@@ -49,7 +49,7 @@ $pageName = 'editMember';
             <h2 class="title m-0 ">修改資料</h2>
             <div class="card">
                 <!-- alert 的方式 -->
-                <!-- <form name="form1" action="member-api.php" method="post" onsubmit="return checkForm();">
+                <!-- <form name="form1" action="<?= WEB_API ?>/member-api.php" method="post" onsubmit="return checkForm();">
                     <input type="hidden" name="action" value="changePassword"/>
                     <input type="hidden" name="id" value="<?= $_GET['id'] ?>"/>
                     <div class="form-group">
@@ -62,7 +62,7 @@ $pageName = 'editMember';
                     </div>
                     <div class=" text-center mt-4"><button type="submit" class="custom-btn btn-4 t_shadow">修改</button></div>
                 </form> -->
-                <form name="form1" action="member-api.php" method="post" onsubmit="return checkForm();">
+                <form name="form1" action="<?= WEB_API ?>/member-api.php" method="post" onsubmit="return checkForm();">
                     <div class="form-group">
                         <label for="password autofocus ">密碼</label>
                         <input type="password" class="form-control" name="password" id="password" value="" required></input>
@@ -94,7 +94,7 @@ $pageName = 'editMember';
     // }
     function checkForm(){
         if ($("#password").val() === $("#check_password").val()) {
-            $.post('member-api.php', {
+            $.post('<?= WEB_API ?>/member-api.php', {
                 action: 'changePassword',
                 id: <?= $_GET['id'] ?>,
                 key: '<?= $_GET['key'] ?>',
@@ -109,7 +109,7 @@ $pageName = 'editMember';
         return false;
     }
     function checkKey(){
-        $.post('member-api.php', {
+        $.post('<?= WEB_API ?>/member-api.php', {
             action: 'checkKey',
             id: <?= $_GET['id'] ?>,
             key: '<?= $_GET['key'] ?>',

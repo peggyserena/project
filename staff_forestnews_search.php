@@ -22,7 +22,7 @@ $order = $_GET['order'] ?? "";
 
 
 
-$sql = "SELECT `e`.*, ec.name as `ec_name`, SUM(`oe`.quantity) as quantity FROM `event` as e";
+$sql = "SELECT `e`.*, ec.name as `ec_name`, SUM(`oe`.quantity) as quantity FROM `forestnews` as e";
 $sql_condition = [];
 if ($year != "") {
     if (strpos($year, '~')!== false){
@@ -41,8 +41,8 @@ if ($cat_id != "") {
 array_push($sql_condition, "`time` BETWEEN '$start_time' AND '$end_time'");
 // array_push($sql_condition, "`date` >= '$date'");
 
-$sql .= " JOIN `event_category` as ec ON `cat_id` = ec.`id`";
-$sql .= " LEFT JOIN `order_event` as oe ON e.id = oe.event_id";
+$sql .= " JOIN `forestnews_category` as ec ON `cat_id` = ec.`id`";
+$sql .= " LEFT JOIN `order_forestnews` as oe ON e.id = oe.forestnews_id";
 
 if (sizeof($sql_condition) > 0) {
     $sql .= " WHERE ";
@@ -64,22 +64,22 @@ switch ($order) {
         break;
 }
 $stmt = $pdo->query($sql);
-$events = $stmt->fetchAll();
+$forestnewss = $stmt->fetchAll();
 // 抓活動的id
-$event_id_list = [];
-foreach($events as $event){
-    array_push($event_id_list, $event['id']);
+$forestnews_id_list = [];
+foreach($forestnewss as $forestnews){
+    array_push($forestnews_id_list, $forestnews['id']);
 }
 // 抓圖片
-if (!empty($event_id_list)){
-    $sql = "SELECT * FROM `event_image` WHERE event_id in (".implode(",", $event_id_list).") ORDER BY num_order";
+if (!empty($forestnews_id_list)){
+    $sql = "SELECT * FROM `forestnews_image` WHERE forestnews_id in (".implode(",", $forestnews_id_list).") ORDER BY num_order";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([]);
     $result = $stmt->fetchAll();
-    $event_img = [];
+    $forestnews_img = [];
     foreach($result as $cover_img){
-        if (!array_key_exists($cover_img['event_id'], $event_img)){
-            $event_img[$cover_img['event_id']] = $cover_img['path'];
+        if (!array_key_exists($cover_img['forestnews_id'], $forestnews_img)){
+            $forestnews_img[$cover_img['forestnews_id']] = $cover_img['path'];
         }
     }
 }
@@ -87,17 +87,17 @@ if (!empty($event_id_list)){
 
 
 // 活動類別
-$sql = "SELECT * FROM `event_category`";
+$sql = "SELECT * FROM `forestnews_category`";
 
 $stmt = $pdo->query($sql);
-$event_category = $stmt->fetchAll();
+$forestnews_category = $stmt->fetchAll();
 
 
 ?>
 
 <?php
 $title = '森林體驗查詢';
-$pageName = 'event';
+$pageName = 'forestnews';
 ?>
 <?php include __DIR__ . '/parts/staff_html-head.php'; ?>
 <?php include __DIR__ . '/parts/staff_navbar.php'; ?>
@@ -128,19 +128,18 @@ $pageName = 'event';
 <div class="container">
         <div class="con_01">
             <div class=" " id="searchBar" >
-                <form action="staff_event_search.php" method="get" >
-                    <ul class="list-unstyled  row justify-content-center align-items-center p-2 m-0 ">
+                <form action="staff_forestnews_search.php" method="get" >
+                    <ul class="row list-unstyled  row justify-content-center align-items-center p-2 m-0 ">
                         <li class=" ">
                             <select id="select_id" name='cat_id'>
-                                <option disabled hidden selected value="">活動類別</option>
+                                <option value="">活動類別</option>
                 
-                                <?php foreach ($event_category as $cat) { ?>
+                                <?php foreach ($forestnews_category as $cat) { ?>
                                     <option value='<?= $cat['id'] ?>'><?= $cat['name'] ?></option>
                                 <?php } ?>
                             </select>
                         </li>
                         <li class="">
-
                             <select id="select_year" name="year">
                                 <option disabled hidden selected value="">年份</option>
                                 <option value="全部">全部</option>
@@ -196,38 +195,38 @@ $pageName = 'event';
                 </form>
             </div>
 
-            <div class="eventItem  p-0 m-0">
+            <div class="forestnewsItem  p-0 m-0">
                     <table id="result" class="table table-bordered table-Primary table-hover text-center">
                             <thead class="thead-dark">
                                 <tr>
                                     <th>序號</th>
                                     <th>主圖片</th>
-                                    <th>活動名稱</th>
-                                    <th>活動類別</th>
-                                    <th>日期</th>
-                                    <th>人數</th>
-                                    <th>費用</th>
-                                    <th>詳情</th>
-                                    <th>修改</th>
+                                    <th>分類</th>
+                                    <th>標題</th>
+                                    <th>開始日期</th>
+                                    <th>結束日期</th>
+                                    <th>活動內容</th>
+                                    <th>注意事項</th>
                                     <th scope="col" class="m-0 t_shadow text-center"><i class="fas fa-trash-alt"></i></th>
 
                 
                                 </tr>
                             </thead>
                             <tbody>
-                            <?php foreach ($events as $key => $event) : ?>
+                            <?php foreach ($forestnewss as $key => $forestnews) : ?>
                                 <tr>
                                     <td class="bg-dark text-white" style="border: #454d55 1px solid ;"><?= $key + 1 ?></td>
-                                    <td ><img src='<?= WEB_ROOT."/".$event_img[$event['id']] ?>' alt='' style="width: 120px;"></td>
-                                    <td><span><?= $event['name'] ?></span></td>
-                                    <td><span><?= $event["ec_name"] ?></span></td>
-                                    <td><span><?= $event["date"] . '&emsp;' . substr($event["time"], 0, 5) ?></span></td>
-                                    <td><span><?= $event["limitNum"] ?></span></td>
-                                    <td><span><?= $event["price"]  ?></span></td>
-                                    <td><a href="staff_event_item.php?id=<?= $event['id'] ?>" target="blank">查詢</a></td>
-                                    <td><a href="staff_event_editor.php?id=<?= $event['id'] ?>" target="blank">修改</a></td>
+                                    <td ><img src='<?= WEB_ROOT."/".$forestnews_img[$forestnews['id']] ?>' alt='' style="width: 120px;"></td>
+                                    <td><span><?= $forestnews['cat_id_H'] ?><?= $forestnews['cat_id_E'] ?></span></td>
+                                    <td><span><?= $forestnews["name"] ?></span></td>
+                                    <td><span><?= $forestnews["start_date"] ?></span></td>
+                                    <td><span><?= $forestnews["end_date"] ?></span></td>
+                                    <td><span><?= $forestnews["content"] ?></span></td>
+                                    <td><span><?= $forestnews["notice"]  ?></span></td>
+                                    <td><a href="staff_forestnews_item.php?id=<?= $forestnews['id'] ?>" target="blank">查詢</a></td>
+                                    <td><a href="staff_forestnews_editor.php?id=<?= $forestnews['id'] ?>" target="blank">修改</a></td>
                                     <td>
-                                        <a href="javascript:" onclick="deleteItem(event, 'event', '<?= $key ?>')">
+                                        <a href="javascript:" onclick="deleteItem(forestnews, 'forestnews', '<?= $key ?>')">
                                             <i class="fas fa-trash-alt"></i>
                                         </a>
                                     </td>
@@ -265,7 +264,7 @@ $pageName = 'event';
             }
         });
         $("#select_year option").each(function(ind, elem) {
-            if (ind === 0){
+            if (ind === 1){
                 elem.text = "之前";
                 elem.value = `~${year}`;
             }else if (ind > 0) {
@@ -283,10 +282,10 @@ $pageName = 'event';
     </script>
 
     <script>
-        const deleteItem = function(event, type, key) {
-            let t = $(event.currentTarget);
-            console.log('event:', event);
-            $.get('<?= WEB_API ?>/event-api.php', {
+        const deleteItem = function(forestnews, type, key) {
+            let t = $(forestnews.currentTarget);
+            console.log('forestnews:', forestnews);
+            $.get('<?= WEB_API ?>/forestnews-api.php', {
                 action: 'delete',
                 type: type,
                 key: key

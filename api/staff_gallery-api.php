@@ -1,158 +1,135 @@
-<?php include __DIR__ . '/parts/config.php';
+<?php include __DIR__ . '/../parts/config.php';
 
-$user = $_SESSION['user'];
-$type = isset($_POST['type']) ? $_POST['type'] : ''; // 操作類型
-switch ($type) {
-    case 'readCat':
-        $sql = "SELECT * FROM helpdesk_category";
+
+$action = isset($_POST['action']) ? $_POST['action'] : ''; // 操作類型
+switch ($action) {
+    
+    case 'readAll':
+        $result = [];
+        $sql = "SELECT * FROM `index`";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([]);
-        $result = $stmt->fetchAll();
-        break;
-    case 'readAll':
-        $condition = ["`user_id` = ?"];
-        $param = [$user['id']];
-        $condition_map = [
-            'cat_id' => "h.`cat_id` = ?",
-            'year' => "YEAR(h.`create_datetime`) = ?",
-            'month' => "MONTH(h.`create_datetime`) = ?",
-        ];
-        foreach($condition_map as $key => $value){
-            if (!empty($_POST[$key])){
-                array_push($condition, $value);
-                array_push($param, $_POST[$key]);
-            }
-        }
-        $sql = "SELECT h.*, hc.name as `cat_name` FROM `helpdesk` as h JOIN `helpdesk_category` as hc on h.`cat_id` = hc.`id`";
-        if (count($condition) > 0){
-            $sql .= "WHERE ".implode(" AND ", $condition);
-        }
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute($param);
-        $result = $stmt->fetchALL();
-        
-        // $sql = "SELECT * FROM `helpdesk_image` WHERE helpdesk_id = ? ORDER BY num_order";
-        // $stmt = $pdo->prepare($sql);
-        // $stmt->execute([$_POST['id']]);
-        // $result['img'] = $stmt->fetchAll();
-        break;
+        $result['data'] = $stmt->fetchAll();
 
+        $sql = "SELECT * FROM `index_image` ORDER BY num_order";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([]);
+        $index_image_list = $stmt->fetchAll();
+        $result['img'] = [];
+        $result['test'] = [];
+        foreach($index_image_list as $index_image){
+            if (!array_key_exists($index_image['index_id'], $result['img'])) {
+                $result['img'][$index_image['index_id']] = [];
+            }
+            array_push($result['img'][$index_image['index_id']], $index_image);
+        }
+        
+        break;
     case 'read':
-        $sql = "SELECT * FROM `helpdesk` WHERE id = ?";
+        $sql = "SELECT * FROM `index` WHERE id = ?";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$_POST['id']]);
         $result = $stmt->fetch();
-        
-        $sql = "SELECT * FROM `helpdesk_image` WHERE helpdesk_id = ? ORDER BY num_order";
+
+        $sql = "SELECT * FROM `index_image` WHERE index_id = ? ORDER BY num_order";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$_POST['id']]);
         $result['img'] = $stmt->fetchAll();
         break;
-
     case 'add':
-        
-        // insert helpdesk
-        $columns = ['user_id', 'g_name', 'g_mobile', 'g_email', 'order_num', 'content', 'create_datetime'];
-        $sql = "INSERT INTO `helpdesk` ";
+        // insert index
+        $columns = [ 'title', 'content', 'content_tablet', 'content_cellphone'];
+        $sql = "INSERT INTO `index` ";
 
         $sql .= "(`".implode("`,`", $columns)."`) VALUES (".substr(str_repeat("?,", count($columns)), 0, -1).")";
-        // INSERT INTO `helpdesk` ('user_id', 'g_name', 'g_mobile', 'g_email', 'order_num', 'content', 'create_datetime') VALUES (?, ?, ?, ?, ?, ?, ?)        
-
-
-        $helpdesk_id = $pdo->lastInsertId();
+        // INSERT INTO `index` ( 'title', 'content', 'content_tablet', 'content_cellphone') VALUES (?, ?, ?)        
 
         // insert gallery image
-        $name_list = uploadImgs($_FILES['img'], "images/helpdesk/gallery/");
-        // json_decode() 字串變陣列
-        // json_encode() 陣列變字串
-        $img_order = json_decode($_POST['img_order']);
-        $sql = "INSERT INTO `helpdesk_image` (`helpdesk_id`, `path`, `num_order`) VALUES ".substr(str_repeat("($helpdesk_id, ?, ?),", count($name_list)), 0, -1);    
-        // INSERT INTO `helpdesk` (`helpdesk_id`, `path`) VALUES  (1, ?, ?), (1, ?, ?), (1, ?, ?)
+        $name_list = uploadImgs($_FILES['img'], "images/album/");
+        $sql = "INSERT INTO `index_image` (`index_id`, `path`) VALUES ".substr(str_repeat("($index_id, ?),", count($name_list)), 0, -1);    
+        // INSERT INTO `index` (`index_id`, `path`) VALUES  (1, ?), (1, ?), (1, ?)
         $stmt = $pdo->prepare($sql);
-        $param = []; // [path1, order1, path2, order2]
-        foreach($name_list as $index => $name){
-            array_push($param, $name);
-            array_push($param, $img_order[$index]);
-        }
-        $stmt->execute($param);
+        $stmt->execute($name_list);
 
         $result = ["success"];
         break;
-
     case 'edit':
         $id = $_POST['id'];
-        // get old helpdesk
-        $sql = "SELECT * FROM `helpdesk` WHERE id = ?";
+         // get old index
+        $sql = "SELECT * FROM `index` WHERE id = ?";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$id]);
-        $helpdesk = $stmt->fetch();
+        $index = $stmt->fetch();
         
-        $sql = "SELECT * FROM `helpdesk_image` WHERE helpdesk_id = ? ORDER BY num_order";
+        $sql = "SELECT * FROM `index_image` WHERE index_id = ? ORDER BY num_order";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$id]);
-        $helpdesk['img'] = $stmt->fetchAll();
+        $index['img'] = $stmt->fetchAll();
 
-        // insert video image
-        $video_img_changed = $_POST['video_img_changed'];
+        // update index
+        $columns = [ 'title', 'content', 'content_tablet', 'content_cellphone'];
         $img_changed = $_POST['img_changed'];
-
-        if ($video_img_changed === "1"){
-            deleteImg($helpdesk['video_img']);
-            $name = uploadImg($_FILES['video_img'], "images/helpdesk/video/");
-            $_POST['video_img'] = $name;
-        }
+        $sql = "UPDATE `index` SET ";
         
-
-        // insert helpdesk
-        $columns = ['user_id', 'g_name', 'g_mobile', 'g_email', 'order_num', 'content', 'create_datetime'];
-        $sql = "UPDATE `helpdesk` SET ";
-        
-        $sql .= implode(" = ?, ", $columns)." = ? WHERE id = $id";
-        // INSERT INTO `helpdesk` (`'user_id', 'g_name', 'g_mobile', 'g_email', 'order_num', 'content', 'create_datetime') VALUES (?, ?, ?, ?, ?, ?, ?)        
-        // UPDATE `helpdesk` `user_id` = ?, `g_name` = ?,  `g_mobile` = ?,  `g_email` = ?,  `order_num` = ?,  `content` = ?,  `create_datetime` = ?   
+        $sql .= implode(" = ?, ", $columns)." = ? WHERE id = ?";
+        // UPDATE `index` `name` = ?, `title` = ?, `content` = ?  WHERE id = ?
 
         $data = [];
         foreach($columns as $col){
             array_push($data, $_POST[$col]);
         }
-        
+        array_push($data, $id);
+
         $stmt = $pdo->prepare($sql);
         $stmt->execute($data);
-        
+
+
         // insert gallery image
         if ($img_changed === "1"){
             if ($_FILES['img']['size'][0] === 0){
                 $num_order = json_decode($_POST['img_order']);
                 $result = [];
-                $sql = "SELECT * FROM `helpdesk_image` WHERE `helpdesk_id` = ? ORDER BY num_order";
+                $sql = "SELECT * FROM `index_image` WHERE `index_id` = ? ORDER BY num_order";
                 $stmt = $pdo->prepare($sql);
                 $stmt->execute([$id]);
-                $helpdesk_image = $stmt->fetchAll();
+                $index_image = $stmt->fetchAll();
 
                 foreach($num_order as $key => $value){
-                    $sql = "UPDATE `helpdesk_image` SET num_order = ? WHERE id = ?";    
+                    $sql = "UPDATE `index_image` SET num_order = ? WHERE id = ?";    
                     $stmt = $pdo->prepare($sql);
-                    $stmt->execute([$value, $helpdesk_image[$key]['id']]);
+                    $stmt->execute([$value, $index_image[$key]['id']]);
                 }
             } else{
-                foreach($helpdesk['img'] as $helpdesk_image){
-                    deleteImg($helpdesk_image['path']);
+                foreach($index['img'] as $index_image){
+                    deleteImg($index_image['path']);
                 }
-                $sql = "DELETE FROM `helpdesk_image` WHERE `helpdesk_id` = ?";
+                $sql = "DELETE FROM `index_image` WHERE `index_id` = ?";
                 $stmt = $pdo->prepare($sql);
                 $stmt->execute([$id]);
-                $name_list = uploadImgs($_FILES['img'], "images/helpdesk/gallery/");
-                $sql = "INSERT INTO `helpdesk_image` (`helpdesk_id`, `path`) VALUES ".substr(str_repeat("($id, ?),", count($name_list)), 0, -1);    
-                // INSERT INTO `helpdesk` (`helpdesk_id`, `path`) VALUES  (1, ?), (1, ?), (1, ?)
+                $name_list = uploadImgs($_FILES['img'], "images/album/");
+                $sql = "INSERT INTO `index_image` (`index_id`, `path`) VALUES ".substr(str_repeat("($id, ?),", count($name_list)), 0, -1);    
+                // INSERT INTO `index` (`index_id`, `path`) VALUES  (1, ?), (1, ?), (1, ?)
                 $stmt = $pdo->prepare($sql);
                 $stmt->execute($name_list);
             }
             
         }
-        
+
+
+        // // insert gallery image
+        // $name_list = uploadImgs($_FILES['img'], "images/album/");
+        // $sql = "INSERT INTO `index_image` (`index_id`, `path`) VALUES ".substr(str_repeat("($id, ?),", count($name_list)), 0, -1);    
+        // // INSERT INTO `index` (`index_id`, `path`) VALUES  (1, ?), (1, ?), (1, ?)
+        // $stmt = $pdo->prepare($sql);
+        // $stmt->execute($name_list);
+
         $result = ["success"];
         break;
 }
+
+
+
+
 
 function uploadImgs($img, $target_dir){
     $name_list = [];
@@ -182,7 +159,7 @@ function uploadImgs($img, $target_dir){
         }
     
         // Check file size (bytes)
-        if ($img["size"][$i] > 2000000) {
+        if ($img["size"][$i] > 5000000) {
         // echo "Sorry, your file is too large.";
         $uploadOk = 0;
         }
@@ -208,6 +185,7 @@ function uploadImgs($img, $target_dir){
     }
     return $name_list;
 }
+
 function uploadImg($img, $target_dir){
     $name = "";
     $filename = md5(uniqid());
@@ -260,7 +238,6 @@ function uploadImg($img, $target_dir){
     }
     return $name;
 }
-
 function deleteImg($img){
     $target_file = $img;
     $uploadOk = 1;

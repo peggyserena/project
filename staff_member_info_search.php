@@ -44,18 +44,19 @@ exit;
                 <form action="staff_member_info_search.php" method="post" >
                     <ul class="row list-unstyled p-2 m-0 text-center justify-content-center align-items-center">
                         <li class=" ">
-                            <input type="text" value="" placeholder="帳號(E-mail)">          
+                            <input id="email" type="text" value="" placeholder="帳號(E-mail)">          
                         </li>
                         <li class=" ">
-                            <input type="text" value="" placeholder="姓名">          
+                            <input id="fullname" type="text" value="" placeholder="姓名">          
                         </li>
 
                         <li class=" ">
-                            <input type="text" value="" placeholder="手機">          
+                            <input id="mobile" type="text" value="" placeholder="手機">          
                         </li>
                         <li class="">
                             <select id="select_month" name="birthmonth">
                                 <option disabled hidden selected value="">生日月份</option>
+                                <option value="全部">全部</option>
                                 <option value=""></option>
                                 <option value=""></option>
                                 <option value=""></option>
@@ -73,14 +74,16 @@ exit;
                         <li class="">
                             <select id="gender" name="gender">
                                 <option disabled hidden selected value="">性別</option>
-                                <option value="male">男性</option>
-                                <option value="female">女性</option>
-                                <option value="none">不填</option>
+                                <option value="全部">全部</option>
+                                <option value="男">男性</option>
+                                <option value="女">女性</option>
+                                <option value="無">不填</option>
                             </select>
                         </li>
                         <li class="">
                             <select id="age" name="age">
                                 <option value="" disabled hidden selected>年齡區間</option>
+                                <option value="全部">全部</option>
                                 <option value="0-6">0-6歲</option>
                                 <option value="6-12">6-12歲</option>
                                 <option value="12-15">12-15歲</option>
@@ -133,13 +136,14 @@ exit;
 
 <script>
   function memberIntoSearch(){
-    $.post('member-api.php', {
+    $.post('<?= WEB_API ?>/member-api.php', {
         action: 'readAll',
         id: $("#id").val(),
         fullname: $("#fullname").val(),
         gender: $("#gender").val(),
         mobile: $("#mobile").val(),
-        // select_month: $("#select_month").val(),
+        email: $("#email").val(),
+        birthmonth: $("#select_month").val(),
         age: $("#age").val(),
     },function(data) {
         console.log(data);
@@ -150,9 +154,9 @@ exit;
                             <td class="bg-dark text-white" style="border: #454d55 1px solid ;">${index + 1}</td>
                             <td>${nullTo(members['id'])}</td>
                             <td>${nullTo(members['fullname'])}</td>
-                            <td style="font-size:0.8rem">${nullTo(members['fb_id'])}</td>
-                            <td style="font-size:0.8rem">${nullTo(members['email'])}</td>
-                            <td style="font-size:0.8rem">${nullTo(members['email_2nd'])}</td>
+                            <td>${nullTo(members['fb_id'])}</td>
+                            <td>${nullTo(members['email'])}</td>
+                            <td>${nullTo(members['email_2nd'])}</td>
                             <td>${nullTo(members['gender'])}</td>
                             <td>${nullTo(members['birthday'])}</td>
                             <td>${nullTo(members['mobile'])}</td>
@@ -178,7 +182,7 @@ exit;
     var month = 1;
     var selectedMonth = "<?= $_GET['month'] ?? "" ?>";
     $("#select_month option").each(function(ind, elem) {
-        if (ind > 0) {
+        if (ind > 1) {
             elem.text = month;
             elem.value = month;
             month++;

@@ -308,7 +308,7 @@ if (!empty($helpdesk_id_list)){
         const deleteItem = function(hd, id) {
             let t = $(hd.currentTarget);
             console.log('hd:', hd);
-            $.get('cart-api.php', {
+            $.get('<?= WEB_API ?>/cart-api.php', {
                 action: 'delete',
                 id: id
             }, function(data) {
@@ -348,7 +348,7 @@ if (!empty($helpdesk_id_list)){
             const qty = el.val();
             const pid = el.closest('tr').attr('data-sid');
 
-            $.get('cart-api.php', {
+            $.get('<?= WEB_API ?>/cart-api.php', {
                 action: 'add',
                 pid,
                 qty
@@ -358,7 +358,7 @@ if (!empty($helpdesk_id_list)){
             }, 'json');
         };
         function getWishList(){
-            $.post('wishList-api.php', {
+            $.post('<?= WEB_API ?>/wishList-api.php', {
                 action: 'read'
             }, function(data){
                 
@@ -394,7 +394,7 @@ if (!empty($helpdesk_id_list)){
         function deleteWishList(hd, id){
             console.log(id);
             let t = $(hd.currentTarget);
-            $.post('wishList-api.php', {
+            $.post('<?= WEB_API ?>/wishList-api.php', {
                 action: 'delete',
                 id: id,
             }, function(data){
@@ -407,7 +407,7 @@ if (!empty($helpdesk_id_list)){
             })
         }
         function deleteWishListAll(){
-            $.post('wishList-api.php', {
+            $.post('<?= WEB_API ?>/wishList-api.php', {
                 action: 'deleteAll',
             }, function(data){
                 console.log(data);
@@ -420,7 +420,7 @@ if (!empty($helpdesk_id_list)){
         function readOrder(){
             var start_date = $("#start_date").val();
             var end_date = $("#end_date").val();
-            $.post('order-api.php', {
+            $.post('<?= WEB_API ?>/order-api.php', {
                 action: 'read',
                 start_date: start_date,
                 end_date: end_date
@@ -456,7 +456,7 @@ if (!empty($helpdesk_id_list)){
 
         function orderCancel(order_id){
             if (!confirm("確定刪除?")) return 0;
-            $.post('order-api.php', {
+            $.post('<?= WEB_API ?>/order-api.php', {
                 action: 'cancel',
                 order_id
             },function(data) {
@@ -518,7 +518,7 @@ if (!empty($helpdesk_id_list)){
         // helpdesk
 
         function helpdeskRecord(){
-            $.post('helpdesk-api.php', {
+            $.post('<?= WEB_API ?>/helpdesk-api.php', {
                 type: 'readAll',
                 cat_id: $("#helpdesk_select_id").val(),
                 year: $("#helpdesk_select_year").val(),

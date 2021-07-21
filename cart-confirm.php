@@ -229,7 +229,7 @@ $(document).ready(function(){
     fillTable();
 });
 function isCompletedUserData(){
-    $.post('member-api.php', {
+    $.post('<?= WEB_API ?>/member-api.php', {
         'action': 'isCompletedUserData',
     }, function(data){
         
@@ -263,7 +263,7 @@ function fillTable(){
     var url_string = window.location.href
     var url = new URL(url_string);
     var id = url.searchParams.get("id");
-    $.post('order-api.php', {
+    $.post('<?= WEB_API ?>/order-api.php', {
         'action': 'readOne',
         id
     }, function(data){

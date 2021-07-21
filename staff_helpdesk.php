@@ -101,7 +101,7 @@ $pageName = 'staff_helpdesk';
 
 <script>
 function helpdeskRecord(){
-    $.post('helpdesk-api.php', {
+    $.post('<?= WEB_API ?>/helpdesk-api.php', {
         type: 'readAll',
         cat_id: $("#helpdesk_select_id").val(),
         year: $("#helpdesk_select_year").val(),
@@ -166,7 +166,7 @@ function helpdeskRecord(){
     $("#helpdesk_select_id").val(selectedId);
     </script>
     <script>
-    $.post('helpdesk-api.php', {
+    $.post('<?= WEB_API ?>/helpdesk-api.php', {
         'type': 'readCat',
     }, function(data){
         var output = `<option value="" disabled hidden selected>請選擇</option>`;
@@ -185,7 +185,7 @@ function helpdeskRecord(){
         })
         $("#img_order").val(JSON.stringify(img_order));
         $.ajax({
-            url: 'helpdesk-api.php',
+            url: '<?= WEB_API ?>/helpdesk-api.php',
             data: new FormData($("#myForm")[0]),
             cache: false,
             contentType: false,
@@ -195,7 +195,7 @@ function helpdeskRecord(){
             success: function(data){
             console.log(data);
             modal_init();
-            insertPage("#modal_img", "animation_success.html");
+            insertPage("#modal_img", "animation/animation_success.html");
             insertText("#modal_content", "信件回覆成功!");
             $("#modal_alert").modal("show");
             setTimeout(function(){location.href = "staff_helpdesk_search.php"}, 2000);
@@ -204,7 +204,7 @@ function helpdeskRecord(){
             error: function(data){
             console.log(data);
             modal_init();
-            insertPage("#modal_img", "animation_error.html");
+            insertPage("#modal_img", "animation/animation_error.html");
             insertText("#modal_content", "資料傳輸失敗");
             $("#modal_alert").modal("show");
             setTimeout(function(){location.href = "staff_helpdesk_search.php"}, 2000);

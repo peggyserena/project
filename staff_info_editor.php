@@ -151,13 +151,13 @@ $pageName ='staff_register';
         if (isPass) {
             var data = $(document.form1).serialize() + "&zipcode=" + $("#zipcode").val();
             $.post(
-                'staff-api.php',
+                '<?= WEB_API?>/staff-api.php',
                 data,
                 function(data) {
                     console.log(data);
                     if (data.success) {
                         modal_init();
-                        insertPage("#modal_img", "animation_success.html");
+                        insertPage("#modal_img", "animation/animation_success.html");
                         insertText("#modal_content", "修改成功");
                         $("#modal_alert").modal("show");
                         setTimeout(function(){window.history.back();}, 2000);
@@ -170,7 +170,7 @@ $pageName ='staff_register';
                 'json'
             ).fail(function(d){
                 modal_init();
-                insertPage("#modal_img", "animation_error.html");
+                insertPage("#modal_img", "animation/animation_error.html");
                 insertText("#modal_content", "資料傳輸失敗");
                 $("#modal_alert").modal("show");
                 setTimeout(function(){window.history.back();}, 2000);

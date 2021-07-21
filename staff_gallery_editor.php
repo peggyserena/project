@@ -9,8 +9,6 @@ $pageName = 'staff_gallery_editor';
 
 <style>
  
- 
-
 
 
 </style>
@@ -18,7 +16,7 @@ $pageName = 'staff_gallery_editor';
 <main>
   <?php include "parts/modal.php"?>
   <div class="container my-5">
-    <form class="" action="staff_gallery-api.php" name="formGallery" id="formGallery" method="post" onsubmit="edit(); return false;" enctype="multipart/form-data">
+    <form class="" action="<?= WEB_API ?>/staff_gallery-api.php" name="formGallery" id="formGallery" method="post" onsubmit="edit(); return false;" enctype="multipart/form-data">
       <input type="hidden" name="action" value="edit"/>
       <input type="hidden" name="id" value="<?= $_GET['id'] ?>"/>
 
@@ -78,7 +76,7 @@ $("#img").change(() => {
   }
 });
 function fillData(){
-    $.post('staff_gallery-api.php', {
+    $.post('<?= WEB_API ?>/staff_gallery-api.php', {
       'action': 'read',
       'id': <?= $_GET['id']?>,
     }, function(data){
@@ -115,7 +113,7 @@ function fillData(){
     // "[1,2,3]" 
     // $("#img_order").val()[0] = "["
     $.ajax({
-        url: 'staff_gallery-api.php',
+        url: '<?= WEB_API ?>/staff_gallery-api.php',
         data: new FormData($("#formGallery")[0]),
         cache: false,
         contentType: false,
@@ -125,7 +123,7 @@ function fillData(){
         success: function(data){
             console.log(data);
             modal_init();
-            insertPage("#modal_img", "animation_success.html");
+            insertPage("#modal_img", "animation/animation_success.html");
             insertText("#modal_content", "修改成功!");
             $("#modal_alert").modal("show");
             setTimeout(location.href = "staff_gallery.php", 2000);
@@ -134,7 +132,7 @@ function fillData(){
         error: function(data){
             console.log(data);
             modal_init();
-            insertPage("#modal_img", "animation_error.html");
+            insertPage("#modal_img", "animation/animation_error.html");
             insertText("#modal_content", "資料傳輸失敗");
             $("#modal_alert").modal("show");
             setTimeout(function(){window.history.back();}, 2000);

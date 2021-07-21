@@ -17,7 +17,7 @@ $pageName = 'staff_event_editor';
   <div class="container ">
     <div class="con_01 row mx-0 ">
         <h2 class="title b-green rot-135 col-sm-12">修改活動</h2>
-        <form action="event-api.php" class="p-5 col-sm-12" name="form1" id="myForm" method="post" onsubmit="create(); return false;" enctype="multipart/form-data">
+        <form action="<?= WEB_API ?>/event-api.php" class="p-5 col-sm-12" name="form1" id="myForm" method="post" onsubmit="create(); return false;" enctype="multipart/form-data">
           <input type="hidden" name="type" value="edit"/>
           <input type="hidden" name="id" value="<?= $_GET['id']?>"/>
             <div class="form-group">
@@ -91,7 +91,7 @@ $pageName = 'staff_event_editor';
                 <input type="hidden" id="img_changed" name="img_changed" value="0">
             </div>
             <div class="form-group" id="preview">
-              <ul id="sortable" class="row">
+              <ul id="sortable" class="row  list-unstyled">
               </ul>
             </div>
             <hr>
@@ -149,7 +149,7 @@ $("#img")
 <script> 
   fillCat();
   function fillCat(){
-    $.post('event-api.php', {
+    $.post('<?= WEB_API ?>/event-api.php', {
       'type': 'readCat',
     }, function(data){
       var output = `<option value="" disabled hidden selected>請選擇</option>`;
@@ -164,7 +164,7 @@ $("#img")
     })
   }
   function fillData(){
-    $.post('event-api.php', {
+    $.post('<?= WEB_API ?>/event-api.php', {
       'type': 'read',
       'id': <?= $_GET['id']?>
     }, function(data){
@@ -204,7 +204,7 @@ $("#img")
     })
     $("#img_order").val(JSON.stringify(img_order));
     $.ajax({
-        url: 'event-api.php',
+        url: '<?= WEB_API ?>/event-api.php',
         data: new FormData($("#myForm")[0]),
         cache: false,
         contentType: false,
@@ -214,7 +214,7 @@ $("#img")
         success: function(data){
           console.log(data);
           modal_init();
-          insertPage("#modal_img", "animation_success.html");
+          insertPage("#modal_img", "animation/animation_success.html");
           insertText("#modal_content", "修改成功!");
           $("#modal_alert").modal("show");
           setTimeout(function(){location.href = "staff_event_search.php"}, 2000);
@@ -223,7 +223,7 @@ $("#img")
         error: function(data){
           console.log(data);
           modal_init();
-          insertPage("#modal_img", "animation_error.html");
+          insertPage("#modal_img", "animation/animation_error.html");
           insertText("#modal_content", "資料傳輸失敗");
           $("#modal_alert").modal("show");
           setTimeout(function(){location.href = "staff_event_search.php"}, 2000);

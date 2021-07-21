@@ -110,7 +110,7 @@ foreach($result as $role_cat){
                     <span class="button m-4"><button type="button" class="custom-btn btn-4 t_shadow" onclick="exportExcel();">匯出</button></span>
                     <hr>
                 </form>
-                <form name="form2" id="form2" method="post" action="staff-api.php" hidden>
+                <form name="form2" id="form2" method="post" action="<?= WEB_API ?>/staff-api.php" hidden>
                     <input type="hidden" name="action" value="exportExcel"/>
                     <input type="hidden" name="data" value=''/>
                 </form>
@@ -141,12 +141,12 @@ foreach($result as $role_cat){
 <script>
     function checkForm() {
         $.post(
-            'register-api.php',
+            '<?= WEB_API?>/register-api.php',
             $(document.form1).serialize(),
             function(data) {
                 if (data.authError) {
                     modal_init();
-                    insertPage("#modal_img", "animation_success.html");
+                    insertPage("#modal_img", "animation/animation_success.html");
                     insertText("#modal_content", data.authError);
                     $("#modal_alert").modal("show");
                 } else if (data.success) {
@@ -160,12 +160,12 @@ foreach($result as $role_cat){
                         </tr>`);
                     });
                     modal_init();
-                    insertPage("#modal_img", "animation_success.html");
+                    insertPage("#modal_img", "animation/animation_success.html");
                     insertText("#modal_content", "新增員工成功");
                     $("#modal_alert").modal("show");
                 } else {
                     modal_init();
-                    insertPage("#modal_img", "animation_error.html");
+                    insertPage("#modal_img", "animation/animation_error.html");
                     insertText("#modal_content", "資料傳輸失敗");
                     $("#modal_alert").modal("show");
                     setTimeout(function(){window.history.back();}, 2000);

@@ -105,9 +105,9 @@ $pageName = 'register';
                     </div>
                     <div class="form-group">
                         <label for="gender">性別 </label>
-                        <input type="radio"  name="gender" value="male">男
-                        <input type="radio"  name="gender" value="female">女
-                        <input type="radio"  name="gender" value="none">不填
+                        <input type="radio"  name="gender" value="男">男
+                        <input type="radio"  name="gender" value="女">女
+                        <input type="radio"  name="gender" value="無">不填
                         <small class="form-text error"></small>
                     </div>
                     <div class="form-group">
@@ -194,13 +194,13 @@ $pageName = 'register';
         if (isPass) {
             var data = $(document.form1).serialize() + "&zipcode=" + $("#zipcode").val();
             $.post(
-                'register-api.php',
+                '<?= WEB_API?>/register-api.php',
                 data,
                 function(data) {
                     console.log(data);
                     if (data.success) {
                         modal_init();
-                        insertPage("#modal_img", "animation_register.html");
+                        insertPage("#modal_img", "animation/animation_register.html");
                         insertText("#modal_content", "歡迎加入薰衣草森林家族～");
                         $("#modal_alert").modal("show");
                         // alert('註冊成功');
@@ -212,10 +212,10 @@ $pageName = 'register';
                 'json'
             ).fail(function(d){
                 modal_init();
-                insertPage("#modal_img", "animation_error.html");
+                insertPage("#modal_img", "animation/animation_error.html");
                 insertText("#modal_content", "資料傳輸失敗");
                 $("#modal_alert").modal("show");
-                setTimeout(function(){window.history.back();}, 2000);
+                // setTimeout(function(){window.history.back();}, 2000);
                 console.log(d);
             })
         }

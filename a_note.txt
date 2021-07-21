@@ -1,0 +1,14 @@
+123abcd
+abcd123
+abcd456
+abcd789
+
+// 正規表達
+(abcd\d{3})
+$1xx
+
+// 陣列
+// print_r, var_dump
+
+// 字串
+// 都可以 print_r, var_dump, echo, print

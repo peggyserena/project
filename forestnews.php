@@ -245,7 +245,7 @@ $pageName = 'news';
     <main>
         <div class="container mt-5">
             <div id="gardenInfo">
-                <h2 class="title1 b-green rot-135 c_1 ">園區相關 <span>Register</span></h2>
+                <h2 class="title1 b-green rot-135 c_1 ">園區相關 <span>Garden Information</span></h2>
                 <div id="accordion">
                     <div class="card ">
                         <div class="card-header  p-0">

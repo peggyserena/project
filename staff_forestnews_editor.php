@@ -1,0 +1,201 @@
+<?php include __DIR__ . '/parts/config.php'; ?>
+<?php
+$title = '森林體驗查詢';
+$pageName = 'staff_forestnews_editor';
+
+ ?>
+
+<?php include __DIR__. '/parts/staff_html-head.php'; ?>
+<link rel="stylesheet" href="<?= WEB_ROOT ?>/js/jquery-ui-1.12.1.custom/jquery-ui.structure.min.css">
+
+<style>
+
+
+</style>
+<?php include __DIR__. '/parts/staff_navbar.php'; ?>
+<?php include "parts/modal.php" ?>
+  <main>
+  <div class="container ">
+    <div class="con_01 row mx-0 ">
+        <h2 class="title b-green rot-135 col-sm-12">修改活動</h2>
+        <form action="<?= WEB_API ?>/forestnews-api.php" class="p-5 col-sm-12" name="form1" id="myForm" method="post" onsubmit="create(); return false;" enctype="multipart/form-data">
+          <input type="hidden" name="type" value="edit"/>
+          <input type="hidden" name="id" value="<?= $_GET['id']?>"/>
+
+
+          <div class="form-group">
+                  <label for="cat_id_H">分類-中文</label>
+                  <select type="text" class="form-control" id="cat_id_H" name="cat_id" autofocus required></select>
+              </div>
+              <div class="form-group">
+                  <label for="cat_id_E">分類-英文</label>
+                  <select type="text" class="form-control" id="cat_id_E" name="cat_id"  required></select>
+              </div>
+              <div class="form-group">
+                  <label for="name">標題</label>
+                  <input type="text" class="form-control" id="name" name="name"  >
+              </div>
+              <div class="form-group">
+                  <!-- 或填中文 -->
+                  <label for="start_date">開始日期</label>
+                  <input type="date" class="form-control" id="start_date" name="start_date"  required>
+              </div>
+              <div class="form-group">
+                  <label for="end_date">結束日期</label>
+                  <input type="date" class="form-control" id="end_date" name="end_date"  required>
+              </div>
+              <div class="form-group">
+                  <label for="content">活動內容</label>
+                  <textarea type="text" class="form-control" id="content" name="content"  required></textarea>
+              </div>
+              <div class="form-group">
+                  <label for="notice">注意事項</label>
+                  <textarea type="text" class="form-control" id="notice" name="notice"  required></textarea>
+              </div>
+
+              <div class="form-group">
+                  <label for="img">圖片</label>
+                  <input type="file" id="img" name="img[]" accept=".png,.jpeg,.jpg" multiple>
+                  <input type="hidden" id="img_order" name="img_order">
+              </div>
+              <div class="form-group" id="preview">
+                <ul id="sortable" class="row list-unstyled">
+                </ul>
+              </div>
+
+
+
+
+            <hr>
+            
+           <div class="button my-4  text-center" ><button type="submit" class="custom-btn btn-4 t_shadow " style="width: 100%;">送出</button></div>
+        </form>
+
+
+        </div>
+
+    </div>
+
+  </main>
+
+<?php include __DIR__. '/parts/staff_scripts.php'; ?>
+<script src="<?= WEB_ROOT ?>/js/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+<script>
+$("#img")
+
+  $( function() {
+    $( "#sortable" ).sortable({
+      change: function( event, ui ) {
+        $("#img_changed").val(1);
+      }
+    });
+    // $( "#sortable" ).disableSelection();
+  } );
+
+  $("#img").change(() => {
+    $("#img_changed").val(1);
+    $("#preview #sortable").html("");
+    const files = $("#img")[0].files
+    for(var i = 0; i < files.length; i++){
+      var file = files[i];
+      if (file) {
+        var img = ` <li class="ui-state-default" data-order="${i}">
+                      <img class="preview_img" style="max-width: 120px; max-height: 120px" src="${URL.createObjectURL(file)}" alt="your image" />
+                    </li>`;
+        $("#preview #sortable").append(img);
+      }
+    }
+  });
+  
+</script>
+<script> 
+  fillCat();
+  function fillCat(){
+    $.post('<?= WEB_API ?>/forestnews-api.php', {
+      'action': 'readCat',
+    }, function(data){
+      var output = `<option value="" disabled hidden selected>請選擇</option>`;
+      $("#cat_id_H").append(output);
+      data.forEach(function (cat){
+        var output = `<option value="${cat['id']}">${cat['name']}</option>`;
+        $("#cat_id_H").append(output);
+      });
+      $("#cat_id_E").append(output);
+      data.forEach(function (cat){
+        var output = `<option value="${cat['id']}">${cat['en_name']}</option>`;
+        $("#cat_id_E").append(output);
+      });
+      fillData();
+    }, 'json').fail(function(data){
+      console.log(data);
+    })
+  }
+  function fillData(){
+    $.post('<?= WEB_API ?>/forestnews-api.php', {
+      'type': 'read',
+      'id': <?= $_GET['id']?>
+    }, function(data){
+      console.log(data);
+      var columns = ['cat_id', 'name', 'start_date', 'end_date', 'content','notice']
+      columns.forEach(function(elem){
+        $(`#${elem}`).val(data[elem]);
+      });
+
+      
+      $("#preview #sortable").html("");
+      const files = data['img'];
+      for(var i = 0; i < files.length; i++){
+        var file = files[i];
+        if (file) {
+          var img = ` <li class="ui-state-default" data-order="${i}">
+                        <img class="preview_img" style="max-width: 120px; max-height: 120px" src="${file.path}" alt="your image" />
+                      </li>`;
+          $("#preview #sortable").append(img);
+        }
+      }
+    }, 'json').fail(function(data){
+      console.log(data);
+    })
+  }
+  
+  function create(){
+    var img_order = [];
+    $("#preview #sortable li").each(function(ind, elem){
+      img_order[$(elem).data("order")] = ind + 1;
+    })
+    $("#img_order").val(JSON.stringify(img_order));
+    $.ajax({
+        url: '<?= WEB_API ?>/forestnews-api.php',
+        data: new FormData($("#myForm")[0]),
+        cache: false,
+        contentType: false,
+        processData: false,
+        method: 'POST',
+        type: 'POST', // For jQuery < 1.9
+        success: function(data){
+          console.log(data);
+          modal_init();
+          insertPage("#modal_img", "animation/animation_success.html");
+          insertText("#modal_content", "修改成功!");
+          $("#modal_alert").modal("show");
+          setTimeout(function(){location.href = "staff_event_search.php"}, 2000);
+
+        },
+        error: function(data){
+          console.log(data);
+          modal_init();
+          insertPage("#modal_img", "animation/animation_error.html");
+          insertText("#modal_content", "資料傳輸失敗");
+          $("#modal_alert").modal("show");
+          setTimeout(function(){location.href = "staff_event_search.php"}, 2000);
+        }
+    });
+  }
+
+
+  // 設定date日期min為今日
+  var d = new Date();
+  var min = d.toISOString().split("T")[0];
+  $("#date").attr("min", min);
+</script>
+<?php include __DIR__. '/parts/staff_html-foot.php'; ?>

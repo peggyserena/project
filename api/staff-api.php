@@ -1,5 +1,5 @@
 <?php
-include __DIR__ . '/parts/config.php';
+include __DIR__ . '/../parts/config.php';
 
 $action = $_POST['action'];
 $staff = $_SESSION['staff'] ?? null;
@@ -18,7 +18,7 @@ switch ($action){
                 'gender' => "`gender` = ?",
                 'mobile' => "`mobile` = ?",
                 'identityNum' => "`identityNum` = ?",
-                'birthmonth'=>"TIMESTAMPDIFF(MOTH, `birthday`, CURDATE()) ",
+                'birthmonth'=>"MONTH(`birthday`) = ?",
                 'age' => "TIMESTAMPDIFF(YEAR, `birthday`, CURDATE()) BETWEEN ? AND ?",
                 ];
                 

@@ -1,4 +1,4 @@
-<?php include __DIR__ . '/parts/config.php';
+<?php include __DIR__ . '/../parts/config.php';
 
 $action = isset($_POST['action']) ? $_POST['action'] : ''; // 操作類型
 $order_date = isset($_POST['order_date']) ? $_POST['order_date'] : ''; // 定位日期

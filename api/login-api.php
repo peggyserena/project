@@ -1,5 +1,12 @@
-<?php include __DIR__ . '/parts/config.php';
+<?php include __DIR__ . '/../parts/config.php';
+// new
+// project/api/../parts/config.php
+// __DIR__ = project/api
+// __DIR__ . '/../../parts/config.php' = project/../parts/config.php
 
+// old
+// project/../parts/config.php
+// __DIR__ = project
 $action = $_POST["action"];
 
 $output = [

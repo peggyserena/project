@@ -70,9 +70,9 @@ $r = $pdo->query($sql)->fetchAll();
                     </div>
                     <div class="form-group">
                         <label for="gender">性別 </label>
-                        <input type="radio"  name="gender" value="male">男
-                        <input type="radio"  name="gender" value="female">女
-                        <input type="radio"  name="gender" value="none">不填
+                        <input type="radio"  name="gender" value="男">男
+                        <input type="radio"  name="gender" value="女">女
+                        <input type="radio"  name="gender" value="無">不填
                         <small class="form-text error"></small>
                     </div>
                     <div class="form-group">
@@ -155,13 +155,13 @@ $r = $pdo->query($sql)->fetchAll();
         if (isPass) {
             var data = $(document.form1).serialize() + "&zipcode=" + $("#zipcode").val();
             $.post(
-                'staff-api.php',
+                '<?= WEB_API?>/staff-api.php',
                 data,
                 function(data) {
                     console.log(data);
                     if (data.success) {
                         modal_init();
-                        insertPage("#modal_img", "animation_success.html");
+                        insertPage("#modal_img", "animation/animation_success.html");
                         insertText("#modal_content", "修改成功");
                         $("#modal_alert").modal("show");
                         setTimeout(function(){window.history.back();}, 2000);
@@ -174,7 +174,7 @@ $r = $pdo->query($sql)->fetchAll();
                 'json'
             ).fail(function(d){
                 modal_init();
-                insertPage("#modal_img", "animation_error.html");
+                insertPage("#modal_img", "animation/animation_error.html");
                 insertText("#modal_content", "資料傳輸失敗");
                 $("#modal_alert").modal("show");
                 setTimeout(function(){window.history.back();}, 2000);

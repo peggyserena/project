@@ -1,4 +1,4 @@
-<?php include __DIR__ . '/parts/config.php';
+<?php include __DIR__ . '/../parts/config.php';
 
 
 $output = [
@@ -68,11 +68,11 @@ switch ($action){
                 ]);
             }else{
                 $sql = "INSERT INTO `members`(
-                    `email`, `fullname`,'gender', `birthday`, 
+                    `email`, `fullname`,`gender`, `birthday`, 
                     `mobile`, `zipcode`,`county`,  `district`,
                     `address`, `hash`,`created_at`
                     ) VALUES (
-                                ?, ?, ?, ?, ?,
+                                ?, ?, ?, ?,
                                 ?, ?, ?, ?,
                                 ?, ?, NOW()
                     )";
@@ -92,8 +92,6 @@ switch ($action){
 
                 ]);
             }
-            
-
             if ($stmt->rowCount()) {
                 $output['success'] = true;
                 $output['error'] = '';

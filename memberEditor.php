@@ -63,7 +63,7 @@ if (empty($row)) {
         <div class="col-md-6">
             <h2 class="title m-0 ">修改資料</h2>
             <div class="card">
-                <form name="form1" id="myForm" action="memberEditor-api.php" method="post" novalidate onsubmit="checkForm(); return false;">
+                <form name="form1" id="myForm" action="<?= WEB_API ?>/memberEditor-api.php" method="post" novalidate onsubmit="checkForm(); return false;">
                     <div class="form-group">
                         <label for="fullname autofocus ">姓名</label>
                         <input type="text" class="form-control" name="fullname" id="fullname" value="<?= htmlentities($row['fullname']) ?>"></input>
@@ -143,18 +143,18 @@ if (empty($row)) {
         if (isPass) {
             var data = $(document.form1).serialize() + "&zipcode=" + $("#zipcode").val();
             $.post(
-                'memberEditor-api.php',
+                '<?= WEB_API?>/memberEditor-api.php',
                 data,
                 function(data) {
                     if (data.success) {
                         modal_init();
-                        insertPage("#modal_img", "animation_success.html");
+                        insertPage("#modal_img", "animation/animation_success.html");
                         insertText("#modal_content", '資料修改成功');
                         $("#modal_alert").modal("show");
                         setTimeout(function(){window.history.back();}, 2000);
                     } else {
                         modal_init();
-                        insertPage("#modal_img", "animation_error.html");
+                        insertPage("#modal_img", "animation/animation_error.html");
                         insertText("#modal_content", "資料傳輸失敗");
                         $("#modal_alert").modal("show");
                         setTimeout(function(){window.history.back();}, 2000);

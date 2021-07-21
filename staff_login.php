@@ -100,14 +100,14 @@ $pageName ='staff_login';
 
     if (isPass) {
       $.post(
-        'login-api.php',
+        '<?= WEB_API?>/login-api.php',
         $(document.form1).serialize(),
         function (data) {
           if (data.success) {
             // alert('資料修改成功');
             // swal('Title...', 'Hello World!', 'success');
             modal_init()
-            insertPage('#modal_img', 'animation_success.html')
+            insertPage('#modal_img', 'animation/animation_success.html')
             insertText('#modal_content', '登入成功')
             $('#modal_alert').modal('show')
             setTimeout(function () {
@@ -116,7 +116,7 @@ $pageName ='staff_login';
             // location.href = './staff_index.php';
           } else {
             modal_init();
-            insertPage("#modal_img", "animation_error.html");
+            insertPage("#modal_img", "animation/animation_error.html");
             insertText("#modal_content", "登入失敗，請確認員工編號和密碼！");
             $("#modal_alert").modal("show");
             setTimeout(function(){window.history.back();}, 2000);

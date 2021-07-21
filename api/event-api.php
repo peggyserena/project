@@ -1,9 +1,8 @@
-<?php include __DIR__ . '/parts/config.php';
+<?php include __DIR__ . '/../parts/config.php';
 
+$action = isset($_POST['action']) ? $_POST['action'] : $_POST['type']; // 操作類型
 
-$type = isset($_POST['type']) ? $_POST['type'] : ''; // 操作類型
-
-switch ($type) {
+switch ($action) {
     case 'readCat':
         $sql = "SELECT * FROM event_category";
         $stmt = $pdo->prepare($sql);
@@ -11,15 +10,32 @@ switch ($type) {
         $result = $stmt->fetchAll();
         break;
     case 'read':
-        $sql = "SELECT * FROM `event` WHERE id = ?";
+        $id = $_POST['id'];
+        // 抓取活動參與人數與類別中文名稱
+        $sql = "SELECT `e`.*, ec.name as `ec_name`, SUM(`oe`.quantity) as quantity FROM `event` as e 
+                JOIN `event_category` as ec ON `cat_id` = ec.`id` 
+                LEFT JOIN `order_event` as oe ON e.id = oe.event_id 
+                WHERE e.id = ? 
+                group by e.id";
         $stmt = $pdo->prepare($sql);
-        $stmt->execute([$_POST['id']]);
+        $stmt->execute([$id]);
         $result = $stmt->fetch();
-        
+      
+        // 抓圖片
         $sql = "SELECT * FROM `event_image` WHERE event_id = ? ORDER BY num_order";
         $stmt = $pdo->prepare($sql);
-        $stmt->execute([$_POST['id']]);
+        $stmt->execute([$id]);
         $result['img'] = $stmt->fetchAll();
+        
+        // 活動歷年總數
+        $sql = "SELECT e.name, IFNULL(sum(`quantity`), 0) as quantity FROM `event` as e LEFT JOIN `order_event` as oe ON e.id = oe.event_id WHERE e.id = ? GROUP BY `name`";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$id]);
+        $quantity_list = $stmt->fetchAll();
+        $result['quantity_map'] = [];
+        foreach ($quantity_list as $value) {
+            $result['quantity_map'][$value['name']] = $value['quantity'];
+        }
         break;
     case 'add':
         // insert video image

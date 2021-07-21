@@ -104,7 +104,7 @@ $pageName = 'fun';
 </style>
 <body>
     <div class="loader">
-        <?php include 'animation_fun.html'?>
+        <?php include 'animation/animation_fun.html'?>
     </div> 
     <div class="container con2 bgImg  mb-5 mt-5">
         <h2 class="box_desktop b-green rot-135 text-center t_shadow mb-0">寫張卡片把喜悅快樂 分享給朋友吧！</h2>

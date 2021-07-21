@@ -905,7 +905,7 @@ for (var i = 1; i <= 26; i++){
 		function createRestaurantData() {
 			var order_date = $("#order_date").val();
 			var order_time = $("#order_time").val();
-			$.post('restaurant-api.php', {
+			$.post('<?= WEB_API ?>/restaurant-api.php', {
 				action: 'read',
 				order_date: order_date,
 				order_time: order_time,

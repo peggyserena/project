@@ -1,5 +1,5 @@
 <?php
-include __DIR__ . '/parts/config.php';
+include __DIR__ . '/../parts/config.php';
 $action = $_POST['action'];
 $staff = $_SESSION['staff'] ?? null;
 
@@ -17,21 +17,21 @@ switch ($action) {
                 'mobile' => "`mobile` = ?",
                 'email' => "`email` = ?",
                 'gender' => "`gender` = ?",
-                'birthmonth'=>"TIMESTAMPDIFF(MOTH, `birthday`, CURDATE()) ",
+                'birthmonth'=>"MONTH(`birthday`) = ?",
                 'age' => "TIMESTAMPDIFF(YEAR, `birthday`, CURDATE()) BETWEEN ? AND ?",
                 ];
                 
                 foreach ($condition_map as $key => $value) {
                         if (!empty($_POST[$key])) {
-                        if ($key === 'age') {
-                                $age_from = explode("-", $_POST['age'])[0];
-                                $age_to = explode("-", $_POST['age'])[1];
-                                array_push($param, $age_from);
-                                array_push($param, $age_to);
-                        } else {
-                                array_push($param, $_POST[$key]);
-                        }
-                        array_push($condition, $value);
+                                if ($key === 'age') {
+                                        $age_from = explode("-", $_POST['age'])[0];
+                                        $age_to = explode("-", $_POST['age'])[1];
+                                        array_push($param, $age_from);
+                                        array_push($param, $age_to);
+                                } else {
+                                        array_push($param, $_POST[$key]);
+                                }
+                                array_push($condition, $value);
                         }
                 }
                 $sql ="SELECT *FROM `members`";
@@ -42,6 +42,7 @@ switch ($action) {
                 $stmt->execute($param);
                 $output['result'] = $stmt->fetchAll();
                 $output['success'] = "讀取成功";
+                $output['test'] = [$param, $condition, $sql];
                 break;
 case 'isCompletedUserData':
 $user = $_SESSION['user'];

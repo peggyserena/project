@@ -11,11 +11,11 @@ exit;
 }
 
 
-$sql = "SELECT * FROM members WHERE id= ? ";
+// $sql = "SELECT * FROM members WHERE id= ? ";
 
-$stmt = $pdo->prepare($sql);
-$stmt->execute();
-$result = $stmt->fetchAll;
+// $stmt = $pdo->prepare($sql);
+// $stmt->execute([]);
+// $result = $stmt->fetchAll;
 
 
 // 抓圖片
@@ -99,7 +99,7 @@ if (!empty($helpdesk_id_list)){
           function readOrder(){
             var start_date = $("#start_date").val();
             var end_date = $("#end_date").val();
-            $.post('order-api.php', {
+            $.post('<?= WEB_API ?>/order-api.php', {
                 action: 'read',
                 start_date: start_date,
                 end_date: end_date
@@ -135,7 +135,7 @@ if (!empty($helpdesk_id_list)){
 
         function orderCancel(order_id){
             if (!confirm("確定刪除?")) return 0;
-            $.post('order-api.php', {
+            $.post('<?= WEB_API ?>/order-api.php', {
                 action: 'cancel',
                 order_id
             },function(data) {

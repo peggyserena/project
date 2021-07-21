@@ -21,7 +21,7 @@
 
 
     function updateCartCount() {
-        $.get('cart-api.php', {
+        $.get('<?= WEB_API ?>/cart-api.php', {
             type: "cart",
             action: "read",
         }, function(data) {
@@ -37,7 +37,7 @@
         $('.wishList-count').text(wishList.length);
     }
     function updateWishListCount() {
-        $.post('wishList-api.php', {
+        $.post('<?= WEB_API ?>/wishList-api.php', {
             action: 'read'
         },function(data) {
             console.log("wishList");
@@ -49,7 +49,7 @@
 
 
     // function updateCartCount(cart) {
-    //     $.get('cart-api.php', function(data) {
+    //     $.get('<?= WEB_API ?>/cart-api.php', function(data) {
     //         let total = 0;
     //         for (let i in cart) {
     //             total += cart[i].quantity;

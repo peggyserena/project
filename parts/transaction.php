@@ -5,12 +5,12 @@
 function tr_addToCart(param, success, dataType = null, fail = function(){}) {
     // param = {key: value, ...};
     param['action'] = 'add';
-    $.get('cart-api.php', param, success, dataType).fail(fail);
+    $.get('<?= WEB_API ?>/cart-api.php', param, success, dataType).fail(fail);
 }
 
 function tr_addToWishList(param, success, dataType = null, fail = function(){}) {
     param['action'] = 'add';
-    $.post('wishList-api.php', param, success, dataType).fail(fail);
+    $.post('<?= WEB_API ?>/wishList-api.php', param, success, dataType).fail(fail);
 }
 
 timeOutId = 0;
@@ -39,13 +39,13 @@ function tr_addTransaction_event(method, id){
             var param = {
                 id : id,
                 type : "event",
-                qty : $("#event_" + id + " #quantity").val()
+                qty : $("#event_" + id + " #quantity").val() ?? $("#event_quantity_input").val()
             };
             var success = function() {
                 updateCartCount();
 
                 // modal
-                var modal_img = "animation_addToCart.html";
+                var modal_img = "animation/animation_addToCart.html";
                 insertPage("#modal_img", modal_img);
                 insertText("#modal_content", "已加入購物車");
                 
@@ -70,7 +70,7 @@ function tr_addTransaction_event(method, id){
                     console.log("addToWishList");
                     updateWishListCount();
 
-                    var modal_img = "animation_addToWishList.html";
+                    var modal_img = "animation/animation_addToWishList.html";
                     insertPage("#modal_img", modal_img);
                     insertText("#modal_content", "已加入我的收藏");
 
@@ -106,7 +106,7 @@ function addTransaction_hotel(method){
                 updateCartCount();
 
                 // modal
-                var modal_img = "animation_addToCart.html";
+                var modal_img = "animation/animation_addToCart.html";
                 insertPage("#modal_img", modal_img);
                 insertText("#modal_content", "已加入購物車");
 
@@ -133,7 +133,7 @@ function addTransaction_hotel(method){
                     console.log("addToWishList: success");
                     updateWishListCount();
 
-                    var modal_img = "animation_addToWishList.html";
+                    var modal_img = "animation/animation_addToWishList.html";
                     insertPage("#modal_img", modal_img);
                     insertText("#modal_content", "已加入我的收藏");
 
@@ -189,7 +189,7 @@ function addTransaction_restaurant(method){
                     updateCartCount();
 
                     // modal
-                    var modal_img = "animation_addToCart.html";
+                    var modal_img = "animation/animation_addToCart.html";
                     insertPage("#modal_img", modal_img);
                     insertText("#modal_content", "已加入購物車");
 
@@ -226,7 +226,7 @@ function addTransaction_restaurant(method){
                     console.log("addToWishList: success");
                     updateWishListCount();
 
-                    var modal_img = "animation_addToWishList.html";
+                    var modal_img = "animation/animation_addToWishList.html";
                     insertPage("#modal_img", modal_img);
                     insertText("#modal_content", "已加入我的收藏");
 

@@ -2,6 +2,7 @@
 
 require __DIR__ . '/parts/config.php';
 
+
 $month = "";
 $time = "";
 $cat_id = "";
@@ -58,6 +59,22 @@ $event_id_list = [];
 foreach($events as $event){
     array_push($event_id_list, $event['id']);
 }
+// 抓圖片
+if (!empty($event_id_list)){
+    $sql = "SELECT * FROM `event_image` WHERE event_id in (".implode(",", $event_id_list).") ORDER BY num_order";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([]);
+    $result = $stmt->fetchAll();
+    $event_img = [];
+    foreach($result as $cover_img){
+        if (!array_key_exists($cover_img['event_id'], $event_img)){
+            $event_img[$cover_img['event_id']] = $cover_img['path'];
+        }
+    }
+}
+// print($event_img[$event['id']] ?? "" );
+
+
 
 
 
@@ -75,6 +92,9 @@ $sql = "SELECT * FROM `event_category`";
 
 $stmt = $pdo->query($sql);
 $event_category = $stmt->fetchAll();
+
+
+
 
 // 取得總筆數, 總頁數, 該頁的商品資料
 
@@ -144,104 +164,109 @@ $pageName = 'event';
     
     
 
-    <main>
-        <div class="container">
-            <div class="box row mt-5 mb-5 ">
-                <div class="col-lg-8 col-md-12 col-sm-12 row align-items-center ml-0 mr-0 ">
-                    <h3 class="box_desktop text-white t_shadow text-center rot-135" style="line-height: 200%;">
-                        置身於紫色森林，放下生活的束縛，<br>打開心靈的耳朵，傾聽大自然的聲音，<br>欣賞得天獨厚的湖光山色，體驗到豐富的生態資源～<br><br>
-                        薰衣草森林的探索與手作體驗，<br>以最初的心念，向旅人傳遞幸福，<br>尋回自己的夢想與勇氣，感受這座森林的紫色幸福！
-                    </h3>
-                    <h3 class="box_tablet text-white t_shadow text-center rot-135" style="line-height: 200%;">
-                        置身於紫色森林，放下生活的束縛，<br>打開心靈的耳朵，傾聽大自然的聲音，<br>欣賞得天獨厚的湖光山色，體驗到豐富的生態資源～<br><br>
-                        薰衣草森林的探索與手作體驗，<br>以最初的心念，向旅人傳遞幸福，<br>尋回自己的夢想與勇氣，感受這座森林的紫色幸福！
-                    </h3>
-                    <h3 class="box_cellphone text-white t_shadow text-center rot-135 p-4 mb-4" style="line-height: 200%;">
-                        置身於紫色森林，<br> 放下生活的束縛，<br>打開心靈的耳朵，<br> 傾聽大自然的聲音，<br>欣賞得天獨厚的湖光山色，<br>體驗到豐富的生態資源～<br><br>
-                        薰衣草森林的探索與手作體驗，<br>以最初的心念，<br>向旅人傳遞幸福，<br>尋回自己的夢想與勇氣，<br>感受這座森林的紫色幸福！
-                    </h3>
-                </div>
-                <div class="box_calendar col-lg-4 col-md-12 col-sm-12  mt-lg-0  mt-sm-5 mt-md-5">
-                    <div id="calendar" class=""></div>
-                </div>
+    
+    <div class="container">
+        <div class="box row mt-5 mb-5 ">
+            <div class="col-lg-8 col-md-12 col-sm-12 row align-items-center ml-0 mr-0 ">
+                <h3 class="box_desktop text-white t_shadow text-center rot-135" style="line-height: 200%;">
+                    置身於紫色森林，放下生活的束縛，<br>打開心靈的耳朵，傾聽大自然的聲音，<br>欣賞得天獨厚的湖光山色，體驗到豐富的生態資源～<br><br>
+                    薰衣草森林的探索與手作體驗，<br>以最初的心念，向旅人傳遞幸福，<br>尋回自己的夢想與勇氣，感受這座森林的紫色幸福！
+                </h3>
+                <h3 class="box_tablet text-white t_shadow text-center rot-135" style="line-height: 200%;">
+                    置身於紫色森林，放下生活的束縛，<br>打開心靈的耳朵，傾聽大自然的聲音，<br>欣賞得天獨厚的湖光山色，體驗到豐富的生態資源～<br><br>
+                    薰衣草森林的探索與手作體驗，<br>以最初的心念，向旅人傳遞幸福，<br>尋回自己的夢想與勇氣，感受這座森林的紫色幸福！
+                </h3>
+                <h3 class="box_cellphone text-white t_shadow text-center rot-135 p-4 mb-4" style="line-height: 200%;">
+                    置身於紫色森林，<br> 放下生活的束縛，<br>打開心靈的耳朵，<br> 傾聽大自然的聲音，<br>欣賞得天獨厚的湖光山色，<br>體驗到豐富的生態資源～<br><br>
+                    薰衣草森林的探索與手作體驗，<br>以最初的心念，<br>向旅人傳遞幸福，<br>尋回自己的夢想與勇氣，<br>感受這座森林的紫色幸福！
+                </h3>
+            </div>
+            <div class="box_calendar col-lg-4 col-md-12 col-sm-12  mt-lg-0  mt-sm-5 mt-md-5">
+                <div id="calendar" class=""></div>
             </div>
         </div>
-
-        <div class="container">
-            <div class="m-0 p-0 " id="event">
-                <form action="event.php" method="get">
-                <ul class="row list-unstyled p-2 m-0 justify-content-center align-items-center ">
-                        <li class=" ">
-                            <select name='cat_id'>
-                                <option value="">活動類別</option>
-                                <?php
-                                // foreach($event_category as $cat){
-                                //     print("<option value='".$cat['id']."'>".$cat['name']."</option>");
-                                // }
-                                ?>
-                                <?php foreach ($event_category as $cat) { ?>
-                                    <option value='<?= $cat['id'] ?>'><?= $cat['name'] ?></option>
-                                <?php } ?>
-                            </select>
-                        </li>
-                        <li class="">
-                            <select id="select_month" name="month">
-                                <option value="">月份</option>
-                                <option value=""></option>
-                                <option value=""></option>
-                                <option value=""></option>
-                            </select>
-                        </li>
-                        <li class=" ">
-                            <select name="time">
-                                <option value="">時段</option>
-                                <option value="10:00">10:00</option>
-                                <option value="12:00">12:00</option>
-                                <option value="14:00">14:00</option>
-                                <option value="16:00">16:00</option>
-                            </select>
-                        </li>
-                        <li class="2 bg-green">
-                            <select name="order">
-                                <option value="">排序</option>
-                                <option value="1" <?= $order == 1 ? "selected" : "" ?>>暢銷度由高至低</option>
-                                <option value="2" <?= $order == 2 ? "selected" : "" ?>>價錢由低至高</option>
-                                <option value="3" <?= $order == 3 ? "selected" : "" ?>>價錢由高至低</option>
-                            </select>
-                        </li>
-                        <li><button type="submit" class="custom-btn btn-4 m-0 p-0" style="width:3rem; ">送出</button></li>
+        <div class="m-0 p-0 " id="event">
+            <form action="event.php" method="get">
+            <ul class="row list-unstyled p-2 m-0 justify-content-center align-items-center ">
+                    <li class=" ">
+                        <select name='cat_id'>
+                            <option value="">活動類別</option>
+                            <?php
+                            // foreach($event_category as $cat){
+                            //     print("<option value='".$cat['id']."'>".$cat['name']."</option>");
+                            // }
+                            ?>
+                            <?php foreach ($event_category as $cat) { ?>
+                                <option value='<?= $cat['id'] ?>'><?= $cat['name'] ?></option>
+                            <?php } ?>
+                        </select>
+                    </li>
+                    <li class="">
+                        <select id="select_month" name="month">
+                            <option value="">月份</option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                        </select>
+                    </li>
+                    <li class=" ">
+                        <select name="time">
+                            <option value="">時段</option>
+                            <option value="10:00">10:00</option>
+                            <option value="12:00">12:00</option>
+                            <option value="14:00">14:00</option>
+                            <option value="16:00">16:00</option>
+                        </select>
+                    </li>
+                    <li class="2 bg-green">
+                        <select name="order">
+                            <option value="">排序</option>
+                            <option value="1" <?= $order == 1 ? "selected" : "" ?>>暢銷度由高至低</option>
+                            <option value="2" <?= $order == 2 ? "selected" : "" ?>>價錢由低至高</option>
+                            <option value="3" <?= $order == 3 ? "selected" : "" ?>>價錢由高至低</option>
+                        </select>
+                    </li>
+                    <li><button type="submit" class="custom-btn btn-4 m-0 p-0" style="width:3rem; ">送出</button></li>
 
 
-                    </ul>
-                </form>
-            </div>
+                </ul>
+            </form>
         </div>
 
-        <div class="container justify-content-center m-auto  row  text-secondary ">
-            <h2 class='text-center b-green rot-135 col-sm-12  p-2 m-0 event_name'></h2>
-            <div class="eventItem col-sm-12 justify-content-center row px-0 ">
-                <div class='col-lg-8  m-0 p-0'>
-                    <div class='p-0 m-0'><img id="event_img_cover" src='' alt=''> </div>
-                </div>
+        <div class="container  m-0  row  text-secondary">
+        <?php foreach ($events as $event) : ?>
 
-                <div class='col-lg-4  col-sm-12 row m-0 p-0 pop ' style="background-color: whitesmoke;">
-                    
-                        <div class='col-12 p-3 mt-0 ml-0 mr-0 'style="margin-bottom:60px">
-                                <p class="text-success">累積銷售數量： <span id="event_quantity"></span></p>
+            <div class="eventItem con_01 row  p-0 mb-5">
+                    <h2 class='text-center b-green rot-135 col-12 p-2 m-0' id="event_<?= $event['id']?>">
+                        <?= $event['name'] ?>
+                    </h2>
 
-                                <p>活動類別：<span style="font-size:1.2rem">
-                                    <span class="ec_name"></span>
-                                </p>
-                                <p>日期：
-                                    <span style="font-size:1.2rem" class="event_datetime"></span>
-                                </p>
-                                <p>尚有名額/總額：
-                                    <span style="font-size:1.2rem" class="event_available_quantity"></span> 人
-                                </p>
-                                <p>單價：<span class="event_price" class="c_pink_t" style="font-size:1.2rem"></span>
-                                </p>                                    
-                                <br>
-                                <div id="event_description">
+                    <div class='col-lg-8  m-0 p-0'>
+                    <img src='<?= WEB_ROOT."/".($event_img[$event['id']] ?? "") ?>' alt=''>
+                    </div>
+                    <div class='col-lg-4  row m-0 p-0 pop '  id="event_<?= $event['id'] ?>">
+                        <div>
+                        
+                            <div class='col-12 p-3 mt-0 ml-0 mr-0 'style="margin-bottom:60px">
+                                <div > 
+                                    <p class=" text-success">累積銷售數量： <?= $quantity_map[$event['name']] ?></p>
+
+                                    <p>活動類別：<span style="font-size:1.2rem">
+                                        <?= $event["ec_name"] ?></span>
+                                    </p>
+                                    <p>日期：
+                                        <span style="font-size:1.2rem"><?= $event["date"] . '&emsp;' . substr($event["time"], 0, 5) ?></span>
+                                    </p>
+                                    <p>尚有名額/總額：
+                                        <span style="font-size:1.2rem"><?= $event["limitNum"] - $event["quantity"]  ?>/<?= $event["limitNum"] ?></span> 人
+                                    </p>
+                                    <p>單價：<span class="c_pink_t" style="font-size:1.2rem">
+                                            <?= $event["price"]  ?>
+                                            </span>
+                                    </p>
+                                    <br>
+                                    <div>
+                                    </div>
                                     <!-- <span class="d-inline-block text-truncate" style="max-width: 150px;">
                                         <?php 
                                             $description = $event["description"]; 
@@ -256,31 +281,36 @@ $pageName = 'event';
                                             }
                                             echo $description;
                                         ?>
-                                        <a class='m-0 ' type="button" href="event_item.php?id=<?= $event['id'] ?>">更多資訊</a>
+                                         <a class='m-0 ' type="button" href="event_item.php?id=<?= $event['id'] ?>">更多資訊</a>
                                     </span> 
+                                   
+
                                 </div>
-                        </div>
-                        <div class='col-12 p-0 m-0 priceBar01'>
-                            <form class='' action='' method=''>
-                                <div class='d-flex c_pink justify-content-around pt-2 pb-2 pl-4 pr-4 '>
-                                    <div class='d-flex align-items-center'>
-                                        <label for='' class='m-0 p-0'>
-                                            <h4 class='m-0 pr-2'>參加人數</h4>
-                                        </label>
-                                        <input type='number' value='1' min='1' max="" name='quantity' id='event_quantity_input' style='width: 3rem; ' placeholder='1' class=''>
+                            </div>
+                            <div class='col-12 p-0 m-0 priceBar01'>
+
+                                <form class='' action='' method=''>
+                                    <div class='d-flex c_pink justify-content-around pt-2 pb-2 pl-4 pr-4 '>
+                                        <div class='d-flex align-items-center'>
+                                            <label for='' class='m-0 p-0'>
+                                                <h4 class='m-0 pr-2'>參加人數</h4>
+                                            </label>
+                                            <input type='number' value='1' min='1' max="<?= $event['limitNum'] - $event['quantity'] ?>" name='quantity' id='quantity' style='width: 3rem; ' placeholder='1' class=''>
+                                        </div>
+                                        <button class='btn add-to-cart m-0 ' type="button" data-toggle="modal" data-target="#addToCartAlert" onclick="tr_addTransaction('event', 'cart', '<?= $event['id'] ?>')"><i class='fas fa-cart-plus'></i></button>
+                                        <button class='btn add-to-wishList m-0 ' type="button"  data-toggle="modal" data-target="#addToWishListAlert" onclick="tr_addTransaction('event', 'wishList', '<?= $event['id'] ?>')" ><i class='fas fa-heart' ></i></button>
                                     </div>
-                                    <button class='btn add-to-cart m-0 ' type="button" data-toggle="modal" data-target="#addToCartAlert" onclick="tr_addTransaction('event', 'cart', '<?= $_GET['id'] ?>')"><i class='fas fa-cart-plus'></i></button>
-                                    <button class='btn add-to-wishList m-0 ' type="button"  data-toggle="modal" data-target="#addToWishListAlert" onclick="tr_addTransaction('event', 'wishList', '<?= $_GET['id'] ?>')" ><i class='fas fa-heart' ></i></button>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
+
+
                         </div>
                     </div>
-
             </div>
+            <?php endforeach; ?>
 
         </div>
-
-    </main>
+    </div>
 
     <?php include __DIR__ . '/parts/scripts.php'; ?>
 
@@ -732,117 +762,6 @@ $pageName = 'event';
         }
     </script>
     <script>
-        $(document).ready(function() {
-         $(".c_pink_t").each(function(ind, elem){
-            $(elem).text(dallorCommas($(elem).text()) + "元");
-        });
-        scroll();
-        console.log("test");
-        $.post('api/event-api.php', {
-            action: 'read',
-            id: <?= $_GET['id'] ?>
-        }, function(data){
-            console.log('read');
-            console.log(data);
-            list = [
-                {
-                    selector: ".event_name",
-                    text: data['name'],
-                },
-                {
-                    selector: "#event_img_cover",
-                    attr: {
-                        src: "<?= WEB_ROOT."/" ?>" + data['img'][0]['path']
-                    }
-                },
-                {
-                    selector: "#event_quantity",
-                    text: data['quantity_map'][data['name']],
-                },
-                {
-                    selector: ".event_datetime",
-                    text: `${data['date']} ${data['time'].substr(0, 5)}`,
-                },
-                {
-                    selector: ".event_available_quantity",
-                    text:`${data['limitNum'] - data['quantity']}/${data['limitNum']}`,
-                },
-                {
-                    selector: ".event_price",
-                    text: data['price'],
-                },
-                {
-                    selector: "#event_quantity_input",
-                    attr: {
-                        max: data['limitNum'] - data['quantity'],
-                    },
-                },
- 
-                {
-                    selector: ".ec_name",
-                    text: data['ec_name'],
-                },
-                {
-                    selector: "#event_location",
-                    text: data['location'],
-                },
-                {
-                    selector: "#event_limitNum",
-                    text: data['limitNum'],
-                },
-                {
-                    selector: "#event_content",
-                    text: data['content'],
-                },
-                {
-                    selector: "#event_description",
-                    text: data['description'],
-                },
-
-            ]
-            
-            // map
-            // {
-            //     selector: "#event_name",
-            //     attr: {
-            //         text: data['name']
-            //     }
-            // }
-            list.forEach(function(m){
-                // attr
-                // attr: {
-                //         src: <?= WEB_ROOT."/" ?>data['img'][0]['path']
-                //     }
-                if ('text' in m){
-                    $(m['selector']).text(m['text']);
-                }
-                if ('value' in m){
-                    $(m['selector']).value(m['value']);
-                }
-                for (attr_key in m['attr']){
-                    // fill_key = 'src'
-                    // m['attr']['src']
-                    $(m['selector']).attr(attr_key, m['attr'][attr_key]);
-                }
-            });
-
-            data['img'].forEach(function(data_img){
-                var output = `<a href='<?= WEB_ROOT."/" ?>${data_img['path']}' data-fancybox='F_box1' data-caption=' ${data['name']}'>
-                        <img src='<?= WEB_ROOT."/" ?>${data_img['path']}' alt=''>
-                    </a>`
-                $(".fancybox").append(output);
-            })
-            
-            
-        }, 'json').fail(function(data){
-            console.log('error');
-            console.log(data);
-        })
-    });
-
-    </script>
-
-    <script>
     $(document).ready(function() {
         if (location.search) {
             $('html, body').scrollTop(910);
@@ -853,5 +772,4 @@ $pageName = 'event';
         scroll();
     });
     </script>
-
     <?php include __DIR__ . '/parts/html-foot.php'; ?>

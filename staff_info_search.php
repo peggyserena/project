@@ -22,11 +22,7 @@ exit;
 // foreach($result as $role_cat){
 //     $staff_role_category[$role_cat['id']] = $role_cat['position'];
 // }
-// 陣列
-// print_r, var_dump
 
-// 字串
-// 都可以 print_r, var_dump, echo, print
 
 
 // $sql = "SELECT staff.*, src.position as position FROM staff JOIN `staff_role_category` as src ON src.id = id WHERE staff_id='" . $_SESSION['staff']['staff_id']."'";
@@ -80,9 +76,10 @@ exit;
                         <li class="">
                             <select id="gender" name="gender">
                                 <option disabled hidden selected value="">性別</option>
-                                <option value="male">男性</option>
-                                <option value="female">女性</option>
-                                <option value="none">不填</option>
+                                <option value="全部">全部</option>
+                                <option value="男">男性</option>
+                                <option value="女">女性</option>
+                                <option value="無">不填</option>
                             </select>
                         </li>
 
@@ -90,7 +87,8 @@ exit;
                         <li class="">
                             <select id="select_month" name="birthmonth" class="text-center">
                                 <option disabled hidden selected >生日月份</option>
-                                <option value="" class="text-center"></option>
+                                <option value="全部">全部</option>
+                                <option value=""></option>
                                 <option value=""></option>
                                 <option value=""></option>
                                 <option value=""></option>
@@ -107,6 +105,7 @@ exit;
                         <li class="">
                             <select id="age" name="age">
                                 <option value="" disabled hidden selected>年齡區間</option>
+                                <option value="全部">全部</option>
                                 <option value="18-22">18-20歲</option>
                                 <option value="23-30">21-30歲</option>
                                 <option value="31-40">31-40歲</option>
@@ -153,13 +152,13 @@ exit;
 
 <script>
   function staffIntoSearch(){
-    $.post('staff-api.php', {
+    $.post('<?= WEB_API ?>/staff-api.php', {
         action: 'readAll',
         staff_id: $("#staff_id").val(),
         fullname: $("#fullname").val(),
         mobile: $("#mobile").val(),
         identityNum: $("#identityNum").val(),
-        // select_month: $("#select_month").val(),
+        birthmonth: $("#select_month").val(),
         age: $("#age").val(),
     },function(data) {
         console.log(data);
@@ -197,7 +196,7 @@ exit;
     var month = 1;
     var selectedMonth = "<?= $_GET['month'] ?? "" ?>";
     $("#select_month option").each(function(ind, elem) {
-        if (ind > 0) {
+        if (ind > 1) {
             elem.text = month;
             elem.value = month;
             month++;

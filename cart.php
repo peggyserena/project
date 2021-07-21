@@ -4,9 +4,7 @@
 $title = '購物車';
 $pageName = 'cart';
 if (isset($_SESSION['user'])) {
-    $sql = "SELECT * FROM members WHERE id=" . $_SESSION['user']['id'];
-
-    $r = $pdo->query($sql)->fetch();
+    $user = $_SESSION['user'];
 }
 
 ?>
@@ -355,23 +353,23 @@ if (isset($_SESSION['user'])) {
         </div>
         <div class="form-container buyer1">
             <?php
-            if (isset($r)) {
+            if (isset($user)) {
             ?>
                 <form name="form1" class="row card-body " method="post">
                     <div class="form-group col-lg-6 col-sm-12">
-                        <label for="fullname">姓名： <span><?= $r['fullname'] ?></span>
+                        <label for="fullname">姓名： <span><?= $user['fullname'] ?></span>
                     </div>
                     <div class="form-group col-lg-6 col-sm-12">
-                        <label for="mobile">連絡電話： </label><span><?= $r['mobile'] ?></span>
+                        <label for="mobile">連絡電話： </label><span><?= $user['mobile'] ?></span>
                     </div>
                     <div class="form-group col-lg-6 col-sm-12">
-                        <label for="email">email： </label><span><?= $r['email'] ?></span>
+                        <label for="email">email： </label><span><?= $user['email'] ?></span>
                     </div>
                     <div class="form-group col-lg-6 col-sm-12">
-                        <label for="email_2nd">備用eamil： </label><span><?= $r['email_2nd'] ?></span>
+                        <label for="email_2nd">備用eamil： </label><span><?= $user['email_2nd'] ?></span>
                     </div>
                     <div class="form-group col-sm-12">
-                        <label for="zipcode">地址： </label><span><?= $r['zipcode'] ?></span><span><?= $r['county'] ?></span><span><?= $r['district'] ?></span><span><?= htmlentities($r['address']) ?></span>
+                        <label for="zipcode">地址： </label><span><?= $user['zipcode'] ?></span><span><?= $user['county'] ?></span><span><?= $user['district'] ?></span><span><?= htmlentities($user['address']) ?></span>
                     </div>
                     <div class="form-group col-sm-12 ">
                       <textarea style="width:100%; " type="text" name="notes" autocomplete="on" placeholder="需求備註"></textarea>
@@ -573,7 +571,7 @@ if (isset($_SESSION['user'])) {
     const deleteItem = function(event, type, key) {
         let t = $(event.currentTarget);
         console.log('event:', event);
-        $.get('cart-api.php', {
+        $.get('<?= WEB_API ?>/cart-api.php', {
             action: 'delete',
             type: type,
             key: key
@@ -638,7 +636,7 @@ if (isset($_SESSION['user'])) {
     const changeQty = function(event, type, key, qty) {
         const el = $(event.currentTarget);
         console.log([type, key, qty]);
-        $.get('cart-api.php', {
+        $.get('<?= WEB_API ?>/cart-api.php', {
             action: 'update',
             type: type,
             key: key,
@@ -659,7 +657,7 @@ if (isset($_SESSION['user'])) {
         const el = $(event.currentTarget);
         console.log("changePeopleNum");
         console.log([type, key, peopleNum]);
-        $.get('cart-api.php', {
+        $.get('<?= WEB_API ?>/cart-api.php', {
             action: 'update',
             type: type,
             key: key,
@@ -678,7 +676,7 @@ if (isset($_SESSION['user'])) {
     };
 
     const checkOutCart = function() {
-        $.post('order-api.php', {
+        $.post('<?= WEB_API ?>/order-api.php', {
                 action: 'add'
             }, function(data) {
                 // location.reload();  // 刷頁面
@@ -765,7 +763,7 @@ if (isset($_SESSION['user'])) {
     });
 
     function isCompletedUserData() {
-        $.post('member-api.php', {
+        $.post('<?= WEB_API ?>/member-api.php', {
             'action': 'isCompletedUserData',
         }, function(data) {
 
@@ -804,7 +802,7 @@ if (isset($_SESSION['user'])) {
 </script>
 <script>
     function updateDiscountTip(){
-        $.get('cart-api.php', {
+        $.get('<?= WEB_API ?>/cart-api.php', {
             action: 'read',
             type: 'cart'
         }, function(data) {

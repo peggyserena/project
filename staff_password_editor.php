@@ -99,19 +99,19 @@ $pageName ='staff_password_editor';
 
         if (isPass) {
             $.post(
-                'staff-api.php',
+                '<?= WEB_API?>/staff-api.php',
                 $(document.form1).serialize(),
                 function(data) {
                     console.log(data);
                     if (data.success) {
                         modal_init();
-                        insertPage("#modal_img", "animation_success.html");
+                        insertPage("#modal_img", "animation/animation_success.html");
                         insertText("#modal_content", "密碼修改成功");
                         $("#modal_alert").modal("show");
                         setTimeout(function(){window.history.back();}, 2000);
                     } else {
                         modal_init();
-                        insertPage("#modal_img", "animation_error.html");
+                        insertPage("#modal_img", "animation/animation_error.html");
                         insertText("#modal_content", "資料傳輸失敗");
                         $("#modal_alert").modal("show");
                         setTimeout(function(){window.history.back();}, 2000);

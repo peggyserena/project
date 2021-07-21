@@ -173,7 +173,7 @@ hr {
                             <input type="hidden" id="img_order" name="img_order">
                         </div>
                         <div class="form-group" id="preview">
-                        <ul id="sortable" class="row">
+                        <ul id="sortable" class="row  list-unstyled">
                         </ul>
                         </div>
 
@@ -236,7 +236,7 @@ hr {
     $("#buyer1").attr("checked", '');
 </script>
 <script>
-  $.post('helpdesk-api.php', {
+  $.post('<?= WEB_API ?>/helpdesk-api.php', {
     'type': 'readCat',
   }, function(data){
     var output = 
@@ -252,7 +252,7 @@ hr {
   }, 'json').fail(function(data){
   })
 
-  $.post('helpdesk-api.php', {
+  $.post('<?= WEB_API ?>/helpdesk-api.php', {
     'type': 'readAll',
   }, function(data){
     var output = 
@@ -281,7 +281,7 @@ hr {
     $("#img_order").val(JSON.stringify(img_order));
 
     $.ajax({
-        url: 'helpdesk-api.php',
+        url: '<?= WEB_API ?>/helpdesk-api.php',
         data: new FormData($("#myForm3")[0]),
         cache: false,
         contentType: false,
@@ -291,7 +291,7 @@ hr {
         success: function(data){
           console.log(data);
           modal_init();
-          insertPage("#modal_img", "animation_mail.html");
+          insertPage("#modal_img", "animation/animation_mail.html");
           insertText("#modal_content", "感謝您的來信！我們會盡速回覆您！");
           $("#modal_alert").modal("show");
           setTimeout(function(){location.href = "member.php?tab=helpdesk"}, 5000);
@@ -299,7 +299,7 @@ hr {
         error: function(data){
           console.log(data);
           modal_init();
-          insertPage("#modal_img", "animation_error.html");
+          insertPage("#modal_img", "animation/animation_error.html");
           insertText("#modal_content", "資料傳輸失敗，請稍後再試～");
           $("#modal_alert").modal("show");
           setTimeout(function(){location.href = "helpdesk.php"}, 2000);

@@ -1,4 +1,4 @@
-<?php include __DIR__ . '/parts/config.php';
+<?php include __DIR__ . '/../parts/config.php';
 
 $type = isset($_POST['type']) ? $_POST['type'] : ''; // 操作類型
 $startDate = isset($_POST['startDate']) ? $_POST['startDate'] : ''; // 開始日期

@@ -23,60 +23,60 @@ $pageName = 'staff_event_create';
             <input type="hidden" name="type" value="add"/>
             <div class="form-group">
                 <label for="cat_id">分類</label>
-                <select type="text" class="form-control" id="cat_id" name="cat_id" autofocus required></select>
+                <select type="text" class="form-control" id="cat_id" name="cat_id"  required></select>
             </div>
             <div class="form-group">
                 <label for="name">活動名稱</label>
-                <input type="text" class="form-control" id="name" name="name" autofocus required>
+                <input type="text" class="form-control" id="name" name="name"  required>
             </div>
             <div class="form-group">
                 <label for="date">活動日期</label>
-                <input type="date" class="form-control" id="date" name="date" autofocus required>
+                <input type="date" class="form-control" id="date" name="date"  required>
             </div>
             <div class="form-group">
                 <label for="time">活動時間</label>
-                <input type="time" class="form-control" id="time" name="time" autofocus required>
+                <input type="time" class="form-control" id="time" name="time"  required>
             </div>
             <div class="form-group">
                 <label for="price">金額</label>
-                <input type="number" class="form-control" id="price" name="price" min=0 autofocus required>
+                <input type="number" class="form-control" id="price" name="price" min=0  required>
             </div>
             <div class="form-group">
                 <label for="limitNum">開放人數</label>
-                <input type="number" class="form-control" id="limitNum" name="limitNum" min=1 autofocus required>
+                <input type="number" class="form-control" id="limitNum" name="limitNum" min=1  required>
             </div>
             <div class="form-group">
                 <label for="description">活動簡介</label>
-                <textarea type="text" class="form-control" id="description" name="description" autofocus required></textarea>
+                <textarea type="text" class="form-control" id="description" name="description"  required></textarea>
             </div>
             <div class="form-group">
                 <label for="des_title">詳情標題</label>
-                <input type="text" class="form-control" id="title" name="title" autofocus required>
+                <input type="text" class="form-control" id="title" name="title"  required>
             </div>
             <div class="form-group">
                 <label for="age">年齡/參加者條件</label>
-                <textarea type="text" class="form-control" id="age" name="age" autofocus required></textarea>
+                <textarea type="text" class="form-control" id="age" name="age"  required></textarea>
             </div>
             <div class="form-group">
                 <label for="location">集合地點</label>
-                <textarea type="text" class="form-control" id="location" name="location" autofocus required></textarea>
+                <textarea type="text" class="form-control" id="location" name="location"  required></textarea>
             </div>
             <div class="form-group">
                 <label for="content">活動內容</label>
-                <textarea type="text" class="form-control" id="content" name="content" autofocus required></textarea>
+                <textarea type="text" class="form-control" id="content" name="content"  required></textarea>
             </div>
             <div class="form-group">
                 <label for="info">活動任務</label>
-                <textarea type="text" class="form-control" id="info" name="info" autofocus required></textarea>
+                <textarea type="text" class="form-control" id="info" name="info"  required></textarea>
             </div>
             <div class="form-group">
                 <label for="notice">注意事項</label>
-                <textarea type="text" class="form-control" id="notice" name="notice" autofocus required></textarea>
+                <textarea type="text" class="form-control" id="notice" name="notice"  required></textarea>
             </div>
 
             <div class="form-group">
                 <label for="video">影片網址</label>
-                <input type="text" class="form-control" id="video" name="video" autofocus required>
+                <input type="text" class="form-control" id="video" name="video"  required>
             </div>
             <div class="form-group">
                 <label for="video_img">影片縮圖</label>
@@ -90,7 +90,7 @@ $pageName = 'staff_event_create';
                 <input type="hidden" id="img_order" name="img_order">
             </div>
             <div class="form-group" id="preview">
-              <ul id="sortable" class="row">
+              <ul id="sortable" class="row  list-unstyled">
               </ul>
             </div>
             <div class="button m-4 text-center"><button type="submit" class="custom-btn btn-4 t_shadow ">送出</button></div>
@@ -140,7 +140,7 @@ $("#img")
 </script>
 
 <script>
-  $.post('event-api.php', {
+  $.post('<?= WEB_API ?>/event-api.php', {
     'type': 'readCat',
   }, function(data){
     var output = `<option value="" disabled hidden selected>請選擇</option>`;
@@ -160,7 +160,7 @@ $("#img")
     })
     $("#img_order").val(JSON.stringify(img_order));
     $.ajax({
-        url: 'event-api.php',
+        url: '<?= WEB_API ?>/event-api.php',
         data: new FormData($("#myForm")[0]),
         cache: false,
         contentType: false,
@@ -170,7 +170,7 @@ $("#img")
         success: function(data){
           console.log(data);
           modal_init();
-          insertPage("#modal_img", "animation_success.html");
+          insertPage("#modal_img", "animation/animation_success.html");
           insertText("#modal_content", "森林體驗新增成功!");
           $("#modal_alert").modal("show");
           setTimeout(function(){location.href = "staff_event_search.php"}, 2000);
@@ -179,7 +179,7 @@ $("#img")
         error: function(data){
           console.log(data);
           modal_init();
-          insertPage("#modal_img", "animation_error.html");
+          insertPage("#modal_img", "animation/animation_error.html");
           insertText("#modal_content", "資料傳輸失敗");
           $("#modal_alert").modal("show");
           setTimeout(function(){location.href = "staff_event_search.php"}, 2000);

@@ -130,7 +130,7 @@ $pageName = 'login';
 
         if (isPass) {
             $.post(
-                'login-api.php',
+                '<?= WEB_API?>/login-api.php',
                 $(document.form1).serialize() + "&action=guest",
                 function(data) {
                     if (data.success) {
@@ -138,14 +138,14 @@ $pageName = 'login';
                         // swal('Title...', 'Hello World!', 'success');
                         // Alert Modal Type
                         modal_init();
-                        insertPage("#modal_img", "animation_success.html");
+                        insertPage("#modal_img", "animation/animation_success.html");
                         insertText("#modal_content", "歡迎您登入薰衣草森林會員～");
                         $("#modal_alert").modal("show");
                         setTimeout(function(){window.history.back();}, 2000);
                         // location.href = './index.php';
                     } else {
                         modal_init();
-                        insertPage("#modal_img", "animation_error.html");
+                        insertPage("#modal_img", "animation/animation_error.html");
                         insertText("#modal_content", "登入失敗，請確認帳號和密碼～");
                         $("#modal_alert").modal("show");
                         setTimeout(function(){window.history.back();}, 2000);

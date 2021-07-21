@@ -16,12 +16,14 @@ h4 {
   background-color: whitesmoke;
 }
 
-.form-group img {
-  width: 120px;
+.form-group img,
+#slider img {
+  max-width: 120px;
   height: auto;
   object-fit: cover;
   margin: 0.5rem 0.25rem;
 }
+
 .btn-4 {
   box-shadow: none;
 }

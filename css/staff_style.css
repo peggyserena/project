@@ -7,3 +7,7 @@ body {
 .con_01 {
   background-color: whitesmoke;
 }
+select{
+  height: 30px;
+}
+/*
