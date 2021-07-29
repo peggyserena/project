@@ -12,3 +12,106 @@ $1xx
 
 // 字串
 // 都可以 print_r, var_dump, echo, print
+
+// js foreach
+var arr = [1,2,3];
+arr.foreach(function(elem, ind){
+	console.log(elem, ind); 
+});
+// 結果
+1 0
+2 1
+3 2
+
+// js for...in
+// 適用物件的類型
+var arr = [1,2,3];
+for(key in arr){
+	console.log(arr[key], key);
+}
+// 結果
+1 0
+2 1
+3 2
+
+// jQuery each
+var arr = [1,2,3];
+$(arr).each(function(ind, elem){
+	console.log(elem, ind); 
+});
+// 結果
+1 0
+2 1
+3 2
+
+// php for
+$arr = [1,2,3];
+for($i = 0; $i < count($arr); $i++){
+	print($arr[$i])
+}
+// 結果
+1 0
+2 1
+3 2
+
+// php for...endfor
+$arr = [1,2,3];
+for($i = 0; $i < count($arr); $i++):
+	print($arr[$i])
+endfor;
+// 結果
+1 0
+2 1
+3 2
+
+// php foreach
+$arr = [1,2,3];
+
+// js 迴圈補充網址
+// https://codertw.com/ios/20743/
+foreach($arr as $key => $a){
+	print($a, $key)
+}
+// 結果
+1 0
+2 1
+3 2
+
+// php foreach...endforeach
+$arr = [1,2,3];
+foreach($arr as $key => $a):
+	print($a, $key)
+endforeach;
+// 結果
+1 0
+2 1
+3 2
+
+
+// php foreach
+$arr = [
+  [1,2,3],
+  [1,2,3],
+  [1,2,3]
+];
+foreach($arr as $key => $a){
+   print_r($a);
+   foreach($a as $key2 => $a2){
+	print($a2);
+   }
+}
+// 結果
+[1,2,3]
+1
+2
+3
+[1,2,3]
+1
+2
+3
+[1,2,3]
+1
+2
+3
+
+

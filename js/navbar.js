@@ -12,7 +12,7 @@ function showCartCount(cart) {
 
 
 function updateCartCount() {
-    $.get('<?= WEB_API ?>/cart-api.php', {
+    $.get(`${WEB_API}/cart-api.php`, {
         type: "cart",
         action: "read",
     },function(data) {
@@ -28,7 +28,7 @@ function showWishListCount(wishList) {
     $('.wishList-count').text(wishList.length);
 }
 function updateWishListCount() {
-    $.post('<?= WEB_API ?>/wishList-api.php', {
+    $.post(`${WEB_API}//wishList-api.php`, {
         action: 'read'
     },function(data) {
         console.log("wishList");

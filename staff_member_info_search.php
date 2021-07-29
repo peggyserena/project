@@ -56,7 +56,7 @@ exit;
                         <li class="">
                             <select id="select_month" name="birthmonth">
                                 <option disabled hidden selected value="">生日月份</option>
-                                <option value="全部">全部</option>
+                                <option value="">全部</option>
                                 <option value=""></option>
                                 <option value=""></option>
                                 <option value=""></option>
@@ -74,7 +74,7 @@ exit;
                         <li class="">
                             <select id="gender" name="gender">
                                 <option disabled hidden selected value="">性別</option>
-                                <option value="全部">全部</option>
+                                <option value="">全部</option>
                                 <option value="男">男性</option>
                                 <option value="女">女性</option>
                                 <option value="無">不填</option>
@@ -83,7 +83,7 @@ exit;
                         <li class="">
                             <select id="age" name="age">
                                 <option value="" disabled hidden selected>年齡區間</option>
-                                <option value="全部">全部</option>
+                                <option value="">全部</option>
                                 <option value="0-6">0-6歲</option>
                                 <option value="6-12">6-12歲</option>
                                 <option value="12-15">12-15歲</option>

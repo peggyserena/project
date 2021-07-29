@@ -99,10 +99,12 @@ $pageName ='staff_login';
     }
 
     if (isPass) {
+      console.log("test1");
       $.post(
         '<?= WEB_API?>/login-api.php',
         $(document.form1).serialize(),
         function (data) {
+          console.log(data);
           if (data.success) {
             // alert('資料修改成功');
             // swal('Title...', 'Hello World!', 'success');
@@ -123,7 +125,9 @@ $pageName ='staff_login';
           }
         },
         'json'
-      )
+      ).fail(function(e){
+        console.log(e);
+      })
     }
   }
 </script>

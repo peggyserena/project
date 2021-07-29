@@ -75,7 +75,7 @@ $pageName = 'staff_event_editor';
 
             <div class="form-group">
                 <label for="video">影片網址</label>
-                <input type="text" class="form-control" id="video" name="video"  required >
+                <input type="text" class="form-control" id="video" name="video"   >
             </div>
             <div class="form-group">
                 <label for="video_img">影片縮圖</label>

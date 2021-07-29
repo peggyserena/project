@@ -200,9 +200,9 @@ h3 {
 }
 
 .big .radioArea {
-  position: absolute;
-  width: 960px;
-  height: 1073.63px;
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 
 .grid-container img {

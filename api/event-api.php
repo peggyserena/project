@@ -1,6 +1,9 @@
-<?php include __DIR__ . '/../parts/config.php';
+<?php 
+include __DIR__ . '/../parts/config.php';
+include __DIR__ . '/../parts/imgHandler.php';
 
 $action = isset($_POST['action']) ? $_POST['action'] : $_POST['type']; // 操作類型
+$result = ["error"];
 
 switch ($action) {
     case 'readCat':
@@ -9,33 +12,18 @@ switch ($action) {
         $stmt->execute([]);
         $result = $stmt->fetchAll();
         break;
+    case 'readAll':
+        // 抓取活動參與人數與類別中文名稱
+        $result['data'] = read();
+        $result['img'] = readImage();
+        $result['quantity_map'] = readQuantityList();
+        break;
     case 'read':
         $id = $_POST['id'];
         // 抓取活動參與人數與類別中文名稱
-        $sql = "SELECT `e`.*, ec.name as `ec_name`, SUM(`oe`.quantity) as quantity FROM `event` as e 
-                JOIN `event_category` as ec ON `cat_id` = ec.`id` 
-                LEFT JOIN `order_event` as oe ON e.id = oe.event_id 
-                WHERE e.id = ? 
-                group by e.id";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([$id]);
-        $result = $stmt->fetch();
-      
-        // 抓圖片
-        $sql = "SELECT * FROM `event_image` WHERE event_id = ? ORDER BY num_order";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([$id]);
-        $result['img'] = $stmt->fetchAll();
-        
-        // 活動歷年總數
-        $sql = "SELECT e.name, IFNULL(sum(`quantity`), 0) as quantity FROM `event` as e LEFT JOIN `order_event` as oe ON e.id = oe.event_id WHERE e.id = ? GROUP BY `name`";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([$id]);
-        $quantity_list = $stmt->fetchAll();
-        $result['quantity_map'] = [];
-        foreach ($quantity_list as $value) {
-            $result['quantity_map'][$value['name']] = $value['quantity'];
-        }
+        $result = read($id);
+        $result['img'] = readImage($id);
+        $result['quantity_map'] = readQuantityList($id);
         break;
     case 'add':
         // insert video image
@@ -151,134 +139,158 @@ switch ($action) {
         
         $result = ["success"];
         break;
-}
-
-function uploadImgs($img, $target_dir){
-    $name_list = [];
-    for ($i = 0; $i < count($img["name"]); $i++){
-        $filename = md5(uniqid());
-        $ext = explode(".", $img["name"][$i])[1];
-        $target_file = $target_dir . basename("$filename.$ext");
-        $uploadOk = 1;
-        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-    
-        // Check if image file is a actual image or fake image
-        if(isset($_POST["submit"])) {
-        $check = getimagesize($img["tmp_name"][$i]);
-        if($check !== false) {
-            // echo "File is an image - " . $check["mime"] . ".";
-            $uploadOk = 1;
-        } else {
-            // echo "File is not an image.";
-            $uploadOk = 0;
-        }
-        }
-    
-        // Check if file already exists
-        if (file_exists($target_file)) {
-        // echo "Sorry, file already exists.";
-        $uploadOk = 0;
-        }
-    
-        // Check file size (bytes)
-        if ($img["size"][$i] > 2000000) {
-        // echo "Sorry, your file is too large.";
-        $uploadOk = 0;
-        }
-    
-        // Allow certain file formats
-        if($imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "jpg") {
-        // echo "Sorry, only JPEG, PNG files are allowed.";
-        $uploadOk = 0;
-        }
-    
-        // Check if $uploadOk is set to 0 by an error
-        if ($uploadOk == 0) {
-        // echo "Sorry, your file was not uploaded.";
-        // if everything is ok, try to upload file
-        } else {
-            if (move_uploaded_file($img["tmp_name"][$i], $target_file)) {
-                array_push($name_list, $target_file);
-                // echo "The file ". htmlspecialchars( basename( $img["name"][$i])). " has been uploaded.";
-            } else {
-                // echo "Sorry, there was an error uploading your file.";
+    case "delete":
+        $id = $_POST['id'] ?? 0;
+        if ($id > 0){
+            $sql = "SELECT COUNT(*) as `count` FROM `order_event` WHERE `event_id` = ?";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([$id]);
+            $result = $stmt->fetch();
+            if ($result['count'] === "0"){
+                $sql = "DELETE FROM `event` WHERE `id` = ?";
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute([$id]);
+                $result = ["success"];
+            }else{
+                $result = ["message" => "已有交易紀錄，請勿刪除", $result['count']];
             }
         }
-    }
-    return $name_list;
+        break;
 }
-function uploadImg($img, $target_dir){
-    $name = "";
-    $filename = md5(uniqid());
-    $ext = explode(".", $img["name"])[1];
-    $target_file = $target_dir . basename("$filename.$ext");
-    $uploadOk = 1;
-    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
-    // Check if image file is a actual image or fake image
-    if(isset($_POST["submit"])) {
-    $check = getimagesize($img["tmp_name"]);
-    if($check !== false) {
-        // echo "File is an image - " . $check["mime"] . ".";
-        $uploadOk = 1;
-    } else {
-        // echo "File is not an image.";
-        $uploadOk = 0;
-    }
-    }
 
-    // Check if file already exists
-    if (file_exists($target_file)) {
-    // echo "Sorry, file already exists.";
-    $uploadOk = 0;
+function readQuantityList($id = null){
+    global $pdo;
+    // 活動歷年總數
+    if (isset($id)){
+        // read
+        $sql = "SELECT e.name, IFNULL(sum(`quantity`), 0) as quantity FROM `event` as e LEFT JOIN `order_event` as oe ON e.id = oe.event_id WHERE e.id = ? GROUP BY `name`";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$id]);
+    }else{
+        // readAll
+        $sql = "SELECT e.name, IFNULL(sum(`quantity`), 0) as quantity FROM `event` as e LEFT JOIN `order_event` as oe ON e.id = oe.event_id GROUP BY `name`";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
     }
-
-    // Check file size (bytes)
-    if ($img["size"] > 2000000) {
-    // echo "Sorry, your file is too large.";
-    $uploadOk = 0;
+    $quantity_list = $stmt->fetchAll();
+    $result = [];
+    foreach ($quantity_list as $value) {
+        $result[$value['name']] = $value['quantity'];
     }
-
-    // Allow certain file formats
-    if($imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "jpg") {
-    // echo "Sorry, only JPEG, PNG files are allowed.";
-    $uploadOk = 0;
-    }
-
-    // Check if $uploadOk is set to 0 by an error
-    if ($uploadOk == 0) {
-    // echo "Sorry, your file was not uploaded.";
-    // if everything is ok, try to upload file
-    } else {
-        if (move_uploaded_file($img["tmp_name"], $target_file)) {
-            $name = $target_file;
-            // echo "The file ". htmlspecialchars( basename( $img["name"])). " has been uploaded.";
-        } else {
-            // echo "Sorry, there was an error uploading your file.";
+    return $result;
+}
+function readImage($id = null){
+    global $pdo;
+    // 抓圖片
+    if (isset($id)){
+        // read
+        $sql = "SELECT * FROM `event_image` WHERE event_id = ? ORDER BY num_order";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$id]);
+        $result = $stmt->fetchAll();
+    }else{
+        // readAll
+        $sql = "SELECT * FROM `event_image` ORDER BY num_order";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+        $image_list = $stmt->fetchAll();
+        $result = [];
+        foreach ($image_list as $value) {
+            if (!array_key_exists($value['event_id'], $result)){
+                $result[$value['event_id']] = [];
+            }
+            array_push($result[$value['event_id']], $value);
         }
     }
-    return $name;
+    return $result;
 }
-
-function deleteImg($img){
-    $target_file = $img;
-    $uploadOk = 1;
-    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-    if (!file_exists($target_file)) {
-        // echo "Sorry, file already exists.";
-        $uploadOk = 0;
-    }
-    // Allow certain file formats
-    if($imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "jpg") {
-        // echo "Sorry, only JPEG, PNG files are allowed.";
-        $uploadOk = 0;
-    }
-    if ($uploadOk == 0){
-
+function read($id = null){
+    global $pdo;
+    if (isset($id)){
+        // read
+        $sql = "SELECT `e`.*, ec.name as `ec_name`, SUM(`oe`.quantity) as quantity FROM `event` as e 
+                JOIN `event_category` as ec ON `cat_id` = ec.`id` 
+                LEFT JOIN `order_event` as oe ON e.id = oe.event_id 
+                WHERE e.id = ? 
+                group by e.id";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$id]);
+        $result = $stmt->fetch();
     }else{
-        unlink($img);
+        // readAll
+        $date = date("Y-m-d");
+        $year = $_POST['year'] ?? "";
+        $month = $_POST['month'] ?? "";
+        $time = $_POST['time'] ?? "";
+        $cat_id = $_POST['cat_id'] ?? "";
+        $order = $_POST['order'] ?? "";
+        // $start_time = "00:00";
+        // $end_time = "23:59";
+        
+        // if (isset($_POST['time'])){
+        //     $time = explode("-", $_POST['time']);
+        //     $start_time = $time[0] ?? $start_time;
+        //     $end_time = $time[1] ?? $end_time;
+        // }
+        [$year, $month, $time, $cat_id] = replaceAllToEmpty([$year, $month, $time, $cat_id]);
+        $start_time = "00:00";
+        $end_time = "23:59";
+        if ($time !== ""){
+            $time = explode("-", $_POST['time']);
+            $start_time =  $time[0] ?? $start_time;
+            $end_time = $time[1] ?? $end_time;
+        }
+
+        
+
+        $sql = "SELECT `e`.*, ec.name as `ec_name`, SUM(`oe`.quantity) as quantity FROM `event` as e";
+        $sql_condition = [];
+        if ($year != "") {
+            array_push($sql_condition, "YEAR(`date`) = $year");
+        }
+        if ($month != "") {
+            array_push($sql_condition, "MONTH(`date`) = $month");
+        }
+        if ($time != "") {
+            array_push($sql_condition, "`time` BETWEEN '$start_time' AND '$end_time'");
+        }
+        if ($cat_id != "") {
+            array_push($sql_condition, "`cat_id` = $cat_id");
+        }
+
+        array_push($sql_condition, "`date` >= '$date'");
+
+        $sql .= " JOIN `event_category` as ec ON `cat_id` = ec.`id`";
+        $sql .= " LEFT JOIN `order_event` as oe ON e.id = oe.event_id";
+
+        if (sizeof($sql_condition) > 0) {
+            $sql .= " WHERE ";
+        }
+        $sql .= implode(" AND ", $sql_condition);
+        $sql .= " group by e.id";
+        switch ($order) {
+            case 1:
+                $sql .= " ORDER BY `quantity` DESC";
+                break;
+            case 2:
+                $sql .= " ORDER BY `price`";
+                break;
+            case 3:
+                $sql .= " ORDER BY `price` DESC";
+                break;
+            default:
+                $sql .= " ORDER BY `date`";
+                break;
+        }
+        $stmt = $pdo->query($sql);
+        $result = $stmt->fetchAll();
+        // $result=$sql;
     }
+    return $result;
 }
+
+
 echo json_encode($result, JSON_UNESCAPED_UNICODE);
 
 

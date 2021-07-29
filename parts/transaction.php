@@ -39,7 +39,7 @@ function tr_addTransaction_event(method, id){
             var param = {
                 id : id,
                 type : "event",
-                qty : $("#event_" + id + " #quantity").val() ?? $("#event_quantity_input").val()
+                qty : $("#event_" + id + " .event_quantity_input").val() ?? $("#event_quantity_input").val()
             };
             var success = function() {
                 updateCartCount();

@@ -97,7 +97,6 @@ $pageName = 'fun';
         75%  {transform:scale(1)}
         100% {transform:scale(0)}
             }
-        }
 
 
 

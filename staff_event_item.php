@@ -259,15 +259,13 @@ foreach ($quantity_list as $value) {
     <?php include __DIR__ . '/parts/staff_scripts.php'; ?>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
 
-    <script>
+<script>
     
-    console.log("test1");
     $(document).ready(function() {
          $(".c_pink_t").each(function(ind, elem){
             $(elem).text(dallorCommas($(elem).text()) + "元");
         });
         scroll();
-        console.log("test");
         $.post('api/event-api.php', {
             action: 'read',
             id: <?= $_GET['id'] ?>

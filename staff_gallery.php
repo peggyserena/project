@@ -30,12 +30,7 @@ $pageName = 'staff_gallery';
 <main>
 
   <div class="galleryBar col-sm-12 mt-0 p-2 text-left ">
-    <ul class="row m-0 px-md-5 p-sm-1 py-0 list-unstyled ">
-        <?php foreach ($indexs as $ind) : ?>
-        <li class=" mx-2 ">
-          <a  href="#<?= $ind['name']?>"><span class=" text-white"  id="<?= $ind['id']?>" ><?= $ind["title"] ?></span></a>
-        </li>
-        <?php endforeach; ?>
+    <ul class="row m-0 px-md-5 p-sm-1 py-0 list-unstyled " id="galleryName">
     </ul>
   </div>
 
@@ -58,6 +53,13 @@ $pageName = 'staff_gallery';
     }, function(data){
       var formGallery = $("#formGallery");
       data['data'].forEach(function(elem){
+        // galleryName
+        var output = `<li class=" mx-2 ">
+          <a  href="#${elem['name']}"><span class=" text-white"  id="${elem['id']}" >${elem['title']}</span></a>
+        </li>`;
+        $("#galleryName").append(output);
+        
+        // formGallery
         var img_output = "";
         if (elem['id'] in data['img']){
           data['img'][elem['id']].forEach(function(img_elem){
@@ -102,13 +104,6 @@ $pageName = 'staff_gallery';
     }, 'json').fail(function(data){
     })
   }
-  function scroll(){
-      console.log('test' + window.scrollY);
-      if (location.href.indexOf("#<?= $ind['name']?>") > -1){
-          window.scrollTo(0, window.scrollY - 152)
-      }
-  }
-
 
 </script>
 

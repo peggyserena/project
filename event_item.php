@@ -218,13 +218,10 @@ $pageName = 'event';
             $(elem).text(dallorCommas($(elem).text()) + "元");
         });
         scroll();
-        console.log("test");
         $.post('api/event-api.php', {
             action: 'read',
             id: <?= $_GET['id'] ?>
         }, function(data){
-            console.log('read');
-            console.log(data);
             list = [
                 {
                     selector: ".event_name",
@@ -345,8 +342,6 @@ $pageName = 'event';
             
             
         }, 'json').fail(function(data){
-            console.log('error');
-            console.log(data);
         })
     });
 </script>

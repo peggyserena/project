@@ -25,11 +25,11 @@ $pageName = 'staff_forestnews_editor';
 
           <div class="form-group">
                   <label for="cat_id_H">分類-中文</label>
-                  <select type="text" class="form-control" id="cat_id_H" name="cat_id" autofocus required></select>
+                  <select type="text" class="form-control" id="cat_id_H" name="name" autofocus required></select>
               </div>
               <div class="form-group">
                   <label for="cat_id_E">分類-英文</label>
-                  <select type="text" class="form-control" id="cat_id_E" name="cat_id"  required></select>
+                  <select type="text" class="form-control" id="cat_id_E" name="en_name"  required></select>
               </div>
               <div class="form-group">
                   <label for="name">標題</label>

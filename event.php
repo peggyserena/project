@@ -1,81 +1,6 @@
 <?php
 
 require __DIR__ . '/parts/config.php';
-
-$month = "";
-$time = "";
-$cat_id = "";
-$date = date("Y-m-d");
-
-$month = $_GET['month'] ?? "";
-$time = $_GET['time'] ?? "";
-$cat_id = $_GET['cat_id'] ?? "";
-$order = $_GET['order'] ?? "";
-
-
-
-$sql = "SELECT `e`.*, ec.name as `ec_name`, SUM(`oe`.quantity) as quantity FROM `event` as e";
-$sql_condition = [];
-if ($month != "") {
-    array_push($sql_condition, "MONTH(`date`) = $month");
-}
-if ($time != "") {
-    array_push($sql_condition, "`time` = '$time'");
-}
-if ($cat_id != "") {
-    array_push($sql_condition, "`cat_id` = $cat_id");
-}
-
-array_push($sql_condition, "`date` >= '$date'");
-
-$sql .= " JOIN `event_category` as ec ON `cat_id` = ec.`id`";
-$sql .= " LEFT JOIN `order_event` as oe ON e.id = oe.event_id";
-
-if (sizeof($sql_condition) > 0) {
-    $sql .= " WHERE ";
-}
-$sql .= implode(" AND ", $sql_condition);
-$sql .= " group by e.id";
-switch ($order) {
-    case 1:
-        $sql .= " ORDER BY `quantity` DESC";
-        break;
-    case 2:
-        $sql .= " ORDER BY `price`";
-        break;
-    case 3:
-        $sql .= " ORDER BY `price` DESC";
-        break;
-    default:
-        $sql .= " ORDER BY `date`";
-        break;
-}
-$stmt = $pdo->query($sql);
-$events = $stmt->fetchAll();
-
-// 抓活動的id
-$event_id_list = [];
-foreach($events as $event){
-    array_push($event_id_list, $event['id']);
-}
-
-
-
-// 活動歷年總數
-$sql = "SELECT e.name, IFNULL(sum(`quantity`), 0) as quantity FROM `event` as e LEFT JOIN `order_event` as oe ON e.id = oe.event_id GROUP BY `name`";
-$stmt = $pdo->query($sql);
-$quantity_list = $stmt->fetchAll();
-$quantity_map = [];
-foreach($quantity_list as $value){
-    $quantity_map[$value['name']] = $value['quantity'];
-}
-
-// 活動類別
-$sql = "SELECT * FROM `event_category`";
-
-$stmt = $pdo->query($sql);
-$event_category = $stmt->fetchAll();
-
 // 取得總筆數, 總頁數, 該頁的商品資料
 
 // $perPage = 4; // 每一頁有幾筆
@@ -144,7 +69,7 @@ $pageName = 'event';
     
     
 
-    <main>
+    <main id="event_contain">
         <div class="container">
             <div class="box row mt-5 mb-5 ">
                 <div class="col-lg-8 col-md-12 col-sm-12 row align-items-center ml-0 mr-0 ">
@@ -172,16 +97,8 @@ $pageName = 'event';
                 <form action="event.php" method="get">
                 <ul class="row list-unstyled p-2 m-0 justify-content-center align-items-center ">
                         <li class=" ">
-                            <select name='cat_id'>
+                            <select id="select_cat_id" name='cat_id'>
                                 <option value="">活動類別</option>
-                                <?php
-                                // foreach($event_category as $cat){
-                                //     print("<option value='".$cat['id']."'>".$cat['name']."</option>");
-                                // }
-                                ?>
-                                <?php foreach ($event_category as $cat) { ?>
-                                    <option value='<?= $cat['id'] ?>'><?= $cat['name'] ?></option>
-                                <?php } ?>
                             </select>
                         </li>
                         <li class="">
@@ -193,20 +110,22 @@ $pageName = 'event';
                             </select>
                         </li>
                         <li class=" ">
-                            <select name="time">
+                            <select id="select_time" name="time">
                                 <option value="">時段</option>
-                                <option value="10:00">10:00</option>
-                                <option value="12:00">12:00</option>
-                                <option value="14:00">14:00</option>
-                                <option value="16:00">16:00</option>
+                                <option value="00:00-10:00" <?= $_GET['time'] ?? "" === "00:00-10:00" ? "selected" : "" ?>>10:00~之前</option>
+                                <option value="10:00-12:00"  <?= $_GET['time'] ?? "" === "10:00-12:00" ? "selected" : "" ?>>10:00~12:00</option>
+                                <option value="12:00-14:00"  <?= $_GET['time'] ?? "" === "12:00-14:00" ? "selected" : "" ?>>12:00~14:00</option>
+                                <option value="14:00-16:00"  <?= $_GET['time'] ?? "" === "14:00-16:00" ? "selected" : "" ?>>14:00~16:00</option>
+                                <option value="16:00-18:00"  <?= $_GET['time'] ?? "" === "16:00-18:00" ? "selected" : "" ?>>16:00~18:00</option>
+                                <option value="18:00-23:59"  <?= $_GET['time'] ?? "" === "18:00-23:59" ? "selected" : "" ?>>18:00~之後</option>
                             </select>
                         </li>
                         <li class="2 bg-green">
-                            <select name="order">
+                            <select id="select_order" name="order">
                                 <option value="">排序</option>
-                                <option value="1" <?= $order == 1 ? "selected" : "" ?>>暢銷度由高至低</option>
-                                <option value="2" <?= $order == 2 ? "selected" : "" ?>>價錢由低至高</option>
-                                <option value="3" <?= $order == 3 ? "selected" : "" ?>>價錢由高至低</option>
+                                <option value="1" <?= $_GET['order'] ?? "" == 1 ? "selected" : "" ?>>暢銷度由高至低</option>
+                                <option value="2" <?= $_GET['order'] ?? "" == 2 ? "selected" : "" ?>>價錢由低至高</option>
+                                <option value="3" <?= $_GET['order'] ?? "" == 3 ? "selected" : "" ?>>價錢由高至低</option>
                             </select>
                         </li>
                         <li><button type="submit" class="custom-btn btn-4 m-0 p-0" style="width:3rem; ">送出</button></li>
@@ -217,17 +136,16 @@ $pageName = 'event';
             </div>
         </div>
 
-        <div class="container justify-content-center m-auto  row  text-secondary ">
+        <div class="container justify-content-center m-auto  row  text-secondary event_data" style="display: none;">
             <h2 class='text-center b-green rot-135 col-sm-12  p-2 m-0 event_name'></h2>
             <div class="eventItem col-sm-12 justify-content-center row px-0 ">
                 <div class='col-lg-8  m-0 p-0'>
-                    <div class='p-0 m-0'><img id="event_img_cover" src='' alt=''> </div>
+                    <div class='p-0 m-0'><img class="event_img_cover" src='' alt=''> </div>
                 </div>
-
                 <div class='col-lg-4  col-sm-12 row m-0 p-0 pop ' style="background-color: whitesmoke;">
                     
                         <div class='col-12 p-3 mt-0 ml-0 mr-0 'style="margin-bottom:60px">
-                                <p class="text-success">累積銷售數量： <span id="event_quantity"></span></p>
+                                <p class="text-success">累積銷售數量： <span class="event_quantity"></span></p>
 
                                 <p>活動類別：<span style="font-size:1.2rem">
                                     <span class="ec_name"></span>
@@ -241,22 +159,11 @@ $pageName = 'event';
                                 <p>單價：<span class="event_price" class="c_pink_t" style="font-size:1.2rem"></span>
                                 </p>                                    
                                 <br>
-                                <div id="event_description">
-                                    <!-- <span class="d-inline-block text-truncate" style="max-width: 150px;">
-                                        <?php 
-                                            $description = $event["description"]; 
-                                            echo $description;
-                                        ?>
-                                    </span> -->
+                                <div>
+                                    <span class="event_description">
+                                    </span> 
                                     <span>
-                                        <?php 
-                                            $description = $event["description"]; 
-                                            if (strlen($description) > 50){
-                                                $description = mb_substr($description, 0, 50, 'utf-8'). "...";
-                                            }
-                                            echo $description;
-                                        ?>
-                                        <a class='m-0 ' type="button" href="event_item.php?id=<?= $event['id'] ?>">更多資訊</a>
+                                        <a  class='event_link m-0 ' type="button" href="">更多資訊</a>
                                     </span> 
                                 </div>
                         </div>
@@ -267,10 +174,10 @@ $pageName = 'event';
                                         <label for='' class='m-0 p-0'>
                                             <h4 class='m-0 pr-2'>參加人數</h4>
                                         </label>
-                                        <input type='number' value='1' min='1' max="" name='quantity' id='event_quantity_input' style='width: 3rem; ' placeholder='1' class=''>
+                                        <input type='number' value='1' min='1' max="" name='quantity' class='event_quantity_input' style='width: 3rem; ' placeholder='1' class=''>
                                     </div>
-                                    <button class='btn add-to-cart m-0 ' type="button" data-toggle="modal" data-target="#addToCartAlert" onclick="tr_addTransaction('event', 'cart', '<?= $_GET['id'] ?>')"><i class='fas fa-cart-plus'></i></button>
-                                    <button class='btn add-to-wishList m-0 ' type="button"  data-toggle="modal" data-target="#addToWishListAlert" onclick="tr_addTransaction('event', 'wishList', '<?= $_GET['id'] ?>')" ><i class='fas fa-heart' ></i></button>
+                                    <button class='btn add-to-cart m-0 ' type="button" data-toggle="modal" data-target="#addToCartAlert" onclick=""><i class='fas fa-cart-plus'></i></button>
+                                    <button class='btn add-to-wishList m-0 ' type="button"  data-toggle="modal" data-target="#addToWishListAlert" onclick="" ><i class='fas fa-heart' ></i></button>
                                 </div>
                             </form>
                         </div>
@@ -712,10 +619,14 @@ $pageName = 'event';
     <script>
         var date = new Date();
         var month = date.getMonth() + 1;
+        var selected_month = parseInt("<?= $_GET['month']?>");
         $("#select_month option").each(function(ind, elem) {
             if (ind > 0) {
                 elem.text = month;
                 elem.value = month;
+                if (month === selected_month){
+                    $(elem).prop("selected", true);
+                }
                 month++;
             }
             if (month > 12) {
@@ -733,113 +644,170 @@ $pageName = 'event';
     </script>
     <script>
         $(document).ready(function() {
-         $(".c_pink_t").each(function(ind, elem){
-            $(elem).text(dallorCommas($(elem).text()) + "元");
-        });
-        scroll();
-        console.log("test");
-        $.post('api/event-api.php', {
-            action: 'read',
-            id: <?= $_GET['id'] ?>
-        }, function(data){
-            console.log('read');
-            console.log(data);
-            list = [
-                {
-                    selector: ".event_name",
-                    text: data['name'],
-                },
-                {
-                    selector: "#event_img_cover",
-                    attr: {
-                        src: "<?= WEB_ROOT."/" ?>" + data['img'][0]['path']
-                    }
-                },
-                {
-                    selector: "#event_quantity",
-                    text: data['quantity_map'][data['name']],
-                },
-                {
-                    selector: ".event_datetime",
-                    text: `${data['date']} ${data['time'].substr(0, 5)}`,
-                },
-                {
-                    selector: ".event_available_quantity",
-                    text:`${data['limitNum'] - data['quantity']}/${data['limitNum']}`,
-                },
-                {
-                    selector: ".event_price",
-                    text: data['price'],
-                },
-                {
-                    selector: "#event_quantity_input",
-                    attr: {
-                        max: data['limitNum'] - data['quantity'],
-                    },
-                },
- 
-                {
-                    selector: ".ec_name",
-                    text: data['ec_name'],
-                },
-                {
-                    selector: "#event_location",
-                    text: data['location'],
-                },
-                {
-                    selector: "#event_limitNum",
-                    text: data['limitNum'],
-                },
-                {
-                    selector: "#event_content",
-                    text: data['content'],
-                },
-                {
-                    selector: "#event_description",
-                    text: data['description'],
-                },
-
-            ]
-            
-            // map
-            // {
-            //     selector: "#event_name",
-            //     attr: {
-            //         text: data['name']
-            //     }
-            // }
-            list.forEach(function(m){
-                // attr
-                // attr: {
-                //         src: <?= WEB_ROOT."/" ?>data['img'][0]['path']
-                //     }
-                if ('text' in m){
-                    $(m['selector']).text(m['text']);
-                }
-                if ('value' in m){
-                    $(m['selector']).value(m['value']);
-                }
-                for (attr_key in m['attr']){
-                    // fill_key = 'src'
-                    // m['attr']['src']
-                    $(m['selector']).attr(attr_key, m['attr'][attr_key]);
-                }
+            $(".c_pink_t").each(function(ind, elem){
+                $(elem).text(dallorCommas($(elem).text()) + "元");
             });
+            scroll();
+            $.post('api/event-api.php', {
+                action: 'readAll',
+                month: $("#select_month").val(),
+                time: $("#select_time").val(),
+                cat_id: $("#select_cat_id").val(),
+                order: $("#select_order").val(),
+            }, function(result){
+                data = result['data'];
+                for (key in data){
+                    elem = data[key];
+                    output = $($(".event_data")[0]).clone();
+                    output.show();
+                    $("#event_contain").append(output);
+                    elem['img'] = result['img'][elem['id']];
+                    elem['quantity_map'] = result['quantity_map'];
+                    console.log(elem);
+                    fillData(elem, output);
+                }
+                
+            }, 'json').fail(function(data){
+                console.log('error');
+                console.log(data);
+            })
+            var selected_cat_id = parseInt("<?= $_GET['cat_id']?>");
+            $.post('api/event-api.php', {
+                action: 'readCat',
+            }, function(result){
+                result.forEach(function(elem){
+                    output = `<option value='${elem['id']}' ${selected_cat_id == elem['id'] ? "selected" : ""}>${elem['name']}</option>`;
+                    $("#select_cat_id").append(output);
+                })
+                
+            }, 'json').fail(function(data){
+                console.log('error');
+                console.log(data);
+            })
 
+
+            
+        });
+    function fillData(data, elem){
+        var event_img_cover = "";
+        if (typeof(data['img']) !== "undefined"){
+            event_img_cover = "<?= WEB_ROOT."/" ?>" + data['img'][0]['path'];
+        }
+        list = [
+            {
+                selector: ".eventItem",
+                attr: {
+                    id: `event_${data['id']}`,
+                }
+            },
+            {
+                selector: ".event_name",
+                text: data['name'],
+            },
+            {
+                selector: ".event_img_cover",
+                attr: {
+                    src: event_img_cover
+                }
+            },
+            {
+                selector: ".event_quantity",
+                text: data['quantity_map'][data['name']],
+            },
+            {
+                selector: ".event_datetime",
+                text: `${data['date']} ${data['time'].substr(0, 5)}`,
+            },
+            {
+                selector: ".event_available_quantity",
+                text:`${data['limitNum'] - data['quantity']}/${data['limitNum']}`,
+            },
+            {
+                selector: ".event_price",
+                text: data['price'],
+            },
+            {
+                selector: ".event_quantity_input",
+                attr: {
+                    max: data['limitNum'] - data['quantity'],
+                },
+            },
+
+            {
+                selector: ".ec_name",
+                text: data['ec_name'],
+            },
+            {
+                selector: ".event_location",
+                text: data['location'],
+            },
+            {
+                selector: ".event_limitNum",
+                text: data['limitNum'],
+            },
+            {
+                selector: ".event_content",
+                text: data['content'],
+            },
+            {
+                selector: ".event_description",
+                text: substr(data['description'], 50),
+            },
+            {
+                selector: ".event_link",
+                attr: {
+                    href: `event_item.php?id=${data['id']}`
+                }
+            },
+            {
+                selector: ".add-to-cart",
+                attr: {
+                    onclick: `tr_addTransaction('event', 'cart', ${data['id']})`
+                }
+            },
+            {
+                selector: ".add-to-wishList",
+                attr: {
+                    onclick: `tr_addTransaction('event', 'wishList', ${data['id']})`
+                }
+            },
+        ]
+        
+        // map
+        // {
+        //     selector: "#event_name",
+        //     attr: {
+        //         text: data['name']
+        //     }
+        // }
+        list.forEach(function(m){
+            // attr
+            // attr: {
+            //         src: <?= WEB_ROOT."/" ?>data['img'][0]['path']
+            //     }
+            if ('text' in m){
+                $(elem).find(m['selector']).text(m['text']);
+            }
+            if ('value' in m){
+                $(elem).find(m['selector']).value(m['value']);
+            }
+            for (attr_key in m['attr']){
+                // fill_key = 'src'
+                // m['attr']['src']
+                $(elem).find(m['selector']).attr(attr_key, m['attr'][attr_key]);
+            }
+        });
+
+        
+        if (typeof(data['img']) !== "undefined"){
             data['img'].forEach(function(data_img){
                 var output = `<a href='<?= WEB_ROOT."/" ?>${data_img['path']}' data-fancybox='F_box1' data-caption=' ${data['name']}'>
                         <img src='<?= WEB_ROOT."/" ?>${data_img['path']}' alt=''>
                     </a>`
                 $(".fancybox").append(output);
             })
-            
-            
-        }, 'json').fail(function(data){
-            console.log('error');
-            console.log(data);
-        })
-    });
-
+        }
+    }
     </script>
 
     <script>
@@ -853,5 +821,15 @@ $pageName = 'event';
         scroll();
     });
     </script>
+    <script>
+        function substr(str, count, pad = "..."){
+            if (str.length > count){
+                str = str.substring(0, count) + pad;
+            }else{
+                str = str.substring(0, count);
+            }
+            return str;
+        }
 
+    </script>
     <?php include __DIR__ . '/parts/html-foot.php'; ?>

@@ -237,7 +237,7 @@ if (!empty($helpdesk_id_list)){
 
 
                         <div id="helpdeskRecorde" class="tab-pane fade row mb-5">
-                            <form action="member.php" method="get" onsubmit="helpdeskRecord(); return false;">
+                            <form onsubmit="helpdeskRecord(); return false;">
                                 <div id="searchBar" class="m-0 p-0">
 
                                 

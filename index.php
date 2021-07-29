@@ -4,58 +4,6 @@ $title = '薰衣草森林 Lavender Forest';
 $pageName = 'index';
 
 
-// $sql = "SELECT * FROM `index`where id in (16,17,18,19,20,21,22)";
-$sql = "SELECT * FROM `index`where id >= 16 AND id <= 22";
-$stmt = $pdo->query($sql);
-$result = $stmt->fetchAll();
-$a = $result[0];
-$b = $result[1];
-$c = $result[2];
-$d = $result[3];
-$e = $result[4];
-$f = $result[5];
-$g = $result[6];
-
-
-$sql = "SELECT * FROM `index`where id >= 1 AND id <= 14";
-$stmt = $pdo->query($sql);
-$gallery = $stmt->fetchAll();
-
-// 抓圖片
-if (!empty($gallery)){
-    $sql = "SELECT * FROM `index_image` WHERE index_id ORDER BY num_order";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([]);
-    $result = $stmt->fetchAll();
-    $gallery_img = [];
-    
-    foreach($result as $cover_img){
-        if (!array_key_exists($cover_img['index_id'], $gallery_img)){
-            $gallery_img[$cover_img['index_id']] = [$cover_img['path']];
-        }else{
-            array_push($gallery_img[$cover_img['index_id']], $cover_img['path']);
-        }
-    }
-}
-
-
-
-if (!empty($slider)){
-    $sql_17 = "SELECT * FROM `index_image` WHERE `index_id`=17";
-    $stmt = $pdo->prepare($sql_17);
-    $stmt->execute([]);
-    $slider = $stmt->fetch();
-    $slider_img = [];
-    
-    foreach($slider as $cover_img){
-        if (!array_key_exists($cover_img['index_id'], $slider_img)){
-            $slider_img[$cover_img['index_id']] = [$cover_img['path']];
-        }else{
-            array_push($slider_img[$cover_img['index_id']], $cover_img['path']);
-        }
-    }
-}
-// print($gallery_img[$index['id']] ?? "" );
 
 ?>
 <?php include __DIR__ . '/parts/html-head.php'; ?>
@@ -87,22 +35,22 @@ if (!empty($slider)){
         </div>
     </div> -->
     <div id="slider" name="slider" class=" owl-carousel owl-theme">
-        <?php foreach ($slider as $sli) : ?>
-                <img src='<?= WEB_ROOT."/".$slider_img[$sli['id']][$i] ?>' alt=''>
-        <?php endforeach; ?>
+        <!-- <?php foreach ($slider as $sli) : ?>
+                <img src='<?= WEB_ROOT."/".$sli['path'] ?>' alt=''>
+        <?php endforeach; ?> -->
 
     </div>
 
  
 
     <div class="container  text-center text-white c_1 mt-5 ">
-        <h1 class="box_desktop  m-0  "><?= $a['title'] ?> </h1>
-        <h2 class="box_cellphone m-0   mb-4 mt-4" ><?= $a['title'] ?></h2>
+        <h1 class="box_desktop  m-0 index_a_title"></h1>
+        <h2 class="box_cellphone m-0 mb-4 mt-4 index_a_title"></h2>
         <pre>
-            <h3 class="poetry1   m-0 " style="line-height:2.8rem"><?= $a['content'] ?></h3>
+            <h3 class="poetry1   m-0 index_a_content" style="line-height:2.8rem"></h3>
         </pre>
         <pre>
-            <div class="poetry2   m-0 "><?= $a['content_cellphone'] ?></div>
+            <div class="poetry2   m-0 index_a_content_cellphone"></div>
         </pre>
 
 
@@ -194,54 +142,54 @@ if (!empty($slider)){
         </div>
 
         <div class="tableTwo col-sm-12 col-lg-6 " >
-            <h3 class=" text-center  b-green rot-135 col-12 p-3 m-0" style="background-color: rgb(95, 185, 173);"><?= $c['title'] ?></h3>
+            <h3 class=" text-center  b-green rot-135 col-12 p-3 m-0 index_c_title" style="background-color: rgb(95, 185, 173);"></h3>
             <table>
                 <tbody>
                     <tr>
-                        <th style="height:3rem"><?= $d['title'] ?></th>
-                        <td><?= $d['content'] ?></td>
+                        <th style="height:3rem" class="index_c_title"></th>
+                        <td class="index_c_content"></td>
                         <td rowspan="3" class="pt-3 pb-3">
                             <pre>
-                                <p class=box_desktop><?= $c['content'] ?></p>
-                                <p class=box_tablet><?= $c['content'] ?></p>
-                                <p class=box_cellphone><?= $c['content'] ?></p>
+                                <p class="box_desktop index_c_content"></p>
+                                <p class="box_tablet index_c_content"></p>
+                                <p class="box_cellphone index_c_content"></p>
                             </pre>
                         </td>
                     </tr>
                     <tr>
-                        <th style="height:3rem"><?= $e['title'] ?></th>
+                        <th style="height:3rem" class="index_e_title"></th>
                         <td>
                             <pre>
-                                <p><?= $e['content'] ?></p>
+                                <p class="index_e_content"></p>
                             </pre>
                         </td>
                     </tr>
                     <tr>
-                        <th><?= $f['title'] ?></th>
+                        <th class="index_f_title"></th>
                         <td >
                             <pre>
-                                <p><?= $f['content'] ?></p>
+                                <p class="index_e_content"></p>
                             </pre>
                         </td>
                     </tr>
                     <tr class="box_desktop">
                         <td colspan="3" class="pt-3 pm-3 c_pink">
                             <pre>
-                                <h4 class=""><?= $g['content'] ?></h4></li>
+                                <h4 class="index_g_content"></h4></li>
                             </pre>
                         </td>
                     </tr>
                     <tr class="box_tablet">
                         <td colspan="3" class="pt-3 pm-3 c_pink">
                             <pre>
-                                <h4 class=""><?= $g['content'] ?></h4></li>
+                                <h4 class="index_g_content"></h4></li>
                             </pre>
                         </td>
                     </tr>
                     <tr class="box_cellphone">
                         <td colspan="3" class="pt-3 pb-3 c_pink">
                             <pre>
-                                <h4 class=""><?= $g['content'] ?></h4></li>
+                                <h4 class="index_g_content"></h4></li>
                             </pre>
                         </td>
                     </tr>
@@ -254,60 +202,7 @@ if (!empty($slider)){
         <h3 class="text-center text-white b-green rot-135 col-12 p-3 m-0" style="background-color: rgb(95, 185, 173);"> 薰衣草森林 園區介紹＆相簿</h3>
 
 
-        <div class="grid-container">
-        <?php foreach ($gallery as $gal) : ?>
-
-            <div class="small <?= $gal['name'] ?>" id="<?= $gal['name'] ?>" name="<?= $gal['name'] ?>">
-
-                <h4 class="p-3 m-0 b-green rot-135 c_1 text-center text-white "><?= $gal['title'] ?></h4>
-                <pre  class="push-2"><p><?= $gal['content'] ?></p></pre>
-                    <img src="<?= WEB_ROOT."/".$gallery_img[$gal['id']][0] ?>" alt="" data-toggle="modal" data-target="#myModal_desktop_<?= $gal['id'] ?>">
-                <div class="modal fade" id="myModal_desktop_<?= $gal['id'] ?>">
-
-                    <div class="modal-dialog modal-lg modal-dialog-centered ">
-                        <div class="modal-content">
-                            <!-- Modal Header -->
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            </div>
-                            <!-- Modal body -->
-                            <div class="modal-body">
-                                <div id="demo_desktop_<?= $gal['name'] ?>" class="carousel slide" data-ride="carousel" data-interval="3000">
-                                    <ul class="carousel-indicators">
-                                        <?php for ($i = 0; $i < count($gallery_img[$gal['id']]); $i++) : ?>
-                                            <li data-target="#demo_desktop_<?= $gal['name'] ?>" data-slide-to="<?= $i?>" class="<?= $i === 0 ? 'active' : ''?>"></li>
-                                            <!-- <li data-target="#r"#demo" data-slide-to="0"></li> -->
-                                        <?php endfor; ?>                                     
-
-                                    </ul>
-                                    <div class="carousel-inner">
-                                        <?php for ($i = 1; $i < count($gallery_img[$gal['id']]); $i++) : ?>
-                                            <div class="carousel-item <?= $i === 1 ? 'active' : ''?>">
-                                                <img src='<?= WEB_ROOT."/".$gallery_img[$gal['id']][$i] ?>' alt=''>
-                                            </div>
-                                        <?php endfor; ?>    
-                                                                         
-                                    </div>
-                                    <a class="carousel-control-prev " style="width: 10%;" href="#demo_desktop_<?= $gal['name'] ?>" data-slide="prev"><span class="carousel-control-prev-icon bg-info" style="border-radius: 50%;width: 1.5rem;height: 1.5rem;"></span></a>
-                                    <a class="carousel-control-next "  style="width: 10%;"href="#demo_desktop_<?= $gal['name'] ?>" data-slide="next"><span class="carousel-control-next-icon bg-info" style="border-radius: 50%;width: 1.5rem;height: 1.5rem;"></span></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <?php endforeach; ?>
-
-
-            <div class="big map">
-                <div class="radioArea">
-                    <?php foreach ($gallery as $gal) : ?>
-                        <input type="radio" name="radio" class="<?= $gal['name'] ?>">
-                    <?php endforeach; ?>
-
-                </div>
-            </div>
+        <div class="grid-container" id="index_map_gallery">
         </div>
     </div>
 
@@ -655,26 +550,118 @@ if (!empty($slider)){
 </script>
 <script>
     
-        $('input[type="radio"]'). change(function() {
+        $('input[type="radio"]').change(function() {
             $(".small").css({
-                "border": "10px solid white;border-radius:10px"
+                "border": "10px solid white",
+                "border-radius": "10px"
             });
             // var number = this.id.replace("radio", "");
             // console.log(this);
             // $(".grid_" + number)[0].style = " border:10px solid orange;border-radius:10px"
-
-            $(".<?= $gal['name'] ?>")[0].style = " border:10px solid orange;border-radius:10px"
-
-            // $(".<?= $ind['name'] ?>")[0].css({
-            //     "border": "10px solid white;border-radius:10px"});
-
+            
+            // $(`.${$(this).data("target")}`)[0].style = " border:10px solid orange;border-radius:10px";
+            $($(`.${$(this).data("target")}`)[0]).css({
+                "border": "10px solid orange",
+                "border-radius": "10px",
+            });
+            
     });
 </script>
 
 <script>
     $("#exampleModalCenter").modal('show');
-
+    
     // updateStyle('nobordertop');
+    </script>
+
+<script>
+    $.post('api/staff_gallery-api.php', {
+        action: 'read',
+
+
+
+        action: 'readAll',
+    }, function(result){
+
+        data = result['data'];
+        newData = {};
+        for (key in data){
+            newData[data[key]['id']] = data[key];
+        }
+        data = newData;
+        var columns = [ "title", "content", "content_tablet", "content_cellphone"];
+        var indexStart = 16;
+        var indexEnd = 22;
+        for (var i = indexStart; i <= indexEnd; i ++){
+            var code = String.fromCharCode(97 + i - indexStart);
+            columns.forEach(function(column){
+                $(`.index_${code}_${column}`).text(data[i][column]);
+            })
+        }
+        fillMapGellery(data, result['img']);
+        // fillData(elem, output);
+    }, 'json').fail(function(data){
+    })
+
+    function fillMapGellery(data, img){
+        var indexStart = 1;
+        var indexEnd = 14;
+        var radio_output = "";
+        for (var i = indexStart; i <= indexEnd; i ++){
+            var d = data[i];
+            var img_output_indicators = "";
+            var img_output_inner = "";
+            img[d['id']].forEach(function(elem, ind){
+                img_output_indicators += `<li data-target="#demo_desktop_${ d['name']}" data-slide-to="${ind}" class="${ind === 0 ? 'active' : ''}"></li>`;
+                img_output_inner += `<div class="carousel-item ${ind === 1 ? 'active' : ''}">
+                                        <img src='<?= WEB_ROOT ?>/${img[d['id']][ind]['path']}' alt=''>
+                                     </div>`;
+            
+            })
+            var output = `
+                <div class="small ${ d['name']}" id="${ d['name']}" name="${ d['name']}">
+
+                        <h4 class="p-3 m-0 b-green rot-135 c_1 text-center text-white ">${ d['title']}</h4>
+                        <pre  class="push-2"><p>${ d['content']}</p></pre>
+                            <img src="<?= WEB_ROOT ?>/${img[d['id']][0]['path']}" alt="" data-toggle="modal" data-target="#myModal_desktop_${ d['id']}">
+                        <div class="modal fade" id="myModal_desktop_${ d['id']}">
+
+                            <div class="modal-dialog modal-lg modal-dialog-centered ">
+                                <div class="modal-content">
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                        <div id="demo_desktop_${ d['name']}" class="carousel slide" data-ride="carousel" data-interval="3000">
+                                            <ul class="carousel-indicators">
+                                                ${img_output_indicators}    
+                                            </ul>
+                                            <div class="carousel-inner">
+                                                ${img_output_inner}              
+                                            </div>
+                                            <a class="carousel-control-prev " style="width: 10%;" href="#demo_desktop_${ d['name']}" data-slide="prev"><span class="carousel-control-prev-icon bg-info" style="border-radius: 50%;width: 1.5rem;height: 1.5rem;"></span></a>
+                                            <a class="carousel-control-next "  style="width: 10%;"href="#demo_desktop_${ d['name']}" data-slide="next"><span class="carousel-control-next-icon bg-info" style="border-radius: 50%;width: 1.5rem;height: 1.5rem;"></span></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+            $("#index_map_gallery").append(output);
+
+            radio_output += `<input type="radio" name="radio" class="${d['name']}" data-target="${d['name']}">`;
+            
+        }
+        $("#index_map_gallery").append(`<div class="big map">
+            <div class="radioArea">
+                ${radio_output}
+            </div>
+        </div>`);
+        
+    }
+    
     </script>
 
 

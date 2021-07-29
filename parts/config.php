@@ -7,3 +7,4 @@ define('WEB_API', '/project/api');
 
 session_start();
 
+?>

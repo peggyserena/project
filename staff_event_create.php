@@ -173,7 +173,7 @@ $("#img")
           insertPage("#modal_img", "animation/animation_success.html");
           insertText("#modal_content", "森林體驗新增成功!");
           $("#modal_alert").modal("show");
-          setTimeout(function(){location.href = "staff_event_search.php"}, 2000);
+          // setTimeout(function(){location.href = "staff_event_search.php"}, 2000);
 
         },
         error: function(data){
@@ -182,7 +182,7 @@ $("#img")
           insertPage("#modal_img", "animation/animation_error.html");
           insertText("#modal_content", "資料傳輸失敗");
           $("#modal_alert").modal("show");
-          setTimeout(function(){location.href = "staff_event_search.php"}, 2000);
+          // setTimeout(function(){location.href = "staff_event_search.php"}, 2000);
         }
     });
   }

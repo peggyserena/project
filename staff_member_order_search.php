@@ -105,7 +105,6 @@ if (!empty($helpdesk_id_list)){
                 end_date: end_date
             },function(data) {
                 $("#tradeRecord table tbody").html("");
-                console.log(data);
                 var maxLength = 12;
                 data.forEach(function(elem){
                     var order_id = "";
