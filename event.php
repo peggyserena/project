@@ -619,7 +619,7 @@ $pageName = 'event';
     <script>
         var date = new Date();
         var month = date.getMonth() + 1;
-        var selected_month = parseInt("<?= $_GET['month']?>");
+        var selected_month = parseInt("<?= $_GET['month'] ?? '' ?>");
         $("#select_month option").each(function(ind, elem) {
             if (ind > 0) {
                 elem.text = month;
@@ -671,7 +671,7 @@ $pageName = 'event';
                 console.log('error');
                 console.log(data);
             })
-            var selected_cat_id = parseInt("<?= $_GET['cat_id']?>");
+            var selected_cat_id = parseInt("<?= $_GET['cat_id'] ?? ''?>");
             $.post('api/event-api.php', {
                 action: 'readCat',
             }, function(result){
@@ -789,7 +789,7 @@ $pageName = 'event';
                 $(elem).find(m['selector']).text(m['text']);
             }
             if ('value' in m){
-                $(elem).find(m['selector']).value(m['value']);
+                $(elem).find(m['selector']).val(m['value']);
             }
             for (attr_key in m['attr']){
                 // fill_key = 'src'

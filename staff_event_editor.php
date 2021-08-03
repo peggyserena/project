@@ -82,7 +82,10 @@ $pageName = 'staff_event_editor';
                 <input type="file" id="video_img" name="video_img" accept=".png,.jpeg,.jpg">
                 <input type="hidden" id="video_img_changed" name="video_img_changed" value="0">
             </div>
-            <div class="form-group" id="preview_video_img"></div>
+            <div class="form-group">
+              <ul id="preview_video_img" class="row  list-unstyled">
+              </ul>
+            </div>
 
             <div class="form-group">
                 <label for="limitNum">圖片</label>
@@ -127,9 +130,13 @@ $("#img")
     for(var i = 0; i < files.length; i++){
       var file = files[i];
       if (file) {
-        var img = ` <li class="ui-state-default" data-order="${i}">
-                      <img class="preview_img" style="max-width: 120px; max-height: 120px" src="${URL.createObjectURL(file)}" alt="your image" />
-                    </li>`;
+        
+      var img =`<li class="ui-state-default" data-order="${i}">
+                        <div style="display: grid;">
+                          <img class="preview_img" style="max-width: 120px; max-height: 120px" src="${URL.createObjectURL(file)}" alt="your image" />
+                          <button type="button" onclick="deleteItem(this);">X</button>
+                        </div>
+                      </li>`;
         $("#preview #sortable").append(img);
       }
     }
@@ -139,7 +146,12 @@ $("#img")
     $("#preview_video_img").html("");
     const [file] = $("#video_img")[0].files
     if (file) {
-      var img = `<img class="preview_img" style="max-width: 120px; max-height: 120px" src="${URL.createObjectURL(file)}" alt="your image" />`;
+      var img =`<li class="ui-state-default" data-order="${i}">
+                        <div style="display: grid;">
+                          <img class="preview_img" style="max-width: 120px; max-height: 120px" src="${URL.createObjectURL(file)}" alt="your image" />
+                          <button type="button" onclick="deleteItem(this);">X</button>
+                        </div>
+                      </li>`;
       $("#preview_video_img").append(img);
     }
   });
@@ -177,7 +189,12 @@ $("#img")
 
       $("#preview_video_img").html("");
       if ('video_img' in data) {
-        var img = `<img class="preview_img" style="max-width: 120px; max-height: 120px" src="${data['video_img']}" alt="your image" />`;
+        var img =`<li class="ui-state-default" data-order="${i}">
+                        <div style="display: grid;">
+                          <img class="preview_img" style="max-width: 120px; max-height: 120px" src="${data['video_img']}" alt="your image" />
+                          <button type="button" onclick="deleteItem(this);">X</button>
+                        </div>
+                      </li>`;
         $("#preview_video_img").append(img);
       }
 
@@ -186,8 +203,11 @@ $("#img")
       for(var i = 0; i < files.length; i++){
         var file = files[i];
         if (file) {
-          var img = ` <li class="ui-state-default" data-order="${i}">
-                        <img class="preview_img" style="max-width: 120px; max-height: 120px" src="${file.path}" alt="your image" />
+        var img =`<li class="ui-state-default" data-order="${i}">
+                        <div style="display: grid;">
+                          <img class="preview_img" style="max-width: 120px; max-height: 120px" src="${file.path}" alt="your image" />
+                          <button type="button" onclick="deleteItem(this);">X</button>
+                        </div>
                       </li>`;
           $("#preview #sortable").append(img);
         }
@@ -198,7 +218,7 @@ $("#img")
   }
   
   function create(){
-    var img_order = [];
+    var img_order = {};
     $("#preview #sortable li").each(function(ind, elem){
       img_order[$(elem).data("order")] = ind + 1;
     })
@@ -231,6 +251,10 @@ $("#img")
     });
   }
 
+  function deleteItem(elem){
+    $(elem).parents("li").remove();
+    $("#img_changed").val(1);
+  }
 
   // 設定date日期min為今日
   var d = new Date();

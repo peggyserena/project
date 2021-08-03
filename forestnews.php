@@ -15,7 +15,7 @@ $pageName = 'news';
 
 <?php include __DIR__ . '/parts/navbar.php'; ?>
     <main>
-        <div class="container mt-5">
+        <div class="container mt-5" id="forestnews">
             <div id="gardenInfo">
                 <h2 class="title1 b-green rot-135 c_1 ">園區相關 <span>Garden Information</span></h2>
                 <div id="accordion">
@@ -250,140 +250,43 @@ $pageName = 'news';
 
                 </div>
             </div>
-
-            <div id="eventInfo">
-                <h2 class="title1 b-green rot-135 c_1 ">森林體驗<span>Forest Events</span></h2>
-                <div id="accordion">
-                    <div class="card">
-                        <div class="card-header  p-0">
-                        <a class="card-link row   align-items-center  " data-toggle="collapse" href="#collapseThrid">
-                                <h4 class="col-lg-8 col-md-8 col-sm-12">園區內消費只要滿＄1,000元，即可獲得 " 森林麻吉慢遊券 " 乙本</h4>
-                                <p class="col-lg-4 col-md-4 col-sm-12">活動期間：即日起~2021/9/30</p>
-                            </a>
-                        </div>
-                        <div id="collapseThrid" class="collapse" data-parent="#accordion">
-                            <img class="card-img-top m-0" src="./images/news/eventNews1_1.jpg" alt="Card image cap">
-                            <div class="card-body justify-content center">
-                                <p><img src="./images/icon/leaf_R.svg" alt=""> 即日起，至園區內消費只要滿＄1,000元，即可獲得<span>森林麻吉慢遊券</span> 乙本。</p>
-                                <p><img src="./images/icon/leaf_R.svg" alt=""> 集結薰衣草森林全品牌加碼的限量優惠（值市價＄10,000元)，好吃、好住、好玩、好逛，一本包辦</p>
-                                <p><img src="./images/icon/leaf_R.svg" alt=""> 森林體驗－手作DIY，與孩子一同享手作樂趣將成為你們暑期最悠閒的日常❤️
-                                <p>&emsp;&emsp;✅平日手作DIY體驗買一送一（新社/初衷小屋、年輪郵局）<br>&emsp;&emsp;✅平日新社店年輪郵局明信片買一送一</p>
-                            </div>
-                            <div class="card-body p-3 m-0 justify-content center">
-                                <p><a href="event.php"><i class="fas fa-democrat fa-2x"></i> ※森林體驗－線上訂票系統</a></p>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
             
-            <div id="restaurantInfo">
-                <h2 class="title1 b-green rot-135 c_1 ">森林咖啡館 <span>Forest Cafe</span></h2>
-                <div id="accordion">
+            <div id="" class="forestnew_row" style="display: none;">
+                <h2 class="title1  b-green rot-135 c_1">
+                    <span  class="cat_id_H" name="name"  >
+                    </span>
+                    <span  class="cat_id_E" name="name"  >
+                    </span>
+                </h2>
+                <div class="accordion" style="display: none;">
                     <div class="card">
-                        <div class="card-header  p-0">
-                            <a class="card-link row   align-items-center  " data-toggle="collapse" href="#collapseSixth">
-                                <h4 class="col-lg-8 col-md-8 col-sm-12">醫護人員優惠</h4>
-                                <p class="col-lg-4 col-md-4 col-sm-12">活動期間：~疫情結束</p>
-
+                        <div class="card-header p-1">
+                            <a class="card-link row   align-items-center" data-toggle="collapse" href="">
+                                <h4 class="name col-lg-8 col-md-8 col-sm-12" name="name"></h4>
+                                <p class="col-lg-4 col-md-4 col-sm-12">
+                                    <span class="start_date" name="start_date" ></span> ～
+                                    <span class="end_date" name="end_date"></span>
+                                </p>
                             </a>
                         </div>
-                        <div id="collapseSixth" class="collapse" data-parent="#accordion">
-                            <img class="card-img-top m-0" src="./images/news/restaurantNews_1.jpg" alt="Card image cap">
-                            <div class="card-body p-3 m-0 justify-content center">
-                                <p><a href="restaurant.php"><i class="fas fa-utensils  fa-2x"></i>&emsp; 森林咖啡館－線上訂位系統</a></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="accordion">
-                    <div class="card">
-                        <div class="card-header  p-0">
-                            <a class="card-link row   align-items-center  " data-toggle="collapse" href="#collapseForth">
-                                <h4 class="col-lg-8 col-md-8 col-sm-12">午茶套餐</h4>
-                                <p class="col-lg-4 col-md-4 col-sm-12">活動期間：即日起~2021/12/31</p>
-                            </a>
-                        </div>
-                        <div id="collapseForth" class="collapse" data-parent="#accordion">
-                            <div class="row">
-                                <img class="col-lg-3 col-md-3 col-sm-12" src="./images/news/restaurantNews2_1.jpg" alt="">
-                                <img class="col-lg-3 col-md-3 col-sm-12" src="./images/news/restaurantNews2_2.jpg" alt="">
-                                <img class="col-lg-3 col-md-3 col-sm-12" src="./images/news/restaurantNews2_3.jpg" alt="">
-                                <img class="col-lg-3 col-md-3 col-sm-12" src="./images/news/restaurantNews2_4.jpg" alt="">
-                            </div>
-                            <div class="card-body  p-3 m-0 justify-content center">
-                                <p>從一月一日起，推出 #午茶套餐 ，推出四款熱銷飲品搭配三種鹹甜點心，售價250元，優惠供應時段為每天14:00-16:30。另外新推出 #野菜天婦羅 ，單點180元，凡點主餐可享120元加購價。沒什麼比在美景中吃美食更愜意的，快來尖石吃頓飯吧！</p>
-                            </div>
-                            <div class="card-body p-3 m-0 justify-content center">
-                                <p><a href="restaurant.php"><i class="fas fa-utensils  fa-2x"></i>&emsp; 森林咖啡館－線上訂位系統</a></p>
-                            </div>
+                        <div id="" class="collapse" data-parent="#accordion">
+                        <img class="card-img-top m-0 forestnews_img_cover" alt="Card image cap">
 
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="hotelInfo">
-                <h2 class="title1 b-green rot-135 c_1 ">夜宿薰衣草森林 <span>Staying the Night in Lavender Forest</span></h2>
-                <div id="accordion">
-                    <div class="card">
-                        <div class="card-header  p-0">
-                            <a class="card-link row   align-items-center  " data-toggle="collapse" href="#collapseFifth">
-                                <h4 class="col-lg-8 col-md-8 col-sm-12">2021薰衣草節 #早鳥住宿開訂『每日限量四間』</h4>
-                                <p class="col-lg-4 col-md-4 col-sm-12">活動期間：2021/1/1~2021/6/30</p>
-
-                            </a>
-                        </div>
-                        <div id="collapseFifth" class="collapse" data-parent="#accordion">
-                            <div class="d-flex">
-                                <img src="./images/news/hotelNews1_1.jpg" alt="">
-                                <img src="./images/news/hotelNews1_2.jpg" alt="">
-                                <img src="./images/news/hotelNews1_3.jpg" alt="">
-                                <img src="./images/news/hotelNews1_4.jpg" alt="">
-                                <img src="./images/news/hotelNews1_5.jpg" alt="">
+                            <div class="card-body">
+                                <h4 class="card-title1 text-center"></h4>
+                                <pre>
+                                    <p class="content" name="content"class="card-text" ></p>
+                                </pre>
                             </div>
-                            <div class="card-body p-3 m-0 justify-content center">
-                                <h4>🌲享受被薰衣草花田喚醒的早晨🌲</h4>
-                                <p>※ 2021薰衣草節 #早鳥住宿開訂『每日限量四間』</p>
-                                <div>
-                                    <p>
-                                        ✅方案一：【多人包館】
-                                        <br>&ensp;&ensp;<img src="./images/icon/checkmark.svg">適合15人以上（上限20人）
-                                        <br>&ensp;&ensp;<img src="./images/icon/checkmark.svg">平日$1,000/人、旺日$1,200/人
-                                    </p>
-                                    <br>
-                                    <p>
-                                        ✅方案二：【6人小團】：
-                                        <br>&ensp;&ensp;<img src="./images/icon/checkmark.svg">本館房型；每日限量一組
-                                        <br>&ensp;&ensp;<img src="./images/icon/checkmark.svg">平日NT$6,400；旺日NT$7,600
-                                        <br>&ensp;&ensp;<img src="./images/icon/checkmark.svg">四人房+雙人房+7.8坪溫馨客廳
-                                    </p>
-
-                                     
-                                </div>
-                                <div>
-                                    <p>💬專案說明：
-                                        <ul>
-                                            <li>2021/1/1~2021/6/30入住均適用</li>
-                                            <li>本專案假日、連續假期、農曆春節不適用</li>
-                                            <li>不得與其他住宿優惠專案併用</li>
-                                            <li>不與其他訂房平台並用</li>
-                                            <li>薰衣草林保有專案最終解釋權力</li>
-                                        </ul>
-                                    </p>
-                                </div>
-                                <div>
-                                    <p><a href="hotel.php"><i class="fas fa-bed fa-2x"></i>&emsp; 夜宿薰衣草森林－線上訂房系統</a></p>
-                                </div>
+                            <div class="card-footer mb-3">
+                                <pre>
+                                    <p class="notice" name="notice" class="text-muted"></p>
+                                </pre>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-
-
         </div>
     
 
@@ -399,7 +302,124 @@ $pageName = 'news';
 <?php include __DIR__ . '/parts/scripts.php'; ?>
 
 <script>
+    readCat();
+    function readCat(){
+        $.post('api/forestnews-api.php', {
+            action: 'readCat',
+        }, function(result){
+            result.forEach(function(elem){
+                output = $($(".forestnew_row")[0]).clone();
+                output.find(".cat_id_H").text(elem['name']);
+                output.find(".cat_id_E").text(elem['en_name']);
+                output.attr("id", "forestnew_row" + elem['id']);
+                output.show();
+                $("#forestnews").append(output);
+            })
+            readData();
+        }, 'json').fail(function(data){
+            console.log('error');
+            console.log(data);
+        })
+    }
+    function readData(){
+            d = new Date();
+            year = d.getFullYear();
+            month = d.getMonth() + 1;
+            $.post('api/forestnews-api.php', {
+                action: 'readAll',
+                year,
+                month,
+                cat_id: "",
+                order: "",
+            }, function(result){
+                data = result['data'];
+                img = result['img'];
+                data.forEach(function(elem){
+                    forestnew_row = $(`#forestnew_row${elem['cat_id']}`);
+                    accordion = $($(forestnew_row).find(".accordion")[0]).clone();
+                    elem['img'] = img[elem['id']];
+                    fillData(elem, accordion);
+                    accordion.show();
+                    forestnew_row.append(accordion);
+                });
 
+                
+            }, 'json').fail(function(data){
+            })
+        }
+    function fillData(data, elem){
+        var forestnews_img_cover = "";
+        if (typeof(data['img']) !== "undefined"){
+            forestnews_img_cover = "<?= WEB_ROOT."/" ?>" + data['img'][0]['path'];
+        }
+        list = [
+                {
+                    selector: ".name",
+                    text: data['name'],
+                },
+                {
+                    selector: ".card-link",
+                    attr: {
+                        href: `#forestnew_${data['id']}`
+                    }
+                },
+                {
+                    selector: ".collapse",
+                    attr: {
+                        id: `forestnew_${data['id']}`
+                    }
+                },
+                {
+                    selector: ".start_date",
+                    text: data['start_date'],
+                },
+                {
+                    selector: ".end_date",
+                    text: data['end_date'],
+                },
+                {
+                    selector: ".content",
+                    text: data['content'],
+                },
+                {
+                    selector: ".notice",
+                    text: data['notice'],
+                },
+                {
+                    selector: ".forestnews_img_cover",
+                    attr: {
+                        src: data['img'][0]['path'],
+                    },
+                },
+            ]
+        
+        // map
+        // {
+        //     selector: "#forestnews_name",
+        //     attr: {
+        //         text: data['name']
+        //     }
+        // }
+        list.forEach(function(m){
+            // attr
+            // attr: {
+            //         src: <?= WEB_ROOT."/" ?>data['img'][0]['path']
+            //     }
+            if ('text' in m){
+                $(elem).find(m['selector']).text(m['text']);
+            }
+            if ('value' in m){
+                $(elem).find(m['selector']).val(m['value']);
+            }
+            for (attr_key in m['attr']){
+                // fill_key = 'src'
+                // m['attr']['src']
+                $(elem).find(m['selector']).attr(attr_key, m['attr'][attr_key]);
+            }
+        });
+
+    }
 
 </script>
+
 <?php include __DIR__ . '/parts/html-foot.php'; ?>

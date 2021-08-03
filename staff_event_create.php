@@ -109,29 +109,44 @@ $pageName = 'staff_event_create';
 <script>
 $("#img")
 
-  $( function() {
-    $( "#sortable" ).sortable();
+$( function() {
+    $( "#sortable" ).sortable({
+      change: function( event, ui ) {
+        $("#img_changed").val(1);
+      }
+    });
     // $( "#sortable" ).disableSelection();
   } );
 
   $("#img").change(() => {
+    $("#img_changed").val(1);
     $("#preview #sortable").html("");
     const files = $("#img")[0].files
     for(var i = 0; i < files.length; i++){
       var file = files[i];
       if (file) {
-        var img = ` <li class="ui-state-default" data-order="${i}">
-                      <img class="preview_img" style="max-width: 120px; max-height: 120px" src="${URL.createObjectURL(file)}" alt="your image" />
-                    </li>`;
+        
+      var img =`<li class="ui-state-default" data-order="${i}">
+                        <div style="display: grid;">
+                          <img class="preview_img" style="max-width: 120px; max-height: 120px" src="${URL.createObjectURL(file)}" alt="your image" />
+                          <button type="button" onclick="deleteItem(this);">X</button>
+                        </div>
+                      </li>`;
         $("#preview #sortable").append(img);
       }
     }
   });
   $("#video_img").change(() => {
+    $("#video_img_changed").val(1);
     $("#preview_video_img").html("");
     const [file] = $("#video_img")[0].files
     if (file) {
-      var img = `<img class="preview_img" style="max-width: 120px; max-height: 120px" src="${URL.createObjectURL(file)}" alt="your image" />`;
+      var img =`<li class="ui-state-default" data-order="${i}">
+                        <div style="display: grid;">
+                          <img class="preview_img" style="max-width: 120px; max-height: 120px" src="${URL.createObjectURL(file)}" alt="your image" />
+                          <button type="button" onclick="deleteItem(this);">X</button>
+                        </div>
+                      </li>`;
       $("#preview_video_img").append(img);
     }
   });
@@ -162,18 +177,20 @@ $("#img")
     $.ajax({
         url: '<?= WEB_API ?>/event-api.php',
         data: new FormData($("#myForm")[0]),
+        dataType: "json",
         cache: false,
         contentType: false,
         processData: false,
         method: 'POST',
         type: 'POST', // For jQuery < 1.9
         success: function(data){
+          data = data['data'];
           console.log(data);
           modal_init();
           insertPage("#modal_img", "animation/animation_success.html");
           insertText("#modal_content", "森林體驗新增成功!");
           $("#modal_alert").modal("show");
-          // setTimeout(function(){location.href = "staff_event_search.php"}, 2000);
+          setTimeout(function(){location.href = `staff_event_confirm.php?id=${data['event_id']}`}, 2000);
 
         },
         error: function(data){

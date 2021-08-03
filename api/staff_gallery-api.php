@@ -32,13 +32,10 @@ switch ($action) {
         $stmt->execute([$_POST['id']]);
         $result = $stmt->fetch();
 
- 
         $sql = "SELECT * FROM `index_image` WHERE index_id = ? ORDER BY num_order";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$_POST['id']]);
         $result['img'] = $stmt->fetchAll();
-
-
         break;
     case 'add':
         // insert index

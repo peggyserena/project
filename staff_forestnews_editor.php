@@ -25,11 +25,11 @@ $pageName = 'staff_forestnews_editor';
 
           <div class="form-group">
                   <label for="cat_id_H">分類-中文</label>
-                  <select type="text" class="form-control" id="cat_id_H" name="name" autofocus required></select>
+                  <select type="text" class="form-control" id="cat_id_H" name="cat_id" autofocus required></select>
               </div>
               <div class="form-group">
                   <label for="cat_id_E">分類-英文</label>
-                  <select type="text" class="form-control" id="cat_id_E" name="en_name"  required></select>
+                  <select type="text" class="form-control" id="cat_id_E" required></select>
               </div>
               <div class="form-group">
                   <label for="name">標題</label>
@@ -57,6 +57,7 @@ $pageName = 'staff_forestnews_editor';
                   <label for="img">圖片</label>
                   <input type="file" id="img" name="img[]" accept=".png,.jpeg,.jpg" multiple>
                   <input type="hidden" id="img_order" name="img_order">
+                  <input type="hidden" id="img_changed" name="img_changed" value="0">
               </div>
               <div class="form-group" id="preview">
                 <ul id="sortable" class="row list-unstyled">
@@ -84,6 +85,7 @@ $pageName = 'staff_forestnews_editor';
 $("#img")
 
   $( function() {
+    
     $( "#sortable" ).sortable({
       change: function( event, ui ) {
         $("#img_changed").val(1);
@@ -100,13 +102,26 @@ $("#img")
       var file = files[i];
       if (file) {
         var img = ` <li class="ui-state-default" data-order="${i}">
-                      <img class="preview_img" style="max-width: 120px; max-height: 120px" src="${URL.createObjectURL(file)}" alt="your image" />
+                      <div style="display: grid;">
+                        <img class="preview_img" style="max-width: 120px; max-height: 120px" src="${URL.createObjectURL(file)}" alt="your image" />
+                        <button type="button">X</button>
+                      </div>
                     </li>`;
         $("#preview #sortable").append(img);
       }
     }
   });
   
+</script>
+
+<script>
+
+// 設定end_date大於start_date
+$("#start_date").change(function(){
+  var min = $("#start_date").val();
+  $("#end_date").attr("min", min);
+})
+
 </script>
 <script> 
   fillCat();
@@ -134,32 +149,40 @@ $("#img")
     $.post('<?= WEB_API ?>/forestnews-api.php', {
       'type': 'read',
       'id': <?= $_GET['id']?>
-    }, function(data){
+    }, function(result){
+      console.log("result");
+      console.log(result);
+      data = result['data'];
+      files = result['img'];
       console.log(data);
       var columns = ['cat_id', 'name', 'start_date', 'end_date', 'content','notice']
       columns.forEach(function(elem){
         $(`#${elem}`).val(data[elem]);
       });
-
+      $("#cat_id_H, #cat_id_E").val(data['cat_id']);
       
       $("#preview #sortable").html("");
-      const files = data['img'];
       for(var i = 0; i < files.length; i++){
         var file = files[i];
         if (file) {
           var img = ` <li class="ui-state-default" data-order="${i}">
-                        <img class="preview_img" style="max-width: 120px; max-height: 120px" src="${file.path}" alt="your image" />
+                        <div style="display: grid;">
+                          <img class="preview_img" style="max-width: 120px; max-height: 120px" src="${file.path}" alt="your image" />
+                          <button type="button" onclick="deleteItem(this);">X</button>
+                        </div>
                       </li>`;
           $("#preview #sortable").append(img);
         }
       }
+      
+      $("#start_date").trigger("change");
     }, 'json').fail(function(data){
       console.log(data);
     })
   }
   
   function create(){
-    var img_order = [];
+    var img_order = {};
     $("#preview #sortable li").each(function(ind, elem){
       img_order[$(elem).data("order")] = ind + 1;
     })
@@ -178,7 +201,7 @@ $("#img")
           insertPage("#modal_img", "animation/animation_success.html");
           insertText("#modal_content", "修改成功!");
           $("#modal_alert").modal("show");
-          setTimeout(function(){location.href = "staff_event_search.php"}, 2000);
+          setTimeout(function(){location.href = "staff_forestnews_search.php"}, 2000);
 
         },
         error: function(data){
@@ -187,15 +210,23 @@ $("#img")
           insertPage("#modal_img", "animation/animation_error.html");
           insertText("#modal_content", "資料傳輸失敗");
           $("#modal_alert").modal("show");
-          setTimeout(function(){location.href = "staff_event_search.php"}, 2000);
+          setTimeout(function(){location.href = "staff_forestnews_search.php"}, 2000);
         }
     });
   }
 
+  function deleteItem(elem){
+    $(elem).parents("li").remove();
+    $("#img_changed").val(1);
+  }
 
   // 設定date日期min為今日
   var d = new Date();
   var min = d.toISOString().split("T")[0];
   $("#date").attr("min", min);
+  // 設定分類中英文自動調換
+  $("#cat_id_E, #cat_id_H").change(function(){
+      $("#cat_id_E, #cat_id_H").val(this.value);
+  })
 </script>
 <?php include __DIR__. '/parts/staff_html-foot.php'; ?>

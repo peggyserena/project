@@ -25,7 +25,15 @@ switch ($action) {
         $result['img'] = readImage($id);
         $result['quantity_map'] = readQuantityList($id);
         break;
+    case 'readTemp':
+        $id = $_POST['id'];
+        // 抓取活動參與人數與類別中文名稱
+        $result = read($id, true);
+        $result['img'] = readImage($id);
+        $result['quantity_map'] = readQuantityList($id);
+        break;
     case 'add':
+        $result = [];
         // insert video image
         $name = uploadImg($_FILES['video_img'], "images/event/video/");
         $_POST['video_img'] = $name;
@@ -34,7 +42,7 @@ switch ($action) {
         $columns = ['cat_id', 'video', 'video_img', 'name', 'date', 'time', 'price', 'description', 'title', 'age', 'location', 'content', 'info', 'notice', 'limitNum'];
         $sql = "INSERT INTO `event` ";
 
-        $sql .= "(`".implode("`,`", $columns)."`) VALUES (".substr(str_repeat("?,", count($columns)), 0, -1).")";
+        $sql .= "(`".implode("`,`", $columns)."`, `status`) VALUES (".substr(str_repeat("?,", count($columns)), 0, -1).", '暫存')";
         // INSERT INTO `event` (`cat_id`, `video`, `name`, `date`, `time`, `price`, `description`, `title`, `age`, `location`, `content`, `info`, `notice`, `limitNum`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)        
 
         $data = [];
@@ -61,7 +69,16 @@ switch ($action) {
         }
         $stmt->execute($param);
 
-        $result = ["success"];
+        $result['data'] = ['event_id' => $event_id];
+        break;
+    case 'confirm':
+        $result = [];
+        $id = $_POST['id'];
+        $sql = "UPDATE `event` SET `status` = '已確認' WHERE `id` = ?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$id]);
+        $result = ["sucess"];
+        $result = [$sql];
         break;
     case 'edit':
         $id = $_POST['id'];
@@ -105,21 +122,29 @@ switch ($action) {
         
         $stmt = $pdo->prepare($sql);
         $stmt->execute($data);
-        
+
         // insert gallery image
         if ($img_changed === "1"){
             if ($_FILES['img']['size'][0] === 0){
                 $num_order = json_decode($_POST['img_order']);
-                $result = [];
                 $sql = "SELECT * FROM `event_image` WHERE `event_id` = ? ORDER BY num_order";
                 $stmt = $pdo->prepare($sql);
                 $stmt->execute([$id]);
                 $event_image = $stmt->fetchAll();
-
-                foreach($num_order as $key => $value){
-                    $sql = "UPDATE `event_image` SET num_order = ? WHERE id = ?";    
-                    $stmt = $pdo->prepare($sql);
-                    $stmt->execute([$value, $event_image[$key]['id']]);
+                foreach($event_image as $key => $value){
+                    if (isset($num_order->$key)){
+                        $order_value = $num_order->$key;
+                        $sql = "UPDATE `event_image` SET num_order = ? WHERE id = ?";    
+                        $stmt = $pdo->prepare($sql);
+                        $stmt->execute([$order_value, $value['id']]);
+                    } else{
+                        
+                        $sql = "DELETE FROM `event_image` WHERE id = ?";    
+                        $stmt = $pdo->prepare($sql);
+                        $stmt->execute([$value['id']]);
+                        deleteImg($value['path']);
+                        array_push($result, $sql);
+                    }
                 }
             } else{
                 foreach($event['img'] as $event_image){
@@ -205,14 +230,19 @@ function readImage($id = null){
     }
     return $result;
 }
-function read($id = null){
+function read($id = null, $temp = false){
     global $pdo;
+    $temp_condition = "";
     if (isset($id)){
         // read
+        
+        if (!$temp){
+            $temp_condition = "AND `status` != '暫存'";
+        }
         $sql = "SELECT `e`.*, ec.name as `ec_name`, SUM(`oe`.quantity) as quantity FROM `event` as e 
                 JOIN `event_category` as ec ON `cat_id` = ec.`id` 
                 LEFT JOIN `order_event` as oe ON e.id = oe.event_id 
-                WHERE e.id = ? 
+                WHERE e.id = ? $temp_condition
                 group by e.id";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$id]);
@@ -246,6 +276,10 @@ function read($id = null){
 
         $sql = "SELECT `e`.*, ec.name as `ec_name`, SUM(`oe`.quantity) as quantity FROM `event` as e";
         $sql_condition = [];
+        if (!$temp) {
+            $temp_condition = "`status` != '暫存'";
+            array_push($sql_condition, $temp_condition);
+        }
         if ($year != "") {
             array_push($sql_condition, "YEAR(`date`) = $year");
         }

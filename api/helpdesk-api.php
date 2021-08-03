@@ -2,8 +2,8 @@
 include __DIR__ . '/../parts/imgHandler.php';
 
 $user = $_SESSION['user'];
-$type = isset($_POST['type']) ? $_POST['type'] : ''; // 操作類型
-switch ($type) {
+$action = isset($_POST['action']) ? $_POST['action'] : ''; // 操作類型
+switch ($action) {
     case 'readCat':
         $sql = "SELECT * FROM helpdesk_category";
         $stmt = $pdo->prepare($sql);
@@ -15,8 +15,8 @@ switch ($type) {
         $param = [$user['id']];
         $condition_map = [
             'cat_id' => "h.`cat_id` = ?",
-            'year' => "YEAR(h.`create_datetime`) = ?",
-            'month' => "MONTH(h.`create_datetime`) = ?",
+            'year' => "YEAR(h.`created_at`) = ?",
+            'month' => "MONTH(h.`created_at`) = ?",
         ];
         foreach($condition_map as $key => $value){
             if (!empty($_POST[$key])){
@@ -53,24 +53,33 @@ switch ($type) {
     case 'add':
         
         // insert helpdesk
-        $columns = ['user_id', 'g_name', 'g_mobile', 'g_email', 'order_num', 'content', 'create_datetime'];
+        $param = []; // [path1, order1, path2, order2]
+        $columns = ['user_id', 'g_name', 'g_mobile', 'g_email','topic','cat_id', 'order_num', 'content', 'created_at'];
         $sql = "INSERT INTO `helpdesk` ";
 
         $sql .= "(`".implode("`,`", $columns)."`) VALUES (".substr(str_repeat("?,", count($columns)), 0, -1).")";
-        // INSERT INTO `helpdesk` ('user_id', 'g_name', 'g_mobile', 'g_email', 'order_num', 'content', 'create_datetime') VALUES (?, ?, ?, ?, ?, ?, ?)        
+        // INSERT INTO `helpdesk` ('user_id', 'g_name', 'g_mobile', 'g_email', 'order_num', 'content', 'created_at') VALUES (?, ?, ?, ?, ?, ?, ?)        
 
-
+        $_POST['user_id'] = $user['id'];
+        $_POST['created_at'] = "NOW()";
+        foreach($columns as $col){
+            array_push($param, $_POST[$col]);
+        }
+        
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($param);
         $helpdesk_id = $pdo->lastInsertId();
 
+        $param = []; // [path1, order1, path2, order2]
         // insert gallery image
-        $name_list = uploadImgs($_FILES['img'], "images/helpdesk/gallery/");
+        $name_list = uploadImgs($_FILES['img'], "images/helpdesk/");
         // json_decode() 字串變陣列
         // json_encode() 陣列變字串
         $img_order = json_decode($_POST['img_order']);
+
         $sql = "INSERT INTO `helpdesk_image` (`helpdesk_id`, `path`, `num_order`) VALUES ".substr(str_repeat("($helpdesk_id, ?, ?),", count($name_list)), 0, -1);    
         // INSERT INTO `helpdesk` (`helpdesk_id`, `path`) VALUES  (1, ?, ?), (1, ?, ?), (1, ?, ?)
         $stmt = $pdo->prepare($sql);
-        $param = []; // [path1, order1, path2, order2]
         foreach($name_list as $index => $name){
             array_push($param, $name);
             array_push($param, $img_order[$index]);
@@ -99,18 +108,18 @@ switch ($type) {
 
         if ($video_img_changed === "1"){
             deleteImg($helpdesk['video_img']);
-            $name = uploadImg($_FILES['video_img'], "images/helpdesk/video/");
+            $name = uploadImg($_FILES['video_img'], "images/helpdesk/");
             $_POST['video_img'] = $name;
         }
         
 
         // insert helpdesk
-        $columns = ['user_id', 'g_name', 'g_mobile', 'g_email', 'order_num', 'content', 'create_datetime'];
+        $columns = ['user_id', 'g_name', 'g_mobile', 'g_email', 'order_num', 'content', 'created_at'];
         $sql = "UPDATE `helpdesk` SET ";
         
         $sql .= implode(" = ?, ", $columns)." = ? WHERE id = $id";
-        // INSERT INTO `helpdesk` (`'user_id', 'g_name', 'g_mobile', 'g_email', 'order_num', 'content', 'create_datetime') VALUES (?, ?, ?, ?, ?, ?, ?)        
-        // UPDATE `helpdesk` `user_id` = ?, `g_name` = ?,  `g_mobile` = ?,  `g_email` = ?,  `order_num` = ?,  `content` = ?,  `create_datetime` = ?   
+        // INSERT INTO `helpdesk` (`'user_id', 'g_name', 'g_mobile', 'g_email', 'order_num', 'content', 'created_at') VALUES (?, ?, ?, ?, ?, ?, ?)        
+        // UPDATE `helpdesk` `user_id` = ?, `g_name` = ?,  `g_mobile` = ?,  `g_email` = ?,  `order_num` = ?,  `content` = ?,  `created_at` = ?   
 
         $data = [];
         foreach($columns as $col){
@@ -142,7 +151,7 @@ switch ($type) {
                 $sql = "DELETE FROM `helpdesk_image` WHERE `helpdesk_id` = ?";
                 $stmt = $pdo->prepare($sql);
                 $stmt->execute([$id]);
-                $name_list = uploadImgs($_FILES['img'], "images/helpdesk/gallery/");
+                $name_list = uploadImgs($_FILES['img'], "images/helpdesk/");
                 $sql = "INSERT INTO `helpdesk_image` (`helpdesk_id`, `path`) VALUES ".substr(str_repeat("($id, ?),", count($name_list)), 0, -1);    
                 // INSERT INTO `helpdesk` (`helpdesk_id`, `path`) VALUES  (1, ?), (1, ?), (1, ?)
                 $stmt = $pdo->prepare($sql);

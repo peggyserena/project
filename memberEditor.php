@@ -3,11 +3,7 @@
 $title = '修改資料';
 $pageName = 'editMember';
 
-$id = intval($_SESSION['user']['id']);
-$sql = "SELECT * FROM members WHERE `id`=$id";
-
-$row = $pdo->query($sql)->fetch();
-if (empty($row)) {
+if (empty($_SESSION['user'])) {
     header('Location: member.php');
     exit;
 }
@@ -66,37 +62,38 @@ if (empty($row)) {
                 <form name="form1" id="myForm" action="<?= WEB_API ?>/memberEditor-api.php" method="post" novalidate onsubmit="checkForm(); return false;">
                     <div class="form-group">
                         <label for="fullname autofocus ">姓名</label>
-                        <input type="text" class="form-control" name="fullname" id="fullname" value="<?= htmlentities($row['fullname']) ?>"></input>
+                        <input type="text" class="form-control" name="fullname" id="fullname" value=""></input>
                     </div>
                     <div class="form-group">
                         <label for="fullname autofocus ">性別</label>
-                        <input type="radio"  name="gender" value="<?= htmlentities($row['gender']) ?>"required>
-                        <input type="radio"  name="gender" value="<?= htmlentities($row['gender']) ?>"required>
+                        <input type="radio"  name="gender" value="男"required>男
+                        <input type="radio"  name="gender" value="女"required>女
+                        <input type="radio"  name="gender" value="無"required>不填
                     </div>
                     <div class="form-group">
                         <label for="mobile">手機</label>
-                        <input type="text" class="form-control" id="mobile" name="mobile" pattern="09\d{2}-?\d{3}-?\d{3}" value="<?= htmlentities($row['mobile']) ?>">
+                        <input type="text" class="form-control" id="mobile" name="mobile" pattern="09\d{2}-?\d{3}-?\d{3}" value="">
                         <small class="form-text error"></small>
                     </div>
                     <div class="form-group">
                         <label for="email_2nd">備用email</label>
-                        <input type="text" class="form-control" name="email_2nd" id="email_2nd" value="<?= htmlentities($row['email_2nd']) ?>"></input>
+                        <input type="text" class="form-control" name="email_2nd" id="email_2nd" value=""></input>
                     </div>
                     <div class="form-group">
                         <label for="county">縣市</label>
-                        <select class="form-control" name="county" id="county" value="<?= htmlentities($row['county']) ?>"></select>
+                        <select class="form-control" name="county" id="county" value=""></select>
                     </div>
                     <div class="form-group">
                         <label for="district">鄉鎮市區</label>
-                        <select class="form-control" name="district" id="district" value="<?= htmlentities($row['district']) ?>"></select>
+                        <select class="form-control" name="district" id="district" value=""></select>
                     </div>
                     <div class="form-group">
                         <label for="zipcode">郵遞區號</label>
-                        <input required type="text" class="form-control" name="zipcode" id="zipcode" placeholder="236"  value="<?= htmlentities($row['zipcode']) ?>" disabled>
+                        <input required type="text" class="form-control" name="zipcode" id="zipcode" placeholder="236"  value="" disabled>
                     </div>
                     <div class="form-group">
                         <label for="address">地址</label>
-                        <input required type="text" class="form-control" name="address" id="address" placeholder="＊＊區＊＊路＊＊巷＊＊號＊＊樓"  value="<?= htmlentities($row['address']) ?>">
+                        <input required type="text" class="form-control" name="address" id="address" placeholder="＊＊區＊＊路＊＊巷＊＊號＊＊樓"  value="">
                     </div>
 
                     <div class=" text-center mt-4"><button type="submit" class="custom-btn btn-4 t_shadow">修改</button></div>
@@ -191,5 +188,89 @@ $("#birthday").attr("max", max);
   document.querySelector('#myForm select[name=county]').dispatchEvent(new Event("change"));
   document.querySelector('#myForm select[name=district]').value = "<?= $_SESSION['user']['district'] ?>";
   document.querySelector('#myForm select[name=district]').dispatchEvent(new Event("change"));
+</script>
+<script>
+    $(document).ready(function() {
+        $.post('api/member-api.php', {
+            action: 'readCurrent'
+        }, function(result){
+            console.log(result);
+            data = result['data'];
+            output = $("#myForm");
+            fillData(data, output);
+            
+        }, 'json').fail(function(data){
+            console.log('error');
+            console.log(data);
+        })
+    });
+    function fillData(data, elem){
+        var event_img_cover = "";
+        if (typeof(data['img']) !== "undefined"){
+            event_img_cover = "<?= WEB_ROOT."/" ?>" + data['img'][0]['path'];
+        }
+        list = [
+            {
+                selector: "#fullname",
+                value: data['fullname']
+            },
+            {
+                selector: `input[name='gender'][value='${data['gender']}']`,
+                attr: {
+                    "checked": "checked"
+                }
+            },
+            {
+                selector: "#mobile",
+                value: data['mobile'],
+            },
+            {
+                selector: "#email_2nd",
+                value: data['email_2nd'],
+            },
+            {
+                selector: "#county",
+                value: data['county'],
+            },
+            {
+                selector: "#district",
+                value: data['district'],
+            },
+            {
+                selector: "#zipcode",
+                value: data['zipcode'],
+            },
+            {
+                selector: "#address",
+                value: data['address'],
+            },
+        ]
+        
+        // map
+        // {
+        //     selector: "#event_name",
+        //     attr: {
+        //         text: data['name']
+        //     }
+        // }
+        list.forEach(function(m){
+            // attr
+            // attr: {
+            //         src: <?= WEB_ROOT."/" ?>data['img'][0]['path']
+            //     }
+            if ('text' in m){
+                $(elem).find(m['selector']).text(m['text']);
+            }
+            if ('value' in m){
+                $(elem).find(m['selector']).val(m['value']);
+            }
+            for (attr_key in m['attr']){
+                // fill_key = 'src'
+                // m['attr']['src']
+                $(elem).find(m['selector']).attr(attr_key, m['attr'][attr_key]);
+            }
+        });
+    }
+
 </script>
 <?php include __DIR__ . '/parts/html-foot.php'; ?>

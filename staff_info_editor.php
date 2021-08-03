@@ -53,31 +53,31 @@ $pageName ='staff_register';
                     <input required type="hidden" name="action" value="changeProfile"/>
                     <div class="form-group">
                         <label for="staff_id">員工編號： </label>
-                        <span type="text" id="staff_id"><?= $_SESSION['staff']['staff_id'] ?></span>
+                        <span type="text" id="staff_id"></span>
                     </div>
                     <div class="form-group">
                         <label for="position">職稱： </label>
-                        <span type="text" id="position"><?= $staff_role_category[$_SESSION['staff']['role']] ?></span>
+                        <span type="text" id="position"></span>
                     </div>
                     <div class="form-group">
                         <label for="fullname">姓名</label>
-                        <input required type="text" class="form-control" name="fullname" id="fullname" placeholder="林小花" autofocus value="<?= $_SESSION['staff']['fullname'] ?>">
+                        <input required type="text" class="form-control" name="fullname" id="fullname" placeholder="林小花" autofocus>
                     </div>
                     <div class="form-group">
                         <label for="identityNum">身分證字號</label>
-                        <input required type="text" class="form-control" id="identityNum" name="identityNum"  required value="<?= $_SESSION['staff']['identityNum'] ?>">
+                        <input required type="text" class="form-control" id="identityNum" name="identityNum"  required>
                     </div>
                     <div class="form-group">
                         <label for="birthday">生日 </label>
-                        <input required type="date" class="form-control" id="birthday" name="birthday" required value="<?= $_SESSION['staff']['birthday'] ?>">
+                        <input required type="date" class="form-control" id="birthday" name="birthday" required>
                     </div>
                     <div class="form-group">
                         <label for="mobile">手機</label>
-                        <input required type="text" class="form-control" id="mobile" name="mobile" pattern="09\d{2}-?\d{3}-?\d{3}" placeholder="0987-654-321" value="<?= $_SESSION['staff']['mobile'] ?>">
+                        <input required type="text" class="form-control" id="mobile" name="mobile" pattern="09\d{2}-?\d{3}-?\d{3}" placeholder="0987-654-321">
                     </div>
                     <div class="form-group">
                         <label for="email">email </label>
-                        <input required type="email" class="form-control" id="email" name="email" placeholder="example@gmail.com" required value="<?= $_SESSION['staff']['email'] ?>">
+                        <input required type="email" class="form-control" id="email" name="email" placeholder="example@gmail.com" required>
                     </div>
                     <div class="form-group">
                         <label for="county">縣市</label>
@@ -89,11 +89,11 @@ $pageName ='staff_register';
                     </div>
                     <div class="form-group">
                         <label for="zipcode">郵遞區號</label>
-                        <input required type="text" class="form-control" name="zipcode" id="zipcode" placeholder="236" value="<?= $_SESSION['staff']['zipcode'] ?>" disabled>
+                        <input required type="text" class="form-control" name="zipcode" id="zipcode" placeholder="236" disabled>
                     </div>
                     <div class="form-group">
                         <label for="address">地址</label>
-                        <input required type="text" class="form-control" name="address" id="address" placeholder="＊＊區＊＊路＊＊巷＊＊號＊＊樓" value="<?= $_SESSION['staff']['address'] ?>">
+                        <input required type="text" class="form-control" name="address" id="address" placeholder="＊＊區＊＊路＊＊巷＊＊號＊＊樓" >
                     </div>
                     <div class="button m-4"><button type="submit" class="custom-btn btn-4 t_shadow ">送出</button></div>
                     <hr>
@@ -178,6 +178,93 @@ $pageName ='staff_register';
             })
         }
 
+    }
+</script>
+
+<script>
+    $.post('api/staff-api.php', {
+        action: 'readCurrent',
+    }, function(result){
+        data = result['data'];
+        output = $("#myForm");
+        fillData(data, output);
+    }, 'json').fail(function(data){
+        console.log('error');
+        console.log(data);
+    })
+
+    function fillData(data, elem){
+        list = [
+            {
+                selector: "#staff_id",
+                text: data['staff_id']
+            },
+            {
+                selector: "#position",
+                text: data['role_name']
+            },
+            {
+                selector: "#fullname",
+                value: data['fullname']
+            },
+            {
+                selector: "#birthday",
+                value: data['birthday']
+            },
+            {
+                selector: "#identityNum",
+                value: data['identityNum']
+            },
+            {
+                selector: "#email",
+                value: data['email']
+            },
+            {
+                selector: "#mobile",
+                value: data['mobile']
+            },
+            {
+                selector: "#zipcode",
+                value: data['zipcode']
+            },
+            {
+                selector: "#county",
+                value: data['county']
+            },
+            {
+                selector: "#district",
+                value: data['district']
+            },
+            {
+                selector: "#address",
+                value: data['address']
+            },
+        ]
+        
+        // map
+        // {
+        //     selector: "#event_name",
+        //     attr: {
+        //         text: data['name']
+        //     }
+        // }
+        list.forEach(function(m){
+            // attr
+            // attr: {
+            //         src: <?= WEB_ROOT."/" ?>data['img'][0]['path']
+            //     }
+            if ('text' in m){
+                $(elem).find(m['selector']).text(m['text']);
+            }
+            if ('value' in m){
+                $(elem).find(m['selector']).val(m['value']);
+            }
+            for (attr_key in m['attr']){
+                // fill_key = 'src'
+                // m['attr']['src']
+                $(elem).find(m['selector']).attr(attr_key, m['attr'][attr_key]);
+            }
+        });
     }
 </script>
 <script>

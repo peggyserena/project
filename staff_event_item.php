@@ -6,48 +6,48 @@ $pageName = 'staff_event_item';
 
 
 
-$month = "";
-$time = "";
-$cat_id = "";
+// $month = "";
+// $time = "";
+// $cat_id = "";
 
-$month = $_GET['month'] ?? "";
-$time = $_GET['time'] ?? "";
-$cat_id = $_GET['cat_id'] ?? "";
-$order = $_GET['order'] ?? "";
-
-
-$sql = "SELECT `e`.*, ec.name as `ec_name`, SUM(`oe`.quantity) as quantity FROM `event` as e";
-$sql_condition = [];
-array_push($sql_condition, "e.id = ?");
-
-$sql .= " JOIN `event_category` as ec ON `cat_id` = ec.`id`";
-$sql .= " LEFT JOIN `order_event` as oe ON e.id = oe.event_id";
-
-if (sizeof($sql_condition) > 0) {
-    $sql .= " WHERE ";
-}
-$sql .= implode(" AND ", $sql_condition);
-$sql .= " group by e.id";
-$stmt = $pdo->prepare($sql);
-$stmt->execute([$_GET['id']]);
-$event = $stmt->fetch();
-
-// 抓圖片
-$sql = "SELECT * FROM `event_image` WHERE event_id = ".$event['id']." ORDER BY num_order";
-$stmt = $pdo->prepare($sql);
-$stmt->execute([]);
-$event_img = $stmt->fetchAll();
+// $month = $_GET['month'] ?? "";
+// $time = $_GET['time'] ?? "";
+// $cat_id = $_GET['cat_id'] ?? "";
+// $order = $_GET['order'] ?? "";
 
 
-// 活動歷年總數
-$sql = "SELECT e.name, IFNULL(sum(`quantity`), 0) as quantity FROM `event` as e LEFT JOIN `order_event` as oe ON e.id = oe.event_id WHERE e.id = ? GROUP BY `name`";
-$stmt = $pdo->prepare($sql);
-$stmt->execute([$_GET['id']]);
-$quantity_list = $stmt->fetchAll();
-$quantity_map = [];
-foreach ($quantity_list as $value) {
-    $quantity_map[$value['name']] = $value['quantity'];
-}
+// $sql = "SELECT `e`.*, ec.name as `ec_name`, SUM(`oe`.quantity) as quantity FROM `event` as e";
+// $sql_condition = [];
+// array_push($sql_condition, "e.id = ?");
+
+// $sql .= " JOIN `event_category` as ec ON `cat_id` = ec.`id`";
+// $sql .= " LEFT JOIN `order_event` as oe ON e.id = oe.event_id";
+
+// if (sizeof($sql_condition) > 0) {
+//     $sql .= " WHERE ";
+// }
+// $sql .= implode(" AND ", $sql_condition);
+// $sql .= " group by e.id";
+// $stmt = $pdo->prepare($sql);
+// $stmt->execute([$_GET['id']]);
+// $event = $stmt->fetch();
+
+// // 抓圖片
+// $sql = "SELECT * FROM `event_image` WHERE event_id = ".$event['id']." ORDER BY num_order";
+// $stmt = $pdo->prepare($sql);
+// $stmt->execute([]);
+// $event_img = $stmt->fetchAll();
+
+
+// // 活動歷年總數
+// $sql = "SELECT e.name, IFNULL(sum(`quantity`), 0) as quantity FROM `event` as e LEFT JOIN `order_event` as oe ON e.id = oe.event_id WHERE e.id = ? GROUP BY `name`";
+// $stmt = $pdo->prepare($sql);
+// $stmt->execute([$_GET['id']]);
+// $quantity_list = $stmt->fetchAll();
+// $quantity_map = [];
+// foreach ($quantity_list as $value) {
+//     $quantity_map[$value['name']] = $value['quantity'];
+// }
 ?>
 <?php include __DIR__ . '/parts/staff_html-head.php'; ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
@@ -68,10 +68,9 @@ foreach ($quantity_list as $value) {
         flex: 1 1 0;
     }
 
-    .eventItem img {
+    #event_img_cover {
         width: 100%;
-        height: 50%;
-        object-fit: cover;
+        max-height: 550px;
     }
 
   
@@ -81,12 +80,12 @@ foreach ($quantity_list as $value) {
 
     .eventItem .fancybox {
         width: 100%;
-        height: 80px;
+        height: 180px;
     }
 
     .eventItem .fancybox img {
-        height: 70%;
-        object-fit: cover;
+        width: 100%;
+        max-height: 180px;
         border:white solid 1px;
     }
 
@@ -212,7 +211,7 @@ foreach ($quantity_list as $value) {
 
 
 
-        <div class='m-0  '>
+        <div class='col-lg-12 col-md-12 col-sm-12 m-0 p-0'>
             <div class="m-0">
                 <h4 class=' m-0 text-center p-2 c_1 b-green rot-135' style="color:white; font-weight:600" id="event_title"></h4>
             </div>
@@ -251,7 +250,7 @@ foreach ($quantity_list as $value) {
         
     </div>
     <div class="text-center mt-5">
-      <a class="text-center c_1 custom-btn btn-4" href="staff_event_editor.php?id=<?= $event['id']?>" target="_blank">修改</a>
+      <a class="text-center c_1 custom-btn btn-4" id="event_edit_link" href="staff_event_editor.php?id=<?= $_GET['id'] ?>" target="_blank">修改</a>
     </div>
 
 

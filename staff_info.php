@@ -10,18 +10,6 @@ header('Location: staff_login.php');
 exit;
 }
 
-$sql = "SELECT * FROM staff WHERE staff_id='" . $_SESSION['staff']['staff_id']."'";
-$r = $pdo->query($sql)->fetch();
-
-// role類別
-$sql = "SELECT * FROM `staff_role_category`";
-$stmt = $pdo->query($sql);
-$result = $stmt->fetchAll();
-$staff_role_category = [];
-//ArrayArray ( [1] => 管理者 [2] => 經理 [3] => 會計 [4] => 一般員工 )
-foreach($result as $role_cat){
-    $staff_role_category[$role_cat['id']] = $role_cat['position'];
-}
 // 陣列
 // print_r, var_dump
 
@@ -58,30 +46,30 @@ foreach($result as $role_cat){
             <div class="p-md-5 p-sm-2">
                 <div class="form-group">
                     <label for="staff_id">員工編號： </label>
-                    <span type="text" id="staff_id"><?= $_SESSION['staff']['staff_id'] ?></span>
+                    <span type="text" id="staff_id"></span>
                 </div>
                 <div class="form-group">
-                    <label for="position">職稱： </label><span> <?= $staff_role_category[$r["role"]] ?></span></span>
+                    <label for="position">職稱： </label><span id="position"></span></span>
                 </div>
                 <div class="form-group">
-                    <label for="fullname">姓名： </label><span><?= $r['fullname'] ?></span>
+                    <label for="fullname">姓名： </label><span id="fullname"></span>
                 </div>
                 <div class="form-group">
-                    <label for="birthday">生日： </label><span><?= $r['birthday'] ?></span>
+                    <label for="birthday">生日： </label><spa id='birthday'></span>
                 </div>
 
  
                 <div class="form-group">
-                    <label for="identityNum">身分證字號： </label><span><?= $r['identityNum'] ?></span>
+                    <label for="identityNum">身分證字號： </label><span id='identityNum'></span>
                 </div>
                 <div class="form-group">
-                    <label for="email">E-mail： </label><span><?= $r['email'] ?></span>
+                    <label for="email">E-mail： </label><span id='email'></span>
                 </div>
                 <div class="form-group">
-                    <label for="mobile">手機： </label><span><?= $r['mobile'] ?></span>
+                    <label for="mobile">手機： </label><span id='mobile'></span>
                 </div>
                 <div class="form-group">
-                    <label for="county">地址： </label><span><?= $r['zipcode'] ?></span><span><?= $r['county'] ?></span><span><?= $r['district'] ?></span><span><?= htmlentities($r['address']) ?></span>
+                    <label for="county">地址： </label><span id='zipcode'></span><span id='county'></span><span id='district'></span><span id='address'></span>
                 </div>
      
                 <div  class="text-center"><a href="staff_info_editor.php" class="custom-btn btn-4 text-center t_shadow">修改</a>
@@ -96,7 +84,90 @@ foreach($result as $role_cat){
 <?php include __DIR__. '/parts/staff_scripts.php'; ?>
 
 <script>
-  
+    $.post('api/staff-api.php', {
+        action: 'readCurrent',
+    }, function(result){
+        data = result['data'];
+        output = $("#profile");
+        fillData(data, output);
+    }, 'json').fail(function(data){
+        console.log('error');
+        console.log(data);
+    })
+
+    function fillData(data, elem){
+        list = [
+            {
+                selector: "#staff_id",
+                text: data['staff_id']
+            },
+            {
+                selector: "#position",
+                text: data['role_name']
+            },
+            {
+                selector: "#fullname",
+                text: data['fullname']
+            },
+            {
+                selector: "#birthday",
+                text: data['birthday']
+            },
+            {
+                selector: "#identityNum",
+                text: data['identityNum']
+            },
+            {
+                selector: "#email",
+                text: data['email']
+            },
+            {
+                selector: "#mobile",
+                text: data['mobile']
+            },
+            {
+                selector: "#zipcode",
+                text: data['zipcode']
+            },
+            {
+                selector: "#county",
+                text: data['county']
+            },
+            {
+                selector: "#district",
+                text: data['district']
+            },
+            {
+                selector: "#address",
+                text: data['address']
+            },
+        ]
+        
+        // map
+        // {
+        //     selector: "#event_name",
+        //     attr: {
+        //         text: data['name']
+        //     }
+        // }
+        list.forEach(function(m){
+            // attr
+            // attr: {
+            //         src: <?= WEB_ROOT."/" ?>data['img'][0]['path']
+            //     }
+            if ('text' in m){
+                $(elem).find(m['selector']).text(m['text']);
+            }
+            if ('value' in m){
+                $(elem).find(m['selector']).val(m['value']);
+            }
+            for (attr_key in m['attr']){
+                // fill_key = 'src'
+                // m['attr']['src']
+                $(elem).find(m['selector']).attr(attr_key, m['attr'][attr_key]);
+            }
+        });
+    }
 </script>
 
 <?php include __DIR__. '/parts/staff_html-foot.php'; ?>

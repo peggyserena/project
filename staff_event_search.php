@@ -99,7 +99,7 @@ $pageName = 'event';
                                 <option value="3" <?= $_GET['order'] ?? "" == 3 ? "selected" : "" ?>>價錢由高至低</option>
                             </select>
                         </li>
-                        <li><button type="button" class="custom-btn btn-4 m-0 p-0" style="width:3rem; ">送出</button></li>
+                        <li><button type="button" class="custom-btn btn-4 m-0 p-0" style="width:3rem; " onclick="readData()">送出</button></li>
                     </ul>
                 </form>
             </div>
@@ -334,7 +334,7 @@ $pageName = 'event';
                 $(elem).find(m['selector']).text(m['text']);
             }
             if ('value' in m){
-                $(elem).find(m['selector']).value(m['value']);
+                $(elem).find(m['selector']).val(m['value']);
             }
             for (attr_key in m['attr']){
                 // fill_key = 'src'

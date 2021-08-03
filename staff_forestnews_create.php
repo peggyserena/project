@@ -94,7 +94,16 @@ $("#img")
 
   
 </script>
+<script>
 
+// 設定end_date大於start_date
+$("#start_date").change(function(){
+  var min = $("#start_date").val();
+  $("#end_date").attr("min", min);
+})
+
+
+</script>
 <script>
   $.post('<?= WEB_API ?>/forestnews-api.php', {
     'action': 'readCat',
@@ -160,5 +169,10 @@ $("#img")
   var d = new Date();
   var min = d.toISOString().split("T")[0];
   $("#date").attr("min", min);
+
+  // 設定分類中英文自動調換
+  $("#cat_id_E, #cat_id_H").change(function(){
+      $("#cat_id_E, #cat_id_H").val(this.value);
+  })
 </script>
 <?php include __DIR__. '/parts/staff_html-foot.php'; ?>

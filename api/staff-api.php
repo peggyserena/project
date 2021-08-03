@@ -9,6 +9,20 @@ if (empty($staff)){
 }
 $output = [];
 switch ($action){
+        case 'readCat':
+                $sql ="SELECT * FROM `staff_role_category`";
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute([]);
+                $output['data'] = $stmt->fetchAll();
+                $output['success'] = "讀取成功";
+                break;
+        case 'readCurrent':
+                $sql ="SELECT staff.*, src.position as role_name FROM `staff` JOIN `staff_role_category` as src ON staff.role = src.id WHERE staff_id = ?";
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute([$staff['staff_id']]);
+                $output['data'] = $stmt->fetch();
+                $output['success'] = "讀取成功";
+                break;
         case 'readAll':
                 $condition = [];
                 $param = [];

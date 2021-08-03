@@ -17,32 +17,35 @@ $pageName = 'news';
     <main>
         <div class="container mt-5">
             <div class="cat_id_E">
-                <h2  id="cat_id_H" name="name"  class="title1 b-green rot-135 c_1 ">園區相關 
-                    <span class="cat_id_E" name="en_name">Garden Information</span>
+                <h2 class="title1  b-green rot-135 c_1">
+                    <span  id="cat_id_H" name="name"  >
+                    </span>
+                    <span  id="cat_id_E" name="name"  >
+                    </span>
                 </h2>
                 <div id="accordion">
                     <div class="card">
-                        <div class="card-header  p-0">
-                            <a class="card-link row   align-items-center  " data-toggle="collapse" href="#<?= $forest['name'] ?>">
-                                <h4 id="name" name="name" class="col-lg-8 col-md-8 col-sm-12" >森林防疫懶人包name</h4>
+                        <div class="card-header py-1 ">
+                            <a class="card-link row   align-items-center  " data-toggle="collapse" href="#forestnews_accordion">
+                                <h4 id="name" name="name" class="col-lg-8 col-md-8 col-sm-12" ></h4>
                                 <p class="col-lg-4 col-md-4 col-sm-12">
-                                    <span id="start_date" name="start_date" >開始時間start_date</span>
-                                    <span id="end_date" name="end_date">結束時間end_date</span>
+                                    <span id="start_date" name="start_date" ></span> ～
+                                    <span id="end_date" name="end_date"></span>
                                 </p>
                             </a>
                         </div>
-                        <div id="<?= $forest['name'] ?>" class="collapse" data-parent="#accordion">
+                        <div id="forestnews_accordion" class="collapse" data-parent="#accordion">
                         <img class="card-img-top m-0" id="forestnews_img_cover" alt="Card image cap">
 
                             <div class="card-body">
-                                <h4 class="card-title1 text-center"></h4>
+                                <h4 class="card-title1 text-center "></h4>
                                 <pre>
-                                    <p id="content" name="content"class="card-text" >內容content</p>
+                                    <p id="content" name="content"class="card-text " ></p>
                                 </pre>
                             </div>
                             <div class="card-footer mb-3">
                                 <pre>
-                                    <p id="notice" name="notice" class="text-muted">備註notice</p>
+                                    <p id="notice" name="notice" class="text-muted"></p>
                                 </pre>
                             </div>
                         </div>
@@ -54,7 +57,7 @@ $pageName = 'news';
             </div>
 
             <div class="text-center mt-5">
-                <a class="text-center c_1 custom-btn btn-4" href="staff_forestnews_editor.php?id=<?= $forestnews['id']?>" target="_blank">修改</a>
+                <a class="text-center c_1 custom-btn btn-4" href="staff_forestnews_editor.php?id=<?= $_GET['id']?>" target="_blank">修改</a>
             </div>
 
 
@@ -78,25 +81,28 @@ $pageName = 'news';
         $.post('api/forestnews-api.php', {
             action: 'read',
             id: <?= $_GET['id'] ?>
-        }, function(data){
+        }, function(result){
+            data = result['data'];
+            img = result['img'];
+            console.log(result);
             list = [
                 {
                     selector: "#cat_id_H",
-                    text: data['name'],
+                    text: data['fc_name'],
                 },
                 {
                     selector: "#cat_id_E",
-                    text: data['en_name'],
+                    text: data['fc_en_name'],
                 },
                 {
                     selector: "#forestnews_img_cover",
                     attr: {
-                        src: "<?= WEB_ROOT."/" ?>" + data['img'][0]['path']
+                        src: "<?= WEB_ROOT."/" ?>" + img[0]['path']
                     }
                 },
                 {
                     selector: "#name",
-                    text: data[data['name']],
+                    text: data['name'],
                 },
                 {
                     selector: "#start_date",
@@ -141,7 +147,7 @@ $pageName = 'news';
                 }
             });
 
-            data['img'].forEach(function(data_img){
+            img.forEach(function(data_img){
                 var output = `<a href='<?= WEB_ROOT."/" ?>${data_img['path']}' data-fancybox='F_box1' data-caption=' ${data['name']}'>
                         <img src='<?= WEB_ROOT."/" ?>${data_img['path']}' alt=''>
                     </a>`

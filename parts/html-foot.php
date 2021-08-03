@@ -29,6 +29,7 @@
                 <li><a href="http://localhost/project/member.php?tab=tradeRecord" target="_blank"><img src="./images/icon/arrow_d_r.svg" alt="">交易訂單查詢</a></li>
                 <li><a href="http://localhost/project/member.php?tab=wishList" target="_blank"><img src="./images/icon/arrow_d_r.svg" alt="">我的收藏</a></li>
                 <li><a href="http://localhost/project/member.php?tab=coupon" target="_blank"><img src="./images/icon/arrow_d_r.svg" alt="">購物金查詢</a></li>
+                <li><a href="http://localhost/project/member.php?tab=helpdeskRecord" target="_blank"><img src="./images/icon/arrow_d_r.svg" alt="">客服紀錄</a></li>
                 <li><a href="http://localhost/project/member.php?tab=setting" target="_blank"><img src="./images/icon/arrow_d_r.svg" alt="">其他設定</a></li>
             </ul>
         </div>

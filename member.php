@@ -65,8 +65,8 @@ if (!empty($helpdesk_id_list)){
                         <li class="b-green rot-135"><a data-toggle="tab" href="#tradeRecord"><h3 class="m-0">交易訂單查詢</h3></a></li>
                         <li class="b-green rot-135"><a data-toggle="tab" href="#wishList"><h3 class="m-0">我的收藏</h3></a></li>
                         <li class="b-green rot-135"><a data-toggle="tab" href="#coupon"><h3 class="m-0">購物金查詢</h3></a></li>
+                        <li class="b-green rot-135"><a data-toggle="tab" href="#helpdeskRecord"><h3 class="m-0">客服紀錄</h3></a></li>
                         <li class="b-green rot-135"><a data-toggle="tab" href="#setting"><h3 class="m-0">通知設定</h3></a></li>
-                        <li class="b-green rot-135"><a data-toggle="tab" href="#helpdeskRecorde"><h3 class="m-0">客服紀錄</h3></a></li>
                     </ul>
 
                     <div id="myTabContent" class="tab-content">
@@ -191,6 +191,59 @@ if (!empty($helpdesk_id_list)){
                         </div>
 
 
+                        <!-- ================================ 客服紀錄 ================================ -->
+
+
+
+                        <div id="helpdeskRecord" class="tab-pane fade row mb-5">
+                            <form onsubmit="helpdeskRecord(); return false;">
+                                <div id="searchBar" class="m-0 p-0">
+
+                                
+                                    <ul class="p-2 m-auto row list-unstyled justify-content-center align-items-center ">
+                                        <li class=" " >
+                                            <select id="helpdesk_select_id" name='cat_id'>
+                                                <option value=""disabled hidden selected>問題類別</option>
+                                                <option value="all">全部</option>
+      
+                                            </select>
+                                        </li>
+                                        <li class="">
+                                            <select id="helpdesk_select_year" name="year">
+                                                <option value=""disabled hidden selected>年份</option>
+                                                <option value="all">全部</option>
+                                                <option value=""></option>
+                                                <option value=""></option>
+                                                <option value=""></option>
+                                                <option value=""></option>
+                                            </select>
+                                        </li>
+                                        <li class="">
+                                            <select id="helpdesk_select_month" name="month">
+                                                <option value=""disabled hidden selected>月份</option>
+                                                <option value="all">全部</option>
+                                                <option value=""></option>
+                                                <option value=""></option>
+                                                <option value=""></option>
+                                                <option value=""></option>
+                                                <option value=""></option>
+                                                <option value=""></option>
+                                                <option value=""></option>
+                                                <option value=""></option>
+                                                <option value=""></option>
+                                                <option value=""></option>
+                                                <option value=""></option>
+                                                <option value=""></option>
+                                            </select>
+                                        </li>
+                                        <li><button type="submit" class="custom-btn btn-4 m-0 p-0" style="width:3rem; ">送出</button></li>
+                                    </ul>
+                                </div>
+
+                                <div class="hdItem  p-0 m-0">
+                                </div>
+                            </form>
+                        </div>
 
 
 
@@ -232,59 +285,6 @@ if (!empty($helpdesk_id_list)){
 
                         </div>
 
-                        <!-- ================================ 客服紀錄 ================================ -->
-
-
-
-                        <div id="helpdeskRecorde" class="tab-pane fade row mb-5">
-                            <form onsubmit="helpdeskRecord(); return false;">
-                                <div id="searchBar" class="m-0 p-0">
-
-                                
-                                    <ul class="p-2 m-auto row list-unstyled justify-content-center align-items-center ">
-                                        <li class=" " >
-                                            <select id="helpdesk_select_id" name='cat_id'>
-                                                <option value=""disabled hidden selected>問題類別</option>
-                                                <?php foreach ($helpdesk_category as $cat) { ?>
-                                                    <option value='<?= $cat['id'] ?>'><?= $cat['name'] ?></option>
-                                                <?php } ?>
-                                            </select>
-                                        </li>
-                                        <li class="">
-                                            <select id="helpdesk_select_year" name="year">
-                                                <option value=""disabled hidden selected>年份</option>
-                                                <option value=""></option>
-                                                <option value=""></option>
-                                                <option value=""></option>
-                                                <option value=""></option>
-                                                <option value=""></option>
-                                            </select>
-                                        </li>
-                                        <li class="">
-                                            <select id="helpdesk_select_month" name="month">
-                                                <option value=""disabled hidden selected>月份</option>
-                                                <option value=""></option>
-                                                <option value=""></option>
-                                                <option value=""></option>
-                                                <option value=""></option>
-                                                <option value=""></option>
-                                                <option value=""></option>
-                                                <option value=""></option>
-                                                <option value=""></option>
-                                                <option value=""></option>
-                                                <option value=""></option>
-                                                <option value=""></option>
-                                                <option value=""></option>
-                                            </select>
-                                        </li>
-                                        <li><button type="submit" class="custom-btn btn-4 m-0 p-0" style="width:3rem; ">送出</button></li>
-                                    </ul>
-                                </div>
-
-                                <div class="hdItem  p-0 m-0">
-                                </div>
-                            </form>
-                        </div>
 
 
 
@@ -492,18 +492,23 @@ if (!empty($helpdesk_id_list)){
         if (nowTab === '') {
             $('#myTab li:eq(0) a').tab('show');
         }
-        if (nowTab === 'wishList') {
-            $('#myTab li:eq(2) a').tab('show');
-        }
         if (nowTab === 'tradeRecord') {
             $('#myTab li:eq(1) a').tab('show');
         }
+        if (nowTab === 'wishList') {
+            $('#myTab li:eq(2) a').tab('show');
+        }
+
         if (nowTab === 'coupon') {
             $('#myTab li:eq(3) a').tab('show');
         }
-        if (nowTab === 'setting') {
+        if (nowTab === 'helpdeskRecord') {
             $('#myTab li:eq(4) a').tab('show');
         }
+        if (nowTab === 'setting') {
+            $('#myTab li:eq(5) a').tab('show');
+        }
+
 
 
         $("#end_date").val(getFormattedDate(new Date()));
@@ -516,10 +521,25 @@ if (!empty($helpdesk_id_list)){
         }
 
         // helpdesk
+        $.post('<?= WEB_API ?>/helpdesk-api.php', {
+            'action': 'readCat',
+        }, function(data){
+            var output = 
+            `<option class="form-control" value="" disabled hidden selected>問題類型</option>`;
+            $("#helpdesk_select_id").append(output);
+
+            data.forEach(function (cat){
+            var output = 
+            `<option value="${cat['id']}">${cat['name']}</option>`;
+            $("#helpdesk_select_id").append(output);
+            });
+
+        }, 'json').fail(function(data){
+        })
 
         function helpdeskRecord(){
             $.post('<?= WEB_API ?>/helpdesk-api.php', {
-                type: 'readAll',
+                action: 'readAll',
                 cat_id: $("#helpdesk_select_id").val(),
                 year: $("#helpdesk_select_year").val(),
                 month: $("#helpdesk_select_month").val(),
@@ -530,7 +550,7 @@ if (!empty($helpdesk_id_list)){
                     var output = `<div class="row m-0">
                                     <div class="col-md-3">圖片<img src='#' alt='' style="width: 100%;"></div>
                                     <div class="col-md-9">
-                                        <div>日期：<span>${ hd['create_datetime'] }</span></div>
+                                        <div>日期：<span>${ hd['created_at'] }</span></div>
                                         <div>主題：<span>${ hd["topic"] } </span></div>
                                         <div>問題類型：<span>${ hd["cat_name"] }</span></div>
                                         <div>訂單編號：<span>${ hd["order_num"] }</span></div>
@@ -555,7 +575,7 @@ if (!empty($helpdesk_id_list)){
         var selectedYear = "<?= $_GET['year'] ?? "" ?>";
         var selectedId = "<?= $_GET['cat_id'] ?? "" ?>";
         $("#helpdesk_select_month option").each(function(ind, elem) {
-            if (ind > 0) {
+            if (ind > 1) {
                 elem.text = month;
                 elem.value = month;
                 month++;
@@ -568,9 +588,13 @@ if (!empty($helpdesk_id_list)){
             }
         });
         $("#helpdesk_select_year option").each(function(ind, elem) {
-            if (ind === 1){
+            if (ind === 2){
                 elem.text = "之前";
                 elem.value = `~${year}`;
+            }else if (ind === 1) {
+                elem.text = "全部";
+                elem.value = "all";
+                year++;
             }else if (ind > 0) {
                 elem.text = year;
                 elem.value = year;

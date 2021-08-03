@@ -5,8 +5,7 @@ body {
 }
 
 h2 span {
-  font-size: 1.2rem;
-  margin-left: 1rem;
+  font-size: 1.4rem;
 }
 
 .ts1 {
@@ -27,36 +26,36 @@ main .card-body {
   color: gray;
 }
 
-#accordion .card-body {
+.accordion .card-body {
   padding: 2rem;
   background-color: #dff0d8;
 }
 
-#accordion .card-body span {
+.accordion .card-body span {
   color: #007bff;
 }
 
-#accordion .card .card-header {
+.accordion .card .card-header {
   background-color: #adda9a;
   background: linear-gradient(45deg, #e8ddf1 0%, #e1ebdc 100%);
 }
-#accordion .card .card-header:hover {
+.accordion .card .card-header:hover {
   background-color: #00ffbf;
   background-image: linear-gradient(315deg, #fdbdcb 0%, #92e6d1 74%);
   filter: hue-rotate(45deg);
 }
 
-#accordion .card .card-header h4 {
+.accordion .card .card-header h4 {
   font-weight: 600;
   color: gray;
   padding: 0.5rem 1rem 0.5rem 2rem;
   text-shadow: 0.5px 0.5px 0 white, 0.5px -0.5px 0 white, -0.5px 0.5px 0 white, -0.5px -0.5px 0 white, 0.5px 0px 0 white, 0px 0.5px 0 white, -0.5px 0px 0 white, 0px -0.5px 0 white;
 }
-#accordion .card .card-header p {
+.accordion .card .card-header p {
   padding: 0.5rem 1rem 0.5rem 2rem;
 }
 
-#accordion .card .card-header h4 span {
+.accordion .card .card-header h4 span {
   font-size: 1.2rem;
   font-weight: 500;
 }
@@ -96,6 +95,10 @@ h4 {
   font-size: 1.1rem;
   color: gray;
   font-weight: 600;
+}
+
+.forestnew_row {
+  margin-bottom: 20px;
 }
 
 #collapseOne .card-body > div {

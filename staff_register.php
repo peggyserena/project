@@ -7,15 +7,6 @@ $aceept_role = [1, 2];
 if (!in_array($_SESSION['staff']['role'], $aceept_role)){
     header("Location: staff_index.php");
 }
-// role類別
-$sql = "SELECT * FROM `staff_role_category`";
-$stmt = $pdo->query($sql);
-$result = $stmt->fetchAll();
-$staff_role_category = [];
-//ArrayArray ( [1] => 管理者 [2] => 經理 [3] => 會計 [4] => 一般員工 )
-foreach($result as $role_cat){
-    $staff_role_category[$role_cat['id']] = $role_cat['position'];
-}
 ?>
 <?php include __DIR__ . '/parts/staff_html-head.php'; ?>
 <style>
@@ -92,16 +83,6 @@ foreach($result as $role_cat){
                         <label for="role">類型<span>(必填)</span></label>
                         <select type="text" class="form-control" id="role" name="role_id" autofocus required>
                             <option value="">請選擇</option>
-                            <?php foreach($staff_role_category as $id => $position): ?>
-                                <?php 
-                                if ($_SESSION['staff']['role'] == 2): 
-                                    if (!in_array($id, [3,4])):
-                                        continue;    
-                                    endif; 
-                                endif; 
-                                ?>
-                                <option value="<?=$id?>"><?=$position?></option>
-                            <?php endforeach;?>
                         </select>
                         <small class="form-text error"></small>
                     </div>
@@ -193,6 +174,167 @@ foreach($result as $role_cat){
         });
         dataElem.val(JSON.stringify(dataJSON));
         form2.submit();
+    }
+</script>
+<script>
+        $(document).ready(function() {
+            $(".c_pink_t").each(function(ind, elem){
+                $(elem).text(dallorCommas($(elem).text()) + "元");
+            });
+            scroll();
+            $.post('api/staff-api.php', {
+                action: 'readCat',
+            }, function(result){
+                role = parseInt(<?= $_SESSION['staff']['role']?>);
+                data = result['data'];
+
+                for (key in data){
+                    if (role === 2 && !(data[key]['id'] in [3, 4])){
+                        continue;
+                    }
+                    $("#role").append(`<option value="${data[key]['id']}">${data[key]['position']}</option>`);
+                }
+                
+            }, 'json').fail(function(data){
+                console.log('error');
+                console.log(data);
+            })
+            var selected_cat_id = parseInt("<?= $_GET['cat_id'] ?? ''?>");
+            $.post('api/event-api.php', {
+                action: 'readCat',
+            }, function(result){
+                result.forEach(function(elem){
+                    output = `<option value='${elem['id']}' ${selected_cat_id == elem['id'] ? "selected" : ""}>${elem['name']}</option>`;
+                    $("#select_cat_id").append(output);
+                })
+                
+            }, 'json').fail(function(data){
+                console.log('error');
+                console.log(data);
+            })
+
+
+            
+        });
+    function fillData(data, elem){
+        var event_img_cover = "";
+        if (typeof(data['img']) !== "undefined"){
+            event_img_cover = "<?= WEB_ROOT."/" ?>" + data['img'][0]['path'];
+        }
+        list = [
+            {
+                selector: ".eventItem",
+                attr: {
+                    id: `event_${data['id']}`,
+                }
+            },
+            {
+                selector: ".event_name",
+                text: data['name'],
+            },
+            {
+                selector: ".event_img_cover",
+                attr: {
+                    src: event_img_cover
+                }
+            },
+            {
+                selector: ".event_quantity",
+                text: data['quantity_map'][data['name']],
+            },
+            {
+                selector: ".event_datetime",
+                text: `${data['date']} ${data['time'].substr(0, 5)}`,
+            },
+            {
+                selector: ".event_available_quantity",
+                text:`${data['limitNum'] - data['quantity']}/${data['limitNum']}`,
+            },
+            {
+                selector: ".event_price",
+                text: data['price'],
+            },
+            {
+                selector: ".event_quantity_input",
+                attr: {
+                    max: data['limitNum'] - data['quantity'],
+                },
+            },
+
+            {
+                selector: ".ec_name",
+                text: data['ec_name'],
+            },
+            {
+                selector: ".event_location",
+                text: data['location'],
+            },
+            {
+                selector: ".event_limitNum",
+                text: data['limitNum'],
+            },
+            {
+                selector: ".event_content",
+                text: data['content'],
+            },
+            {
+                selector: ".event_description",
+                text: substr(data['description'], 50),
+            },
+            {
+                selector: ".event_link",
+                attr: {
+                    href: `event_item.php?id=${data['id']}`
+                }
+            },
+            {
+                selector: ".add-to-cart",
+                attr: {
+                    onclick: `tr_addTransaction('event', 'cart', ${data['id']})`
+                }
+            },
+            {
+                selector: ".add-to-wishList",
+                attr: {
+                    onclick: `tr_addTransaction('event', 'wishList', ${data['id']})`
+                }
+            },
+        ]
+        
+        // map
+        // {
+        //     selector: "#event_name",
+        //     attr: {
+        //         text: data['name']
+        //     }
+        // }
+        list.forEach(function(m){
+            // attr
+            // attr: {
+            //         src: <?= WEB_ROOT."/" ?>data['img'][0]['path']
+            //     }
+            if ('text' in m){
+                $(elem).find(m['selector']).text(m['text']);
+            }
+            if ('value' in m){
+                $(elem).find(m['selector']).val(m['value']);
+            }
+            for (attr_key in m['attr']){
+                // fill_key = 'src'
+                // m['attr']['src']
+                $(elem).find(m['selector']).attr(attr_key, m['attr'][attr_key]);
+            }
+        });
+
+        
+        if (typeof(data['img']) !== "undefined"){
+            data['img'].forEach(function(data_img){
+                var output = `<a href='<?= WEB_ROOT."/" ?>${data_img['path']}' data-fancybox='F_box1' data-caption=' ${data['name']}'>
+                        <img src='<?= WEB_ROOT."/" ?>${data_img['path']}' alt=''>
+                    </a>`
+                $(".fancybox").append(output);
+            })
+        }
     }
 </script>
 <?php include __DIR__ . '/parts/staff_html-foot.php'; ?>

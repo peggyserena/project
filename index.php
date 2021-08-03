@@ -35,10 +35,6 @@ $pageName = 'index';
         </div>
     </div> -->
     <div id="slider" name="slider" class=" owl-carousel owl-theme">
-        <!-- <?php foreach ($slider as $sli) : ?>
-                <img src='<?= WEB_ROOT."/".$sli['path'] ?>' alt=''>
-        <?php endforeach; ?> -->
-
     </div>
 
  
@@ -576,10 +572,6 @@ $pageName = 'index';
 
 <script>
     $.post('api/staff_gallery-api.php', {
-        action: 'read',
-
-
-
         action: 'readAll',
     }, function(result){
 
@@ -598,6 +590,14 @@ $pageName = 'index';
                 $(`.index_${code}_${column}`).text(data[i][column]);
             })
         }
+
+        result['img'][17].forEach(function(elem){
+            $("#slider").append(`<img src='${elem['path']}' alt=''>`);
+        });
+        $('#slider').owlCarousel('destroy');
+        initOwlCarousel(items);
+
+
         fillMapGellery(data, result['img']);
         // fillData(elem, output);
     }, 'json').fail(function(data){

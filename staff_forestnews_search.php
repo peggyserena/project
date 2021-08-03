@@ -81,7 +81,7 @@ $pageName = 'forestnews';
                                 <option value="2" <?= $_GET['order'] ?? "" == 2 ? "selected" : "" ?>>結束日期</option>
                             </select>
                         </li>
-                        <li><button type="button" class="custom-btn btn-4 m-0 p-0" style="width:3rem; ">送出</button></li>
+                        <li><button type="button" class="custom-btn btn-4 m-0 p-0" style="width:3rem; " onclick="readData();">送出</button></li>
                     </ul>
                 </form>
             </div>
@@ -107,18 +107,18 @@ $pageName = 'forestnews';
                             </thead>
                             <tbody>
                                 <tr class="forestnews_data" style="display: none;">
-                                    <td class="bg-dark text-white forestnews_count_num" style="border: #454d55 1px solid ;"></td>
-                                    <td ><img class="forestnews_img_cover" src='' alt='' style="width: 120px;"></td>
-                                    <td><span class="fc_name"></span></td>
-                                    <td><span class="forestnews_name"></span></td>
-                                    <td><span class="forestnews_start_date"></span></td>
-                                    <td><span class="forestnews_end_date"></span></td>
-                                    <td><span class="forestnews_content"></span></td>
-                                    <td><span class="forestnews_notice"></span></td>
-                                    <td><a class="forestnews_detail_link" href="" target="blank">查詢</a></td>
-                                    <td><a class="forest_edit_link" href="" target="blank">修改</a></td>
+                                    <td class="bg-dark text-white count_num" style="border: #454d55 1px solid ;"></td>
+                                    <td ><img class="img_cover" src='' alt='' style="width: 120px;"></td>
+                                    <td><span class="cat_id_H"></span></td>
+                                    <td><span class="name"></span></td>
+                                    <td><span class="start_date"></span></td>
+                                    <td><span class="end_date"></span></td>
+                                    <td><span class="content"></span></td>
+                                    <td><span class="notice"></span></td>
+                                    <td><a class="detail_link" href="" target="blank">查詢</a></td>
+                                    <td><a class="edit_link" href="" target="blank">修改</a></td>
                                     <td>
-                                        <a class="evetn_delete_link"  href="#">
+                                        <a class="forestnews_delete_link"  href="#">
                                             <i class="fas fa-trash-alt"></i>
                                         </a>
                                     </td>
@@ -167,13 +167,12 @@ $pageName = 'forestnews';
             }
         });
         $("#select_id").val(selectedId);
-        $("#select_time").val(selectedTime);
         $("#select_order").val(selectedOrder);
     </script>
 
     <script>
-        const deleteItem = function(forestnews, id) {
-            let t = $(forestnews.currentTarget);
+        const deleteItem = function(event, id) {
+            let t = $(event.currentTarget);
             $.post('<?= WEB_API ?>/forestnews-api.php', {
                 action: 'delete',
                 id
@@ -188,6 +187,7 @@ $pageName = 'forestnews';
                     }
                 }
             }, 'json').fail(function(e){
+                console.log(e);
             });
        };
     </script>
@@ -220,6 +220,8 @@ $pageName = 'forestnews';
             }, function(result){
                 $("#result tbody").html($($(".forestnews_data")[0]));
                 data = result['data'];
+                img = result['img'];
+                console.log(result);
                 var count = 0;
                 for (key in data){
                     count++;
@@ -227,7 +229,7 @@ $pageName = 'forestnews';
                     output = $($(".forestnews_data")[0]).clone();
                     output.show();
                     $("#result tbody").append(output);
-                    elem['img'] = result['img'][elem['id']];
+                    elem['img'] = img[elem['id']];
                     elem['count_num'] = count;
                     console.log(elem);
                     fillData(elem, output);
@@ -246,38 +248,56 @@ $pageName = 'forestnews';
         }
         list = [
                 {
-                    selector: "#cat_id_H",
-                    text: data['name'],
+                    selector: ".count_num",
+                    text: data['count_num'],
                 },
                 {
-                    selector: "#cat_id_E",
-                    text: data['en_name'],
+                    selector: ".cat_id_H",
+                    text: data['fc_name'],
                 },
                 {
-                    selector: "#forestnews_img_cover",
+                    selector: ".img_cover",
                     attr: {
                         src: "<?= WEB_ROOT."/" ?>" + data['img'][0]['path']
                     }
                 },
                 {
-                    selector: "#name",
-                    text: data[data['name']],
+                    selector: ".name",
+                    text: data['name'],
                 },
                 {
-                    selector: "#start_date",
-                    text: [data['start_date']],
+                    selector: ".start_date",
+                    text: data['start_date'],
                 },
                 {
-                    selector: "#end_date",
-                    text: [data['start_date']],
+                    selector: ".end_date",
+                    text: data['end_date'],
                 },
                 {
-                    selector: "#content",
+                    selector: ".content",
                     text: data['content'],
                 },
-                 {
-                    selector: "#notice",
+                {
+                    selector: ".notice",
                     text: data['notice'],
+                },
+                {
+                    selector: ".detail_link",
+                    attr: {
+                        href: `staff_forestnews_item.php?id=${data['id']}`,
+                    },
+                },
+                {
+                    selector: ".edit_link",
+                    attr: {
+                        href: `staff_forestnews_editor.php?id=${data['id']}`,
+                    },
+                },
+                {
+                    selector: ".forestnews_delete_link",
+                    attr: {
+                        onclick: `deleteItem(event, ${data['id']})`,
+                    },
                 },
             ]
         
@@ -297,7 +317,7 @@ $pageName = 'forestnews';
                 $(elem).find(m['selector']).text(m['text']);
             }
             if ('value' in m){
-                $(elem).find(m['selector']).value(m['value']);
+                $(elem).find(m['selector']).val(m['value']);
             }
             for (attr_key in m['attr']){
                 // fill_key = 'src'
@@ -316,5 +336,5 @@ $pageName = 'forestnews';
             })
         }
     }
-
+    </script>
     <?php include __DIR__ . '/parts/staff_html-foot.php'; ?>
