@@ -20,7 +20,7 @@ $pageName = 'news';
                 <h2 class="title1 b-green rot-135 c_1 ">園區相關 <span>Garden Information</span></h2>
                 <div id="accordion">
                     <div class="card ">
-                        <div class="card-header  p-0">
+                        <div class="card-header  py-1 pl-3">
                             <a class="card-link row   align-items-center  " data-toggle="collapse" href="#collapseOne">
                                 <h4 class="col-lg-8 col-md-8 col-sm-12">會員優惠</h4>
                                 <p class="col-lg-4 col-md-4 col-sm-12">活動期間：常態</p>
@@ -226,7 +226,7 @@ $pageName = 'news';
                 </div>
                 <div id="accordion">
                     <div class="card">
-                        <div class="card-header  p-0">
+                        <div class="card-header  py-1 pl-3">
                             <a class="card-link row   align-items-center  " data-toggle="collapse" href="#collapseTwo">
                                 <h4 class="col-lg-8 col-md-8 col-sm-12" >森林防疫懶人包</h4>
                                 <p class="col-lg-4 col-md-4 col-sm-12">活動期間：常態</p>
@@ -260,7 +260,7 @@ $pageName = 'news';
                 </h2>
                 <div class="accordion" style="display: none;">
                     <div class="card">
-                        <div class="card-header p-1">
+                        <div class="card-header py-1 pl-3">
                             <a class="card-link row   align-items-center" data-toggle="collapse" href="">
                                 <h4 class="name col-lg-8 col-md-8 col-sm-12" name="name"></h4>
                                 <p class="col-lg-4 col-md-4 col-sm-12">
