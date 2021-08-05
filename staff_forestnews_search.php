@@ -23,7 +23,12 @@ $pageName = 'forestnews';
     .con_01 {
         background-color: whitesmoke;
     }
+    main{
+        width: 97.5%;
+        margin: 100px auto;
+    }
 
+ 
 
 </style>
 
@@ -31,105 +36,105 @@ $pageName = 'forestnews';
 
 <body>
  
-<div class="container">
-        <div class="con_01">
-            <div class=" " id="searchBar" >
-                <form>
-                    <ul class="list-unstyled  row justify-content-center align-items-center p-2 m-0 ">
-                        <li class=" ">
-                            <select id="select_cat_id" name='cat_id'>
-                                <option disabled hidden value="">活動類別</option>
-                                <option value="all">全部</option>
-                            </select>
-                        </li>
-                        <li class="">
+<main>
+    <div class="con_01">
+        <div class=" " id="searchBar" >
+            <form>
+                <ul class="list-unstyled  row justify-content-center align-items-center p-2 m-0 ">
+                    <li class=" ">
+                        <select id="select_cat_id" name='cat_id'>
+                            <option disabled hidden value="">活動類別</option>
+                            <option value="all">全部</option>
+                        </select>
+                    </li>
+                    <li class="">
 
-                            <select id="select_year" name="year">
-                                <option disabled hidden value="">年份</option>
-                                <option value="all">全部</option>
-                                <option value=""></option>
-                                <option value=""></option>
-                                <option value=""></option>
-                                <option value=""></option>
-                                <option value=""></option>
-                                <option value=""></option>
-                                <option value=""></option>
-                            </select>
-                        </li>
-                        <li class="">
-                            <select id="select_month" name="month">
-                                <option disabled hidden selected value="">月份</option>
-                                <option value="all">全部</option>
-                                <option value=""></option>
-                                <option value=""></option>
-                                <option value=""></option>
-                                <option value=""></option>
-                                <option value=""></option>
-                                <option value=""></option>
-                                <option value=""></option>
-                                <option value=""></option>
-                                <option value=""></option>
-                                <option value=""></option>
-                                <option value=""></option>
-                                <option value=""></option>
-                            </select>
-                        </li>
-                        <li class="bg-green">
-                            <select id="select_order" name="order">
-                                <option disabled hidden selected value="">排序</option>
-                                <option value="1" <?= $_GET['order'] ?? "" == 1 ? "selected" : "" ?>>開始日起</option>
-                                <option value="2" <?= $_GET['order'] ?? "" == 2 ? "selected" : "" ?>>結束日期</option>
-                            </select>
-                        </li>
-                        <li><button type="button" class="custom-btn btn-4 m-0 p-0" style="width:3rem; " onclick="readData();">送出</button></li>
-                    </ul>
-                </form>
-            </div>
+                        <select id="select_year" name="year">
+                            <option disabled hidden value="">年份</option>
+                            <option value="all">全部</option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                        </select>
+                    </li>
+                    <li class="">
+                        <select id="select_month" name="month">
+                            <option disabled hidden selected value="">月份</option>
+                            <option value="all">全部</option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                            <option value=""></option>
+                        </select>
+                    </li>
+                    <li class="bg-green">
+                        <select id="select_order" name="order">
+                            <option disabled hidden selected value="">排序</option>
+                            <option value="1" <?= $_GET['order'] ?? "" == 1 ? "selected" : "" ?>>開始日起</option>
+                            <option value="2" <?= $_GET['order'] ?? "" == 2 ? "selected" : "" ?>>結束日期</option>
+                        </select>
+                    </li>
+                    <li><button type="button" class="custom-btn btn-4 m-0 p-0" style="width:3rem; " onclick="readData();">送出</button></li>
+                </ul>
+            </form>
+        </div>
 
-            <div class="forestnewsItem  p-0 m-0">
-                    <table id="result" class="table table-bordered table-Primary table-hover text-center">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th>序號</th>
-                                    <th>主圖片</th>
-                                    <th>活動類別</th>
-                                    <th>活動名稱</th>
-                                    <th>開始日期</th>
-                                    <th>結束日期</th>
-                                    <th>活動內容</th>
-                                    <th>備註</th>
-                                    <th>詳情</th>
-                                    <th>修改</th>
-                                    <th scope="col" class="m-0 t_shadow text-center"><i class="fas fa-trash-alt"></i></th>
+        <div class="forestnewsItem  p-0 m-0">
+                <table id="result" class="table table-bordered table-Primary table-hover ">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>序號</th>
+                                <th>主圖片</th>
+                                <th style="width: 5%;">活動類別</th>
+                                <th style="width: 10%;">活動名稱</th>
+                                <th style="width: 6.5%;">開始日期</th>
+                                <th style="width: 6.5%;">結束日期</th>
+                                <th style="width: 25%;">活動內容</th>
+                                <th style="width: 20%;">備註</th>
+                                <th>詳情</th>
+                                <th>修改</th>
+                                <th scope="col" class="m-0 t_shadow text-center"><i class="fas fa-trash-alt"></i></th>
 
-                
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="forestnews_data" style="display: none;">
-                                    <td class="bg-dark text-white count_num" style="border: #454d55 1px solid ;"></td>
-                                    <td ><img class="img_cover" src='' alt='' style="width: 120px;"></td>
-                                    <td><span class="cat_id_H"></span></td>
-                                    <td><span class="name"></span></td>
-                                    <td><span class="start_date"></span></td>
-                                    <td><span class="end_date"></span></td>
-                                    <td><span class="content"></span></td>
-                                    <td><span class="notice"></span></td>
-                                    <td><a class="detail_link" href="" target="blank">查詢</a></td>
-                                    <td><a class="edit_link" href="" target="blank">修改</a></td>
-                                    <td>
-                                        <a class="forestnews_delete_link"  href="#">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-            </div>
+            
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="forestnews_data text-center" style="display: none;">
+                                <td class="bg-dark text-white count_num" style="border: #454d55 1px solid ;"></td>
+                                <td ><img class="img_cover" src='' alt='' style="width: 120px;"></td>
+                                <td><span class="cat_id_H"></span></td>
+                                <td class="text-justify "><span class="name"></span></td>
+                                <td><span class="start_date"></span></td>
+                                <td><span class="end_date"></span></td>
+                                <td class="text-justify "><span class="content  "></span></td>
+                                <td class="text-justify "><p class="notice"></p></p><p id="link_title"></p><p id="link_address"></td>
+                                <td><a class="detail_link" href="" target="blank">查詢</a></td>
+                                <td><a class="edit_link" href="" target="blank">修改</a></td>
+                                <td>
+                                    <a class="forestnews_delete_link"  href="#">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
 
         </div>
-  </div>
+
+    </div>
+</main>
     <?php include __DIR__ . '/parts/staff_scripts.php'; ?>
 
     <script>
@@ -280,6 +285,14 @@ $pageName = 'forestnews';
                 {
                     selector: ".notice",
                     text: data['notice'],
+                },
+                {
+                    selector: "#link_address",
+                    text: data['link_address']
+                },
+                 {
+                    selector: "#link_title",
+                    text: data['link_title'],
                 },
                 {
                     selector: ".detail_link",

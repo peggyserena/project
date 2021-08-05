@@ -68,11 +68,11 @@ switch ($action) {
     case 'add':
 
         // insert forestnews
-        $columns = ['cat_id', 'name', 'start_date', 'end_date', 'content','notice'];
+        $columns = ['cat_id', 'name', 'start_date', 'end_date', 'content','notice','link_address', 'link_title'];
         $sql = "INSERT INTO `forestnews` ";
 
         $sql .= "(`".implode("`,`", $columns)."`, `created_at`) VALUES (".substr(str_repeat("?,", count($columns)), 0, -1).", NOW())";
-        // INSERT INTO `forestnews` ('cat_id', 'name', 'start_date', 'end_date', 'content','notice') VALUES (?, ?, ?, ?, ?, ?)        
+        // INSERT INTO `forestnews` ('cat_id', 'name', 'start_date', 'end_date', 'content','notice','link_address', 'link_title') VALUES (?, ?, ?, ?, ?, ?)        
 
         $data = [];
         foreach($columns as $col){
@@ -122,11 +122,11 @@ switch ($action) {
 
        
         // insert forestnews
-        $columns = ['cat_id', 'name', 'start_date', 'end_date', 'content','notice'];
+        $columns = ['cat_id', 'name', 'start_date', 'end_date', 'content','notice','link_address', 'link_title'];
         $sql = "UPDATE `forestnews` SET ";
         
         $sql .= implode(" = ?, ", $columns)." = ? WHERE id = $id";
-        // INSERT INTO `forestnews` ('cat_id', 'name', 'start_date', 'end_date', 'content','notice') VALUES (?, ?, ?, ?, ?, ?)        
+        // INSERT INTO `forestnews` ('cat_id', 'name', 'start_date', 'end_date', 'content','notice','link_address', 'link_title') VALUES (?, ?, ?, ?, ?, ?)        
         // UPDATE `forestnews` `cat_id` = ?, `name` = ?,  `start_date` = ?,  `end_date` = ?, `content` = ?,  `notice` = ?    
 
         $data = [];

@@ -52,6 +52,14 @@ $pageName = 'staff_forestnews_editor';
                   <label for="notice">注意事項</label>
                   <textarea type="text" class="form-control" id="notice" name="notice"  required></textarea>
               </div>
+              <div class="form-group">
+                  <label for="link_address">網址</label>
+                  <textarea type="text" class="form-control" id="link_address" name="link_address"  required></textarea>
+              </div>
+              <div class="form-group">
+                  <label for="link_title">網址標題</label>
+                  <textarea type="text" class="form-control" id="link_title" name="link_title"  required></textarea>
+              </div>
 
               <div class="form-group">
                   <label for="img">圖片</label>
@@ -155,7 +163,7 @@ $("#start_date").change(function(){
       data = result['data'];
       files = result['img'];
       console.log(data);
-      var columns = ['cat_id', 'name', 'start_date', 'end_date', 'content','notice']
+      var columns = ['cat_id', 'name', 'start_date', 'end_date', 'content','notice','link_address','link_title']
       columns.forEach(function(elem){
         $(`#${elem}`).val(data[elem]);
       });

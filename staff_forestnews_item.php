@@ -41,11 +41,13 @@ $pageName = 'news';
                                 <h4 class="card-title1 text-center "></h4>
                                 <pre>
                                     <p id="content" name="content"class="card-text " ></p>
+                                    <a id="link_address" name="link_address" href=""><span id="link_title" name="link_title"></span></a>
                                 </pre>
                             </div>
-                            <div class="card-footer mb-3">
+                            <div class="card-footer">
                                 <pre>
                                     <p id="notice" name="notice" class="text-muted"></p>
+                                    <a id="link_address" name="link_address" href=""><p id="link_title" name="link_title"></p></a>
                                 </pre>
                             </div>
                         </div>
@@ -110,7 +112,7 @@ $pageName = 'news';
                 },
                 {
                     selector: "#end_date",
-                    text: [data['start_date']],
+                    text: [data['end_date']],
                 },
                 {
                     selector: "#content",
@@ -119,6 +121,17 @@ $pageName = 'news';
                  {
                     selector: "#notice",
                     text: data['notice'],
+                },
+                 {
+                    selector: "#link_address",
+                    attr: {
+                        src: data['link_address'],
+                    }
+
+                },
+                 {
+                    selector: "#link_title",
+                    text: data['link_title'],
                 },
             ]
             

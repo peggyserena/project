@@ -50,6 +50,14 @@ $pageName = 'staff_forestnews_create';
                   <label for="notice">注意事項</label>
                   <textarea type="text" class="form-control" id="notice" name="notice"  required></textarea>
               </div>
+              <div class="form-group">
+                  <label for="link_address">網址</label>
+                  <textarea type="text" class="form-control" id="link_address" name="link_address"  required></textarea>
+              </div>
+              <div class="form-group">
+                  <label for="link_title">網址標題</label>
+                  <textarea type="text" class="form-control" id="link_title" name="link_title"  required></textarea>
+              </div>
 
               <div class="form-group">
                   <label for="img">圖片</label>
@@ -151,7 +159,7 @@ $("#start_date").change(function(){
           insertPage("#modal_img", "animation/animation_success.html");
           insertText("#modal_content", "森林快報新增成功!");
           $("#modal_alert").modal("show");
-          // setTimeout(function(){location.href = "staff_forestnews_search.php"}, 2000);
+          setTimeout(function(){location.href = "staff_forestnews_search.php"}, 2000);
 
         },
         error: function(data){
@@ -160,7 +168,7 @@ $("#start_date").change(function(){
           insertPage("#modal_img", "animation/animation_error.html");
           insertText("#modal_content", "資料傳輸失敗");
           $("#modal_alert").modal("show");
-          // setTimeout(function(){location.href = "staff_forestnews_search.php"}, 2000);
+          setTimeout(function(){location.href = "staff_forestnews_search.php"}, 2000);
         }
     });
   }

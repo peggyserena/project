@@ -242,7 +242,7 @@ $pageName = 'news';
                                 <p class="card-text">✅入園時<br>step 1.測量體溫<br>step 2.噴灑酒精<br>step 3.填寫實名制表單，並將提交畫面交給園區夥伴確認<br>step 4.購票入園</p><br>                   <p class="card-text">✅在園區<br>- 保持社交距離<br>- 除用餐時全程配戴口罩<br>- 勤洗手</p><br>
                                 <p class="card-text">兩園區面積廣闊，有足夠的空間供旅人遊覽，可以盡情與植物連結再連結，但防疫要當心，照顧自己也照顧別人，出外要小心，才能大盡興，薰衣草森林關心您。</p>
                             </div>
-                            <div class="card-footer mb-3">
+                            <div class="card-footer">
                                 <div class="text-muted">※ 繡球花節 活動期間4/17~6/30，<br>目前園區花卉還有 #鼠尾草 #追風草 #小天使花～</p></div>
                             </div>
                         </div>
@@ -251,7 +251,7 @@ $pageName = 'news';
                 </div>
             </div>
             
-            <div id="" class="forestnew_row" style="display: none;">
+            <div id="" class="forestnews_row" style="display: none;">
                 <h2 class="title1  b-green rot-135 c_1">
                     <span  class="cat_id_H" name="name"  >
                     </span>
@@ -273,14 +273,15 @@ $pageName = 'news';
                         <img class="card-img-top m-0 forestnews_img_cover" alt="Card image cap">
 
                             <div class="card-body">
-                                <h4 class="card-title1 text-center"></h4>
+                                <h4 class="name card-title text-center" name="name"></h4>
                                 <pre>
                                     <p class="content" name="content"class="card-text" ></p>
                                 </pre>
                             </div>
-                            <div class="card-footer mb-3">
+                            <div class="card-footer">
                                 <pre>
                                     <p class="notice" name="notice" class="text-muted"></p>
+                                    <a id="link_address" name="link_address" href=""><p id="link_title" name="link_title"></p></a>
                                 </pre>
                             </div>
                         </div>
@@ -308,10 +309,10 @@ $pageName = 'news';
             action: 'readCat',
         }, function(result){
             result.forEach(function(elem){
-                output = $($(".forestnew_row")[0]).clone();
+                output = $($(".forestnews_row")[0]).clone();
                 output.find(".cat_id_H").text(elem['name']);
                 output.find(".cat_id_E").text(elem['en_name']);
-                output.attr("id", "forestnew_row" + elem['id']);
+                output.attr("id", "forestnews_row" + elem['id']);
                 output.show();
                 $("#forestnews").append(output);
             })
@@ -335,12 +336,12 @@ $pageName = 'news';
                 data = result['data'];
                 img = result['img'];
                 data.forEach(function(elem){
-                    forestnew_row = $(`#forestnew_row${elem['cat_id']}`);
-                    accordion = $($(forestnew_row).find(".accordion")[0]).clone();
+                    forestnews_row = $(`#forestnews_row${elem['cat_id']}`);
+                    accordion = $($(forestnews_row).find(".accordion")[0]).clone();
                     elem['img'] = img[elem['id']];
                     fillData(elem, accordion);
                     accordion.show();
-                    forestnew_row.append(accordion);
+                    forestnews_row.append(accordion);
                 });
 
                 
@@ -360,13 +361,13 @@ $pageName = 'news';
                 {
                     selector: ".card-link",
                     attr: {
-                        href: `#forestnew_${data['id']}`
+                        href: `#forestnews_${data['id']}`
                     }
                 },
                 {
                     selector: ".collapse",
                     attr: {
-                        id: `forestnew_${data['id']}`
+                        id: `forestnews_${data['id']}`
                     }
                 },
                 {
@@ -384,6 +385,17 @@ $pageName = 'news';
                 {
                     selector: ".notice",
                     text: data['notice'],
+                },
+                {
+                    selector: "#link_address",
+                    attr: {
+                        src: data['link_address'],
+                    }
+
+                },
+                 {
+                    selector: "#link_title",
+                    text: data['link_title'],
                 },
                 {
                     selector: ".forestnews_img_cover",

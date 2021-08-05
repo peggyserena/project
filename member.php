@@ -546,17 +546,25 @@ if (!empty($helpdesk_id_list)){
             },function(data) {
                 console.log(data);
                 $(".hdItem").html("");
+                // <img src='<?= WEB_ROOT ?>/${img[d['id']][ind]['path']}' alt=''>
+                // const files = $("#img")[0].files
+                // for(var i = 0; i < files.length; i++){
+                // var file = files[i];
+                // if (file) {
+                // <img class="preview_img" style="max-width: 120px; max-height: 120px" src="${URL.createObjectURL(file)}" alt="your image" />
+
                 data.forEach(function(hd){
                     var output = `<div class="row m-0">
-                                    <div class="col-md-3">圖片<img src='#' alt='' style="width: 100%;"></div>
+                                    <div class="col-md-3">圖片：<img src='#' alt='' style="width: 100%;"></div>
                                     <div class="col-md-9">
                                         <div>日期：<span>${ hd['created_at'] }</span></div>
                                         <div>主題：<span>${ hd["topic"] } </span></div>
                                         <div>問題類型：<span>${ hd["cat_name"] }</span></div>
                                         <div>訂單編號：<span>${ hd["order_num"] }</span></div>
                                     </div>
-                                    <div class="col-md-12">內容<span>${ hd["content"] }</span></div>
-                                    </div>`;
+                                    <div class="col-md-12">內容：
+                                    <p>${ hd["content"] }</ｐ></div>
+                                </div>`;
                     $(".hdItem").append(output);
                 })
             }, 'json')

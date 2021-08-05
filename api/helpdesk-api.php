@@ -54,14 +54,13 @@ switch ($action) {
         
         // insert helpdesk
         $param = []; // [path1, order1, path2, order2]
-        $columns = ['user_id', 'g_name', 'g_mobile', 'g_email','topic','cat_id', 'order_num', 'content', 'created_at'];
+        $columns = ['user_id', 'g_name', 'g_mobile', 'g_email','topic','cat_id', 'order_num', 'content'];
         $sql = "INSERT INTO `helpdesk` ";
 
-        $sql .= "(`".implode("`,`", $columns)."`) VALUES (".substr(str_repeat("?,", count($columns)), 0, -1).")";
+        $sql .= "(`".implode("`,`", $columns)."`, `created_at`) VALUES (".substr(str_repeat("?,", count($columns)), 0, -1).", NOW())";
         // INSERT INTO `helpdesk` ('user_id', 'g_name', 'g_mobile', 'g_email', 'order_num', 'content', 'created_at') VALUES (?, ?, ?, ?, ?, ?, ?)        
 
         $_POST['user_id'] = $user['id'];
-        $_POST['created_at'] = "NOW()";
         foreach($columns as $col){
             array_push($param, $_POST[$col]);
         }

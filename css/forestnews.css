@@ -12,26 +12,24 @@ h2 span {
   text-shadow: 0 0 0.1em #0000e3, 0 0 0.1em #9aff02, -0.3px -0.3px white, 0.3px 0.3px rgb(26, 2, 94);
 }
 
-#gardenInfo,
-#eventInfo,
-#hotelInfo,
-#restaurantInfo {
+.forestnews_row {
   box-shadow: 0px 0px 15px #666e9c;
   -webkit-box-shadow: 0px 0px 15px #666e9c;
   -moz-box-shadow: 0px 0px 15px #666e9c;
   margin-bottom: 2rem;
 }
 
-main .card-body {
+pre {
   color: gray;
 }
 
-.accordion .card-body {
+.card-body {
   padding: 2rem;
   background-color: #dff0d8;
+  color: gray;
 }
 
-.accordion .card-body span {
+.card-body span {
   color: #007bff;
 }
 
@@ -59,6 +57,9 @@ main .card-body {
   font-size: 1.2rem;
   font-weight: 500;
 }
+.card-title {
+  text-shadow: 0.5px 0.5px 0 white, 0.5px -0.5px 0 white, -0.5px 0.5px 0 white, -0.5px -0.5px 0 white, 0.5px 0px 0 white, 0px 0.5px 0 white, -0.5px 0px 0 white, 0px -0.5px 0 white;
+}
 
 /* ======================================== gardenInfo ======================================== */
 
@@ -76,7 +77,7 @@ h4 {
   padding: 0;
 }
 
-#gardenInfo .card-body {
+.card-body {
   padding: 2rem;
   background-color: #dff0d8;
 }
@@ -95,10 +96,6 @@ h4 {
   font-size: 1.1rem;
   color: gray;
   font-weight: 600;
-}
-
-.forestnew_row {
-  margin-bottom: 20px;
 }
 
 #collapseOne .card-body > div {
@@ -192,30 +189,26 @@ h4 {
 }
 
 /* ======================================== eventInfo ======================================== */
-#collapseThird img {
+img {
   height: 100%;
 }
 
-#collapseThrid .card-body img {
+.card-body img {
   width: 2rem;
   height: 2rem;
 }
 /* ======================================== restaurantInfo ======================================== */
 
-#restaurantInfo .collapseForth img {
-  object-fit: fill;
-}
-
-#collapseFifth .card-body img {
+.card-body img {
   width: 1.25rem;
   height: 1.25rem;
 }
-#collapseFifth .card-body div {
+.card-body div {
   margin: 1rem;
 }
 
 /* ======================================== hotelInfo ======================================== */
-#hotelInfo .d-flex img {
+.d-flex img {
   flex: 1 1 0;
   width: 20%;
   height: 20%;
