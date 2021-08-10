@@ -1,4 +1,4 @@
-<?php include __DIR__ . '/parts/config.php'; ?>
+<?php require __DIR__ . '/parts/config.php'; ?>
 <?php
 $title = '種類新增';
 $pageName = 'staff_category_create';

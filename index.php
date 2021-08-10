@@ -1,4 +1,4 @@
-<?php include __DIR__ . '/parts/config.php'; ?>
+<?php require __DIR__ . '/parts/config.php'; ?>
 <?php
 $title = '薰衣草森林 Lavender Forest';
 $pageName = 'index';
@@ -142,8 +142,8 @@ $pageName = 'index';
             <table>
                 <tbody>
                     <tr>
-                        <th style="height:3rem" class="index_c_title"></th>
-                        <td class="index_c_content"></td>
+                        <th style="height:3rem" class="index_d_title"></th>
+                        <td class="index_d_content"></td>
                         <td rowspan="3" class="pt-3 pb-3">
                             <pre>
                                 <p class="box_desktop index_c_content"></p>
@@ -164,7 +164,7 @@ $pageName = 'index';
                         <th class="index_f_title"></th>
                         <td >
                             <pre>
-                                <p class="index_e_content"></p>
+                                <p class="index_f_content"></p>
                             </pre>
                         </td>
                     </tr>

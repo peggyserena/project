@@ -1,4 +1,4 @@
-<?php include __DIR__ . '/parts/config.php'; ?>
+<?php require __DIR__ . '/parts/config.php'; ?>
 <?php
 $title = '員工資料查詢';
 $pageName = 'staff_info_search';

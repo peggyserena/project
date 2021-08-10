@@ -1,16 +1,11 @@
 <?php include __DIR__ . '/../parts/config.php';
 include __DIR__ . '/../parts/imgHandler.php';
 
-$user = $_SESSION['user'];
+$user = $_SESSION['user'] ?? null;
 $action = isset($_POST['action']) ? $_POST['action'] : ''; // 操作類型
 switch ($action) {
-    case 'readCat':
-        $sql = "SELECT * FROM helpdesk_category";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([]);
-        $result = $stmt->fetchAll();
-        break;
     case 'readAll':
+        $result = [];
         $condition = ["`user_id` = ?"];
         $param = [$user['id']];
         $condition_map = [
@@ -18,38 +13,93 @@ switch ($action) {
             'year' => "YEAR(h.`created_at`) = ?",
             'month' => "MONTH(h.`created_at`) = ?",
         ];
+
         foreach($condition_map as $key => $value){
-            if (!empty($_POST[$key])){
+            $val = replaceAllToEmpty($_POST[$key]);
+            if (!empty($val)){
                 array_push($condition, $value);
-                array_push($param, $_POST[$key]);
+                array_push($param, $val);
             }
         }
+
         $sql = "SELECT h.*, hc.name as `cat_name` FROM `helpdesk` as h JOIN `helpdesk_category` as hc on h.`cat_id` = hc.`id`";
         if (count($condition) > 0){
             $sql .= "WHERE ".implode(" AND ", $condition);
         }
         $stmt = $pdo->prepare($sql);
         $stmt->execute($param);
-        $result = $stmt->fetchALL();
+        $result['data'] = $stmt->fetchALL();
         
-        // $sql = "SELECT * FROM `helpdesk_image` WHERE helpdesk_id = ? ORDER BY num_order";
-        // $stmt = $pdo->prepare($sql);
-        // $stmt->execute([$_POST['id']]);
-        // $result['img'] = $stmt->fetchAll();
+        // img
+        $result['img'] = readImage();
         break;
+    case 'staffReadAll':
+        $result = [];
+        $condition = [];
+        $param = [$user['id']];
+        $condition_map = [
+            'cat_id' => "h.`cat_id` = ?",
+            'year' => "YEAR(h.`created_at`) = ?",
+            'month' => "MONTH(h.`created_at`) = ?",
+        ];
+
+        foreach($condition_map as $key => $value){
+            $val = replaceAllToEmpty($_POST[$key]);
+            if (!empty($val)){
+                array_push($condition, $value);
+                array_push($param, $val);
+            }
+        }
+
+        $sql = "SELECT h.*, hc.name as `cat_name` FROM `helpdesk` as h JOIN `helpdesk_category` as hc on h.`cat_id` = hc.`id`";
+        if (count($condition) > 0){
+            $sql .= "WHERE ".implode(" AND ", $condition);
+        }
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($param);
+        $result['data'] = $stmt->fetchALL();
+        
+        // img
+        $result['img'] = readImage();
+        break;
+    case 'readCat':
+        $sql = "SELECT * FROM helpdesk_category";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([]);
+        $result = $stmt->fetchAll();
+        break;
+    
 
     case 'read':
-        $sql = "SELECT * FROM `helpdesk` WHERE id = ?";
+        $sql = "SELECT * FROM `helpdesk` WHERE id = ? and `user_id` = ?";
         $stmt = $pdo->prepare($sql);
-        $stmt->execute([$_POST['id']]);
-        $result = $stmt->fetch();
+        $stmt->execute([$_POST['id'], $user['id']]);
+        $result['data'] = $stmt->fetch();
         
         $sql = "SELECT * FROM `helpdesk_image` WHERE helpdesk_id = ? ORDER BY num_order";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$_POST['id']]);
         $result['img'] = $stmt->fetchAll();
         break;
+    case 'staffRead':
+        $sql = "SELECT h.*, hc.name as `cat_name` FROM `helpdesk` as h JOIN `helpdesk_category` as hc on h.`cat_id` = hc.`id` WHERE h.`id` = ?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$_POST['id']]);
+        $result['data'] = $stmt->fetch();
 
+        $sql = "SELECT `fullname`, `mobile`, `email` FROM `members` WHERE id = ?";
+        $stmt = $pdo->prepare($sql);
+
+        $stmt->execute([$result['data']['user_id']]);
+        $result['user'] = $stmt->fetch();
+        
+        
+        $sql = "SELECT * FROM `helpdesk_image` WHERE helpdesk_id = ? ORDER BY num_order";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$_POST['id']]);
+        $result['img'] = $stmt->fetchAll();
+        break;
+        
     case 'add':
         
         // insert helpdesk
@@ -57,7 +107,7 @@ switch ($action) {
         $columns = ['user_id', 'g_name', 'g_mobile', 'g_email','topic','cat_id', 'order_num', 'content'];
         $sql = "INSERT INTO `helpdesk` ";
 
-        $sql .= "(`".implode("`,`", $columns)."`, `created_at`) VALUES (".substr(str_repeat("?,", count($columns)), 0, -1).", NOW())";
+        $sql .= "(`".implode("`,`", $columns)."`, `status`, `created_at`) VALUES (".substr(str_repeat("?,", count($columns)), 0, -1).",  '已付款', NOW())";
         // INSERT INTO `helpdesk` ('user_id', 'g_name', 'g_mobile', 'g_email', 'order_num', 'content', 'created_at') VALUES (?, ?, ?, ?, ?, ?, ?)        
 
         $_POST['user_id'] = $user['id'];
@@ -88,6 +138,36 @@ switch ($action) {
         $result = ["success"];
         break;
 
+    case 'addReply':
+        $id = $_POST['id'];
+        // get old helpdesk
+        $sql = "SELECT * FROM `helpdesk` WHERE id = ?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$id]);
+        $helpdesk = $stmt->fetch();
+
+        // insert helpdesk
+        $columns = ['reply'];
+        $sql = "UPDATE `helpdesk` SET ";
+        
+        $sql .= implode(" = ?, ", $columns)." = ? WHERE id = $id";
+        // INSERT INTO `helpdesk` (`'user_id', 'g_name', 'g_mobile', 'g_email', 'order_num', 'content', 'created_at') VALUES (?, ?, ?, ?, ?, ?, ?)        
+        // UPDATE `helpdesk` `user_id` = ?, `g_name` = ?,  `g_mobile` = ?,  `g_email` = ?,  `order_num` = ?,  `content` = ?,  `created_at` = ?   
+
+        $data = [];
+        if (!empty($_POST['reply'])){
+            foreach($columns as $col){
+                    array_push($data, $_POST[$col]);
+            }
+            
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute($data);
+            $result = ["success"];
+            
+        }else{
+            $result = ["error"];
+        }
+        break;
     case 'edit':
         $id = $_POST['id'];
         // get old helpdesk
@@ -161,6 +241,32 @@ switch ($action) {
         
         $result = ["success"];
         break;
+}
+
+function readImage($id = null){
+    global $pdo;
+    // 抓圖片
+    if (isset($id)){
+        // read
+        $sql = "SELECT * FROM `helpdesk_image` WHERE helpdesk_id = ? ORDER BY num_order";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$id]);
+        $result = $stmt->fetchAll();
+    }else{
+        // readAll
+        $sql = "SELECT * FROM `helpdesk_image` ORDER BY num_order";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+        $image_list = $stmt->fetchAll();
+        $result = [];
+        foreach ($image_list as $value) {
+            if (!array_key_exists($value['helpdesk_id'], $result)){
+                $result[$value['helpdesk_id']] = [];
+            }
+            array_push($result[$value['helpdesk_id']], $value);
+        }
+    }
+    return $result;
 }
 
 echo json_encode($result, JSON_UNESCAPED_UNICODE);

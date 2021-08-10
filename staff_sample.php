@@ -1,4 +1,4 @@
-<?php include __DIR__ . '/parts/config.php'; ?>
+<?php require __DIR__ . '/parts/config.php'; ?>
 <?php
 $title = '薰衣草森林 Lavender Forest';
 $pageName = 'staff_index';

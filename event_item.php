@@ -1,4 +1,4 @@
-<?php include __DIR__ . '/parts/config.php'; ?>
+<?php require __DIR__ . '/parts/config.php'; ?>
 <?php
 $title = '森林體驗詳情';
 $pageName = 'event';

@@ -85,16 +85,14 @@ $title = '忘記密碼查詢';
 <script>
 	function sendMail(){
 		var email = $("#email").val();
-		var id = setTimeout(modal_load, 2000);
 		$.post('<?= WEB_API ?>/email-api.php', {
 			action: "forget_password",
 			email,
 		}, function(data){
-			clearTimeout(id);
 			if ('error' in data){
-				modal_msg(data['error']);
+				modal_msg_error(data['error']);
 			}else {
-				modal_msg(data['info']);
+				modal_msg_success(data['info']);
 			}
 		}, 'json');
 		remail();
@@ -104,14 +102,14 @@ $title = '忘記密碼查詢';
 
 
 
-	function modal_load(){
+	function modal_msg_success(msg){
     modal_init();
     insertPage("#modal_img", "animation/animation_success.html");
     insertText("#modal_content", "信件已寄到您的信箱～");
     updateStyle('nobordertop');
     $("#modal_alert").modal("show");
 	}
-	function modal_msg(msg){
+	function modal_msg_error(msg){
     modal_init();
     insertPage("#modal_img", "animation/animation_error.html");
     insertText("#modal_content", msg);

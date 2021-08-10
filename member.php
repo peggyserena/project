@@ -1,4 +1,4 @@
-<?php include __DIR__ . '/parts/config.php'; ?>
+<?php require __DIR__ . '/parts/config.php'; ?>
 <?php
 $title = '會員中心';
 $pageName = 'member';
@@ -29,18 +29,6 @@ $r = $pdo->query($sql)->fetch();
 
 
 // 抓圖片
-if (!empty($helpdesk_id_list)){
-    $sql = "SELECT * FROM `helpdesk_image` WHERE helpdesk_id in (".implode(",", $helpdesk_id_list).") ORDER BY num_order";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([]);
-    $result = $stmt->fetchAll();
-    $helpdesk_img = [];
-    foreach($result as $cover_img){
-        if (!array_key_exists($cover_img['helpdesk_id'], $helpdesk_img)){
-            $helpdesk_img[$cover_img['helpdesk_id']] = $cover_img['path'];
-        }
-    }
-}
 // print($helpdesk_img[$helpdesk['id']] ?? "" );
 
 
@@ -142,7 +130,7 @@ if (!empty($helpdesk_id_list)){
 
 
                         <div id="wishList" class="tab-pane fade">
-                            <div class="col text-center">
+                            <div class=" text-center">
                                 <table class="table table-striped table-bordered">
                                     <thead>
                                         <tr class="b-green rot-135 text-white">
@@ -169,31 +157,28 @@ if (!empty($helpdesk_id_list)){
 
                         <!-- ================================ 購物金查詢 ================================ -->
 
-
-
                         <div id="coupon" class="tab-pane fade">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <div class="panel-title d-flex justify-content-between  ">
-                                        <div>日期</div>
-                                        <div>購物金項目</div>
-                                        <div>購物金金額</div>
-                                        <div>到期日</div>
-                                        <div>餘額</div>
-                                    </div>
-                                </div>
-                                <div id="collapse1" class="panel-collapse collapse in">
-                                    <div class="panel-body">
-                                    </div>
-                                </div>
+                            <div class=" text-center">
+                                <table class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr class="b-green rot-135 text-white">
+                                            <th scope="col" class="m-0 t_shadow text-center" style="width: 10%;">序號</th>
+                                            <th scope="col" class="m-0 t_shadow text-center">優惠項目</th>
+                                            <th scope="col" class="m-0 t_shadow text-center">金額</th>
+                                            <th scope="col" class="m-0 t_shadow text-center">使用期限</th>
+                                            <th scope="col" class="m-0 t_shadow text-center">使用日</th>
+                                            <th scope="col" class="m-0 t_shadow text-center">餘額</th>
+                                            <th scope="col" class="m-0 t_shadow text-center">備註</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
                             </div>
-
                         </div>
 
 
                         <!-- ================================ 客服紀錄 ================================ -->
-
-
 
                         <div id="helpdeskRecord" class="tab-pane fade row mb-5">
                             <form onsubmit="helpdeskRecord(); return false;">
@@ -249,8 +234,6 @@ if (!empty($helpdesk_id_list)){
 
                         <!-- ================================ 通知設定 ================================ -->
 
-
-
                         <div id="setting" class="tab-pane fade row mb-5">
                             <ul class="m-auto  col-md-9 col-sm-12 ">
                                     <li class="d-flex align-items-center justify-content-between mt-3 ">
@@ -284,11 +267,6 @@ if (!empty($helpdesk_id_list)){
                             </ul>
 
                         </div>
-
-
-
-
-
                     </div>
                 </div>
             </div>
@@ -362,8 +340,6 @@ if (!empty($helpdesk_id_list)){
                 action: 'read'
             }, function(data){
                 
-                console.log("getWishList");
-                console.log(data);
                 data.forEach(function(elem){
                     var output = "";
                     var type_map = {restaurant: "森林咖啡館", hd: "森林體驗", hotel: "夜宿薰衣草森林"};
@@ -392,7 +368,6 @@ if (!empty($helpdesk_id_list)){
             }, 'json')
         }
         function deleteWishList(hd, id){
-            console.log(id);
             let t = $(hd.currentTarget);
             $.post('<?= WEB_API ?>/wishList-api.php', {
                 action: 'delete',
@@ -400,20 +375,15 @@ if (!empty($helpdesk_id_list)){
             }, function(data){
                 
                 t.closest('tr').remove();
-                console.log(data);
-                console.log(t);
             }, 'json').fail(function(e){
-                console.log(e);
             })
         }
         function deleteWishListAll(){
             $.post('<?= WEB_API ?>/wishList-api.php', {
                 action: 'deleteAll',
             }, function(data){
-                console.log(data);
                 location.reload();
             }, 'json').fail(function(e){
-                console.log(e);
             })
         }
 
@@ -520,14 +490,47 @@ if (!empty($helpdesk_id_list)){
             return formatted_date;
         }
 
+    </script>
+    <script>
+            //coupon
+            function coupon(){
+            $.post('<?= WEB_API ?>/coupon-api.php', {
+                action: 'readAll',
+                name: $("#name").val(),
+                start_date: $("#start_date").val(),
+                end_date: $("#end_date").val(),
+                used_date: $("#used_date").val(),
+                price: $("#price").val(),
+                balance: $("#balance").val(),
+                note: $("#note").val(),
+            },function(data) {
+                console.log(data);
+                staff_list = data['result'];
+                $("#coupond table tbody").html("");
+                staff_list.forEach(function(staff, index){
+                    var output = `<tr>
+                            <td class="bg-dark text-white" style="border: #454d55 1px solid ;">${index + 1}</td>
+                            <td>${coupon['name']}</td>
+                            <td>${coupon['staff_id']}</td>
+                            <td>${coupon['start_date']} ～ ${coupon['end_date']}</td>
+                            <td>${coupon['price']}</td>
+                            <td>${coupon['balance']}</td>
+                            <td>${coupon['note']}</td>
+                            </tr>`;
+                    $("#coupond table tbody").append(output);
+                    console.log(output);
+                });
+            }, 'json')
+        }
+
+
+
+    </script>
+    <script>
         // helpdesk
         $.post('<?= WEB_API ?>/helpdesk-api.php', {
             'action': 'readCat',
         }, function(data){
-            var output = 
-            `<option class="form-control" value="" disabled hidden selected>問題類型</option>`;
-            $("#helpdesk_select_id").append(output);
-
             data.forEach(function (cat){
             var output = 
             `<option value="${cat['id']}">${cat['name']}</option>`;
@@ -543,8 +546,9 @@ if (!empty($helpdesk_id_list)){
                 cat_id: $("#helpdesk_select_id").val(),
                 year: $("#helpdesk_select_year").val(),
                 month: $("#helpdesk_select_month").val(),
-            },function(data) {
-                console.log(data);
+            },function(result) {
+                data = result['data'];
+                img = result['img'];
                 $(".hdItem").html("");
                 // <img src='<?= WEB_ROOT ?>/${img[d['id']][ind]['path']}' alt=''>
                 // const files = $("#img")[0].files
@@ -554,9 +558,15 @@ if (!empty($helpdesk_id_list)){
                 // <img class="preview_img" style="max-width: 120px; max-height: 120px" src="${URL.createObjectURL(file)}" alt="your image" />
 
                 data.forEach(function(hd){
+                    var hdi_output = "";
+                    var imgList = img[hd['id']] ?? [];
+                    imgList.forEach(function(hdi){
+                        hdi_output += `<div class="col"><img src='${hdi['path']}' alt='' style="width: 100%;"></div>`;
+                    });
+
                     var output = `<div class="row m-0">
-                                    <div class="col-md-3">圖片：<img src='#' alt='' style="width: 100%;"></div>
-                                    <div class="col-md-9">
+                                    <div class="col-md-12"><div class="row">圖片：${ hdi_output }</div> </div>
+                                    <div class="col-md-12">
                                         <div>日期：<span>${ hd['created_at'] }</span></div>
                                         <div>主題：<span>${ hd["topic"] } </span></div>
                                         <div>問題類型：<span>${ hd["cat_name"] }</span></div>

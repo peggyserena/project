@@ -1,4 +1,4 @@
-<?php include __DIR__ . '/parts/config.php'; ?>
+<?php require __DIR__ . '/parts/config.php'; ?>
 <?php
 $title = '薰衣草森林 管理系統';
 $pageName = 'staff_index';
@@ -42,6 +42,10 @@ $aceept_role = [1, 2];
         position: relative;
         top: 6px;
     }
+    .box div a:hover{
+        background: linear-gradient(135deg, #dcc5ef 40%, #adda9a 100%);
+        text-shadow: 0 0 0.2em #0000e3, 0 0 0.25em #9aff02, -1px -1px white, 1px 1px rgb(26, 2, 94);
+    }
 
 
 </style>
@@ -52,19 +56,22 @@ $aceept_role = [1, 2];
     <!-- (div>a[href=#]{Link})*6 -->
     <div class=" row justify-content-center align-items-center">
         <div><a class=" " href="staff_helpdesk.php">客服信箱回覆</a></div>
-        <div><a class=" " href="staff_member_info_search.php"> 會員資料查詢</a></div>
+        <div><a class=" " href="staff_helpdesk.php">出貨狀態維護</a></div>
         <div><a class=" " href="staff_member_order_search.php"> 交易訂單查詢</a></div>
-        <div><a class=" " href="staff_category_create.php"> 各項種類新增</a></div>
-        <div><a class=" " href="staff_category_search.php"> 各項種類維護</a></div>
-        <div><a class=" " href="staff_forestnews_create.php"> 電子報新增&寄發</a></div>
-        <div><a class=" " href="staff_forestnews_search.php"> 電子報維護&寄發</a></div>
+        <div><a class=" " href="staff_member_info_search.php"> 會員資料查詢</a></div>
+        <div><a class=" " href="staff_coupon_create.php"> 購物金<br>新增</a></div>
+        <div><a class=" " href="staff_coupon_search.php"> 購物金<br>維護</a></div>
+        <div><a class=" " href="staff_edm_create.php"> EDM新增&寄發</a></div>
+        <div><a class=" " href="staff_edm_search.php"> EDM維護&寄發</a></div>
+        <div><a class=" " href="staff_event_create.php"> 森林體驗新增</a></div>
+        <div><a class=" " href="staff_event_search.php"> 森林體驗維護</a></div>
         <div><a class=" " href="staff_forestnews_create.php"> 森林快報新增</a></div>
         <div><a class=" " href="staff_forestnews_search.php"> 森林快報維護</a></div>
         <div><a class=" " href="staff_madol_create.php">彈跳視窗新增</a></div>
         <div><a class=" " href="staff_madol_search.php">彈跳視窗維護</a></div>
-        <div><a class=" " href="staff_event_create.php"> 森林體驗新增</a></div>
-        <div><a class=" " href="staff_event_search.php"> 森林體驗維護</a></div>
-        <div><a class=" " href="staff_gallery.php">園區相簿維護</a></div>
+        <div><a class=" " href="staff_gallery.php">首頁&相簿維護</a></div>
+        <div><a class=" " href="staff_category_create.php"> 各項種類新增</a></div>
+        <div><a class=" " href="staff_category_search.php"> 各項種類維護</a></div>
     </div>
     <hr>
     <div class=" row justify-content-center align-items-center">

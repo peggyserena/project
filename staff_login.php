@@ -1,4 +1,4 @@
-<?php include __DIR__ . '/parts/config.php'; ?>
+<?php require __DIR__ . '/parts/config.php'; ?>
 <?php
     if (isset($_SESSION['staff'])) header('Location: staff_index.php'); 
 $title = '會員登入';

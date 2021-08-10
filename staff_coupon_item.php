@@ -4,7 +4,7 @@ $title = '森林快報';
 $pageName = 'news';
 ?>
 <?php include __DIR__ . '/parts/html-head.php'; ?>
-<link rel="stylesheet" href="./css/forestnews.css">
+<link rel="stylesheet" href="./css/coupon.css">
 <style>
 
 
@@ -26,7 +26,7 @@ $pageName = 'news';
                 <div id="accordion">
                     <div class="card">
                         <div class="card-header py-1 ">
-                            <a class="card-link row   align-items-center  " data-toggle="collapse" href="#forestnews_accordion">
+                            <a class="card-link row   align-items-center  " data-toggle="collapse" href="#coupon_accordion">
                                 <h4 id="name" name="name" class="col-lg-8 col-md-8 col-sm-12" ></h4>
                                 <p class="col-lg-4 col-md-4 col-sm-12">
                                     <span id="start_date" name="start_date" ></span> ～
@@ -34,8 +34,8 @@ $pageName = 'news';
                                 </p>
                             </a>
                         </div>
-                        <div id="forestnews_accordion" class="collapse" data-parent="#accordion">
-                        <img class="card-img-top m-0" id="forestnews_img_cover" alt="Card image cap">
+                        <div id="coupon_accordion" class="collapse" data-parent="#accordion">
+                        <img class="card-img-top m-0" id="coupon_img_cover" alt="Card image cap">
 
                             <div class="card-body">
                                 <h4 class="card-title1 text-center "></h4>
@@ -58,7 +58,7 @@ $pageName = 'news';
             </div>
 
             <div class="text-center mt-5">
-                <a class="text-center c_1 custom-btn btn-4" href="staff_forestnews_editor.php?id=<?= $_GET['id']?>" target="_blank">修改</a>
+                <a class="text-center c_1 custom-btn btn-4" href="staff_coupon_editor.php?id=<?= $_GET['id']?>" target="_blank">修改</a>
             </div>
 
 
@@ -79,7 +79,7 @@ $pageName = 'news';
 <script>
     
     $(document).ready(function() {
-        $.post('api/forestnews-api.php', {
+        $.post('api/coupon-api.php', {
             action: 'read',
             id: <?= $_GET['id'] ?>
         }, function(result){
@@ -96,7 +96,7 @@ $pageName = 'news';
                     text: data['fc_en_name'],
                 },
                 {
-                    selector: "#forestnews_img_cover",
+                    selector: "#coupon_img_cover",
                     attr: {
                         src: "<?= WEB_ROOT."/" ?>" + img[0]['path']
                     }
@@ -136,7 +136,7 @@ $pageName = 'news';
             
             // map
             // {
-            //     selector: "#forestnews_name",
+            //     selector: "#coupon_name",
             //     attr: {
             //         text: data['name']
             //     }

@@ -1,4 +1,4 @@
-<?php include __DIR__ . '/parts/config.php'; ?>
+<?php require __DIR__ . '/parts/config.php'; ?>
 <?php
 $title = '會員方案 FＡQ & 折扣及優惠說明';
 $pageName = 'membership';

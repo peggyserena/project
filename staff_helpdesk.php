@@ -1,4 +1,4 @@
-<?php include __DIR__ . '/parts/config.php'; ?>
+<?php require __DIR__ . '/parts/config.php'; ?>
 <?php
 
 $title = '客服中心';
@@ -38,8 +38,8 @@ $pageName = 'staff_helpdesk';
 <?php include __DIR__ . '/parts/staff_navbar.php'; ?>
 <main>
     <div class="container">
-        <div id="helpdeskRecorde" class="tab-pane fade row mb-5">
-            <form action="staff_deskhelp.php" method="get" onsubmit="helpdeskRecord(); return false;">
+        <div id="helpdeskRecord" class="mb-5">
+            <form onsubmit="helpdeskRecord(); return false;">
                 <div id="searchBar" class="m-0 p-0">
 
                 
@@ -47,14 +47,14 @@ $pageName = 'staff_helpdesk';
                         <li class=" " >
                             <select id="helpdesk_select_id" name='cat_id'>
                                 <option value=""disabled hidden selected>問題類別</option>
-                                <?php foreach ($helpdesk_category as $cat) { ?>
-                                    <option value='<?= $cat['id'] ?>'><?= $cat['name'] ?></option>
-                                <?php } ?>
+                                <option value="all">全部</option>
+
                             </select>
                         </li>
                         <li class="">
                             <select id="helpdesk_select_year" name="year">
                                 <option value=""disabled hidden selected>年份</option>
+                                <option value="all">全部</option>
                                 <option value=""></option>
                                 <option value=""></option>
                                 <option value=""></option>
@@ -65,6 +65,7 @@ $pageName = 'staff_helpdesk';
                         <li class="">
                             <select id="helpdesk_select_month" name="month">
                                 <option value=""disabled hidden selected>月份</option>
+                                <option value="all">全部</option>
                                 <option value=""></option>
                                 <option value=""></option>
                                 <option value=""></option>
@@ -79,22 +80,35 @@ $pageName = 'staff_helpdesk';
                                 <option value=""></option>
                             </select>
                         </li>
+                        <li class="">
+                            <select id="helpdesk_select_reply" name="reply">
+                                <option value=""disabled hidden selected>回覆狀態</option>
+                                <option value="all">全部</option>
+                                <option value="">已回覆</option>
+                                <option value="">未回覆</option>
+                            </select>
+                        </li>
                         <li><button type="submit" class="custom-btn btn-4 m-0 p-0" style="width:3rem; ">送出</button></li>
                     </ul>
                 </div>
 
                 <div class="hdItem  p-0 m-0">
+                    <table class="table table-striped table-bordered">
+                        <thead  class="bg-dark text-white text-center">
+                            <tr>
+                                <td>圖片</td>
+                                <td>日期</td>
+                                <td>主題</td>
+                                <td>問題類型</td>
+                                <td>訂單編號</td>
+                                <td>回覆</td>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
                 </div>
-                <div id="mailToUser "class="form-group pl-3">
-                    <textarea class="form-control" rows="6"  placeholder="" name="toUser" required></textarea>
-                </div>
-                <button class="custom-btn btn-4 ">回覆</button>
-
             </form>
         </div>
-
-
-
 </main>
 
 <?php include __DIR__ . '/parts/staff_scripts.php'; ?>
@@ -102,25 +116,36 @@ $pageName = 'staff_helpdesk';
 <script>
 function helpdeskRecord(){
     $.post('<?= WEB_API ?>/helpdesk-api.php', {
-        type: 'readAll',
+        action: 'staffReadAll',
         cat_id: $("#helpdesk_select_id").val(),
         year: $("#helpdesk_select_year").val(),
         month: $("#helpdesk_select_month").val(),
-    },function(data) {
-        console.log(data);
-        $(".hdItem").html("");
+        month: $("#helpdesk_select_reply").val(),
+    },function(result) {
+        data = result['data'];
+        img = result['img'];
+        $(".hdItem tbody").html("");
+        // <img src='<?= WEB_ROOT ?>/${img[d['id']][ind]['path']}' alt=''>
+        // const files = $("#img")[0].files
+        // for(var i = 0; i < files.length; i++){
+        // var file = files[i];
+        // if (file) {
+        // <img class="preview_img" style="max-width: 120px; max-height: 120px" src="${URL.createObjectURL(file)}" alt="your image" />
+
         data.forEach(function(hd){
-            var output = `<div class="row m-0">
-                            <div class="col-md-3">圖片<img src='#' alt='' style="width: 100%;"></div>
-                            <div class="col-md-9">
-                                <div>日期：<span>${ hd['create_datetime'] }</span></div>
-                                <div>主題：<span>${ hd["topic"] } </span></div>
-                                <div>問題類型：<span>${ hd["cat_name"] }</span></div>
-                                <div>訂單編號：<span>${ hd["order_num"] }</span></div>
-                            </div>
-                            <div class="col-md-12">內容<span>${ hd["content"] }</span></div>
-                            </div>`;
-            $(".hdItem").append(output);
+            var hdi_output = "";
+            var imgList = img[hd['id']] ?? [];
+            
+
+            var output = `<tr>
+                            <td><img width="120px" src="${ imgList.length != 0 ? imgList[0]['path'] : '' }"/></td>
+                            <td>${ hd['created_at'] }</td>
+                            <td>${ hd['topic'] }</td>
+                            <td>${ hd['cat_name'] }</td>
+                            <td>${ hd['order_num'] }</td>
+                            <td><a href="staff_helpdesk_item.php?id=${ hd['id'] }">回覆</a></td>
+                        </tr>`;
+            $(".hdItem tbody").append(output);
         })
     }, 'json')
     .fail(
@@ -138,7 +163,7 @@ function helpdeskRecord(){
     var selectedYear = "<?= $_GET['year'] ?? "" ?>";
     var selectedId = "<?= $_GET['cat_id'] ?? "" ?>";
     $("#helpdesk_select_month option").each(function(ind, elem) {
-        if (ind > 0) {
+        if (ind > 1) {
             elem.text = month;
             elem.value = month;
             month++;
@@ -151,10 +176,10 @@ function helpdeskRecord(){
         }
     });
     $("#helpdesk_select_year option").each(function(ind, elem) {
-        if (ind === 1){
+        if (ind === 2){
             elem.text = "之前";
             elem.value = `~${year}`;
-        }else if (ind > 0) {
+        }else if (ind > 2) {
             elem.text = year;
             elem.value = year;
             year++;
@@ -167,13 +192,13 @@ function helpdeskRecord(){
     </script>
     <script>
     $.post('<?= WEB_API ?>/helpdesk-api.php', {
-        'type': 'readCat',
+        'action': 'readCat',
     }, function(data){
         var output = `<option value="" disabled hidden selected>請選擇</option>`;
-        $("#cat_id").append(output);
+        $("#helpdesk_select_id").append(output);
         data.forEach(function (cat){
         var output = `<option value="${cat['id']}">${cat['name']}</option>`;
-        $("#cat_id").append(output);
+        $("#helpdesk_select_id").append(output);
         });
     }, 'json').fail(function(data){
         console.log(data);

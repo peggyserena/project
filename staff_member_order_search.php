@@ -1,4 +1,4 @@
-<?php include __DIR__ . '/parts/config.php'; ?>
+<?php require __DIR__ . '/parts/config.php'; ?>
 <?php
 $title = '會員中心';
 $pageName = 'staff_member_order_search';
@@ -9,29 +9,6 @@ if(
 header('Location: login.php');
 exit;
 }
-
-
-// $sql = "SELECT * FROM members WHERE id= ? ";
-
-// $stmt = $pdo->prepare($sql);
-// $stmt->execute([]);
-// $result = $stmt->fetchAll;
-
-
-// 抓圖片
-if (!empty($helpdesk_id_list)){
-    $sql = "SELECT * FROM `helpdesk_image` WHERE helpdesk_id in (".implode(",", $helpdesk_id_list).") ORDER BY num_order";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([]);
-    $result = $stmt->fetchAll();
-    $helpdesk_img = [];
-    foreach($result as $cover_img){
-        if (!array_key_exists($cover_img['helpdesk_id'], $helpdesk_img)){
-            $helpdesk_img[$cover_img['helpdesk_id']] = $cover_img['path'];
-        }
-    }
-}
-// print($helpdesk_img[$helpdesk['id']] ?? "" );
 
 
 ?>
@@ -57,34 +34,52 @@ if (!empty($helpdesk_id_list)){
                             <li class=" "><input type="text" value="" placeholder="帳號(E-mail)"> </li>
                             <li class=" "><input type="text" value="" placeholder="姓名"></li>
                             <li class=" "><input type="text" value="" placeholder="手機"></li>
+                            <li class=" "><input type="text" value="" placeholder="訂單編號"></li>
                         </ul>
                         <ul class="row list-unstyled p-2 m-0 justify-content-center align-items-center ">
-                            <li><span style="font-size: 1.3rem;">交易期間：</span><input type="date" id="start_date">　～　<input type="date" id="end_date"> </li>
-                            <li><button type="submit" onclick="readOrder()" class="custom-btn btn-4 t_shadow ml-4">查詢</button></li>
+                            <li><span style="font-size: 1.2rem;">交易期間：</span><input type="date" id="start_date">　～　<input type="date" id="end_date"> </li>
+                            <li><span style="font-size: 1.2rem;"></span>
+                            <select id="helpdesk_select_reply" name="reply">
+                                <option value=""disabled hidden selected>付款狀態</option>
+                                <option value="all">全部</option>
+                                <option value="">已付款</option>
+                                <option value="">未付款</option>
+                            </select>
+                            <select id="helpdesk_select_reply" name="reply">
+                                <option value=""disabled hidden selected>出貨狀態</option>
+                                <option value="all">全部</option>
+                                <option value="">已出貨</option>
+                                <option value="">未出貨</option>
+                            </select>
+                        </li>
+
+                        
+                            </li>
+                            <li><button type="submit" onclick="readOrder()" class="custom-btn btn-4 ml-4">查詢</button></li>
 
                         </ul>
                     </form>
                 </div>
 
-                <div id="tradeRecord" class="tab-pane fade">
+                <div id="tradeRecord" class="tab-pane ">
                     
 
-                    <div class="mt-4">
                         <table class="table table-striped table-bordered">
                             <thead>
-                                <tr class="b-green rot-135 text-info">
-                                    <th scope="col" class="m-0 t_shadow text-center">訂單編號</th>
-                                    <th scope="col" class="m-0 t_shadow text-center">訂單日期</th>
-                                    <th scope="col" class="m-0 t_shadow text-center">金額</th>
-                                    <th scope="col" class="m-0 t_shadow text-center">狀態</th>
-                                    <th scope="col" class="m-0 t_shadow text-center">查詢</th>
-                                    <th scope="col" class="m-0 t_shadow text-center">取消</th>
+                                <tr class="bg-dark text-white">
+                                    <th scope="col" class="m-0 text-center">序號</th>
+                                    <th scope="col" class="m-0 text-center">圖片</th>
+                                    <th scope="col" class="m-0 text-center">訂單編號</th>
+                                    <th scope="col" class="m-0 text-center">訂單日期</th>
+                                    <th scope="col" class="m-0 text-right">金額</th>
+                                    <th scope="col" class="m-0 text-center">付款狀態</th>
+                                    <th scope="col" class="m-0 text-center">出貨狀態</th>
+                                    <th scope="col" class="m-0 text-center">取消交易</th>
                                 </tr>
                             </thead>
                             <tbody>
                             </tbody>
                         </table>
-                    </div>
                 </div>
 
             </div>

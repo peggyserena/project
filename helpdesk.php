@@ -1,81 +1,18 @@
-<?php include __DIR__ . '/parts/config.php'; ?>
+<?php require __DIR__ . '/parts/config.php'; ?>
 <?php
 
 $title = '客服中心';
 $pageName = 'helpdesk';
 
 
-if(
-    ! isset($_SESSION['user'])
-){
-header('Location: login.php');
-exit;
-}
-
-
-
-
 
 
 ?>
 <link rel="stylesheet" href="<?= WEB_ROOT ?>/js/jquery-ui-1.12.1.custom/jquery-ui.structure.min.css">
+<link rel="stylesheet" href="<?= WEB_ROOT ?>/css/helpdesk.css">
 <?php include __DIR__ . '/parts/html-head.php'; ?>
 <style>
 
-
-
-
-
-body {
-    background: linear-gradient(45deg, #e8ddf1 0%, #e1ebdc 100%);
-    position: relative;
-    z-index: -10;
-
-}
-
-
-
-.direct-contact-container .contact-list li img{
-    width: 2rem;
-    border-radius:50%;
-    padding:5px;
-    margin: 0 1rem 0 0
-}
-.direct-contact-container .contact-list li{
-    margin: 0.5rem 0;
-}
-.direct-contact-container .contact-list li a{
-    color:gray;
-}
-.direct-contact-container .contact-list{
-    list-style-type: none;
-}
-
-.btn-4 {
-    width: 100%;
-    transition: all .2s ease-in-out;
-}
-.btn-4:hover{
-    transform: scale(0.975);
-}
-
-
-.social-media-list li {
-  position: relative; 
-  display: inline-block;
-  cursor: pointer; 
-  transition: all .2s ease-in-out;
-  width: 2rem;
-  margin:0 0.5rem;
-}
-
-.social-media-list li:hover {
-    transform: translateY(-1rem);
-}
-
-hr {
-  border-bottom: 3px solid white;
-}
 
 
 
@@ -115,13 +52,13 @@ hr {
                 </div>
                 <div class="form-container buyer1 pl-3" id="myForm1">
                     <div class="form-group ">
-                        <label for="fullname">姓名： <span><?= $_SESSION['user']['fullname']?></span>
+                        <label for="fullname">姓名： <span><?= $_SESSION['user']['fullname'] ?? "" ?></span>
                     </div>
                     <div class="form-group ">
-                        <label for="mobile">連絡電話： </label><span><?= $_SESSION['user']['mobile']?></span>
+                        <label for="mobile">連絡電話： </label><span><?= $_SESSION['user']['mobile'] ?? ""?></span>
                     </div>
                     <div class="form-group ">
-                        <label for="email">email ： </label><span><?= $_SESSION['user']['email']?></span>
+                        <label for="email">email ： </label><span><?= $_SESSION['user']['email'] ?? "" ?></span>
                     </div>
                 </div>
                 <div class="form-container buyer2 pl-3" id="myForm2">
@@ -307,7 +244,7 @@ hr {
           insertPage("#modal_img", "animation/animation_mail.html");
           insertText("#modal_content", "感謝您的來信！我們會盡速回覆您！");
           $("#modal_alert").modal("show");
-          setTimeout(function(){location.href = "member.php?tab=helpdesk"}, 5000);
+          //setTimeout(function(){location.href = "member.php?tab=helpdesk"}, 5000);
         },
         error: function(data){
           console.log(data);
@@ -315,7 +252,7 @@ hr {
           insertPage("#modal_img", "animation/animation_error.html");
           insertText("#modal_content", "資料傳輸失敗，請稍後再試～");
           $("#modal_alert").modal("show");
-          setTimeout(function(){location.href = "helpdesk.php"}, 2000);
+        //   setTimeout(function(){location.href = "helpdesk.php"}, 2000);
         }
     });
     
