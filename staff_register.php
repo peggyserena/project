@@ -135,7 +135,7 @@ if (!in_array($_SESSION['staff']['role'], $aceept_role)){
                     data['data'].forEach(function(staff, index){
                     $("table#result tbody").append(`<tr>
                             <td>${base + index + 1}</td>
-                            <td>${staff['position']}</td>
+                            <td>${staff['name']}</td>
                             <td>${staff['staff_id']}</td>
                             <td>${staff['password']}</td>
                         </tr>`);
@@ -192,7 +192,7 @@ if (!in_array($_SESSION['staff']['role'], $aceept_role)){
                     if (role === 2 && !(data[key]['id'] in [3, 4])){
                         continue;
                     }
-                    $("#role").append(`<option value="${data[key]['id']}">${data[key]['position']}</option>`);
+                    $("#role").append(`<option value="${data[key]['id']}">${data[key]['name']}</option>`);
                 }
                 
             }, 'json').fail(function(data){

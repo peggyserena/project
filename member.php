@@ -45,7 +45,7 @@ $r = $pdo->query($sql)->fetch();
 
 <body>
     <main>
-        <div class="container">
+        <div class="container my-5">
             <div class="row justify-content-center ">
                 <div class="box  col-md-9 col-sm-12 m-2   p-0 ">
                     <ul id="myTab" class="nav nav-tabs t_shadow ">
@@ -180,7 +180,7 @@ $r = $pdo->query($sql)->fetch();
 
                         <!-- ================================ 客服紀錄 ================================ -->
 
-                        <div id="helpdeskRecord" class="tab-pane fade row mb-5">
+                        <div id="helpdeskRecord" class="tab-pane fade row ">
                             <form onsubmit="helpdeskRecord(); return false;">
                                 <div id="searchBar" class="m-0 p-0">
 
@@ -221,9 +221,24 @@ $r = $pdo->query($sql)->fetch();
                                                 <option value=""></option>
                                             </select>
                                         </li>
+                                        <li class="">
+                                            <select id="helpdesk_select_reply" name="reply">
+                                                <option value=""disabled hidden selected>回覆狀態</option>
+                                                <option value="all">全部</option>
+                                                <option value="">已回覆</option>
+                                                <option value="">未回覆</option>
+                                            </select>
+                                        </li>
+
                                         <li><button type="submit" class="custom-btn btn-4 m-0 p-0" style="width:3rem; ">送出</button></li>
                                     </ul>
                                 </div>
+                                <div class="bar bg-secondary text-white py-2 align-items-center row m-0 ">
+                                        <div class="col-sm-2 text-center ">圖片</div>
+                                        <div class="col-sm-3 text-center ">來信時間</div>
+                                        <div class="col-sm-5">信件主旨</div>
+                                        <div class="col-sm-2 text-center">回覆狀態</div>
+                                    </div>
 
                                 <div class="hdItem  p-0 m-0">
                                 </div>
@@ -454,6 +469,7 @@ $r = $pdo->query($sql)->fetch();
 
             calPrices();
             getWishList();
+            helpdeskRecord();
         });
         
         console.log(location.search.replace('?tab=', ''))
@@ -546,35 +562,50 @@ $r = $pdo->query($sql)->fetch();
                 cat_id: $("#helpdesk_select_id").val(),
                 year: $("#helpdesk_select_year").val(),
                 month: $("#helpdesk_select_month").val(),
+                status: $("#helpdesk_select_reply").val(),
+
             },function(result) {
                 data = result['data'];
                 img = result['img'];
                 $(".hdItem").html("");
-                // <img src='<?= WEB_ROOT ?>/${img[d['id']][ind]['path']}' alt=''>
-                // const files = $("#img")[0].files
-                // for(var i = 0; i < files.length; i++){
-                // var file = files[i];
-                // if (file) {
-                // <img class="preview_img" style="max-width: 120px; max-height: 120px" src="${URL.createObjectURL(file)}" alt="your image" />
-
                 data.forEach(function(hd){
                     var hdi_output = "";
                     var imgList = img[hd['id']] ?? [];
                     imgList.forEach(function(hdi){
-                        hdi_output += `<div class="col"><img src='${hdi['path']}' alt='' style="width: 100%;"></div>`;
+                        hdi_output += `<div class="text-center fancybox d-flex row p-1 m-0"> 
+                                            <a id="fancybox" href="${hdi['path']}"  data-fancybox='F_box1' data-caption= ''>
+                                            <img width="120px" src="${hdi['path']}" alt=''  >
+                                            </a>
+                                        </div>`;
                     });
 
-                    var output = `<div class="row m-0">
-                                    <div class="col-md-12"><div class="row">圖片：${ hdi_output }</div> </div>
-                                    <div class="col-md-12">
+
+
+                    var output = `<a href="#a${ hd['id'] }" class=" " data-toggle="collapse">
+                                      <div class="bar justify-content-center align-items-center text-secondary row m-0">
+                                        <div class="col-sm-2 text-center"><img width="120px" class="p-1" src="${ imgList.length != 0 ? imgList[0]['path'] : '' }"/></div>
+                                        <div class="col-sm-3 text-center ">${ hd['created_at'] ?? "" }</div>
+                                        <div class="col-sm-5">${ hd["topic"] }</div>
+                                        <div class="col-sm-2 text-center">❤ ${ hd['status'] }</div>
+                                      </div>
+                                    </a>
+                    
+                    
+                    
+                                 <div class=" collapse row mx-0 mb-4" id="a${ hd['id'] }">
+                                    <div class="col-md-12 text-white p-2" style="background-color: #83a573">❤ ${ hd['status'] }：${ hd['replied_at'] ?? "" }</div>
+                                    <div class="col-md-12"><div class="row m-0  py-2">圖片：${ hdi_output }</div> </div>
+                                    <div class="col-md-12 py-2  " >
                                         <div>日期：<span>${ hd['created_at'] }</span></div>
-                                        <div>主題：<span>${ hd["topic"] } </span></div>
+                                        <div>信件主旨：<span>${ hd["topic"] } </span></div>
                                         <div>問題類型：<span>${ hd["cat_name"] }</span></div>
                                         <div>訂單編號：<span>${ hd["order_num"] }</span></div>
                                     </div>
-                                    <div class="col-md-12">內容：
+                                    <div class="col-md-12  py-2">信件內容：
                                     <p>${ hd["content"] }</ｐ></div>
-                                </div>`;
+                                    <div class="reply_content col-md-12  py-2" style="background: #dcedd5">回覆內容：
+                                    <p>${ hd["reply"] }</p></div>
+                                  </div>`;
                     $(".hdItem").append(output);
                 })
             }, 'json')

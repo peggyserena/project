@@ -3,34 +3,54 @@
 $action = isset($_POST['action']) ? $_POST['action'] : $_POST['type']; // 操作類型
 
 switch ($action) {
-    case 'readCat':
+    case 'read':
         $sql = "SELECT * FROM event_category";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([]);
+        $result = $stmt->fetchAll();
+
+        $sql = "SELECT * FROM forestnews_category";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([]);
+        $result = $stmt->fetchAll();
+
+        $sql = "SELECT * FROM helpdesk_category";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([]);
+        $result = $stmt->fetchAll();
+
+        $sql = "SELECT * FROM staff_role_category";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([]);
+        $result = $stmt->fetchAll();
+
+        $sql = "SELECT * FROM member_role_category";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([]);
         $result = $stmt->fetchAll();
         break;
         
-    case 'read':
-        $id = $_POST['id'];
-        // 抓取活動參與人數與類別中文名稱
-        $sql = "SELECT `e`.*, ec.name as `ec_name`, SUM(`oe`.quantity) as quantity FROM `event` as e 
-                JOIN `event_category` as ec ON `cat_id` = ec.`id` 
-                LEFT JOIN `order_event` as oe ON e.id = oe.event_id 
-                WHERE e.id = ? 
-                group by e.id";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([$id]);
-        $result = $stmt->fetch();
-      
-        break;
+        
     case 'add':
-        // insert video image
-        $name = uploadImg($_FILES['video_img'], "images/event/video/");
-        $_POST['video_img'] = $name;
+        // insert event_category 
+        $columns = ['name', 'code'];
+        $sql = "INSERT INTO `event_category` ";
 
-        // insert event
-        $columns = ['cat_id', 'video', 'video_img', 'name', 'date', 'time', 'price', 'description', 'title', 'age', 'location', 'content', 'info', 'notice', 'limitNum'];
-        $sql = "INSERT INTO `event` ";
+        // insert forestnews_category
+        $columns = ['name', 'en_name'];
+        $sql = "INSERT INTO `forestnews_category` ";
+
+        // insert helpdesk_category
+        $columns = ['name'];
+        $sql = "INSERT INTO `helpdesk_category` ";
+
+        // insert member_role_category
+        $columns = ['name'];
+        $sql = "INSERT INTO `member_role_category` ";
+
+        // insert staff_role_category
+        $columns = ['name'];
+        $sql = "INSERT INTO `staff_role_category` ";
 
         $sql .= "(`".implode("`,`", $columns)."`) VALUES (".substr(str_repeat("?,", count($columns)), 0, -1).")";
         // INSERT INTO `event` (`cat_id`, `video`, `name`, `date`, `time`, `price`, `description`, `title`, `age`, `location`, `content`, `info`, `notice`, `limitNum`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)        
@@ -48,28 +68,19 @@ switch ($action) {
     case 'edit':
         $id = $_POST['id'];
         // get old event
-        $sql = "SELECT * FROM `event` WHERE id = ?";
+        $sql = "SELECT * FROM `event_category` WHERE id = ?";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$id]);
         $event = $stmt->fetch();
         
-        $sql = "SELECT * FROM `event_image` WHERE event_id = ? ORDER BY num_order";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([$id]);
-        $event['img'] = $stmt->fetchAll();
-
       
-
-        // insert event
-        $columns = ['cat_id', 'video', 'name', 'date', 'time', 'price', 'description', 'title', 'age', 'location', 'content', 'info', 'notice', 'limitNum'];
-        if ($video_img_changed === "1") {
-            array_push($columns, 'video_img');
-        }
-        $sql = "UPDATE `event` SET ";
+        // insert event_category
+        $columns = ['name', 'code'];
+        $sql = "UPDATE `event_category` SET ";
         
         $sql .= implode(" = ?, ", $columns)." = ? WHERE id = $id";
-        // INSERT INTO `event` (`cat_id`, `video`, `name`, `date`, `time`, `price`, `description`, `title`, `age`, `location`, `content`, `info`, `notice`, `limitNum`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)        
-        // UPDATE `event` `cat_id` = ?, `video` = ?,  `name` = ?,  `date` = ?,  `time` = ?,  `price` = ?,  `description` = ?,  `title` = ?,  `age` = ?,  `location` = ?,  `content` = ?,  `info` = ?,  `notice` = ?,  `limitNum` = ?    
+        // INSERT INTO `event_category` ( `name`, `code`) VALUES (?, ?)        
+        // UPDATE `event_category`  `name` = ?,  `code` = ?    
 
         $data = [];
         foreach($columns as $col){
@@ -79,12 +90,115 @@ switch ($action) {
         $stmt = $pdo->prepare($sql);
         $stmt->execute($data);
         
+
+        
+        // get old forestnews_category
+        $sql = "SELECT * FROM `forestnews_category` WHERE id = ?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$id]);
+        $event = $stmt->fetch();
+        
+      
+        // insert forestnews_category
+        $columns = ['name', 'en_name'];
+        $sql = "UPDATE `forestnews_category` SET ";
+        
+        $sql .= implode(" = ?, ", $columns)." = ? WHERE id = $id";
+        // INSERT INTO `forestnews_category` ( `name`, `en_name`) VALUES (?, ?)        
+        // UPDATE `forestnews_category`  `name` = ?,  `en_name` = ?    
+
+        $data = [];
+        foreach($columns as $col){
+            array_push($data, $_POST[$col]);
+        }
+        
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($data);
+        
+
+
+        // get old helpdesk_category
+        $sql = "SELECT * FROM `helpdesk_category` WHERE id = ?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$id]);
+        $event = $stmt->fetch();
+        
+      
+        // insert helpdesk_category
+        $columns = ['name'];
+        $sql = "UPDATE `helpdesk_category` SET ";
+        
+        $sql .= implode(" = ?, ", $columns)." = ? WHERE id = $id";
+        // INSERT INTO `helpdesk_category` ( `name`) VALUES (?, ?)        
+        // UPDATE `helpdesk_category`  `name` = ?,     
+
+        $data = [];
+        foreach($columns as $col){
+            array_push($data, $_POST[$col]);
+        }
+        
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($data);
+        
+
+
+        // get old member_role_category
+        $sql = "SELECT * FROM `member_role_category` WHERE id = ?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$id]);
+        $event = $stmt->fetch();
+        
+      
+        // insert member_role_category
+        $columns = ['name'];
+        $sql = "UPDATE `member_role_category` SET ";
+        
+        $sql .= implode(" = ?, ", $columns)." = ? WHERE id = $id";
+        // INSERT INTO `member_role_category` ( `name`) VALUES (?, ?)        
+        // UPDATE `member_role_category`  `name` = ?    
+
+        $data = [];
+        foreach($columns as $col){
+            array_push($data, $_POST[$col]);
+        }
+        
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($data);
+        
+
+
+        // get old staff_role_category
+        $sql = "SELECT * FROM `staff_role_category` WHERE id = ?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$id]);
+        $event = $stmt->fetch();
+        
+      
+        // insert staff_role_category
+        $columns = ['name'];
+        $sql = "UPDATE `staff_role_category` SET ";
+        
+        $sql .= implode(" = ?, ", $columns)." = ? WHERE id = $id";
+        // INSERT INTO `staff_role_category` ( `name) VALUES (?, ?)        
+        // UPDATE `staff_role_category`  `name` = ?    
+
+        $data = [];
+        foreach($columns as $col){
+            array_push($data, $_POST[$col]);
+        }
+        
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($data);
+        
+
+
+
+
         case 'delete':
             if (isset($key)) {
                 unset($_SESSION['cart']['restaurant'][$key]); // 移除該項商品
             }
             break;
-        // insert gallery image
 }
 echo json_encode($result, JSON_UNESCAPED_UNICODE);
 

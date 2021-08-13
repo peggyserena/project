@@ -56,8 +56,8 @@ $aceept_role = [1, 2];
     <!-- (div>a[href=#]{Link})*6 -->
     <div class=" row justify-content-center align-items-center">
         <div><a class=" " href="staff_helpdesk.php">客服信箱回覆</a></div>
-        <div><a class=" " href="staff_helpdesk.php">出貨狀態維護</a></div>
-        <div><a class=" " href="staff_member_order_search.php"> 交易訂單查詢</a></div>
+        <div><a class=" " href="staff_order_shippment.php">出貨狀態維護</a></div>
+        <div><a class=" " href="staff_order_search.php"> 交易訂單查詢</a></div>
         <div><a class=" " href="staff_member_info_search.php"> 會員資料查詢</a></div>
         <div><a class=" " href="staff_coupon_create.php"> 購物金<br>新增</a></div>
         <div><a class=" " href="staff_coupon_search.php"> 購物金<br>維護</a></div>

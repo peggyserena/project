@@ -20,12 +20,12 @@ exit;
 // $staff_role_category = [];
 //ArrayArray ( [1] => 管理者 [2] => 經理 [3] => 會計 [4] => 一般員工 )
 // foreach($result as $role_cat){
-//     $staff_role_category[$role_cat['id']] = $role_cat['position'];
+//     $staff_role_category[$role_cat['id']] = $role_cat['name'];
 // }
 
 
 
-// $sql = "SELECT staff.*, src.position as position FROM staff JOIN `staff_role_category` as src ON src.id = id WHERE staff_id='" . $_SESSION['staff']['staff_id']."'";
+// $sql = "SELECT staff.*, src.name as name FROM staff JOIN `staff_role_category` as src ON src.id = id WHERE staff_id='" . $_SESSION['staff']['staff_id']."'";
 // $r = $pdo->query($sql)->fetch();
 
 ?>

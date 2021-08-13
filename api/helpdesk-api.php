@@ -26,6 +26,7 @@ switch ($action) {
         if (count($condition) > 0){
             $sql .= "WHERE ".implode(" AND ", $condition);
         }
+        $sql .= " ORDER BY `created_at` DESC";
         $stmt = $pdo->prepare($sql);
         $stmt->execute($param);
         $result['data'] = $stmt->fetchALL();
@@ -36,7 +37,7 @@ switch ($action) {
     case 'staffReadAll':
         $result = [];
         $condition = [];
-        $param = [$user['id']];
+        $param = [];
         $condition_map = [
             'cat_id' => "h.`cat_id` = ?",
             'year' => "YEAR(h.`created_at`) = ?",
@@ -55,6 +56,7 @@ switch ($action) {
         if (count($condition) > 0){
             $sql .= "WHERE ".implode(" AND ", $condition);
         }
+        $sql .= " ORDER BY `created_at` DESC";
         $stmt = $pdo->prepare($sql);
         $stmt->execute($param);
         $result['data'] = $stmt->fetchALL();
@@ -107,7 +109,7 @@ switch ($action) {
         $columns = ['user_id', 'g_name', 'g_mobile', 'g_email','topic','cat_id', 'order_num', 'content'];
         $sql = "INSERT INTO `helpdesk` ";
 
-        $sql .= "(`".implode("`,`", $columns)."`, `status`, `created_at`) VALUES (".substr(str_repeat("?,", count($columns)), 0, -1).",  '已付款', NOW())";
+        $sql .= "(`".implode("`,`", $columns)."`, `status`, `created_at`) VALUES (".substr(str_repeat("?,", count($columns)), 0, -1).",  '未回覆', NOW())";
         // INSERT INTO `helpdesk` ('user_id', 'g_name', 'g_mobile', 'g_email', 'order_num', 'content', 'created_at') VALUES (?, ?, ?, ?, ?, ?, ?)        
 
         $_POST['user_id'] = $user['id'];
@@ -147,14 +149,15 @@ switch ($action) {
         $helpdesk = $stmt->fetch();
 
         // insert helpdesk
-        $columns = ['reply'];
+        $columns = ['reply', 'status'];
         $sql = "UPDATE `helpdesk` SET ";
         
-        $sql .= implode(" = ?, ", $columns)." = ? WHERE id = $id";
+        $sql .= implode(" = ?, ", $columns)." = ?, `replied_at` = NOW() WHERE id = $id AND `status` = '未回覆'";
         // INSERT INTO `helpdesk` (`'user_id', 'g_name', 'g_mobile', 'g_email', 'order_num', 'content', 'created_at') VALUES (?, ?, ?, ?, ?, ?, ?)        
         // UPDATE `helpdesk` `user_id` = ?, `g_name` = ?,  `g_mobile` = ?,  `g_email` = ?,  `order_num` = ?,  `content` = ?,  `created_at` = ?   
 
         $data = [];
+        $_POST['status'] = "已回覆";
         if (!empty($_POST['reply'])){
             foreach($columns as $col){
                     array_push($data, $_POST[$col]);
@@ -162,8 +165,11 @@ switch ($action) {
             
             $stmt = $pdo->prepare($sql);
             $stmt->execute($data);
-            $result = ["success"];
-            
+            if ($stmt->rowCount()=== 0){
+                $result = ["error"];
+            }else{
+                $result = ["success"];
+            }
         }else{
             $result = ["error"];
         }

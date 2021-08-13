@@ -111,17 +111,19 @@ $pageName = 'helpdesk';
                         <textarea class="form-control" rows="6"  placeholder="歡迎留言，我們將會儘快請專人以郵件方式回覆您的問題。" name="content" required></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="img">圖片</label>
-                        <input type="file" id="img" name="img[]" accept=".png,.jpeg,.jpg" multiple>
+                        <label for="img" class="ml-3">圖片</label>
+                        <input class=""type="file" id="img" name="img[]" accept=".png,.jpeg,.jpg" multiple>
                         <input type="hidden" id="img_order" name="img_order">
                     </div>
                     <div class="form-group" id="preview">
-                    <ul id="sortable" class="row  list-unstyled">
-                    </ul>
+                        <ul id="sortable" class="row  list-unstyled ml-3">
+                        </ul>
                     </div>
                 </div>
+                <div class="text-center">
+                    <button class="custom-btn btn-4 c_1" type="submit" value="">寄出</button>
+                </div>
 
-                <button class="custom-btn btn-4 c_1" type="submit" value="">寄出</button>
             </div>
             <div class="col-md-6 direct-contact-container  ">
                 <h4 class="b-green rot-135 p-2 text-center text-white my-3 c_1">其他聯繫方式</h4>
@@ -168,8 +170,8 @@ $pageName = 'helpdesk';
         if (file) {
             
         var img =`<li class="ui-state-default" data-order="${i}">
-                            <div style="display: grid;">
-                            <img class="preview_img" style="max-width: 120px; max-height: 120px" src="${URL.createObjectURL(file)}" alt="your image" />
+                            <div style="display: grid;" class="px-1">
+                            <img class="preview_img " style="max-width: 120px; max-height: 120px" src="${URL.createObjectURL(file)}" alt="your image" />
                             <button type="button" onclick="deleteItem(this);">X</button>
                             </div>
                         </li>`;
@@ -244,7 +246,7 @@ $pageName = 'helpdesk';
           insertPage("#modal_img", "animation/animation_mail.html");
           insertText("#modal_content", "感謝您的來信！我們會盡速回覆您！");
           $("#modal_alert").modal("show");
-          //setTimeout(function(){location.href = "member.php?tab=helpdesk"}, 5000);
+          setTimeout(function(){location.href = "member.php?tab=helpdeskRecord"}, 5000);
         },
         error: function(data){
           console.log(data);
@@ -252,7 +254,7 @@ $pageName = 'helpdesk';
           insertPage("#modal_img", "animation/animation_error.html");
           insertText("#modal_content", "資料傳輸失敗，請稍後再試～");
           $("#modal_alert").modal("show");
-        //   setTimeout(function(){location.href = "helpdesk.php"}, 2000);
+          setTimeout(function(){location.href = "helpdesk.php"}, 2000);
         }
     });
     

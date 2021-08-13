@@ -17,7 +17,7 @@ exit;
 // 都可以 print_r, var_dump, echo, print
 
 
-// $sql = "SELECT staff.*, src.position as position FROM staff JOIN `staff_role_category` as src ON src.id = id WHERE staff_id='" . $_SESSION['staff']['staff_id']."'";
+// $sql = "SELECT staff.*, src.name as name FROM staff JOIN `staff_role_category` as src ON src.id = id WHERE staff_id='" . $_SESSION['staff']['staff_id']."'";
 // $r = $pdo->query($sql)->fetch();
 
 ?>

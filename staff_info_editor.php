@@ -10,7 +10,7 @@ $pageName ='staff_register';
 // $staff_role_category = [];
 //ArrayArray ( [1] => 管理者 [2] => 經理 [3] => 會計 [4] => 一般員工 )
 // foreach($result as $role_cat){
-//     $staff_role_category[$role_cat['id']] = $role_cat['position'];
+//     $staff_role_category[$role_cat['id']] = $role_cat['name'];
 // }
 // print_r($_SESSION['staff']);
 ?>

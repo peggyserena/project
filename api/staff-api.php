@@ -17,7 +17,7 @@ switch ($action){
                 $output['success'] = "讀取成功";
                 break;
         case 'readCurrent':
-                $sql ="SELECT staff.*, src.position as role_name FROM `staff` JOIN `staff_role_category` as src ON staff.role = src.id WHERE staff_id = ?";
+                $sql ="SELECT staff.*, src.name as role_name FROM `staff` JOIN `staff_role_category` as src ON staff.role = src.id WHERE staff_id = ?";
                 $stmt = $pdo->prepare($sql);
                 $stmt->execute([$staff['staff_id']]);
                 $output['data'] = $stmt->fetch();
@@ -49,7 +49,7 @@ switch ($action){
                                 array_push($condition, $value);
                         }
                 }
-                $sql ="SELECT staff.*, src.position as role_name FROM `staff` JOIN `staff_role_category` as src ON staff.role = src.id";
+                $sql ="SELECT staff.*, src.name as role_name FROM `staff` JOIN `staff_role_category` as src ON staff.role = src.id";
                 if (count($condition) > 0){
                         $sql .= " WHERE ".implode(" AND ", $condition);
                 }

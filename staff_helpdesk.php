@@ -11,7 +11,6 @@ $pageName = 'staff_helpdesk';
 
 
 #helpdeskRecord table tbody td {
-  font-weight: 400;
   font-size: 1rem;
   text-align: left;
 }
@@ -37,12 +36,11 @@ $pageName = 'staff_helpdesk';
 
 <?php include __DIR__ . '/parts/staff_navbar.php'; ?>
 <main>
-    <div class="container">
-        <div id="helpdeskRecord" class="mb-5">
+    <div class="container con_01 p-0 ">
+        <h2 class="title b-green rot-135 col-sm-12">客服信箱回覆</h2>
+        <div id="helpdeskRecord" class="mb-5  ">
             <form onsubmit="helpdeskRecord(); return false;">
                 <div id="searchBar" class="m-0 p-0">
-
-                
                     <ul class="p-2 m-auto row list-unstyled justify-content-center align-items-center ">
                         <li class=" " >
                             <select id="helpdesk_select_id" name='cat_id'>
@@ -93,15 +91,15 @@ $pageName = 'staff_helpdesk';
                 </div>
 
                 <div class="hdItem  p-0 m-0">
-                    <table class="table table-striped table-bordered">
+                    <table class="table table-striped table-bordered  table-hover">
                         <thead  class="bg-dark text-white text-center">
                             <tr>
-                                <td>圖片</td>
-                                <td>日期</td>
-                                <td>主題</td>
-                                <td>問題類型</td>
-                                <td>訂單編號</td>
-                                <td>回覆</td>
+                                <td width=15% >圖片</td>
+                                <td width=15%>日期</td>
+                                <td width=15%>問題類型</td>
+                                <td >信件主旨</td>
+                                <td  width=15%>訂單編號</td>
+                                <td  width=10%>狀態</td>
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -114,36 +112,38 @@ $pageName = 'staff_helpdesk';
 <?php include __DIR__ . '/parts/staff_scripts.php'; ?>
 
 <script>
+helpdeskRecord();
 function helpdeskRecord(){
     $.post('<?= WEB_API ?>/helpdesk-api.php', {
         action: 'staffReadAll',
         cat_id: $("#helpdesk_select_id").val(),
         year: $("#helpdesk_select_year").val(),
         month: $("#helpdesk_select_month").val(),
-        month: $("#helpdesk_select_reply").val(),
+        status: $("#helpdesk_select_reply").val(),
     },function(result) {
         data = result['data'];
         img = result['img'];
         $(".hdItem tbody").html("");
-        // <img src='<?= WEB_ROOT ?>/${img[d['id']][ind]['path']}' alt=''>
-        // const files = $("#img")[0].files
-        // for(var i = 0; i < files.length; i++){
-        // var file = files[i];
-        // if (file) {
-        // <img class="preview_img" style="max-width: 120px; max-height: 120px" src="${URL.createObjectURL(file)}" alt="your image" />
 
         data.forEach(function(hd){
             var hdi_output = "";
             var imgList = img[hd['id']] ?? [];
-            
+            var style = "";
 
-            var output = `<tr>
-                            <td><img width="120px" src="${ imgList.length != 0 ? imgList[0]['path'] : '' }"/></td>
+            if (hd['status'] === "未回覆"){
+                style = "background-color: #c9dac2; font-weight: 700";
+            }
+            else if (hd['status'] === "已回覆"){
+                style = "font-style: italic; color: gray";
+            }
+            var output = `<tr style='${style}'>
+                            <td class="text-center"><img width="120px" src="${ imgList.length != 0 ? imgList[0]['path'] : '' }"/></td>
+                            
                             <td>${ hd['created_at'] }</td>
-                            <td>${ hd['topic'] }</td>
                             <td>${ hd['cat_name'] }</td>
+                            <td>${ hd['topic'] }</td>
                             <td>${ hd['order_num'] }</td>
-                            <td><a href="staff_helpdesk_item.php?id=${ hd['id'] }">回覆</a></td>
+                            <td  class="text-center"><a href="staff_helpdesk_item.php?id=${ hd['id'] }">${hd['status']}</a></td>
                         </tr>`;
             $(".hdItem tbody").append(output);
         })
@@ -194,7 +194,7 @@ function helpdeskRecord(){
     $.post('<?= WEB_API ?>/helpdesk-api.php', {
         'action': 'readCat',
     }, function(data){
-        var output = `<option value="" disabled hidden selected>請選擇</option>`;
+        var output = `<option value="" disabled hidden selected>問題類型</option>`;
         $("#helpdesk_select_id").append(output);
         data.forEach(function (cat){
         var output = `<option value="${cat['id']}">${cat['name']}</option>`;

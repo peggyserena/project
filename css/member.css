@@ -14,7 +14,6 @@ input {
 .box {
   margin: 5% 0;
   color: gray;
-  font-weight: 600;
   border-radius: 0.6rem;
 }
 
@@ -73,8 +72,23 @@ table {
   margin-top: 1.5rem;
 }
 
-.hdItem div {
-  border: orange 1px solid;
+.hdItem a {
+  color: rgb(66, 65, 65);
+}
+
+.hdItem > div {
+  border: lightgray 6px solid;
+}
+.reply_content {
+  border-top: lightgray 6px solid;
+}
+.bar {
+  border: lightgray solid;
+  border-width: 6px 6px 6px 6px;
+}
+
+.d-flex a {
+  flex: 1 1 0;
 }
 /* =====================================================
 Some defaults across all toggle demos

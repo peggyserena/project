@@ -113,12 +113,12 @@ switch ($action){
             if (in_array("*", $aceept_role) || in_array($_POST['role_id'], $aceept_role)){
             // if (in_array(intval($staff['role']), $auth_role) && in_array(intval($staff['role']), $auth_role)){
                 if (isset($_POST['quantity']) && isset($_POST['role_id'])) {
-                    // 抓取role的position職稱
-                    $sql = "SELECT `position` FROM `staff_role_category` WHERE `id` = ?";
+                    // 抓取role的name職稱
+                    $sql = "SELECT `name` FROM `staff_role_category` WHERE `id` = ?";
                     $stmt = $pdo->prepare($sql);
                     $stmt->execute([$_POST['role_id']]);
-                    $position = $stmt->fetch();
-                    $position = $position['position'];
+                    $name = $stmt->fetch();
+                    $name = $name['name'];
 
                     // 抓取某職稱最後一筆員工，以計算新的staff_id
                     $output = ['data' => []];
@@ -144,7 +144,7 @@ switch ($action){
                         $staff_id = $role_code.str_pad(strval($staff_id_num++), 5, "0", STR_PAD_LEFT);
                         $password = bin2hex(random_bytes(5));
                         array_push($output['data'], [
-                            'position' => $position,
+                            'name' => $name,
                             'staff_id' => $staff_id,
                             'password' => $password,
                         ]);

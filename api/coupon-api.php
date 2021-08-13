@@ -29,7 +29,7 @@ switch ($action) {
         $result['img'] = readImage($id);
 
         $sql = "SELECT `c`.*, cc.name as `cc_name`, cc.en_name as `cc_en_name` , cc.date as `cc_en_date` FROM `coupon` as c 
-        JOIN `coupon_category` as cc ON `cat_id` = cc.`id` 
+        JOIN `coupon_category` as cc ON `cat_id` = cc.`id`  
         WHERE c.id = ? ";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$id]);
@@ -78,26 +78,41 @@ switch ($action) {
   
     case 'add':
         if (!empty($staff)){
-            // insert coupon
-            $param = []; // [path1, order1, path2, order2]
-            $columns = ['user_id', 'name', 'price', 'start_date', 'end_date','used_date', 'balance', 'note'];
-            $sql = "INSERT INTO `coupon` ";
-
-            $sql .= "(`".implode("`,`", $columns)."`, `created_at`) VALUES (".substr(str_repeat("?,", count($columns)), 0, -1).", NOW())";
-            // INSERT INTO `coupon` (...) VALUES (...)        
-
-            $_POST['user_id'] = $user['id'];
-            $_POST['balance'] = $_POST['price'];
-
-            foreach($columns as $col){
-                array_push($param, $_POST[$col]);
-            }
-
+            $sql = "SELECT * FROM `members` WHERE MONTH(`birthday` - INTERVAL 16 DAY) = MONTH(CURDATE()) AND DAY(`birthday` - INTERVAL 16 DAY) = DAY(CURDATE())";
             $stmt = $pdo->prepare($sql);
-            $stmt->execute($param);
-            $coupon_id = $pdo->lastInsertId();
+            $stmt->execute();
+            $userList = $stmt->fetchAll();
+            $price = 100;
+            $balance = $price;
+            $cat_id = "1";
+            $name = "";
+            $note = "";
 
-            $result = ["success"];
+            $userIdList = [];
+            foreach($userList as $user){
+                // insert coupon
+                $columns = ['user_id', 'cat_id', 'price', 'balance', 'note'];
+                $param = [$user['id'], $cat_id, $price, $balance, $note];
+                $sql = "INSERT INTO `coupon` ";
+    
+                $sql .= "(`".implode("`,`", $columns)."`, 
+                            `start_date`, `end_date`, `created_at`) 
+                        VALUES (".substr(str_repeat("?,", count($columns)), 0, -1).", 
+                            CURDATE() + INTERVAL 1 DAY, CURDATE() + INTERVAL 31 DAY, NOW())";
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute($param);
+                array_push($userIdList, $user['id']);
+            }
+            $couponId = $pdo->lastInsertId();
+            $sql = "SELECT * FROM `coupon` WHERE id = $couponId";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute();
+            $coupon = $stmt->fetch();
+
+            $result['status'] = ["success"];
+            $result['data'] = [];
+            $result['data']['userIdList'] = $userIdList;
+            $result['data']['coupon'] = $coupon;
         }
         break;
     case 'addReply':
