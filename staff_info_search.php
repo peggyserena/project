@@ -77,9 +77,9 @@ exit;
                             <select id="gender" name="gender">
                                 <option disabled hidden selected value="">性別</option>
                                 <option value="">全部</option>
-                                <option value="男">男性</option>
-                                <option value="女">女性</option>
-                                <option value="無">不填</option>
+                                <option value="先生">先生性</option>
+                                <option value="小姐">小姐性</option>
+                                <option value="中性">不填</option>
                             </select>
                         </li>
 

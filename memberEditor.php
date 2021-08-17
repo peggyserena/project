@@ -66,9 +66,9 @@ if (empty($_SESSION['user'])) {
                     </div>
                     <div class="form-group">
                         <label for="fullname autofocus ">性別</label>
-                        <input type="radio"  name="gender" value="男"required>男
-                        <input type="radio"  name="gender" value="女"required>女
-                        <input type="radio"  name="gender" value="無"required>不填
+                        <input type="radio"  name="gender" value="先生"required>先生
+                        <input type="radio"  name="gender" value="小姐"required>小姐
+                        <input type="radio"  name="gender" value="中性"required>不填
                     </div>
                     <div class="form-group">
                         <label for="mobile">手機</label>

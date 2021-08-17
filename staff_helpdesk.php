@@ -35,6 +35,8 @@ $pageName = 'staff_helpdesk';
 </style>
 
 <?php include __DIR__ . '/parts/staff_navbar.php'; ?>
+<?php include "parts/modal.php"?>
+
 <main>
     <div class="container con_01 p-0 ">
         <h2 class="title b-green rot-135 col-sm-12">客服信箱回覆</h2>
@@ -86,7 +88,7 @@ $pageName = 'staff_helpdesk';
                                 <option value="">未回覆</option>
                             </select>
                         </li>
-                        <li><button type="submit" class="custom-btn btn-4 m-0 p-0" style="width:3rem; ">送出</button></li>
+                        <li><button type="submit" class="custom-btn btn-4 m-0 p-0 c_1" style="width:3rem; ">送出</button></li>
                     </ul>
                 </div>
 
@@ -147,6 +149,7 @@ function helpdeskRecord(){
                         </tr>`;
             $(".hdItem tbody").append(output);
         })
+
     }, 'json')
     .fail(
         function(e) {

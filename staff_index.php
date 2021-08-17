@@ -70,8 +70,7 @@ $aceept_role = [1, 2];
         <div><a class=" " href="staff_madol_create.php">彈跳視窗新增</a></div>
         <div><a class=" " href="staff_madol_search.php">彈跳視窗維護</a></div>
         <div><a class=" " href="staff_gallery.php">首頁&相簿維護</a></div>
-        <div><a class=" " href="staff_category_create.php"> 各項種類新增</a></div>
-        <div><a class=" " href="staff_category_search.php"> 各項種類維護</a></div>
+        <div><a class=" " href="staff_category.php"> 各項種類維護</a></div>
     </div>
     <hr>
     <div class=" row justify-content-center align-items-center">

@@ -16,7 +16,7 @@ $result = [];
 $staff = $_SESSION['staff'] ?? null;
 
 // $.post('/project/api/email-api.php', 
-// {'action': 'newCoupon', userIdList, coupon}, function(d){
+// {'action': 'newCoupon', userIdpst, coupon}, function(d){
 //     console.log(d)
 // }).fail(function(d){
 //     console.log(d)
@@ -41,7 +41,7 @@ switch ($action){
         $mail->Body    =  $content;
 
         print_r($mail->Body);
-        $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+        $mail->AltBody = 'This is the body in plain text for non-HTML mail cpents';
 
         $mail->send();
 
@@ -63,7 +63,7 @@ switch ($action){
         $mail->Body  = file_get_contents('../edm/beefree-laxecmficnr.html');
 
         print_r($mail->Body);
-        $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+        $mail->AltBody = 'This is the body in plain text for non-HTML mail cpents';
 
         $mail->send();
 
@@ -71,7 +71,7 @@ switch ($action){
         break;
     case 'newCoupon':
         if (!empty($staff)){
-            $userIdList = $_POST['userIdList'];
+            $userIdpst = $_POST['userIdpst'];
             $coupon = $_POST['coupon'];
             
             $sql = "SELECT * FROM `coupon_category` WHERE `id` = ?";
@@ -82,16 +82,16 @@ switch ($action){
             $coupon_category = $stmt->fetch();
             $coupon_category_name = $coupon_category['name'];
 
-            $sql = "SELECT * FROM `members` WHERE id in (".substr(str_repeat("?,", count($userIdList)), 0, -1).")";
+            $sql = "SELECT * FROM `members` WHERE id in (".substr(str_repeat("?,", count($userIdpst)), 0, -1).")";
             $stmt = $pdo->prepare($sql);
             print($sql);
-            print_r($userIdList);
-            $stmt->execute($userIdList);
-            $userList = $stmt->fetchAll();
+            print_r($userIdpst);
+            $stmt->execute($userIdpst);
+            $userpst = $stmt->fetchAll();
             beforeSendMail();
 
 
-            foreach($userList as $user){
+            foreach($userpst as $user){
                 $email = $user['email'];
                 $fullname = $user['fullname'];
                 $note = $coupon['note'];
@@ -108,7 +108,7 @@ switch ($action){
                         <a href='localhost/".WEB_ROOT."/member.php?tab=coupon'>前往我的購物金</a>";
                
                 
-                $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+                $mail->AltBody = 'This is the body in plain text for non-HTML mail cpents';
     
                 $mail->send();
             }
@@ -127,7 +127,7 @@ switch ($action){
             $stmt->execute([$id]);
             $result['data'] = $stmt->fetch();
 
-            $sql = "SELECT `fullname`, `mobile`, `email` FROM `members` WHERE id = ?";
+            $sql = "SELECT `fullname`, `mobile`, `email`, `gender` FROM `members` WHERE id = ?";
             $stmt = $pdo->prepare($sql);
 
             $stmt->execute([$result['data']['user_id']]);
@@ -160,36 +160,58 @@ switch ($action){
             //Content
             $mail->isHTML(true);                                  //Set email format to HTML
             $mail->Subject = '客服回答';
-            $mail->Body    = " <table>
-            <tr>
-                <td>日期</td>
-                <td>".$result['data']['created_at']."</td>
-            </tr>
-            <tr>
-                <td>信件主旨</td>
-                <td>".$result['data']['topic']."</td>
-            </tr>
-            <tr>
-                <td>類型</td>
-                <td>".$result['data']['cat_name']."</td>
-            </tr>
-            <tr>
-                <td>訂單編號</td>
-                <td>".$result['data']['order_num']."</td>
-            </tr>
-            <tr>
-                <td>內容</td>
-                <td>".$result['data']['content']."</td>
-            </tr>
-            <tr>
-                <td>回覆內容</td>
-                <td>".$result['data']['reply']."</td>
-            </tr>
-            </table>
-            <a href='localhost/".WEB_ROOT."/member.php?tab=helpdeskRecord'>前往客服紀錄</a>";
+            $mail->Body    = " <div style='margin: 2rem 0 2rem 0 ;'>
+            
+                                    <p>親愛的 ".$result['user']['fullname'].$result['user']['gender']." 您好～感謝您的來信與建議，以下是我們真誠地回覆～</p>
+                                    <table style='box-shadow: 0px 0px 15px #666e9c; border: 1px solid #adda9a;'>
+                                        <tr>
+                                            <td style=' background-color: #adda9a;' >日期</td>
+                                            <td>".$result['data']['created_at']."</td>
+                                        </tr>
+                                        <tr>
+                                            <td style=' background-color: #adda9a;'>信件主旨</td>
+                                            <td>".$result['data']['topic']."</td>
+                                        </tr>
+                                        <tr>
+                                            <td style=' background-color: #adda9a;'>類型</td>
+                                            <td>".$result['data']['cat_name']."</td>
+                                        </tr>
+                                        <tr>
+                                            <td style=' background-color: #adda9a;'>訂單編號</td>
+                                            <td>".$result['data']['order_num']."</td>
+                                        </tr>
+                                        <tr>
+                                            <td style=' background-color: #adda9a;'>內容</td>
+                                            <td>".$result['data']['content']."</td>
+                                        </tr>
+                                        <tr style='background-color: pghtblue'>
+                                            <td style=' background-color: #adda9a;'>回覆內容</td>
+                                            <td><pre>".$result['data']['reply']."</pre></td>
+                                        </tr>
+                                    </table>
+                                    <div style='
+                                                text-aling: center;
+                                                height: 40px;
+                                                border-radius: 5px;'>
+                                        <a style='  background-image: pnear-gradient(315deg, #adda9a 0%, #dcc5ef 74%);
+                                                    width: 100px;
+                                                    padding: 10px 25px;
+                                                    cursor: pointer;
+                                                    text-decoration: none' 
+                                        href='localhost/'.WEB_ROOT.'/member.php?tab=helpdeskRecord'>前往客服紀錄</a>
+                                    </div>
+                                    <div class=''>
+                                        <h4>聯絡薰衣草森林</h4>
+                                        <p>TEL：<a href='tel:+886-4-25931066'>(04)2593-1066</a></p>
+                                        <p>E-mail：<a href='mailto:lavenderforestcafe@gmail.com?subject=Lavendar Forest %20使用者意見回饋&body=您好,%0A我在 薰衣草森林 遭遇了底下的問題，請協助處理～ %0A%0A謝謝'>lavenderforestcafe@gmail.com</a></p>
+                                        <p>ADD：<a href='https://goo.gl/maps/pb5HjaKtV1UCcrgz6' target='_blank'>426台中市新社區中興街20號</a> </p>
+                                        <p><a href='https://www.messenger.com/t/lavender2001/' target='_blank'>FB messanger</a></p>
+                                        <p><a href='https://pne.me/ti/p/iHcxJM2qvH' target='_blank'>LINE</a></p>
+                                    </div>
+                                </div>";
            
             
-            $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+            $mail->AltBody = 'This is the body in plain text for non-HTML mail cpents';
 
             $mail->send();
             $result['info'] = "信件寄送成功";
@@ -225,7 +247,7 @@ switch ($action){
                 $mail->isHTML(true);                                  //Set email format to HTML
                 $mail->Subject = '密碼重設';
                 $mail->Body    = "<a href='localhost/".WEB_ROOT."/forgetPassword.php?id=$id&key=$key'>點選重設</a>";
-                $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+                $mail->AltBody = 'This is the body in plain text for non-HTML mail cpents';
 
                 $mail->send();
                 $result['info'] = "信件寄送成功";
@@ -252,6 +274,6 @@ function beforeSendMail(){
     $mail->Port       = 587;                                    //TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
     $mail->CharSet = "UTF-8"; 
     //Recipients
-    $mail->setFrom('lavenderforestcafe@gmail.com', 'Mailer');
+    $mail->setFrom('lavenderforestcafe@gmail.com', '薰衣草森林');
 }
 echo json_encode($result, JSON_UNESCAPED_UNICODE);

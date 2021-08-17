@@ -22,7 +22,9 @@ $pageName = 'staff_gallery_editor';
 
       <div class="form-group con_01 my-5 row justify-content-center align-items-center">
 
-        <h3 class="col-sm-12 p-1 "> <input class="form-control text-center text-white " style="background-color: #83a573;font-size:1.3rem;font-weight: 700; " type="text" id="gallery_title" value="" name="title"></h3>
+        <h3 class='col-sm-12 p-1 '> 
+          <input class='form-control text-center text-white data-toggle="tooltip" data-placement="right"  title="點選修改" ' style="background-color: #83a573;font-size:1.3rem;font-weight: 700; " type="text" id="gallery_title" value="" name="title">
+        </h3>
 
         <label  class="col-sm-12 text-center custom-btn btn-4 t_shadow" style="width:100%;border-radius: 0;transform: none;"  for="img">
 
@@ -151,5 +153,10 @@ function fillData(){
   }
 
 </script>
+<script>
+    $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+    });
+    </script>
 
 <?php include __DIR__. '/parts/staff_html-foot.php'; ?>

@@ -70,15 +70,15 @@ a:hover{
                         </ul>
                     </div>
 
-                <button class="custom-btn btn-4 " onclick="helpdeskAddReply();">回覆</button>
+                <button class="custom-btn btn-4 c_1 " onclick="helpdeskAddReply();">回覆</button>
             </div>
             <div class="repliedContentBox" style="display: none;">
                 <div>
                     <div class="py-2 px-3"><span>回覆時間：</span><span class="replied_at"></span></div>
-                    <div><p class="repliedContent py-2 px-3 mb-3"></p></div>
+                    <div><pre><p class="repliedContent py-2 px-3 mb-3"></p></pre></div>
                     <div class="repliedContentImg" >
                     </div>
-a                </div>
+                </div>
             </div>
         </div>
     </div>

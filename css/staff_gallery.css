@@ -1,6 +1,6 @@
 h3 {
   margin: 0;
-  padding: 0.5rem 0;
+  padding: 0rem 0;
   background-color: #83a573;
   color: white;
 }
@@ -43,4 +43,8 @@ h4 {
 }
 a:hover {
   color: white;
+}
+
+#gallery_title {
+  cursor: pointer;
 }
