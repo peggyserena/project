@@ -3,6 +3,8 @@ include __DIR__ . '/../parts/imgHandler.php';
 
 $user = $_SESSION['user'] ?? null;
 $action = isset($_POST['action']) ? $_POST['action'] : ''; // 操作類型
+$type_list = ['members', 'staff'];
+
 switch ($action) {
     case 'readAll':
         $result = [];
@@ -12,6 +14,7 @@ switch ($action) {
             'cat_id' => "h.`cat_id` = ?",
             'year' => "YEAR(h.`created_at`) = ?",
             'month' => "MONTH(h.`created_at`) = ?",
+            'status' => "status = ?",
         ];
 
         foreach($condition_map as $key => $value){
@@ -33,6 +36,7 @@ switch ($action) {
         
         // img
         $result['img'] = readImage();
+
         break;
     case 'staffReadAll':
         $result = [];
@@ -42,6 +46,7 @@ switch ($action) {
             'cat_id' => "h.`cat_id` = ?",
             'year' => "YEAR(h.`created_at`) = ?",
             'month' => "MONTH(h.`created_at`) = ?",
+            'status' => "status = ?",
         ];
 
         foreach($condition_map as $key => $value){
@@ -94,12 +99,13 @@ switch ($action) {
 
         $stmt->execute([$result['data']['user_id']]);
         $result['user'] = $stmt->fetch();
-        
-        
-        $sql = "SELECT * FROM `helpdesk_image` WHERE helpdesk_id = ? ORDER BY num_order";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([$_POST['id']]);
-        $result['img'] = $stmt->fetchAll();
+        $result['img'] = [];
+        foreach($type_list as $type){
+            $sql = "SELECT * FROM `helpdesk_image` WHERE helpdesk_id = ? AND type = '$type' ORDER BY num_order";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([$_POST['id']]);
+            $result['img'][$type] = $stmt->fetchAll();
+        }
         break;
         
     case 'add':
@@ -109,9 +115,9 @@ switch ($action) {
         $columns = ['user_id', 'g_name', 'g_mobile', 'g_email','topic','cat_id', 'order_num', 'content'];
         $sql = "INSERT INTO `helpdesk` ";
 
-        $sql .= "(`".implode("`,`", $columns)."`, `status`, `created_at`) VALUES (".substr(str_repeat("?,", count($columns)), 0, -1).",  '未回覆', NOW())";
+        $sql .= "(`".implode("`,`", $columns)."`, `status`, `created_at`) VALUES (".substr(str_repeat("?,", count($columns)), 0, -1).", '未回覆', NOW())";
         // INSERT INTO `helpdesk` ('user_id', 'g_name', 'g_mobile', 'g_email', 'order_num', 'content', 'created_at') VALUES (?, ?, ?, ?, ?, ?, ?)        
-
+        
         $_POST['user_id'] = $user['id'];
         foreach($columns as $col){
             array_push($param, $_POST[$col]);
@@ -128,7 +134,7 @@ switch ($action) {
         // json_encode() 陣列變字串
         $img_order = json_decode($_POST['img_order']);
 
-        $sql = "INSERT INTO `helpdesk_image` (`helpdesk_id`, `path`, `num_order`) VALUES ".substr(str_repeat("($helpdesk_id, ?, ?),", count($name_list)), 0, -1);    
+        $sql = "INSERT INTO `helpdesk_image` (`type`, `helpdesk_id`, `path`, `num_order`) VALUES ".substr(str_repeat("('members', $helpdesk_id, ?, ?),", count($name_list)), 0, -1);    
         // INSERT INTO `helpdesk` (`helpdesk_id`, `path`) VALUES  (1, ?, ?), (1, ?, ?), (1, ?, ?)
         $stmt = $pdo->prepare($sql);
         foreach($name_list as $index => $name){
@@ -142,6 +148,21 @@ switch ($action) {
 
     case 'addReply':
         $id = $_POST['id'];
+
+        // insert img
+        $name_list = uploadImgs($_FILES['img'], "images/helpdesk/");
+        $img_order = json_decode($_POST['img_order']);
+        $sql = "INSERT INTO `helpdesk_image` (`type`, `helpdesk_id`, `path`, `num_order`) VALUES ".substr(str_repeat("(?, ?, ?, ?),", count($name_list)), 0, -1);
+        $param = []; // [path1, order1, path2, order2]
+        foreach($name_list as $index => $name){
+            array_push($param, 'staff');
+            array_push($param, $id);
+            array_push($param, $name);
+            array_push($param, $img_order[$index]);
+        }
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($param);
+
         // get old helpdesk
         $sql = "SELECT * FROM `helpdesk` WHERE id = ?";
         $stmt = $pdo->prepare($sql);
@@ -250,26 +271,33 @@ switch ($action) {
 }
 
 function readImage($id = null){
-    global $pdo;
+    global $pdo, $type_list;
+    $result = [];
+    
     // 抓圖片
     if (isset($id)){
         // read
-        $sql = "SELECT * FROM `helpdesk_image` WHERE helpdesk_id = ? ORDER BY num_order";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([$id]);
-        $result = $stmt->fetchAll();
+        foreach($type_list as $type){
+            $sql = "SELECT * FROM `helpdesk_image` WHERE helpdesk_id = ? AND `type` = '$type' ORDER BY num_order";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([$id]);
+            $result[$type] = $stmt->fetchAll();
+        }
     }else{
         // readAll
-        $sql = "SELECT * FROM `helpdesk_image` ORDER BY num_order";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute();
-        $image_list = $stmt->fetchAll();
-        $result = [];
-        foreach ($image_list as $value) {
-            if (!array_key_exists($value['helpdesk_id'], $result)){
-                $result[$value['helpdesk_id']] = [];
+        
+        foreach($type_list as $type){
+            $sql = "SELECT * FROM `helpdesk_image` WHERE `type` = '$type' ORDER BY num_order";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute();
+            $image_list = $stmt->fetchAll();
+            $result[$type] = [];
+            foreach ($image_list as $value) {
+                if (!array_key_exists($value['helpdesk_id'], $result[$type])){
+                    $result[$type][$value['helpdesk_id']] = [];
+                }
+                array_push($result[$type][$value['helpdesk_id']], $value);
             }
-            array_push($result[$value['helpdesk_id']], $value);
         }
     }
     return $result;

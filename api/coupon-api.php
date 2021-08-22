@@ -37,6 +37,7 @@ switch ($action) {
         break;
 
     case 'readAll':
+        $user_id = $user['id'];
         $result = [];
         $year = $_POST['year'] ?? "";
         $month = $_POST['month'] ?? "";
@@ -44,12 +45,9 @@ switch ($action) {
         $order = $_POST['order'] ?? "";
         [$year, $month, $cat_id] = replaceAllToEmpty([$year, $month, $cat_id]);
 
-        // 抓圖片
-        $result['img'] = readImage();
-        
         // 資料
         $sql = "SELECT `c`.*, cc.name as `cc_name`FROM `coupon` as c 
-        JOIN `coupon_category` as cc ON c.`cat_id` = cc.`id`";
+        JOIN `coupon_category` as cc ON c.`cat_id` = cc.`id` WHERE `user_id` = $user_id";
         $sql_condition = [];
         if ($year != "") {
             array_push($sql_condition, "$year BETWEEN YEAR(`start_date`) AND YEAR(`end_date`)");
@@ -70,12 +68,17 @@ switch ($action) {
         $stmt = $pdo->prepare($sql);
         $stmt->execute([]);
         $result['data'] = $stmt->fetchAll();
-
         break;
+    case 'balance':
+        $user_id = $user['id'];
 
-
-
-  
+        // 資料
+        $sql = "SELECT sum(c.balance) as 'sum' FROM `coupon` as c 
+        JOIN `coupon_category` as cc ON c.`cat_id` = cc.`id` WHERE `user_id` = $user_id AND NOW() BETWEEN c.start_date AND c.end_date";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([]);
+        $result['data'] = $stmt->fetch();
+        break;
     case 'add':
         if (!empty($staff)){
             $sql = "SELECT * FROM `members` WHERE MONTH(`birthday` - INTERVAL 16 DAY) = MONTH(CURDATE()) AND DAY(`birthday` - INTERVAL 16 DAY) = DAY(CURDATE())";

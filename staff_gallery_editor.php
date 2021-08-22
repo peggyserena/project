@@ -71,7 +71,10 @@ $("#img").change(() => {
     var file = files[i];
     if (file) {
       var img = ` <li class="ui-state-default" data-order="${i}">
-                    <img class="preview_img" style="max-width: 120px; max-height: 120px" src="${URL.createObjectURL(file)}" alt="your image" />
+                    <div style="display: grid;">
+                      <img class="preview_img" style="max-width: 120px; max-height: 120px" src="${URL.createObjectURL(file)}" alt="your image" />
+                      <button type="button" onclick="deleteItem(this);">X</button>
+                    </div>
                   </li>`;
       $("#preview #sortable").append(img);
     }
@@ -94,7 +97,10 @@ function fillData(){
         var file = files[i];
         if (file) {
           var img = ` <li class="ui-state-default" data-order="${i}">
-                        <img class="preview_img" style="max-width: 120px; max-height: 120px" src="${file.path}" alt="your image" />
+                        <div style="display: grid;">
+                            <img class="preview_img" style="max-width: 120px; max-height: 120px" src="${file.path}" alt="your image" />
+                            <button type="button" onclick="deleteItem(this);">X</button>
+                        </div>
                       </li>`;
           $("#preview #sortable").append(img);
         }
@@ -142,6 +148,10 @@ function fillData(){
     });
   }
 
+  function deleteItem(elem){
+    $(elem).parents("li").remove();
+    $("#img_changed").val(1);
+  }
 </script>
 
 <script>

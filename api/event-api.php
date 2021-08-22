@@ -59,11 +59,12 @@ switch ($action) {
         // json_decode() 字串變陣列
         // json_encode() 陣列變字串
         $img_order = json_decode($_POST['img_order']);
-        $sql = "INSERT INTO `event_image` (`event_id`, `path`, `num_order`) VALUES ".substr(str_repeat("($event_id, ?, ?),", count($name_list)), 0, -1);    
-        // INSERT INTO `event` (`event_id`, `path`) VALUES  (1, ?, ?), (1, ?, ?), (1, ?, ?)
+        $sql = "INSERT INTO `event_image` (`event_id`, `path`, `num_order`) VALUES ".substr(str_repeat("(?, ?, ?),", count($name_list)), 0, -1);    
+        // INSERT INTO `event` (`event_id`, `path`) VALUES  (?, ?, ?), (?, ?, ?), (?, ?, ?)
         $stmt = $pdo->prepare($sql);
         $param = []; // [path1, order1, path2, order2]
         foreach($name_list as $index => $name){
+            array_push($param, $event_id);
             array_push($param, $name);
             array_push($param, $img_order[$index]);
         }

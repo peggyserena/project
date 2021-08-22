@@ -32,7 +32,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '3c0a2cdf592bf5d3b7125d1a0ef28e6847a9b1c6',
+    'reference' => '219ade54d89d194053c24ab00a99dcc0c80b89c5',
     'name' => '__root__',
   ),
   'versions' => 
@@ -44,7 +44,16 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '3c0a2cdf592bf5d3b7125d1a0ef28e6847a9b1c6',
+      'reference' => '219ade54d89d194053c24ab00a99dcc0c80b89c5',
+    ),
+    'mtdowling/cron-expression' => 
+    array (
+      'pretty_version' => 'v1.2.3',
+      'version' => '1.2.3.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '9be552eebcc1ceec9776378f7dcc085246cacca6',
     ),
     'phpmailer/phpmailer' => 
     array (

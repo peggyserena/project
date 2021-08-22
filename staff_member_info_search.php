@@ -2,15 +2,6 @@
 <?php
 $title = '會員資料查詢';
 $pageName = 'staff_member_info_search';
-
-if(
-  ! isset($_SESSION['staff'])
-){
-header('Location: staff_login.php');
-exit;
-}
-
-
 ?>
 
 

@@ -38,6 +38,7 @@ exit;
     .edit_column{
         cursor: pointer;
     }
+    .anchor:before { content: ''; display: block; position: relative; width: 0; height: 5em; margin-top: -5em }
 </style>
 <?php include __DIR__. '/parts/staff_navbar.php'; ?>
 <?php include "parts/modal.php"?>
@@ -87,13 +88,18 @@ exit;
                     $("#modal_alert").modal("show");
                     setTimeout(function(){location.href = "staff_category_editor.php"}, 2000);
                 }else{
-                    t.closest('tr').remove();
-                    // location.reload();  // 刷頁面
-                    if ($('tbody>tr').length < 1) { 
-                        //location.reload(); // 重新載入
-                    }
+                    modal_init();
+                    insertPage("#modal_img", "animation/animation_error.html");
+                    insertText("#modal_content", '資料修改失敗');
+                    $("#modal_alert").modal("show");
+                    setTimeout(function(){location.href = "staff_category_editor.php"}, 2000);
                 }
             }, 'json').fail(function(e){
+                modal_init();
+                insertPage("#modal_img", "animation/animation_error.html");
+                insertText("#modal_content", '資料修改失敗');
+                $("#modal_alert").modal("show");
+                setTimeout(function(){location.href = "staff_category_editor.php"}, 2000);
             });
        };
     </script>

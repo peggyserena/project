@@ -29,7 +29,9 @@ $pageName = 'staff_helpdesk';
 .hdItem div {
   border: orange 1px solid;
 }
-
+.hdItem tbody tr{
+    cursor: pointer;
+}
 
 
 </style>
@@ -84,8 +86,8 @@ $pageName = 'staff_helpdesk';
                             <select id="helpdesk_select_reply" name="reply">
                                 <option value=""disabled hidden selected>回覆狀態</option>
                                 <option value="all">全部</option>
-                                <option value="">已回覆</option>
-                                <option value="">未回覆</option>
+                                <option value="已回覆">已回覆</option>
+                                <option value="未回覆">未回覆</option>
                             </select>
                         </li>
                         <li><button type="submit" class="custom-btn btn-4 m-0 p-0 c_1" style="width:3rem; ">送出</button></li>
@@ -129,7 +131,7 @@ function helpdeskRecord(){
 
         data.forEach(function(hd){
             var hdi_output = "";
-            var imgList = img[hd['id']] ?? [];
+            var imgList_members = img['members'][hd['id']] ?? [];
             var style = "";
 
             if (hd['status'] === "未回覆"){
@@ -138,8 +140,8 @@ function helpdeskRecord(){
             else if (hd['status'] === "已回覆"){
                 style = "font-style: italic; color: gray";
             }
-            var output = `<tr style='${style}'>
-                            <td class="text-center"><img width="120px" src="${ imgList.length != 0 ? imgList[0]['path'] : '' }"/></td>
+            var output = `<tr style='${style}' data-link="staff_helpdesk_item.php?id=${ hd['id'] }">
+                            <td class="text-center"><img width="120px" src="${ imgList_members.length != 0 ? imgList_members[0]['path'] : '' }"/></td>
                             
                             <td>${ hd['created_at'] }</td>
                             <td>${ hd['cat_name'] }</td>
@@ -150,6 +152,9 @@ function helpdeskRecord(){
             $(".hdItem tbody").append(output);
         })
 
+        $(".hdItem tbody tr").click(function(){
+            location.href = $(this).data("link");
+        })
     }, 'json')
     .fail(
         function(e) {
@@ -206,45 +211,11 @@ function helpdeskRecord(){
     }, 'json').fail(function(data){
         console.log(data);
     })
-    function create(){
-        var img_order = [];
-        $("#preview #sortable li").each(function(ind, elem){
-        img_order[$(elem).data("order")] = ind + 1;
-        })
-        $("#img_order").val(JSON.stringify(img_order));
-        $.ajax({
-            url: '<?= WEB_API ?>/helpdesk-api.php',
-            data: new FormData($("#myForm")[0]),
-            cache: false,
-            contentType: false,
-            processData: false,
-            method: 'POST',
-            type: 'POST', // For jQuery < 1.9
-            success: function(data){
-            console.log(data);
-            modal_init();
-            insertPage("#modal_img", "animation/animation_success.html");
-            insertText("#modal_content", "信件回覆成功!");
-            $("#modal_alert").modal("show");
-            setTimeout(function(){location.href = "staff_helpdesk_search.php"}, 2000);
-
-            },
-            error: function(data){
-            console.log(data);
-            modal_init();
-            insertPage("#modal_img", "animation/animation_error.html");
-            insertText("#modal_content", "資料傳輸失敗");
-            $("#modal_alert").modal("show");
-            setTimeout(function(){location.href = "staff_helpdesk_search.php"}, 2000);
-            }
-        });
-    }
 
     // 設定date日期min為今日
     var d = new Date();
     var min = d.toISOString().split("T")[0];
     $("#date").attr("min", min);
 </script>
-
 
 <?php include __DIR__ . '/parts/staff_html-foot.php'; ?>

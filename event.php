@@ -638,7 +638,8 @@ $pageName = 'event';
         function scroll(){
             console.log('test' + window.scrollY);
             if (location.href.indexOf("#event") > -1){
-                window.scrollTo(0, window.scrollY - 70)
+                hash = location.hash;
+                scrollTo(0, $(hash).position().top - $("#nav_01").outerHeight() - $(hash).siblings("h2").outerHeight());
             }
         }
     </script>
@@ -647,30 +648,7 @@ $pageName = 'event';
             $(".c_pink_t").each(function(ind, elem){
                 $(elem).text(dallorCommas($(elem).text()) + "元");
             });
-            scroll();
-            $.post('api/event-api.php', {
-                action: 'readAll',
-                month: $("#select_month").val(),
-                time: $("#select_time").val(),
-                cat_id: $("#select_cat_id").val(),
-                order: $("#select_order").val(),
-            }, function(result){
-                data = result['data'];
-                for (key in data){
-                    elem = data[key];
-                    output = $($(".event_data")[0]).clone();
-                    output.show();
-                    $("#event_contain").append(output);
-                    elem['img'] = result['img'][elem['id']];
-                    elem['quantity_map'] = result['quantity_map'];
-                    console.log(elem);
-                    fillData(elem, output);
-                }
-                
-            }, 'json').fail(function(data){
-                console.log('error');
-                console.log(data);
-            })
+            
             var selected_cat_id = parseInt("<?= $_GET['cat_id'] ?? ''?>");
             $.post('api/event-api.php', {
                 action: 'readCat',
@@ -679,12 +657,37 @@ $pageName = 'event';
                     output = `<option value='${elem['id']}' ${selected_cat_id == elem['id'] ? "selected" : ""}>${elem['name']}</option>`;
                     $("#select_cat_id").append(output);
                 })
+
+                $.post('api/event-api.php', {
+                    action: 'readAll',
+                    month: $("#select_month").val(),
+                    time: $("#select_time").val(),
+                    cat_id: $("#select_cat_id").val(),
+                    order: $("#select_order").val(),
+                }, function(result){
+                    data = result['data'];
+                    for (key in data){
+                        elem = data[key];
+                        output = $($(".event_data")[0]).clone();
+                        output.show();
+                        $("#event_contain").append(output);
+                        elem['img'] = result['img'][elem['id']];
+                        elem['quantity_map'] = result['quantity_map'];
+                        console.log(elem);
+                        fillData(elem, output);
+                    }
+                    
+                    scroll();
+                    
+                }, 'json').fail(function(data){
+                    console.log('error');
+                    console.log(data);
+                })
                 
             }, 'json').fail(function(data){
                 console.log('error');
                 console.log(data);
             })
-
 
             
         });
@@ -818,7 +821,6 @@ $pageName = 'event';
         $(".c_pink_t").each(function(ind, elem){
             $(elem).text(dallorCommas($(elem).text()) + "元"); 
         });
-        scroll();
     });
     </script>
     <script>

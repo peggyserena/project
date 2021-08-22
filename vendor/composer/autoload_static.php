@@ -11,12 +11,20 @@ class ComposerStaticInit8c51584fa3754fde14362960e6192137
         array (
             'PHPMailer\\PHPMailer\\' => 20,
         ),
+        'C' => 
+        array (
+            'Cron\\' => 5,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
         'PHPMailer\\PHPMailer\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
+        ),
+        'Cron\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/mtdowling/cron-expression/src/Cron',
         ),
     );
 

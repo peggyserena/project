@@ -203,7 +203,10 @@ $( function() {
         }
     });
   }
-
+  function deleteItem(elem){
+    $(elem).parents("li").remove();
+    $("#img_changed").val(1);
+  }
   // 設定date日期min為今日
   var d = new Date();
   var min = d.toISOString().split("T")[0];

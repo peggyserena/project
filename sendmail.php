@@ -14,7 +14,7 @@ $(function(){
                 $("#chkmsg").html("該郵箱尚未註冊！"); 
                 $("#sub_btn").removeAttr("disabled").val('提 交').css("cursor","pointer"); 
             }else{ 
-                $(".demo").html("<h3>" msg "</h3>"); 
+                $(".demo").html("<h3>" + msg + "</h3>"); 
                 } 
             }); 
         } 

@@ -194,27 +194,27 @@ if (isset($_SESSION['user'])) {
         </div>
     </div>
 <?php else : ?>
-<div class="container mt-5 text-center ">
-    <div class="row  ">
+<div class="container mt-5  ">
+    <div class="row  text-center ">
         <div class="col ">
             
                 <?php if (!empty($_SESSION['cart']['event'])) : ?>
                     <table class="table table-striped table-bordered" id="event_table">
                         <thead>
                             <tr class="b-green rot-135 text-white">
-                                <th scope="col" colspan="100%" class="m-0 t_shadow text-center">
+                                <th scope="col" colspan="100%" class="m-0 t_shadow ">
                                     <h3 class=" title2 b-green rot-135">購物車明細 - 森林體驗</h3>
                                 </th>
                             </tr>
                             <tr class="b-green rot-135 text-white">
-                                <th scope="col" class="m-0 t_shadow text-center">
+                                <th scope="col" class="m-0 t_shadow ">
                                     項目名稱
                                 </th>
-                                <th scope="col" class="m-0 t_shadow text-center">日期／時間</th>
-                                <th scope="col" class="m-0 t_shadow text-center">數量</th>
-                                <th scope="col" class="m-0 t_shadow text-center">費用</th>
-                                <th scope="col" class="m-0 t_shadow text-center">小計</th>
-                                <th scope="col" class="m-0 t_shadow text-center"><i class="fas fa-trash-alt"></i></th>
+                                <th scope="col" class="m-0 t_shadow ">日期／時間</th>
+                                <th scope="col" class="m-0 t_shadow ">數量</th>
+                                <th scope="col" class="m-0 t_shadow ">費用</th>
+                                <th scope="col" class="m-0 t_shadow ">小計</th>
+                                <th scope="col" class="m-0 t_shadow "><i class="fas fa-trash-alt"></i></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -322,10 +322,26 @@ if (isset($_SESSION['user'])) {
 
         </div>
     </div>
+
     <div class="row">
         <div class="col">
-            <div class="finalPrice alert  text-center m-0" role="alert">
-                <h4 class="m-0"> 原價: <span class="originalPrice"></span> - 折扣: <span class="discountPrice"></span> = 總計: <span class="totalPrice c_pink_t"></span></h4>
+            <div class="finalPrice alert  m-0" role="alert">
+                <h4>使用購物金： <input class="pl-0"style="width:120px;text-align: center;"  type="number" id="couponBalanceInput" value="0" min=0/> <span><small><a href='member.php?tab=coupon'>&emsp;購物金查詢</small></a></span></h4> 
+                    <div class="d-flex text-secondary font-weight-bold">
+                        <p class="mr-2"> 原購物金餘額： <span id="couponBalance"></span>；</p>
+                        <p class="mx-2"> 本次使用金額： <span id="couponBalanceUsed"></span>；</p>
+                        <p class="mx-2"> 使用後餘額： <span id="couponFinalBalance"></span></p>
+                    </div>
+                   
+               
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col">
+            <div class="finalPrice alert   m-0" role="alert">
+                <h4 class="m-0"> 原價： <span class="originalPrice"></span> - 折扣： <span class="discountPrice"></span> - 購物金： <span class="couponPrice"></span>+ 運費： <span class="ShippingFee"></span> = 總計： <span class="totalPrice c_pink_t"></span></h4>
             </div>
         </div>
     </div>
@@ -420,12 +436,12 @@ if (isset($_SESSION['user'])) {
         <div class="shipway ">
             <h3 class="title p-2 b-green rot-135">寄送方式</h3>
             <div class="row mx-2 my-4 ">
-                <div><input id="7e" type="radio" name="shipway" value="7Eleven" /><label for="7e"><img src="./images/icon/delivery_711.svg" alt=""></label></div>
-                <div><input id="fm" type="radio" name="shipway" value="familyMart​ " /><label for="fm"><img src="./images/icon/delivery_familymart.svg" alt=""></label></div>
-                <div><input id="hl" type="radio" name="shipway" value="hiLife​ " /><label for="hl"><img src="./images/icon/delivery_hilife.svg" alt=""></label></div>
-                <div> <input id="ok" type="radio" name="shipway" value="okMart​ " /><label for="ok"><img src="./images/icon/delivery_ok.svg" alt=""></label></div>
-                <div><input id="po" type="radio" name="shipway" value="postOffice​ " /><label for="po"><img src="./images/icon/delivery_postoffice.svg" alt=""></label></div>
-                <div><input id="cat" type="radio" name="shipway" value="cat​ " /><label for="cat"><img src="./images/icon/delivery_cat.svg" alt=""></label></div>
+                <div><input id="7e" type="radio" name="7Eleven" value="" /><label for="7e"><img src="./images/icon/delivery_711.svg" alt=""></label></div>
+                <div><input id="fm" type="radio" name="familyMart​" value=" " /><label for="fm"><img src="./images/icon/delivery_familymart.svg" alt=""></label></div>
+                <div><input id="hl" type="radio" name="hiLife​" value=" " /><label for="hl"><img src="./images/icon/delivery_hilife.svg" alt=""></label></div>
+                <div> <input id="ok" type="radio" name="okMart​" value=" " /><label for="ok"><img src="./images/icon/delivery_ok.svg" alt=""></label></div>
+                <div><input id="po" type="radio" name="postOffice​" value=" " /><label for="po"><img src="./images/icon/delivery_postoffice.svg" alt=""></label></div>
+                <div><input id="cat" type="radio" name="cat​" value=" " /><label for="cat"><img src="./images/icon/delivery_cat.svg" alt=""></label></div>
             </div>
             <div class="mx-2 my-4">
               <h4>貨件追蹤查詢</h4>
@@ -576,8 +592,6 @@ if (isset($_SESSION['user'])) {
             type: type,
             key: key
         }, function(data) {
-            console.log(t);
-            console.log(data);
             t.closest('tr').remove();
             updateDiscountTip();
             updateTable();
@@ -603,9 +617,6 @@ if (isset($_SESSION['user'])) {
             $(this).find('.event_sub-total').text('$ ' + dallorCommas(price * qty));
 
             total += price * qty;
-            console.log(price);
-            console.log(qty);
-            console.log(total);
         });
         $('#hotel_table tbody>tr').each(function() {
             const $price = $(this).find('.hotel_price');
@@ -617,9 +628,6 @@ if (isset($_SESSION['user'])) {
             $(this).find('.hotel_sub-total').text('$ ' + dallorCommas(price * qty));
 
             total += price * qty;
-            console.log(price);
-            console.log(qty);
-            console.log(total);
         });
 
         var isDiscount = $("#event_table tbody tr").length >= 1 && $("#hotel_table tbody tr").length >= 1;
@@ -628,9 +636,22 @@ if (isset($_SESSION['user'])) {
         if (isDiscount) {
             discountPrice = total * 0.15;
         }
+        couponPrice = $("#couponBalanceInput").val();
+        if (total - discountPrice - couponPrice < 0){
+            couponPrice = total - discountPrice;
+            $("#couponBalanceInput").val(couponPrice);
+            $("#couponBalanceInput").trigger("change");
+        }
+
+        // $('#couponBalance').text('$ ' + dallorCommas(couponBalance));
+        // $('#couponBalanceUsed').text('$ ' + dallorCommas(couponBalanceUsed));
+        // $('#couponFinalBalance').text('$ ' + dallorCommas(couponFinalBalance));
         $('.originalPrice').text('$ ' + dallorCommas(total));
         $('.discountPrice').text('$ ' + dallorCommas(discountPrice));
-        $('.totalPrice').text('$ ' + dallorCommas(total - discountPrice));
+        $('.couponPrice').text('$ ' + dallorCommas(couponPrice));
+        $('.totalPrice').text('$ ' + dallorCommas(total - discountPrice - couponPrice));
+
+        
     };
 
     const changeQty = function(event, type, key, qty) {
@@ -642,15 +663,10 @@ if (isset($_SESSION['user'])) {
             key: key,
             qty: qty
         }, function(data) {
-            console.log("test1");
-            console.log(data);
-            console.log("test3");
             showCartCount(data);
             calPrices();
         }, 'json').fail(function(e) {
             alert("error");
-            console.log("test2");
-            console.log(e.responseText);
         });;
     };
     const changePeopleNum = function(event, type, key, peopleNum) {
@@ -663,15 +679,10 @@ if (isset($_SESSION['user'])) {
             key: key,
             people_num: peopleNum
         }, function(data) {
-            console.log("test1");
-            console.log(data);
-            console.log("test3");
             showCartCount(data);
             calPrices();
         }, 'json').fail(function(e) {
             alert("error");
-            console.log("test2");
-            console.log(e.responseText);
         });;
     };
 
@@ -685,7 +696,6 @@ if (isset($_SESSION['user'])) {
                 }
                 if ("info" in data){
                     alert(data["info"]);
-                    console.log(data);
                     if ("redirect" in data){
                         location.href = data['redirect'];
                     }
@@ -697,7 +707,6 @@ if (isset($_SESSION['user'])) {
             }, 'json')
             .fail(function(e) {
                 alert("error");
-                console.log(e.responseText);
             });
     };
 
@@ -844,6 +853,31 @@ if (isset($_SESSION['user'])) {
         }
         });
     }
+
+    function couponBalance(){
+        $.post('<?= WEB_API ?>/coupon-api.php', {
+            action: 'balance',
+        },function(data) {
+            balance = data['data']['sum'];
+            $("#couponBalance").text(balance);
+            $("#couponBalanceInput").attr("max", balance);
+            
+        }, 'json')
+    }
+    couponBalance();
+    $("#couponBalanceInput").change(function(){
+        balanceUsed = $(this).val(); // input value
+        finalBalance = parseInt($("#couponBalance").text()) - balanceUsed;
+        if (finalBalance < 0){
+            finalBalance = 0;
+            balanceUsed = $(this).attr("max");
+            $(this).val(balanceUsed);
+        }
+
+        $("#couponBalanceUsed").text(balanceUsed);
+        $("#couponFinalBalance").text(finalBalance);
+        calPrices();
+    })
 </script>
 <script>
   erTWZipcode({

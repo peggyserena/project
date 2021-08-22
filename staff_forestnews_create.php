@@ -93,7 +93,10 @@ $("#img")
       var file = files[i];
       if (file) {
         var img = ` <li class="ui-state-default" data-order="${i}">
-                      <img class="preview_img" style="max-width: 120px; max-height: 120px" src="${URL.createObjectURL(file)}" alt="your image" />
+                      <div style="display: grid;">
+                        <img class="preview_img" style="max-width: 120px; max-height: 120px" src="${URL.createObjectURL(file)}" alt="your image" />
+                        <button type="button" onclick="deleteItem(this);">X</button>
+                      </div>
                     </li>`;
         $("#preview #sortable").append(img);
       }
@@ -172,9 +175,13 @@ $("#start_date").change(function(){
         }
     });
   }
-
-  // 設定date日期min為今日
-  var d = new Date();
+  function deleteItem(elem){
+    $(elem).parents("li").remove();
+    $("#img_changed").val(1);
+  } function deleteItem(elem){
+    $(elem).parents("li").remove();
+    $("#img_changed").val(1);
+  }
   var min = d.toISOString().split("T")[0];
   $("#date").attr("min", min);
 

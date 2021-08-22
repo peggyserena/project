@@ -1,4 +1,15 @@
 <!doctype html>
+<?php
+$request_arr = explode( "/", $_SERVER['REQUEST_URI']);
+$current_path = end($request_arr);
+if(
+    ! isset($_SESSION['staff']) &&
+    $current_path != 'staff_login.php'
+){
+header('Location: staff_login.php');
+exit;
+}
+?>
 <html lang="en">
 
 <head>

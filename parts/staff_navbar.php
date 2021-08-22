@@ -116,7 +116,7 @@ body {
             <a class="nav-link dropdown-toggle" href="staff_category.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">種類</a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="staff_category_create.php"> 種類新增</a>
-                <a class="dropdown-item" href="staff_category_search.php"> 種類查詢&修改 </a>
+                <a class="dropdown-item" href="staff_category_editor.php"> 種類查詢&修改 </a>
             </div>
         </li>
 

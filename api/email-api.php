@@ -134,9 +134,9 @@ switch ($action){
             $result['user'] = $stmt->fetch();
             
             
-            $sql = "SELECT * FROM `helpdesk_image` WHERE helpdesk_id = ? ORDER BY num_order";
+            $sql = "SELECT * FROM `helpdesk_image` WHERE helpdesk_id = ? AND `type` = ? ORDER BY num_order";
             $stmt = $pdo->prepare($sql);
-            $stmt->execute([$id]);
+            $stmt->execute([$id, 'staff']);
             $result['img'] = $stmt->fetchAll();
             
             if ($result['user']){
@@ -156,7 +156,11 @@ switch ($action){
             //Attachments
             // $mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
             // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
-
+            
+            foreach($result['img'] as $key => $img){
+                $mail->addAttachment($_SERVER['DOCUMENT_ROOT'].WEB_ROOT."/".$img['path']);
+            }
+            
             //Content
             $mail->isHTML(true);                                  //Set email format to HTML
             $mail->Subject = '客服回答';

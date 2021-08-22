@@ -225,8 +225,8 @@ $r = $pdo->query($sql)->fetch();
                                             <select id="helpdesk_select_reply" name="reply">
                                                 <option value=""disabled hidden selected>回覆狀態</option>
                                                 <option value="all">全部</option>
-                                                <option value="">已回覆</option>
-                                                <option value="">未回覆</option>
+                                                <option value="已回覆">已回覆</option>
+                                                <option value="未回覆">未回覆</option>
                                             </select>
                                         </li>
 
@@ -521,24 +521,23 @@ $r = $pdo->query($sql)->fetch();
                 note: $("#note").val(),
             },function(data) {
                 console.log(data);
-                staff_list = data['result'];
-                $("#coupond table tbody").html("");
-                staff_list.forEach(function(staff, index){
+                coupon_list = data['data'];
+                $("#coupon table tbody").html("");
+                coupon_list.forEach(function(coupon, index){
                     var output = `<tr>
                             <td class="bg-dark text-white" style="border: #454d55 1px solid ;">${index + 1}</td>
-                            <td>${coupon['name']}</td>
-                            <td>${coupon['staff_id']}</td>
-                            <td>${coupon['start_date']} ～ ${coupon['end_date']}</td>
+                            <td>${coupon['cc_name']}</td>
                             <td>${coupon['price']}</td>
+                            <td>${coupon['start_date']} ～ ${coupon['end_date']}</td>
+                            <td>${coupon['used_date'] ?? ''}</td>
                             <td>${coupon['balance']}</td>
                             <td>${coupon['note']}</td>
                             </tr>`;
-                    $("#coupond table tbody").append(output);
-                    console.log(output);
+                    $("#coupon table tbody").append(output);
                 });
             }, 'json')
         }
-
+        coupon();
 
 
     </script>
@@ -567,12 +566,25 @@ $r = $pdo->query($sql)->fetch();
             },function(result) {
                 data = result['data'];
                 img = result['img'];
+                console.log(img);
                 $(".hdItem").html("");
                 data.forEach(function(hd){
-                    var hdi_output = "";
-                    var imgList = img[hd['id']] ?? [];
-                    imgList.forEach(function(hdi){
-                        hdi_output += `<div class="text-center fancybox d-flex row p-1 m-0"> 
+                    var hdi_output_members = "";
+                    var hdi_output_staff = "";
+                    var imgList_members = img['members'][hd['id']] ?? [];
+                    var imgList_staff = img['staff'][hd['id']] ?? [];
+                    console.log([img['members'], img['members'][hd['id']], hd['id']]);
+                    imgList_members.forEach(function(hdi){
+                        hdi_output_members += `<div class="text-center fancybox d-flex row p-1 m-0"> 
+                                            <a id="fancybox" href="${hdi['path']}"  data-fancybox='F_box1' data-caption= ''>
+                                            <img width="120px" src="${hdi['path']}" alt=''  >
+                                            </a>
+                                        </div>`;
+                    });
+                    
+                    console.log(hdi_output_members);
+                    imgList_staff.forEach(function(hdi){
+                        hdi_output_staff += `<div class="text-center fancybox p-1 m-0"> 
                                             <a id="fancybox" href="${hdi['path']}"  data-fancybox='F_box1' data-caption= ''>
                                             <img width="120px" src="${hdi['path']}" alt=''  >
                                             </a>
@@ -583,7 +595,7 @@ $r = $pdo->query($sql)->fetch();
 
                     var output = `<a href="#a${ hd['id'] }" class=" " data-toggle="collapse">
                                       <div class="bar justify-content-center align-items-center text-secondary row m-0">
-                                        <div class="col-sm-2 text-center"><img width="120px" class="p-1" src="${ imgList.length != 0 ? imgList[0]['path'] : '' }"/></div>
+                                        <div class="col-sm-2 text-center"><img width="120px" class="p-1" src="${ imgList_members.length != 0 ? imgList_members[0]['path'] : '' }"/></div>
                                         <div class="col-sm-3 text-center ">${ hd['created_at'] ?? "" }</div>
                                         <div class="col-sm-5">${ hd["topic"] }</div>
                                         <div class="col-sm-2 text-center">❤ ${ hd['status'] }</div>
@@ -594,7 +606,7 @@ $r = $pdo->query($sql)->fetch();
                     
                                  <div class=" collapse row mx-0 mb-4" id="a${ hd['id'] }">
                                     <div class="col-md-12 text-white p-2" style="background-color: #83a573">❤ ${ hd['status'] }：${ hd['replied_at'] ?? "" }</div>
-                                    <div class="col-md-12"><div class="row m-0  py-2">圖片：${ hdi_output }</div> </div>
+                                    <div class="col-md-12"><div class="row m-0  py-2">圖片：${ hdi_output_members }</div> </div>
                                     <div class="col-md-12 py-2  " >
                                         <div>日期：<span>${ hd['created_at'] }</span></div>
                                         <div>信件主旨：<span>${ hd["topic"] } </span></div>
@@ -605,6 +617,7 @@ $r = $pdo->query($sql)->fetch();
                                     <p>${ hd["content"] }</ｐ></div>
                                     <div class="reply_content col-md-12  py-2" style="background: #dcedd5">回覆內容：
                                     <p>${ hd["reply"] }</p></div>
+                                    <div class="d-flex" style="flex-wrap: wrap;">${hdi_output_staff}</div>
                                   </div>`;
                     $(".hdItem").append(output);
                 })
