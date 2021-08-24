@@ -156,7 +156,7 @@ $pageName = 'event';
                                 <p>尚有名額/總額：
                                     <span style="font-size:1.2rem" class="event_available_quantity"></span> 人
                                 </p>
-                                <p>單價：<span class="event_price" class="c_pink_t" style="font-size:1.2rem"></span>
+                                <p>單價：<span class="event_price" class="c_pink_t" style="font-size:1.2rem"></span> 元
                                 </p>                                    
                                 <br>
                                 <div>

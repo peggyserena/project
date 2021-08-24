@@ -74,33 +74,43 @@ exit;
     </script>
 
     <script>
+        const deleteItemSelf = function(self){
+            if (confirm("確定要刪除嗎?")){
+                $(self).parents("tr").remove();
+            }
+        };
         const deleteItem = function(category, id) {
-            let t = $(category.currentTarget);
-            $.post('<?= WEB_API ?>/category-api.php', {
-                action: 'delete',
-                id
-            }, function(data) {
-                console.log(data);
-                if ("message" in data){
-                    modal_init();
-                    insertPage("#modal_img", "animation/animation_success.html");
-                    insertText("#modal_content", '資料修改成功');
-                    $("#modal_alert").modal("show");
-                    setTimeout(function(){location.href = "staff_category_editor.php"}, 2000);
-                }else{
+            if (confirm("確定要刪除嗎?")){
+                $.post('<?= WEB_API ?>/category-api.php', {
+                    action: 'delete',
+                    table: category,
+                    id
+                }, function(data) {
+                    console.log("data-1");
+                    console.log(data);
+                    if (data[0] === 'success'){                
+                        $(`table[data-table='${category}'] tr[data-id=${id}]`).remove();
+                        modal_init();
+                        insertPage("#modal_img", "animation/animation_success.html");
+                        insertText("#modal_content", '資料刪除成功');
+                        $("#modal_alert").modal("show");
+                        setTimeout(function(){location.href = "staff_category_editor.php"}, 2000);
+                    }else{
+                        modal_init();
+                        insertPage("#modal_img", "animation/animation_error.html");
+                        insertText("#modal_content", '已有資料存在，無法刪除');
+                        $("#modal_alert").modal("show");
+                        setTimeout(function(){location.href = "staff_category_editor.php"}, 2000);
+                    }
+                }, 'json').fail(function(e){
                     modal_init();
                     insertPage("#modal_img", "animation/animation_error.html");
-                    insertText("#modal_content", '資料修改失敗');
+                    insertText("#modal_content", '資料刪除失敗');
                     $("#modal_alert").modal("show");
                     setTimeout(function(){location.href = "staff_category_editor.php"}, 2000);
-                }
-            }, 'json').fail(function(e){
-                modal_init();
-                insertPage("#modal_img", "animation/animation_error.html");
-                insertText("#modal_content", '資料修改失敗');
-                $("#modal_alert").modal("show");
-                setTimeout(function(){location.href = "staff_category_editor.php"}, 2000);
-            });
+                });
+            }
+            
        };
     </script>
 
@@ -185,7 +195,7 @@ exit;
                                             <td class="bg-dark text-white category_count_num " style="border: #454d55 1px solid ;">${key + 1}</td>
                                             <td class="p-0"data-toggle="tooltip" data-placement="right"  title="點選修改"><input class="category_name edit_column actived form-control" name="name" data-table="${cat_en_name}" data-id="" value=""/></td>
                                             ${output_td}
-                                            <td><a class="evetn_delete_link"  href="#"><i class="fas fa-trash-alt"></i></a></td>
+                                            <td><a class="delete_link"  href="#" onclick="deleteItemSelf(this)"><i class="fas fa-trash-alt"></i></a></td>
                                         </tr>`;
 
                     tbody.append(output_tr);
@@ -231,11 +241,11 @@ exit;
             if (cat_en_name === "forestnews"){
                 output_td = `<td class="p-0" data-toggle="tooltip" data-placement="right"  title="點選修改"><input class="category_en_name edit_column form-control" name="en_name" data-table="${cat_en_name}" data-id="${elem['id']}" value="${elem['en_name']}"/></td>`;
             }
-            output_tr += `<tr class="category_data">
+            output_tr += `<tr class="category_data" data-id="${elem['id']}">
                                 <td class="bg-dark text-white category_count_num" style="border: #454d55 1px solid ;">${key + 1}</td>
                                 <td class="p-0"data-toggle="tooltip" data-placement="right"  title="點選修改"><input class="category_name edit_column form-control" name="name" data-table="${cat_en_name}" data-id="${elem['id']}" value="${elem['name']}"/></td>
                                 ${output_td}
-                                <td><a class="evetn_delete_link"  href="#"><i class="fas fa-trash-alt"></i></a></td>
+                                <td><a class="delete_link"  href="#" onclick="deleteItem('${cat_en_name}', ${elem['id']})"><i class="fas fa-trash-alt"></i></a></td>
                             </tr>`;
             
         })
@@ -243,7 +253,7 @@ exit;
             <div class="catebox mx-5 ">
                 <input type="hidden" name="type" value="add"/>
                 <h3  class="m-0 p-2 text-center text-white  ">${cat_name}</h3>
-                <table id="" class="table table-bordered table-Primary table-hover text-center m-0 ">
+                <table id="" class="table table-bordered table-Primary table-hover text-center m-0 " data-table="${cat_en_name}">
                     <thead class="thead-dark">
                         <tr class="">
                             <th>序號</th>

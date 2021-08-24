@@ -107,7 +107,7 @@ $pageName = 'register';
                         <label for="gender">性別 </label>
                         <input type="radio"  name="gender" value="先生">先生
                         <input type="radio"  name="gender" value="小姐">小姐
-                        <input type="radio"  name="gender" value="中性">不填
+                        <input type="radio"  name="gender" value="不表明">不表明
                         <small class="form-text error"></small>
                     </div>
                     <div class="form-group">

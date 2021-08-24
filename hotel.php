@@ -447,10 +447,11 @@ $pageName = 'hotel';
                         <th class="status " height="60" colspan="9" scope="col">
                             <div class="row">
                             
-                                <span class='col-6 col-md-3 m-0'><img src="./images/icon/bookStatus-01.svg" alt=""><div>尚有空房</div></span>
-                                <span class='col-6 col-md-3 m-0'><img src="./images/icon/bookStatus-02.svg" alt=""><div>客滿</div></span>
-                                <span class='col-6 col-md-3 m-0'><img src="./images/icon/bookStatus-03.svg" alt=""><div>尚未開放</div></span>
-                                <span class='col-6 col-md-3 m-0'><img src="./images/icon/currency.svg"><div>貨幣單位：新台幣</div></span>
+                                <span class=' col m-0'><img src="./images/icon/bookStatus-01.svg" alt=""><div>尚有空房</div></span>
+                                <span class=' col m-0'><img src="./images/icon/bookStatus-04.svg" alt=""><div>預定中</div></span>
+                                <span class=' col m-0'><img src="./images/icon/bookStatus-02.svg" alt=""><div>客滿</div></span>
+                                <span class=' col m-0'><img src="./images/icon/bookStatus-03.svg" alt=""><div>尚未開放</div></span>
+                                <span class=' col m-0'><img src="./images/icon/currency.svg"><div>貨幣單位：新台幣</div></span>
                             </div>
                         </th>
                     </tr>

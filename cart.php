@@ -47,13 +47,13 @@ if (isset($_SESSION['user'])) {
         width: 100%;
     }
 
-    #column-left {
+    .column-left {
         width: 49.9%;
         float: left;
         margin-bottom: 2px;
     }
 
-    #column-right {
+    .column-right {
         width: 49.9%;
         float: right;
     }
@@ -108,7 +108,6 @@ if (isset($_SESSION['user'])) {
     }
     
     .discountTip{
-        background-color:#fff1ab; 
         color:gray;
         padding:0;
     }
@@ -126,6 +125,11 @@ if (isset($_SESSION['user'])) {
     }
 
     .shipway .track img{
+      width: auto;
+      height: 12.8px;
+      margin: 0.5rem 0.3rem 0.5rem 0rem ;
+    }
+    .alert img{
       width: auto;
       height: 12.8px;
       margin: 0.5rem 0.3rem 0.5rem 0rem ;
@@ -322,40 +326,63 @@ if (isset($_SESSION['user'])) {
 
         </div>
     </div>
+    <div class="shipway ">
+        <h3 class="title p-2 b-green rot-135">寄送方式</h3>
+        <div class="row mx-2 my-4 " id="shipmentRadio">
+        </div>
+    </div>
 
-    <div class="row">
-        <div class="col">
-            <div class="finalPrice alert  m-0" role="alert">
-                <h4>使用購物金： <input class="pl-0"style="width:120px;text-align: center;"  type="number" id="couponBalanceInput" value="0" min=0/> <span><small><a href='member.php?tab=coupon'>&emsp;購物金查詢</small></a></span></h4> 
-                    <div class="d-flex text-secondary font-weight-bold">
-                        <p class="mr-2"> 原購物金餘額： <span id="couponBalance"></span>；</p>
-                        <p class="mx-2"> 本次使用金額： <span id="couponBalanceUsed"></span>；</p>
-                        <p class="mx-2"> 使用後餘額： <span id="couponFinalBalance"></span></p>
-                    </div>
-                   
-               
-            </div>
+    <div>
+        <h3 class="title p-2 b-green rot-135">金額計算</h3>
+        <div class="alert  m-0" role="alert">
+            <h4>使用購物金： <input class="pl-0"style="width:120px;text-align: center;"  type="number" id="couponBalanceInput" value="0" min=0/> <span> <a href='member.php?tab=coupon'>&emsp;<img src="./images/icon/arrow_g_r.svg" alt=""><small class='font-weight-bold' >購物金查詢</small></a></span></h4> 
+                <div class="d-flex text-secondary font-weight-bold">
+                    <p class="mr-2"> 目前可使用金額/總購物金餘額： <span id="couponBalance"></span>/<span id="couponTotal"></span></p>
+                    <p class="mx-2"> 本次使用金額： <span id="couponBalanceUsed"></span>；</p>
+                    <p class="mx-2"> 使用後餘額： <span id="couponFinalBalance"></span></p>
+                </div>
         </div>
-    </div>
-    
-    <div class="row">
-        <div class="col">
+
+        <div class="">
             <div class="finalPrice alert   m-0" role="alert">
-                <h4 class="m-0"> 原價： <span class="originalPrice"></span> - 折扣： <span class="discountPrice"></span> - 購物金： <span class="couponPrice"></span>+ 運費： <span class="ShippingFee"></span> = 總計： <span class="totalPrice c_pink_t"></span></h4>
+                <h4 class="m-0"> 原價： <span class="originalPrice c_pink_t"></span> - 折扣： <span class="discountPrice c_pink_t"></span> - 購物金： <span class="couponPrice c_pink_t"></span> + 運費： <span class="ShippingFee c_pink_t"></span> = 總計： <span class="totalPrice c_pink_t"></span></h4>
             </div>
-        </div>
-    </div>
-    
-    <div class="row ">
-    
-        <div class="col ">
-            <div class="discountTip col">
-                <div class="alert text-center "　 role="alert">
+            <div class="discountTip ">
+                <div class="alert"　 role="alert">
                    
                 </div>
             </div>
+
+        </div>
+    </div>   
+    <div class="mb-5">
+        
+        <div>
+            <h3 class="title p-2 b-green rot-135">付款方式</h3>
+            <div class="mx-2 my-3">
+                <input id="cd" type="radio" name="payment_method" value="creditCard" /><label for="cd">信用卡</label>
+                <input id="cod" type="radio" name="payment_method" value="COD" /><label for="cod">付現</label>
+            </div>
+        </div>
+
+        <div class="payment">
+            <form action="" method="post">
+                <div class="form-container creditCard ">
+                    <div class="card-wrapper"></div>
+                    <div>
+                        <input class="input-field" type="text" name="first-name" placeholder="持卡人全名" />
+                        <input class="input-field" type="text" name="number" placeholder="信用卡卡號" />
+                        <input class="column-left" type="text" name="expiry" placeholder="到期日 (MM / YY)" />
+                        <input class="column-right" type="text" name="cvc" placeholder="安全碼 (CVC)" />
+                    </div>
+                </div>
+                <div class="form-container COD ">
+                </div>
+            </form>
         </div>
     </div>
+
+
 </div>
 
 
@@ -433,57 +460,6 @@ if (isset($_SESSION['user'])) {
         </div>
     </div>
     <div class="mb-5">
-        <div class="shipway ">
-            <h3 class="title p-2 b-green rot-135">寄送方式</h3>
-            <div class="row mx-2 my-4 ">
-                <div><input id="7e" type="radio" name="7Eleven" value="" /><label for="7e"><img src="./images/icon/delivery_711.svg" alt=""></label></div>
-                <div><input id="fm" type="radio" name="familyMart​" value=" " /><label for="fm"><img src="./images/icon/delivery_familymart.svg" alt=""></label></div>
-                <div><input id="hl" type="radio" name="hiLife​" value=" " /><label for="hl"><img src="./images/icon/delivery_hilife.svg" alt=""></label></div>
-                <div> <input id="ok" type="radio" name="okMart​" value=" " /><label for="ok"><img src="./images/icon/delivery_ok.svg" alt=""></label></div>
-                <div><input id="po" type="radio" name="postOffice​" value=" " /><label for="po"><img src="./images/icon/delivery_postoffice.svg" alt=""></label></div>
-                <div><input id="cat" type="radio" name="cat​" value=" " /><label for="cat"><img src="./images/icon/delivery_cat.svg" alt=""></label></div>
-            </div>
-            <div class="mx-2 my-4">
-              <h4>貨件追蹤查詢</h4>
-              <div class="track">
-                <ul class=" ml-3 row list-unstyled">
-                  <li><a href="https://eservice.7-11.com.tw/e-tracking/search.aspx" target="blank"><img src="./images/icon/arrow_g_r.svg" alt="">7-11</a></li>
-                  <li><a href="https://www.famiport.com.tw/Web_Famiport/page/process.aspx" target="blank"><img src="./images/icon/arrow_g_r.svg" alt="">全家</a></li>
-                  <li><a href="https://www.hilife.com.tw/serviceInfo_search.aspx" target="blank"><img src="./images/icon/arrow_g_r.svg" alt="">萊爾富</a></li>
-                  <li><a href="https://ecservice.okmart.com.tw/Tracking/Search" target="blank"><img src="./images/icon/arrow_g_r.svg" alt="">OK</a></li>
-                  <li><a href="http://postserv.post.gov.tw/pstmail/main_mail.html?targetTxn=EB500100" target="blank"><img src="./images/icon/arrow_g_r.svg" alt="">郵局</a></li>
-                  <li><a href="https://www.t-cat.com.tw/Inquire/Trace.aspx" target="blank"><img src="./images/icon/arrow_g_r.svg" alt="">黑貓宅急便</a></li>
-                </ul>
-
-              </div>
-              
-            </div>
-        </div>
-        <div>
-            <h3 class="title p-2 b-green rot-135">付款方式</h3>
-            <div class="mx-2 my-3">
-                <input id="cd" type="radio" name="payway" value="creditCard" /><label for="cd">信用卡</label>
-                <input id="cod" type="radio" name="payway" value="COD" /><label for="cod">貨到付款</label>
-            </div>
-        </div>
-
-        <div class="payment">
-            <form action="" method="post">
-                <div class="form-container creditCard ">
-                    <div class="card-wrapper"></div>
-                    <div>
-                        <input id="input-field" type="text" name="first-name" placeholder="持卡人全名" />
-                        <input id="input-field" type="text" name="number" placeholder="信用卡卡號" />
-                        <input id="column-left" type="text" name="expiry" placeholder="到期日 (MM / YY)" />
-                        <input id="column-right" type="text" name="cvc" placeholder="安全碼 (CVC)" />
-                    </div>
-                </div>
-                <div class="form-container COD ">
-                </div>
-            </form>
-        </div>
-    </div>
-    <div class="mb-5">
         <div>
             <h3 class="title p-2 b-green rot-135">發票類型</h3>
         </div>
@@ -506,9 +482,9 @@ if (isset($_SESSION['user'])) {
                 </div>
                 <div class="form-container CDCR">
                     <input type="text" placeholder="請輸入大寫英文數字共 16 碼 ">
-                    <input id="agreeReceipt" type="checkbox" checked><label for="agreeReceipt"> <span>我同意紀錄本次手機條碼為常用載具</span></label>
+
                 </div>
-                <div class="form-container DR mx-2 my-3">
+                <div class="form-container DR ">
                     <input type="text" placeholder="請輸入捐贈單位全名 ">
                 </div>
                 <div class="form-container CR row mx-2 my-3">
@@ -529,10 +505,10 @@ if (isset($_SESSION['user'])) {
                     <input id="agreeReceipt3" type="radio" name="addressRecepit" value="addressRecepit3"><label for="agreeReceipt3"> 其他</label>
                 </div>
                 <div class="form-container addressRecepit3 mx-2 my-2 ">
-                    <input id="input-field" type="text" name="name" required="required" placeholder="真實姓名" />
-                    <input id="column-right" type="text" name="city" required="required" autocomplete="on" maxlength="20" placeholder="縣市名稱" />
-                    <input id="column-left" type="text" name="zipcode" required="required" autocomplete="on" pattern="[0-9]*" maxlength="5" placeholder="郵遞區號" />
-                    <input id="input-field" type="text" name="address" required="required" autocomplete="on" placeholder="區域及地址" />
+                    <input class="input-field" type="text" name="name" required="required" placeholder="真實姓名" />
+                    <input class="column-right" type="text" name="city" required="required" autocomplete="on" maxlength="20" placeholder="縣市名稱" />
+                    <input class="column-left" type="text" name="zipcode" required="required" autocomplete="on" pattern="[0-9]*" maxlength="5" placeholder="郵遞區號" />
+                    <input class="input-field" type="text" name="address" required="required" autocomplete="on" placeholder="區域及地址" />
                 </div>
             </div>
         </div>
@@ -545,7 +521,7 @@ if (isset($_SESSION['user'])) {
 <div class="container">
     <div class="row mb-5">
         <div class="col-12 my-4">
-            <div class="alert alert-danger " id="warning_msg_payway" role="alert" style="display: none;">
+            <div class="alert alert-danger " id="warning_msg_payment_method" role="alert" style="display: none;">
                     <ul><h4>請確認以下資料填寫完整 </h4>
                       <li>收件人資料</li>
                       <li>寄送方式</li>
@@ -643,15 +619,13 @@ if (isset($_SESSION['user'])) {
             $("#couponBalanceInput").trigger("change");
         }
 
-        // $('#couponBalance').text('$ ' + dallorCommas(couponBalance));
-        // $('#couponBalanceUsed').text('$ ' + dallorCommas(couponBalanceUsed));
-        // $('#couponFinalBalance').text('$ ' + dallorCommas(couponFinalBalance));
+        shoppingFee = $("input[type='radio'][name='shipment']:checked").data("fee");
+        shoppingFee = shoppingFee ?? 0;
         $('.originalPrice').text('$ ' + dallorCommas(total));
         $('.discountPrice').text('$ ' + dallorCommas(discountPrice));
         $('.couponPrice').text('$ ' + dallorCommas(couponPrice));
-        $('.totalPrice').text('$ ' + dallorCommas(total - discountPrice - couponPrice));
-
-        
+        $('.ShippingFee').text('$ ' + dallorCommas(shoppingFee));
+        $('.totalPrice').text('$ ' + dallorCommas(total - discountPrice - couponPrice + shoppingFee));
     };
 
     const changeQty = function(event, type, key, qty) {
@@ -688,7 +662,9 @@ if (isset($_SESSION['user'])) {
 
     const checkOutCart = function() {
         $.post('<?= WEB_API ?>/order-api.php', {
-                action: 'add'
+                action: 'add',
+                coupon: $("#couponBalanceInput").val(),
+                shipment_id: $("input[type='radio'][name='shipment']:checked").val(),
             }, function(data) {
                 // location.reload();  // 刷頁面
                 if ($('tbody>tr').length < 1) {
@@ -706,6 +682,8 @@ if (isset($_SESSION['user'])) {
                 
             }, 'json')
             .fail(function(e) {
+                console.log("error-checkoutCart");
+                console.log(e);
                 alert("error");
             });
     };
@@ -771,39 +749,44 @@ if (isset($_SESSION['user'])) {
         updateDiscountTip();
     });
 
+    
     function isCompletedUserData() {
         $.post('<?= WEB_API ?>/member-api.php', {
             'action': 'isCompletedUserData',
         }, function(data) {
-
-            console.log(data);
             result = data[0];
             if (!result) {
-                $("#warning_msg_payway").show();
+                $("#warning_msg_payment_method").show();
                 $("#checkOutBtn").addClass("disabled");
-                $("#warning_msg").show();
             } else {
                 $("#checkOutBtn").removeClass("disabled");
-                $("#warning_msg").hide();
-                $('input[type="radio"]').click(isCompletedPayWayData);
-                isCompletedPayWayData();
-
+                $('input[type="radio"]').click(isCompleted);
             }
+            isCompleted();
+            
         }, 'json').fail(function(e) {
             console.log("error");
             console.log(e);
         });
     }
-
-    function isCompletedPayWayData() {
-        var checked_count = $("input[name='payway']:checked").length + $("input[name='name']:checked").length;
-        if (checked_count == 2) {
+    function isCompleted(){
+        window.isCompletedUserData;
+        let isCompleteda = isCompletedPaymentMethodData() && isCompletedShipmentData();
+        if (isCompleteda){
             $("#checkOutBtn").removeClass("disabled");
-            $("#warning_msg_payway").hide();
-        } else {
+            $("#warning_msg_payment_method").hide();
+        }else{
             $("#checkOutBtn").addClass("disabled");
-            $("#warning_msg_payway").show();
+            $("#warning_msg_payment_method").show();
         }
+    }
+    function isCompletedPaymentMethodData() {
+        var checked_count = $("input[name='payment_method']:checked").length + $("input[name='name']:checked").length;
+        return checked_count == 2;
+    }
+    function isCompletedShipmentData() {
+        var checked_count = $("input[name='shipment']:checked").length;
+        return checked_count == 1;
     }
 </script>
 <script>
@@ -835,7 +818,7 @@ if (isset($_SESSION['user'])) {
             } else if (empty(data['event']) && !empty(data['hotel']) && empty(data['restaurant'])) {
                 output = `<h4 class="m-0">出示房卡至「森林咖啡館」用餐，享有<span class="c_pink_t">9</span>折優惠；如再加購<a href="event.php">「森林體驗」</a>，可享全面<span class="c_pink_t">85</span>折優惠喔！</h4>`;
             } else if (!empty(data['event']) && empty(data['hotel']) && empty(data['restaurant'])) {
-                output = `<h4 class="m-0">出示「森林體驗」票券至「森林咖啡館」用餐，享有<span class="c_pink_t">9</span> 折優惠；z如再加購<a href="hotel.php">「夜宿薰衣草森林」</a>，可享全面<span class="c_pink_t">85</span>折優惠喔！</h4>`;
+                output = `<h4 class="m-0">出示「森林體驗」票券至「森林咖啡館」用餐，享有<span class="c_pink_t">9</span> 折優惠；如再加購<a href="hotel.php">「夜宿薰衣草森林」</a>，可享全面<span class="c_pink_t">85</span>折優惠喔！</h4>`;
             } else if (!empty(data['event']) && !empty(data['hotel']) && empty(data['restaurant'])) {
                 output = `<h4 class="m-0">目前折扣為<span class="c_pink_t">85</span>折；出示房卡至「森林咖啡館」用餐，也享有<span class="c_pink_t">85</span>折優惠喔！</h4>`;
             }
@@ -858,8 +841,11 @@ if (isset($_SESSION['user'])) {
         $.post('<?= WEB_API ?>/coupon-api.php', {
             action: 'balance',
         },function(data) {
-            balance = data['data']['sum'];
-            $("#couponBalance").text(balance);
+            balance = data['data']['couponBalance'];
+            total = data['data']['couponTotal'];
+            $("#couponTotal").text('$ ' + dallorCommas(total));
+            $("#couponBalance").text('$ ' + dallorCommas(balance));
+            $("#couponBalance").data("value", balance);
             $("#couponBalanceInput").attr("max", balance);
             
         }, 'json')
@@ -867,33 +853,49 @@ if (isset($_SESSION['user'])) {
     couponBalance();
     $("#couponBalanceInput").change(function(){
         balanceUsed = $(this).val(); // input value
-        finalBalance = parseInt($("#couponBalance").text()) - balanceUsed;
+        finalBalance = parseInt($("#couponBalance").data("value")) - balanceUsed;
         if (finalBalance < 0){
             finalBalance = 0;
             balanceUsed = $(this).attr("max");
             $(this).val(balanceUsed);
         }
-
-        $("#couponBalanceUsed").text(balanceUsed);
-        $("#couponFinalBalance").text(finalBalance);
+        $("#couponBalanceUsed").text('$ ' + dallorCommas(balanceUsed));
+        $("#couponFinalBalance").text('$ ' + dallorCommas(finalBalance));
         calPrices();
     })
+
+    
+    function readShipment(){
+        $.get('<?= WEB_API ?>/cart-api.php', {
+            type: 'shipment',
+            action: 'readAll',
+        },function(data) {
+            data.forEach(function(elem){
+                outputRadio = `<div><input id="shipemnt_radio_${elem['id']}" type="radio" name="shipment" value="${elem['id']}" data-fee="${elem['fee']}"/><label for="shipemnt_radio_${elem['id']}"><img src="${elem['img']}" alt=""></label></div>`;
+                outputTrack = `<li><a href="${elem['trackweb']}" target="_blank"><img src="./images/icon/arrow_g_r.svg" alt="">${elem['name']}</a></li>`;
+                $("#shipmentRadio").append(outputRadio);
+                $("#shipmentTrack ul").append(outputTrack);
+            })
+            $("input[type='radio'][name='shipment']").change(function(){
+                calPrices();
+            });
+        }, 'json')
+    }
+    readShipment();
 </script>
 <script>
   erTWZipcode({
     defaultCountyText: "請選擇",
     defaultDistrictText: "請選擇"
   });
-  var distEl = document.querySelector('#myForm select[name=district]');
-  document.querySelector('#myForm select[name=county]')
+  var distEl = document.querySelector('select[name=district]');
+  document.querySelector('select[name=county]')
     .addEventListener("change", function(evt){
       //refresh district element
     //   M.FormSelect.init(distEl);
     });
   //first time init all select elements in #myForm
 //   M.FormSelect.init(document.querySelectorAll('#myForm select'));
-  document.querySelector('#myForm select[name=county]').value = "<?= $_SESSION['staff']['county'] ?>";
-  document.querySelector('#myForm select[name=district]').value = "<?= $_SESSION['staff']['district'] ?>";
 </script>
 
 

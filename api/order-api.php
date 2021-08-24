@@ -34,6 +34,8 @@ $action = $_POST['action'];
 switch ($action){
     case 'add':
 
+        $shipment_id = $_POST['shipment_id'];
+        $couponInputValue = $_POST['coupon'];
         $cart = $_SESSION['cart'];
         $user_id = $_SESSION['user']['id'];
         $cart['event'] = $cart['event'] ?? []; 
@@ -127,6 +129,13 @@ switch ($action){
         }
         if (!$flag) break;
 
+        // 抓運費資訊
+        $sql = "SELECT * FROM `shipment` WHERE id = ?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$shipment_id]);
+        $result = $stmt->fetch();
+        $shipemnt_fee = $result['fee'];
+
         // 計算總價
         $original_price = 0;
         $discount = 0;
@@ -139,12 +148,14 @@ switch ($action){
             }
         }
         if ($isDiscount) $discount = $original_price * 0.15;
-        $price = $original_price - $discount;
+        $price = $original_price - $discount - $couponInputValue;
+        if ($price < 0) break;
+        $price += $shipemnt_fee;
 
-        $sql = "INSERT INTO `sales_order` (`order_id`, `user_id`, `price`, `original_price`, `discount`, `status`, `create_datetime`) VALUES ('', ?, ?, ?, ?, '已付款', NOW())";
-        
+        // 新增訂單
+        $sql = "INSERT INTO `sales_order` (`order_id`, `user_id`, `price`, `original_price`, `discount`, `coupon`, `shipment_id`, `shipping_fee`, `payment_method`, `status`, `create_datetime`) VALUES ('', ?, ?, ?, ?, ?, ?, ?, ?, '已付款', NOW())";
         $stmt = $pdo->prepare($sql);
-        $stmt->execute([$user_id, $price, $original_price, $discount]);
+        $stmt->execute([$user_id, $price, $original_price, $discount, $couponInputValue, $shipment_id, $shipemnt_fee]);
         $sales_order_id = $pdo->lastInsertId();
 
         $sql = "UPDATE `sales_order` SET `order_id` = CONCAT(RPAD(REPLACE(SUBSTRING(NOW(), 1, 10), '-', '') , 12 - LENGTH(id), '0'), id) WHERE id = $sales_order_id";
@@ -230,6 +241,34 @@ switch ($action){
                 
             }
         }
+
+        // 扣除購物金
+        $sql = "SELECT * FROM `coupon` WHERE user_id = $user_id AND NOW() BETWEEN `start_date` AND `end_date` AND balance > 0 ORDER BY `end_date`";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+
+        // 一開始等於使用者輸入的扣除金額
+        $couponReduceProcess = $couponInputValue;
+        foreach($result as $coupon){
+            if ($couponReduceProcess > 0){
+                // 220 - 100 = 120 未被扣款
+                // 120 - 100 = 20 未被扣款
+                // 20 - 100 = -80 扣款完畢
+                $couponReduceProcess -= $coupon['balance'];
+                if ($couponReduceProcess <= 0){
+                    $coupon['balnce'] = -$couponReduceProcess;
+                }else{
+                    $coupon['balnce'] = 0;
+                }
+                $sql = "UPDATE `coupon` SET balance = ? WHERE id = ?";
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute([$coupon['balnce'], $coupon['id']]);
+            }else{
+                break;
+            }
+        }
+
         unset($_SESSION['cart']);
         echo json_encode([$sales_order_id], JSON_UNESCAPED_UNICODE);
         break;
@@ -270,18 +309,25 @@ switch ($action){
         JOIN `restaurant` as r ON _or.restaurant_id = r.id 
         where user_id = ? AND so.id = ?
         group by _or.`item_id`";
-        
+
+         
         $sql_sales_order = "SELECT so.*, m.fullname, m.mobile, m.zipcode, m.county, m.district, m.address from `sales_order` as so JOIN `members` as m ON so.user_id = m.id where so.user_id = ? AND so.id = ?";
         
+        $sql_shipemnt = "SELECT * FROM `shipment` where id = ?";
+       
+
         $output = [];
+
         $stmt = $pdo->prepare($sql_hotel);
         $stmt->execute([$user_id, $id]);
         $result = $stmt->fetchAll();
         $output['hotel'] = $result;
+
         $stmt = $pdo->prepare($sql_evnet);
         $stmt->execute([$user_id, $id]);
         $result = $stmt->fetchAll();
         $output['event'] = $result;
+
         $stmt = $pdo->prepare($sql_resturant);
         $stmt->execute([$user_id, $id]);
         $result = $stmt->fetchAll();
@@ -292,11 +338,14 @@ switch ($action){
         $result = $stmt->fetch();
         $output['order'] = $result;
 
-
-        
+        $stmt = $pdo->prepare($sql_shipemnt);
+        $stmt->execute([$output['order']['shipment_id']]);
+        $result = $stmt->fetch();
+        $output['shipment'] = $result;
         
         echo json_encode($output, JSON_UNESCAPED_UNICODE);
         break;
+        
     case 'cancel':
         $user_id = $_SESSION['user']['id'];
         $order_id = $_POST['order_id'];
@@ -304,6 +353,7 @@ switch ($action){
         $product_list = ['event', 'hotel', 'restaurant'];
         $count = 0;
         $output = [];
+
         foreach($product_list as $product){
             $sql = "SELECT * FROM `sales_order` as so JOIN `order_item` as oi ON so.id = oi.order_id JOIN `order_$product` as op ON oi.type = '$product' AND oi.id = op.item_id  WHERE so.user_id = ? and op.order_datetime >= $last_date and so.order_id = ?";
             $stmt = $pdo->prepare($sql);
@@ -316,7 +366,7 @@ switch ($action){
             $stmt = $pdo->prepare($sql);
             $stmt->execute([$user_id, $order_id]);
         }else{
-            $output = ["info" => "此訂單無法刪除，已超過"];
+            $output = ["info" => "此訂單無法刪除，已超過鑑賞期限7天"];
         }
         echo json_encode($output, JSON_UNESCAPED_UNICODE);
         break;

@@ -2,11 +2,26 @@
 
 $action = isset($_POST['action']) ? $_POST['action'] : $_POST['type']; // 操作類型
 $tableMap = [
-    "event" => "event_category",
-    "forestnews" => "forestnews_category",
-    "helpdesk" => "helpdesk_category",
-    "member" => "member_role_category",
-    "staff" => "staff_role_category",
+    "event" => [
+        'cat' => "event_category",
+        'foreign_key' => "cat_id",
+    ],
+    "forestnews" => [
+        'cat' => "forestnews_category",
+        'foreign_key' => "cat_id",
+    ],
+    "helpdesk" => [
+        'cat' => "helpdesk_category",
+        'foreign_key' => "cat_id",
+    ],
+    "members" => [
+        'cat' => "members_role_category",
+        'foreign_key' => "role",
+    ],
+    "staff" => [
+        'cat' => "staff_role_category",
+        'foreign_key' => "role",
+    ],
 ];
 switch ($action) {
     case 'readCat':
@@ -14,7 +29,7 @@ switch ($action) {
             "event" => "森林體驗",
             "forestnews" => "森林快報",
             "helpdesk" => "客服信件",
-            "member" => "客戶種類",
+            "members" => "客戶種類",
             "staff" => "員工職稱種類",
         ];
         break;
@@ -24,14 +39,15 @@ switch ($action) {
         if (empty($type)){
             $result = [];
             foreach($tableMap as $key => $value){
-                $sql = "SELECT * FROM `$value`";
+                $table_cat = $value['cat'];
+                $sql = "SELECT * FROM `$table_cat`";
                 $stmt = $pdo->prepare($sql);
                 $stmt->execute([]);
                 $result[$key] = $stmt->fetchAll();
             }
             
         }else{
-            $sql = "SELECT * FROM ".$tableMap[$type];
+            $sql = "SELECT * FROM ".$tableMap[$type]['cat'];
             $stmt = $pdo->prepare($sql);
             $stmt->execute([]);
             $result = $stmt->fetchAll();
@@ -59,7 +75,7 @@ switch ($action) {
         $stmt->execute([]);
         $result = $stmt->fetchAll();
 
-        $sql = "SELECT * FROM member_role_category";
+        $sql = "SELECT * FROM members_role_category";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([]);
         $result = $stmt->fetchAll();
@@ -70,7 +86,7 @@ switch ($action) {
         $table = $_POST['table'];
         $param = $_POST['param'];
 
-        $table = $tableMap[$table];
+        $table = $tableMap[$table]['cat'];
         $columnList = [];
         $valueList = [];
         foreach ($param as $key => $value){
@@ -95,7 +111,7 @@ switch ($action) {
         $name = $_POST['name'];
         $value = $_POST['value'];
 
-        $table = $tableMap[$table];
+        $table = $tableMap[$table]['cat'];
         if (!in_array($name, ['name', 'en_name'])){
             break;
         }
@@ -105,8 +121,24 @@ switch ($action) {
         $stmt->execute([$value, $id]);
         $result = ['suceess'];
     case 'delete':
-        if (isset($key)) {
-            unset($_SESSION['cart']['restaurant'][$key]); // 移除該項商品
+        $table = $_POST['table'];
+        $id = $_POST['id'];
+
+        $table_cat = $tableMap[$table]['cat'];
+        $table_fk = $tableMap[$table]['foreign_key'];
+
+        // 確認是否可以刪除
+        $sql = "SELECT count(*) as `count` FROM `$table` WHERE $table_fk = ?";        
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$id]);
+        if ($stmt->fetch()['count'] === "0"){
+            // delete
+            $sql = "DELETE FROM `$table_cat` WHERE id = ?";        
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([$id]);
+            $result = ['success'];
+        }else{
+            $result = ['error'];
         }
         break;
 }

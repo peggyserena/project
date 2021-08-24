@@ -3,9 +3,6 @@ include __DIR__ . '/../parts/config.php';
 $action = $_POST['action'];
 $staff = $_SESSION['staff'] ?? null;
 
-if (empty($staff)){
-        exit();
-}
 $output = [];
 switch ($action) {
         case 'readCurrent':
@@ -25,6 +22,9 @@ switch ($action) {
                 $output['success'] = "讀取成功";
                 break;
         case 'readAll':
+                if (empty($staff)){
+                        exit();
+                }
                 $condition = [];
                 $param = [];
                 $condition_map = [
@@ -73,7 +73,7 @@ switch ($action) {
                         empty($user['address']);
                         
                 $result = !$result;
-                echo json_encode([$result], JSON_UNESCAPED_UNICODE);
+                $output = [$result];
                 break;
         case 'checkAccountExist':
                 $result = false;
@@ -86,7 +86,8 @@ switch ($action) {
                                 $result = true;
                         }
                 }
-                echo json_encode([$result], JSON_UNESCAPED_UNICODE);
+                
+                $output = [$result];
                 break;
         case 'changePassword':
                 $result = false;
@@ -101,7 +102,7 @@ switch ($action) {
                                 $result = true;
                         }
                 }
-                echo json_encode([$result], JSON_UNESCAPED_UNICODE);
+                $output = [$result];
                 break;
         case 'checkKey':
                 $result = false;
@@ -114,7 +115,7 @@ switch ($action) {
                                 $result = true;
                         }
                 }
-                echo json_encode([$result], JSON_UNESCAPED_UNICODE);
+                $output = [$result];
                 break;
                         
         case 'exportExcel':

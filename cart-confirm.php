@@ -30,7 +30,7 @@ $sum = 0;
         margin:1rem;
     }
     .orderStatus span{
-        color:#007bff;
+        color:gray;
     }
     .discountTip{
         background-color:#fff1ab; 
@@ -59,7 +59,7 @@ $sum = 0;
       transition: 0.5s ease;
     }
     .track li:hover{
-    transform: translateY(-0.5rem);
+    transform: translateX(0.5rem);
     }
     .track li a:hover{
     color:#83a573;
@@ -151,7 +151,7 @@ $sum = 0;
                 </tbody>
             </table>
             <div class="finalPrice alert  text-center mx-0 my-5" role="alert">
-                <h4 class="m-0">原價 : <span class="originalPrice"></span> - 折扣: <span class="discountPrice"></span> = 總計: <span class="totalPrice c_pink_t"></span></h4>
+                <h4 class="m-0">原價 : <span class="originalPrice"></span> - 折扣: <span class="discountPrice"></span> - 購物金： <span class="couponPrice"></span> + 運費： <span class="ShippingFee"></span> = 總計: <span class="totalPrice c_pink_t"></span></h4>
                 <hr>
                 <div class="row ">
                     <div class="discountTip col">
@@ -160,9 +160,9 @@ $sum = 0;
                 </div>
             </div>
             <div class="orderStatus text-secondary ">
-                <div> 
-                    <h4>訂單狀態</h4>
-                    <div><span id="status"></span></div>
+                <div class="d-flex"> 
+                    <h4>訂單狀態：<small id="status"></small></h4> &emsp;
+                    <h4>付款方式：<small id="payment_method"></small></h4>
                 </div>
                 <hr>
                 <div>
@@ -179,23 +179,32 @@ $sum = 0;
                     </div>
                 </div>
                 <hr>
+                <div class="receiptType">
+                    <h4>發票類型</h4>
+                    <div id="cloudR" type="radio" name="receiptType" value="cloudR">雲端發票 捐贈發票 公司紙本 個人紙本<div>
+                        <div class="cloudR">＊雲端發票＊會員載具 手機條碼 自然人憑證條碼</div>
+                        <div class="DR"> ＊捐贈發票＊捐贈單位全名</div>
+                        <div class="CR"> ＊公司紙本＊請輸入發票抬頭 請輸入統一編號
+                            <div class="cr_information">發票寄送地址：同訂購人 同收件人 其他 </div>
+                        </div>
+                        <div class="PR"> ＊個人紙本＊請輸入發票抬頭 請輸入統一編號
+                            <div class="pr_information">發票寄送地址：同訂購人 同收件人 其他 </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>                
                 <div>
                     <h4>物流狀態</h4>
+                    <p class="mb-3">寄送方式：<span id="shipment"></span>&emsp;<span id="shipmentNote"></span></p>
+                    <h4>貨件追蹤查詢</h4>
+                    <div class="track" id="shipmentTrack">
+                        <ul class=" row list-unstyled">
+                        </ul>
+                    </div>
+            
+
                     <p class="mb-3">顯示備貨/出貨</p>
                     <p class="mb-3">物流編號：</p>
-                    <p class="">貨件追蹤查詢：
-                      <div>
-                        <ul class="row list-unstyled track ">
-                          <li><a href="https://eservice.7-11.com.tw/e-tracking/search.aspx" target="blank"><img src="./images/icon/arrow_g_r.svg" alt="">7-11</a></li>
-                          <li><a href="https://www.famiport.com.tw/Web_Famiport/page/process.aspx" target="blank"><img src="./images/icon/arrow_g_r.svg" alt="">全家</a></li>
-                          <li><a href="https://www.hilife.com.tw/serviceInfo_search.aspx" target="blank"><img src="./images/icon/arrow_g_r.svg" alt="">萊爾富</a></li>
-                          <li><a href="https://ecservice.okmart.com.tw/Tracking/Search" target="blank"><img src="./images/icon/arrow_g_r.svg" alt="">OK</a></li>
-                          <li><a href="http://postserv.post.gov.tw/pstmail/main_mail.html?targetTxn=EB500100" target="blank"><img src="./images/icon/arrow_g_r.svg" alt="">郵局</a></li>
-                          <li><a href="https://www.t-cat.com.tw/Inquire/Trace.aspx" target="blank"><img src="./images/icon/arrow_g_r.svg" alt="">黑貓宅急便</a></li>
-                        </ul>
-
-                      </div>
-                    </p>
                 </div>
             </div>
             <hr>
@@ -212,52 +221,8 @@ $sum = 0;
 <?php include __DIR__. '/parts/scripts.php'; ?>
 <script>
 $(document).ready(function(){
-    function updateFormContainer(){
-        $(".form-container").hide();
-        $('input[type="radio"]:checked').each(function(i, elem){
-            
-            var targetBox = $("." + elem.value);
-            $(targetBox).show();
-        });
-        
-    }
-    $('input[type="radio"]').click(updateFormContainer);
-    $('input[type="radio"]').click(isCompletedPayWayData);
-    updateFormContainer();
-    isCompletedUserData();
-    isCompletedPayWayData();
     fillTable();
 });
-function isCompletedUserData(){
-    $.post('<?= WEB_API ?>/member-api.php', {
-        'action': 'isCompletedUserData',
-    }, function(data){
-        
-        console.log(data);
-        result = data[0];
-        if (!result) {
-            $("#checkOutBtn").addClass("disabled");
-            $("#warning_msg").show();
-        }else{
-            $("#checkOutBtn").removeClass("disabled");
-            $("#warning_msg").hide();
-        }
-    }, 'json').fail(function(e){
-        console.log("error");
-        console.log(e);
-    });
-}
-
-function isCompletedPayWayData(){
-    var checked_count = $("input[name='payway']:checked").length + $("input[name='name']:checked").length;
-    if (checked_count == 2){
-        $("#checkOutBtn").removeClass("disabled");
-        $("#warning_msg_payway").hide();
-    }else{
-        $("#checkOutBtn").addClass("disabled");
-        $("#warning_msg_payway").show();
-    }
-}
 
 function fillTable(){
     var url_string = window.location.href
@@ -267,8 +232,6 @@ function fillTable(){
         'action': 'readOne',
         id
     }, function(data){
-        console.log("fileTable");
-        console.log(data);
         var type_list = ['event', 'hotel', 'restaurant'];
         type_list.forEach(function(elem){
             if (data[elem].length > 0){
@@ -286,13 +249,13 @@ function fillTable(){
         } else if (!empty(data['event']) && !empty(data['hotel']) && !empty(data['restaurant'])) { 
             output = '<h4 class="m-0">目前折扣為<span class="c_pink_t">85</span>折；出示房卡至「森林咖啡館」用餐，也享有<span class="c_pink_t">85</span>折優惠喔！</h4>';
         } else if (empty(data['event']) && !empty(data['hotel']) && !empty(data['restaurant'])) { 
-            output = '<h4 class="m-0">出示房卡至「森林咖啡館」用餐，享有<span class="c_pink_t">9</span>折優惠；如再加購<a href="event.php">「森林體驗」</a>，可享全面<span class="c_pink_t">85</span>折優惠喔！</h4>';
+            output = '<h4 class="m-0">出示房卡至「森林咖啡館」用餐，享有<span class="c_pink_t">9</span>折優惠喔！</h4>';
         } else if (!empty(data['event']) && empty(data['hotel']) && !empty(data['restaurant'])) { 
-            output = '<h4 class="m-0">出示 "森林體驗票券" 至「森林咖啡館」用餐，享有<span class="c_pink_t">9</span>折優惠；如再加購<a href="hotel.php">「夜宿薰衣草森林」</a>，可享全面<span class="c_pink_t">85</span>折優惠喔！</h4>';
+            output = '<h4 class="m-0">出示 "森林體驗票券" 至「森林咖啡館」用餐，享有<span class="c_pink_t">9</span>折優惠喔！</h4>';
         } else if (empty(data['event']) && !empty(data['hotel']) && empty(data['restaurant'])) { 
-            output = '<h4 class="m-0">出示房卡至「森林咖啡館」用餐，享有<span class="c_pink_t">9</span>折優惠；如再加購<a href="event.php">「森林體驗」</a>，可享全面<span class="c_pink_t">85</span>折優惠喔！</h4>';
+            output = '<h4 class="m-0">出示房卡至「森林咖啡館」用餐，享有<span class="c_pink_t">9</span>折優惠喔！</h4>';
         } else if (!empty(data['event']) && empty(data['hotel']) && empty(data['restaurant'])) { 
-            output = '<h4 class="m-0">出示「森林體驗」票券至「森林咖啡館」用餐，享有<span class="c_pink_t">9</span> 折優惠；如再加購<a href="hotel.php">「夜宿薰衣草森林」</a>，可享全面<span class="c_pink_t">85</span>折優惠喔！</h4>';
+            output = '<h4 class="m-0">出示「森林體驗」票券至「森林咖啡館」用餐，享有<span class="c_pink_t">9</span> 折優惠喔！</h4>';
         } else if (!empty(data['event']) && !empty(data['hotel']) && empty(data['restaurant'])) { 
             output = '<h4 class="m-0">目前折扣為<span class="c_pink_t">85</span>折；出示房卡至「森林咖啡館」用餐，也享有<span class="c_pink_t">85</span>折優惠喔！</h4>';
         } 
@@ -310,6 +273,7 @@ function fillTable(){
                 </tr>`;
             $('#event_table tbody').append(tr);
         });
+
         data['restaurant'].forEach(function(elem){
             tr = `<tr class="text-center" data-sid="${elem['id']}">
                                     <td>${elem['order_date']}</td>
@@ -321,6 +285,7 @@ function fillTable(){
                                 </tr>`;
             $('#restaurant_table tbody').append(tr);
         });
+
         data['hotel'].forEach(function(elem){
             tr = `<tr class="text-center" data-sid="${elem['id'] }">
                                     <td>${elem['name_zh'] }</br>${elem['name_en'] }</td>
@@ -335,6 +300,8 @@ function fillTable(){
          $("#order_id").text( data['order']['order_id']);
          $(".originalPrice").text( dallorCommas(data['order']['original_price']));
          $(".discountPrice").text( dallorCommas(data['order']['discount']));
+         $(".couponPrice").text( dallorCommas(data['order']['coupon']));
+         $(".ShippingFee").text( dallorCommas(data['order']['shipping_fee']));
          $(".totalPrice").text( dallorCommas(data['order']['price']));
          $("#fullname").html(data['order']['fullname']);
          $("#mobile").html( data['order']['mobile']);
@@ -343,13 +310,32 @@ function fillTable(){
          $("#district").html(data['order']['district']);
          $("#address").html(data['order']['address']);
          $("#status").html("" +  data['order']['status']);
+         $("#payment_method").text(data['order']['payment_method']);
+         $("#shipment").text(data['shipment']['name']);
+         $("#shipmentNote ").text(data['shipment']['note']);
 
     }, 'json').fail(function(e){
-        console.log("error");
-        console.log(e.responseText);
     });
 
 }
+</script>
+<script>
+        function readShipment(){
+        $.get('<?= WEB_API ?>/cart-api.php', {
+            type: 'shipment',
+            action: 'readAll',
+        },function(data) {
+            data.forEach(function(elem){
+                outputTrack = `<li><a href="${elem['trackweb']}" target="_blank"><img src="./images/icon/arrow_g_r.svg" alt="">${elem['name']}</a></li>`;
+                $("#shipmentTrack ul").append(outputTrack);
+            })
+            $("input[type='radio'][name='shipment']").change(function(){
+                calPrices();
+            });
+        }, 'json')
+    }
+    readShipment();
+
 </script>
 
 <?php include __DIR__ . '/parts/html-foot.php'; ?>

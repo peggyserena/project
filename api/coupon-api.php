@@ -71,13 +71,19 @@ switch ($action) {
         break;
     case 'balance':
         $user_id = $user['id'];
+        $result['data'] = [];
 
-        // 資料
-        $sql = "SELECT sum(c.balance) as 'sum' FROM `coupon` as c 
-        JOIN `coupon_category` as cc ON c.`cat_id` = cc.`id` WHERE `user_id` = $user_id AND NOW() BETWEEN c.start_date AND c.end_date";
+        // 期間可使用餘額
+        $sql = "SELECT sum(c.balance) as 'sum' FROM `coupon` as c WHERE `user_id` = $user_id AND NOW() BETWEEN c.start_date AND c.end_date";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([]);
-        $result['data'] = $stmt->fetch();
+        $result['data']['couponBalance'] = $stmt->fetch()['sum'];
+
+        // 總餘額
+        $sql = "SELECT sum(c.balance) as 'sum' FROM `coupon` as c WHERE `user_id` = $user_id AND c.end_date >= NOW()";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([]);
+        $result['data']['couponTotal'] = $stmt->fetch()['sum'];
         break;
     case 'add':
         if (!empty($staff)){

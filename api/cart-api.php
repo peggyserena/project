@@ -175,26 +175,21 @@ switch ($type) {
             case 'add':
                 if (!empty($id)) {
                     if ($qty > 0) {
-                        $key = search_nested_array('id', $id, $_SESSION['cart']['hotel']);
-                        if ($key >= 0){
-                            $sql_count = "SELECT SUM(quantity) as order_quantity FROM `order_hotel` WHERE hotel_id=$id AND order_datetime = '$order_date'  GROUP BY hotel_id";
-                            $result = $pdo->query($sql_count)->fetch();
-                            $order_quantity = 0;
-                            if (array_key_exists('order_quantity', $result)){
-                                $order_quantity = $result['order_quantity'];
-                            }
-    
-                            // 如果是新加入的商品
-                            $sql = "SELECT * FROM `hotel` WHERE id=$id";
-                            $row = $pdo->query($sql)->fetch();
-    
-                            if (!empty($row)) {
-                                $row['quantity'] = $qty;  // 把數量修正成訂購的數量
-                                $row['people_num'] = $people_num;  // 把人數加入
-                                $row['order_date'] = $order_date;  // 把日期加入
-                                $row['order_quantity'] = $order_quantity;  // 把下單數量加入
-                                array_push($_SESSION['cart']['hotel'], $row); // 放到購物車裡
-                            }
+                        $sql_count = "SELECT SUM(quantity) as order_quantity FROM `order_hotel` WHERE hotel_id=$id AND order_datetime = '$order_date'  GROUP BY hotel_id";
+                        $result = $pdo->query($sql_count)->fetch();
+                        $order_quantity = 0;
+                        $order_quantity = $result['order_quantity'];
+
+                        // 如果是新加入的商品
+                        $sql = "SELECT * FROM `hotel` WHERE id=$id";
+                        $row = $pdo->query($sql)->fetch();
+
+                        if (!empty($row)) {
+                            $row['quantity'] = $qty;  // 把數量修正成訂購的數量
+                            $row['people_num'] = $people_num;  // 把人數加入
+                            $row['order_date'] = $order_date;  // 把日期加入
+                            $row['order_quantity'] = $order_quantity;  // 把下單數量加入
+                            array_push($_SESSION['cart']['hotel'], $row); // 放到購物車裡
                         }
                     } else {
                         unset($_SESSION['cart']['hotel'][$key]); // 移除該項商品
@@ -214,6 +209,13 @@ switch ($type) {
         switch($action){
             case "read":
                 $output = $_SESSION['cart'];
+                break;
+        }
+    case "shipment":   
+        switch($action){
+            case "readAll":
+                $sql = "SELECT * FROM `shipment`";
+                $output = $pdo->query($sql)->fetchAll();
                 break;
         }
 }

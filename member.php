@@ -159,6 +159,60 @@ $r = $pdo->query($sql)->fetch();
 
                         <div id="coupon" class="tab-pane fade">
                             <div class=" text-center">
+                                <div class=" " id="searchBar" >
+                                    <form>
+                                        <ul class="list-unstyled  row justify-content-center align-items-center p-2 m-0 ">
+                                            <li class=" ">
+                                                <select id="select_cat_id" name='cat_id'>
+                                                    <option disabled hidden value="">活動類別</option>
+                                                    <option value="all">全部</option>
+                                                </select>
+                                            </li>
+                                            <li class="">
+
+                                                <select id="select_year" name="year">
+                                                    <option disabled hidden value="">年份</option>
+                                                    <option value="all">全部</option>
+                                                    <option value=""></option>
+                                                    <option value=""></option>
+                                                    <option value=""></option>
+                                                    <option value=""></option>
+                                                    <option value=""></option>
+                                                    <option value=""></option>
+                                                    <option value=""></option>
+                                                </select>
+                                            </li>
+                                            <li class="">
+                                                <select id="select_month" name="month">
+                                                    <option disabled hidden selected value="">月份</option>
+                                                    <option value="all">全部</option>
+                                                    <option value=""></option>
+                                                    <option value=""></option>
+                                                    <option value=""></option>
+                                                    <option value=""></option>
+                                                    <option value=""></option>
+                                                    <option value=""></option>
+                                                    <option value=""></option>
+                                                    <option value=""></option>
+                                                    <option value=""></option>
+                                                    <option value=""></option>
+                                                    <option value=""></option>
+                                                    <option value=""></option>
+                                                </select>
+                                            </li>
+                                            <li class="bg-green">
+                                                <select id="select_order" name="order">
+                                                    <option disabled hidden selected value="">排序</option>
+                                                    <option value="1" <?= $_GET['order'] ?? "" == 1 ? "selected" : "" ?>>暢銷度由高至低</option>
+                                                    <option value="2" <?= $_GET['order'] ?? "" == 2 ? "selected" : "" ?>>價錢由低至高</option>
+                                                    <option value="3" <?= $_GET['order'] ?? "" == 3 ? "selected" : "" ?>>價錢由高至低</option>
+                                                </select>
+                                            </li>
+                                            <li><button type="button" class="custom-btn btn-4 m-0 p-0" style="width:3rem; " onclick="readData()">送出</button></li>
+                                        </ul>
+                                    </form>
+                                </div>
+
                                 <table class="table table-striped table-bordered">
                                     <thead>
                                         <tr class="b-green rot-135 text-white">
@@ -294,6 +348,7 @@ $r = $pdo->query($sql)->fetch();
 
     <?php include __DIR__ . '/parts/scripts.php'; ?>
 
+    <!------------------------------------- trade record ------------------------------------->
 
     <script>
         const quantity = $('select.quantity');
@@ -350,58 +405,9 @@ $r = $pdo->query($sql)->fetch();
                 calPrices();
             }, 'json');
         };
-        function getWishList(){
-            $.post('<?= WEB_API ?>/wishList-api.php', {
-                action: 'read'
-            }, function(data){
-                
-                data.forEach(function(elem){
-                    var output = "";
-                    var type_map = {restaurant: "森林咖啡館", hd: "森林體驗", hotel: "夜宿薰衣草森林"};
-                    var goToWhere = `${elem['type']}.php`;
-                    switch (elem['type']){
-                        case 'hd':
-                            goToWhere += `#hd_${elem['id']}`;
-                            break;
-                        case "hotel":
-                            goToWhere += `#reservation`;
-                            break;
-                        case "restaurant":
-                            goToWhere += `#bookSeat`;
-                            break;
-                    }
-                    output += "<td>" + type_map[elem['type']] + "</td>";
-                    output += "<td>" + elem['name'] + "</td>";
-                    output += "<td>" + elem['date'] + "/" + elem['time'].slice(0, 5) + "</td>";
-                    output += "<td>" + dallorCommas(elem['price']) + "</td>";
-                    output += `<td><a href="${goToWhere}"><i class="fas fa-trash-alt"></i></a></td>`;
-                    output += '<td><a href="javascript:" onclick="deleteWishList(hd,' + elem['wish_list_id'] + ')"><i class="fas fa-trash-alt"></i></a></td>';
-                    output = '<tr>' + output + '</tr>';
-                    $("#wishList table tbody").append(output);
-                    console.log(output);
-                });
-            }, 'json')
-        }
-        function deleteWishList(hd, id){
-            let t = $(hd.currentTarget);
-            $.post('<?= WEB_API ?>/wishList-api.php', {
-                action: 'delete',
-                id: id,
-            }, function(data){
-                
-                t.closest('tr').remove();
-            }, 'json').fail(function(e){
-            })
-        }
-        function deleteWishListAll(){
-            $.post('<?= WEB_API ?>/wishList-api.php', {
-                action: 'deleteAll',
-            }, function(data){
-                location.reload();
-            }, 'json').fail(function(e){
-            })
-        }
 
+    </script>
+    <script>
         function readOrder(){
             var start_date = $("#start_date").val();
             var end_date = $("#end_date").val();
@@ -472,28 +478,6 @@ $r = $pdo->query($sql)->fetch();
             helpdeskRecord();
         });
         
-        console.log(location.search.replace('?tab=', ''))
-
-        const nowTab = location.search.replace('?tab=', '');
-        if (nowTab === '') {
-            $('#myTab li:eq(0) a').tab('show');
-        }
-        if (nowTab === 'tradeRecord') {
-            $('#myTab li:eq(1) a').tab('show');
-        }
-        if (nowTab === 'wishList') {
-            $('#myTab li:eq(2) a').tab('show');
-        }
-
-        if (nowTab === 'coupon') {
-            $('#myTab li:eq(3) a').tab('show');
-        }
-        if (nowTab === 'helpdeskRecord') {
-            $('#myTab li:eq(4) a').tab('show');
-        }
-        if (nowTab === 'setting') {
-            $('#myTab li:eq(5) a').tab('show');
-        }
 
 
 
@@ -506,9 +490,72 @@ $r = $pdo->query($sql)->fetch();
             return formatted_date;
         }
 
+
     </script>
+
+
+    <!------------------------------------- wish list ------------------------------------->
+
     <script>
-            //coupon
+
+        function getWishList(){
+            $.post('<?= WEB_API ?>/wishList-api.php', {
+                action: 'read'
+            }, function(data){
+                
+                data.forEach(function(elem){
+                    var output = "";
+                    var type_map = {restaurant: "森林咖啡館", hd: "森林體驗", hotel: "夜宿薰衣草森林"};
+                    var goToWhere = `${elem['type']}.php`;
+                    switch (elem['type']){
+                        case 'hd':
+                            goToWhere += `#hd_${elem['id']}`;
+                            break;
+                        case "hotel":
+                            goToWhere += `#reservation`;
+                            break;
+                        case "restaurant":
+                            goToWhere += `#bookSeat`;
+                            break;
+                    }
+                    output += "<td>" + type_map[elem['type']] + "</td>";
+                    output += "<td>" + elem['name'] + "</td>";
+                    output += "<td>" + elem['date'] + "/" + elem['time'].slice(0, 5) + "</td>";
+                    output += "<td>" + dallorCommas(elem['price']) + "</td>";
+                    output += `<td><a href="${goToWhere}"><i class="fas fa-trash-alt"></i></a></td>`;
+                    output += '<td><a href="javascript:" onclick="deleteWishList(hd,' + elem['wish_list_id'] + ')"><i class="fas fa-trash-alt"></i></a></td>';
+                    output = '<tr>' + output + '</tr>';
+                    $("#wishList table tbody").append(output);
+                    console.log(output);
+                });
+            }, 'json')
+        }
+        function deleteWishList(hd, id){
+            let t = $(hd.currentTarget);
+            $.post('<?= WEB_API ?>/wishList-api.php', {
+                action: 'delete',
+                id: id,
+            }, function(data){
+                
+                t.closest('tr').remove();
+            }, 'json').fail(function(e){
+            })
+        }
+        function deleteWishListAll(){
+            $.post('<?= WEB_API ?>/wishList-api.php', {
+                action: 'deleteAll',
+            }, function(data){
+                location.reload();
+            }, 'json').fail(function(e){
+            })
+        }
+
+    </script>
+
+
+    <!------------------------------------- coupon ------------------------------------->
+
+    <script>
             function coupon(){
             $.post('<?= WEB_API ?>/coupon-api.php', {
                 action: 'readAll',
@@ -525,7 +572,7 @@ $r = $pdo->query($sql)->fetch();
                 $("#coupon table tbody").html("");
                 coupon_list.forEach(function(coupon, index){
                     var output = `<tr>
-                            <td class="bg-dark text-white" style="border: #454d55 1px solid ;">${index + 1}</td>
+                            <td class="text-secondary"  ;">${index + 1}</td>
                             <td>${coupon['cc_name']}</td>
                             <td>${coupon['price']}</td>
                             <td>${coupon['start_date']} ～ ${coupon['end_date']}</td>
@@ -541,8 +588,11 @@ $r = $pdo->query($sql)->fetch();
 
 
     </script>
+
+
+    <!------------------------------------- helpdesk ------------------------------------->
+
     <script>
-        // helpdesk
         $.post('<?= WEB_API ?>/helpdesk-api.php', {
             'action': 'readCat',
         }, function(data){
@@ -584,7 +634,7 @@ $r = $pdo->query($sql)->fetch();
                     
                     console.log(hdi_output_members);
                     imgList_staff.forEach(function(hdi){
-                        hdi_output_staff += `<div class="text-center fancybox p-1 m-0"> 
+                        hdi_output_staff += `<div class="text-center fancybox p-1 m-0" > 
                                             <a id="fancybox" href="${hdi['path']}"  data-fancybox='F_box1' data-caption= ''>
                                             <img width="120px" src="${hdi['path']}" alt=''  >
                                             </a>
@@ -616,7 +666,7 @@ $r = $pdo->query($sql)->fetch();
                                     <div class="col-md-12  py-2">信件內容：
                                     <p>${ hd["content"] }</ｐ></div>
                                     <div class="reply_content col-md-12  py-2" style="background: #dcedd5">回覆內容：
-                                    <p>${ hd["reply"] }</p></div>
+                                    <pre><p>${ hd["reply"] }</p></pre></div>
                                     <div class="d-flex" style="flex-wrap: wrap;">${hdi_output_staff}</div>
                                   </div>`;
                     $(".hdItem").append(output);
@@ -629,6 +679,8 @@ $r = $pdo->query($sql)->fetch();
             });
         }
     </script>
+
+    <!------------------------------------- search bar 設定 ------------------------------------->
     <script>
         var date = new Date();
         var year = date.getFullYear() - 3;
@@ -667,6 +719,126 @@ $r = $pdo->query($sql)->fetch();
             }
         });
         $("#helpdesk_select_id").val(selectedId);
+    </script>
+
+    <!------------------------------------- member ------------------------------------->
+    <script>
+        var date = new Date();
+        var year = date.getFullYear() - 3;
+        var month = date.getMonth() + 1;
+        var selectedMonth = "<?= $_GET['month'] ?? "" ?>";
+        var selectedYear = "<?= $_GET['year'] ?? "" ?>";
+        var selectedId = "<?= $_GET['cat_id'] ?? "" ?>";
+        var selectedOrder = "<?= $_GET['order'] ?? "" ?>";
+        $("#select_month option").each(function(ind, elem) {
+            if (ind > 1) {
+                elem.text = month;
+                elem.value = month;
+                month++;
+            }
+            if (month > 12) {
+                month = 1;
+            }
+            if (elem.value === selectedMonth){
+                elem.selected = true;
+            }
+        });
+        $("#select_year option").each(function(ind, elem) {
+            if (ind == 2){
+                elem.text = "之前";
+                elem.value = `~${year}`;
+            }else if (ind > 2) {
+                elem.text = year;
+                elem.value = year;
+                year++;
+            }
+            if (elem.value === selectedYear){
+                elem.selected = true;
+            }
+        });
+        $("#select_id").val(selectedId);
+        $("#select_order").val(selectedOrder);
+    </script>
+    <script>
+            function readCat(){
+            $.post('api/coupon-api.php', {
+                action: 'readCat',
+            }, function(result){
+                
+                var selected_cat_id = parseInt("<?= $_GET['cat_id'] ?? ''?>");
+                result.forEach(function(elem){
+                    output = `<option value='${elem['id']}' ${selected_cat_id == elem['id'] ? "selected" : ""}>${elem['name']}</option>`;
+                    $("#select_cat_id").append(output);
+                })
+                readData();
+            }, 'json').fail(function(data){
+            })
+        }
+        function readData(){
+            $.post('api/coupon-api.php', {
+                action: 'readAll',
+                year: $("#select_year").val(),
+                month: $("#select_month").val(),
+                time: $("#select_time").val(),
+                cat_id: $("#select_cat_id").val(),
+                order: $("#select_order").val(),
+            }, function(result){
+                console.log("readData");
+                console.log(result);
+                $("#result tbody").html($($(".coupon_data")[0]));
+                data = result['data'];
+                var count = 0;
+                for (key in data){
+                    count++;
+                    elem = data[key];
+                    output = $($(".coupon_data")[0]).clone();
+                    output.show();
+                    $("#result tbody").append(output);
+                    elem['img'] = result['img'][elem['id']];
+                    elem['quantity_map'] = result['quantity_map'];
+                    elem['count_num'] = count;
+                    console.log(elem);
+                    fillData(elem, output);
+                }
+                
+            }, 'json').fail(function(data){
+                console.log('error');
+                console.log(data);
+            })
+        }
+        $(document).ready(function() {
+            readCat();
+        });
+
+
+
+    </script>
+    <!------------------------------------- 進入各tab內頁 ------------------------------------->
+
+    <script>
+        console.log(location.search.replace('?tab=', ''))
+
+        const nowTab = location.search.replace('?tab=', '');
+        if (nowTab === '') {
+            $('#myTab li:eq(0) a').tab('show');
+        }
+        if (nowTab === 'tradeRecord') {
+            $('#myTab li:eq(1) a').tab('show');
+        }
+        if (nowTab === 'wishList') {
+            $('#myTab li:eq(2) a').tab('show');
+        }
+
+        if (nowTab === 'coupon') {
+            $('#myTab li:eq(3) a').tab('show');
+        }
+        if (nowTab === 'helpdeskRecord') {
+            $('#myTab li:eq(4) a').tab('show');
+        }
+        if (nowTab === 'setting') {
+            $('#myTab li:eq(5) a').tab('show');
+        }
+
     </script>
 
     <?php include __DIR__ . '/parts/html-foot.php'; ?>

@@ -222,10 +222,10 @@ $(document).ready(function(){
         
     }
     $('input[type="radio"]').click(updateFormContainer);
-    $('input[type="radio"]').click(isCompletedPayWayData);
+    $('input[type="radio"]').click(isCompletedPaymentMethodData);
     updateFormContainer();
     isCompletedUserData();
-    isCompletedPayWayData();
+    isCompletedPaymentMethodData();
     fillTable();
 });
 function isCompletedUserData(){
@@ -248,14 +248,14 @@ function isCompletedUserData(){
     });
 }
 
-function isCompletedPayWayData(){
-    var checked_count = $("input[name='payway']:checked").length + $("input[name='name']:checked").length;
+function isCompletedPaymentMethodData(){
+    var checked_count = $("input[name='payment_method']:checked").length + $("input[name='name']:checked").length;
     if (checked_count == 2){
         $("#checkOutBtn").removeClass("disabled");
-        $("#warning_msg_payway").hide();
+        $("#warning_msg_payment_method").hide();
     }else{
         $("#checkOutBtn").addClass("disabled");
-        $("#warning_msg_payway").show();
+        $("#warning_msg_payment_method").show();
     }
 }
 

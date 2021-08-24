@@ -68,7 +68,7 @@ $pageName = 'staff_member_info_search';
                                 <option value="">全部</option>
                                 <option value="先生">先生</option>
                                 <option value="小姐">小姐</option>
-                                <option value="中性">不填</option>
+                                <option value="不表明">不表明</option>
                             </select>
                         </li>
                         <li class="">
