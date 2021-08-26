@@ -3,14 +3,6 @@
 $title = '訂單出貨管理';
 $pageName = 'staff_order_search';
 
-if(
-    ! isset($_SESSION['staff'])
-  ){
-  header('Location: staff_login.php');
-  exit;
-  }
-
-
 ?>
 
 
@@ -136,7 +128,7 @@ if(
                         <td class="order_date text-center">${elem['mobile']}</td>
                         <td class="order_price text-right">$ ${dallorCommas(elem['price'])}</td>
                         <td class="order_status text-center">${elem['status']}</td>
-                        <td class="order_shipment_status text-center"><a href="staff_order_cart-confirm.php?id=${elem['id']}">${elem['shipment_status']}</a></td>
+                        <td class="order_shipment_status text-center"><a href="staff_order_cart-confirm.php?id=${elem['order_id']}">${elem['shipment_status']}</a></td>
                         <td class="order_cancel text-center"><a href="" onclick="orderCancel(${elem['order_id']})">取消</a></td>
                     </tr>`;
                 $("#tradeRecord table tbody").append(tr);

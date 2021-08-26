@@ -3,16 +3,9 @@
 $title = '出貨管理';
 $pageName = 'staff_cart-confirm';
 
-if(
-    ! isset($_SESSION['staff'])
-  ){
-  header('Location: staff_login.php');
-  exit;
-  }
-
 $sum = 0;
 ?>
-<?php include __DIR__ . '/parts/html-head.php'; ?>
+<?php include __DIR__ . '/parts/staff_html-head.php'; ?>
 
 <style>
     @media print{
@@ -52,6 +45,8 @@ $sum = 0;
     margin: 0.5rem 0.3rem 0.5rem 0rem;
 }
 </style>
+
+<?php include "parts/modal.php"?>
 <?php include __DIR__ . '/parts/navbar.php'; ?>
 <div class="container mt-5 mb-5  ">
     <div class="card  row mb-5 con_01" >
@@ -154,7 +149,7 @@ $sum = 0;
             <div class="orderStatus  " style="padding: 0 15px;">
                 <div class="d-flex"> 
                     <h4>訂單狀態：<small id="status"></small></h4> &emsp;
-                    <h4>付款方式：<small id="payment_method"></small></h4>
+                    <h4>付款方式：<small class="payment_method"></small></h4>
                 </div>
                 <hr>
                 <div>
@@ -196,21 +191,28 @@ $sum = 0;
         <div class="row card con_01  mt-5">
             <h3 class="title p-2 b-green rot-135">出貨管理</h3>
             <div style="padding: 15px;">
-                <h4>物流編號：<input type="text" name="shipment_num" class="shipment_num" ><button type="button" class="custom-btn btn-4 text-center m-3 c_1" onclick="shipmentConfirm()"><small>出貨確認</small></button></h4>
-                <h4>現場取貨付款：
-                    <input id="cd" type="radio" name="payment_method" value="信用卡" /><label for="cd">信用卡</label>
-                    <input id="cod" type="radio" name="payment_method" value="付現" /><label for="cod">付現</label>
-                    <img src="./images/icon/arrow_g_r.svg" alt="" style="  width: auto;height: 12.8px; margin: 0.5rem 0 0.5rem 0.3rem;">
-                    <label for="cash">收取金額：</label><input type="number"><!-- 確認輸入金額=銷售金額 -->
-                    <button type="button" class="custom-btn btn-4 text-center m-3 c_1" onclick="shipmentConfirm()"><small>出貨確認</small></button>
-                </h4>
-                
-                    <!-- <div class="shipmentManageBox" style="display: none;">
-                            <h4 class="">出貨狀態：small class=""><span class="shipment_status"></span></small></h4>
-                            <h4>物流編號：<small><span class="shipment_num"></span></small></h4>
-                            <h4 class="">出貨時間：<span class="shipment_datetime"></span></h4>
-                        </div> -->
-
+                <div id="inputContentBox" style="display: none;">
+                    <form onsubmit="shipmentConfirm(); return false;">
+                        <h4>物流編號：<input type="text" name="shipment_num" class="shipment_num" required><button type="submit" class="custom-btn btn-4 text-center m-3 c_1 shipmentConfirm"><small>出貨確認</small></button></h4>
+                    </form>
+                    
+                    <form onsubmit="shipmentConfirm(); return false;">
+                        <h4>現場取貨付款：
+                            <input id="cd" type="radio" name="payment_method" value="信用卡" required/><label for="cd">信用卡</label>
+                            <input id="cod" type="radio" name="payment_method" value="付現" required/><label for="cod">付現</label>
+                            <img src="./images/icon/arrow_g_r.svg" alt="" style="  width: auto;height: 12.8px; margin: 0.5rem 0 0.5rem 0.3rem;">
+                            <label for="cash">收取金額：</label><input type="number" id="receiveMoney" required><!-- 確認輸入金額=銷售金額 -->
+                            <button type="submit" class="custom-btn btn-4 text-center m-3 c_1 shipmentConfirm"><small>出貨確認</small></button>
+                        </h4>
+                    </form>
+                </div>
+                <div id="textContentBox" style="display: none;">
+                    <h4>付款方式：<span class="payment_method"></span></h4>
+                    <h4 id="shipment_num_h4">物流編號：<span class="shipment_num"></span></h4>
+                    <h4><span id="pickup"></span></h4>
+                    <h4 class="">出貨狀態：<span class="shipment_status"></span></h4>
+                    <h4 class="">出貨時間：<span class="shipment_datetime"></span></h4>
+                </div>
                 <h4>貨件追蹤查詢：<span style="font-size: 1rem;"class="track" id="shipmentTrack">
                 </span></h4>
             </div>
@@ -233,7 +235,7 @@ function fillTable(){
     var url = new URL(url_string);
     var id = url.searchParams.get("id");
     $.post('<?= WEB_API ?>/order-api.php', {
-        'action': 'readOne',
+        'action': 'readOneStaff',
         id
     }, function(data){
         var type_list = ['event', 'hotel', 'restaurant'];
@@ -315,13 +317,23 @@ function fillTable(){
          $("#district").html(data['order']['district']);
          $("#address").html(data['order']['address']);
          $("#status").html("" +  data['order']['status']);
-         $("#payment_method").text(data['order']['payment_method']);
+         $(".payment_method").text(data['order']['payment_method']);
          $("#shipment").text(data['shipment']['name']);
          $("#shipmentNote ").text(data['shipment']['note']);
          $(".shipment_status ").text(data['order']['shipment_status']);
          $(".shipment_num ").text(data['order']['shipment_num']);
          $(".shipment_datetime ").text(data['order']['shipment_datetime']);
-
+         $("#receiveMoney").attr("max", data['order']['price']);
+         $("#receiveMoney").attr("min", data['order']['price']);
+         if (data['order']['shipment_status'] === "已出貨"){
+            $("#textContentBox").show();
+         }else{
+            $("#inputContentBox").show();
+         }
+         if (data['order']['shipment_num'] === ""){
+            $("#shipment_num_h4").hide();
+            $("#pickup").text("現場付款取貨");
+         }
     }, 'json').fail(function(e){
     });
 
@@ -347,25 +359,19 @@ function fillTable(){
 </script>
 <script>
         const shipmentConfirm = function() {
-        $.post('<?= WEB_API ?>/order-api.php', {
-                action: 'add',
-                shipment_num: $("#shipment_num").val(),
+        $.post('<?= WEB_API ?>/staff_order-api.php', {
+                action: 'shipment',
+                order_id: <?= $_GET['id'] ?>,
+                shipment_num: $("[name='shipment_num']").val(),
                 payment_method: $("input[type='radio'][name='payment_method']:checked").val(),
             }, function(data) {
-                // location.reload();  // 刷頁面
-                if ($('tbody>tr').length < 1) {
-                    // location.reload(); // 重新載入
+                if (data[0] === "success"){
+                    modal_init();
+                    insertPage("#modal_img", "animation/animation_success.html");
+                    insertText("#modal_content", "確認出貨");
+                    $("#modal_alert").modal("show");
+                    setTimeout(function(){ location.href = "staff_order_search.php"}, 2000);
                 }
-                if ("info" in data){
-                    alert(data["info"]);
-                    if ("redirect" in data){
-                        location.href = data['redirect'];
-                    }
-                } else{
-                    location.href = 'staff_order_cart-confirm.php?id=' + data[0];
-                }
-
-                
             }, 'json')
             .fail(function(e) {
                 console.log("error-checkoutCart");
@@ -373,7 +379,17 @@ function fillTable(){
                 alert("error");
             });
     };
-
+    function checkReceiveMoney(){
+        value = $("#receiveMoney").val();
+        max = $("#receiveMoney").attr("max");
+        console.log([value , max]);
+        if (value !== max){
+            $(".shipmentConfirm").prop("disabled", "addAttribute");
+        }else{
+            $(".shipmentConfirm").prop("disabled", "");
+        }
+    }
+    $("#receiveMoney").change(checkReceiveMoney);
 </script>
 <script language="javascript"> 
     function printdiv(printpage){ 

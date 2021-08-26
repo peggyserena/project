@@ -3,17 +3,6 @@
 $title = '會員中心';
 $pageName = 'member';
 
-if(
-    ! isset($_SESSION['user'])
-){
-header('Location: login.php');
-exit;
-}
-
-
-$sql = "SELECT * FROM members WHERE id=" . $_SESSION['user']['id'];
-$r = $pdo->query($sql)->fetch();
-
 // 
 // 二維陣列
 // [
@@ -36,6 +25,11 @@ $r = $pdo->query($sql)->fetch();
 
 
 <?php include __DIR__ . '/parts/html-head.php'; ?>
+<?php
+$sql = "SELECT * FROM members WHERE id=" . $_SESSION['user']['id'];
+$r = $pdo->query($sql)->fetch();
+
+?>
 <link rel="stylesheet" href="./css/member.css">
 <style>
     

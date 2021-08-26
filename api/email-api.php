@@ -166,7 +166,7 @@ switch ($action){
             $mail->Subject = '客服回答';
             $mail->Body    = " <div style='margin: 2rem 0 2rem 0 ;'>
             
-                                    <p>親愛的 ".$result['user']['fullname'].$result['user']['gender']." 您好～感謝您的來信與建議，以下是我們真誠地回覆～</p>
+                                    <p>親愛的 ".$result['user']['fullname'].getFormattedName($result['user'])." 您好～感謝您的來信與建議，以下是我們真誠地回覆～</p>
                                     <table style='box-shadow: 0px 0px 15px #666e9c; border: 1px solid #adda9a;'>
                                         <tr>
                                             <td style=' background-color: #adda9a;' >日期</td>
@@ -279,5 +279,13 @@ function beforeSendMail(){
     $mail->CharSet = "UTF-8"; 
     //Recipients
     $mail->setFrom('lavenderforestcafe@gmail.com', '薰衣草森林');
+}
+
+function getFormattedName($user){
+    $gender = $user['gender'];
+    if ($gender != "先生" && $gender != "小姐"){
+        $gender = "顧客";
+    }
+    return $user['fullname'].$gender;
 }
 echo json_encode($result, JSON_UNESCAPED_UNICODE);

@@ -35,7 +35,6 @@ switch ($action){
     case 'add':
         $payment_method = $_POST['payment_method'];
         $shipment_id = $_POST['shipment_id'];
-        $shipment_num = $_POST['shipment_num'];
         $couponInputValue = $_POST['coupon'];
         $cart = $_SESSION['cart'];
         $user_id = $_SESSION['user']['id'];
@@ -71,7 +70,7 @@ switch ($action){
         if (!$flag) break;
         foreach($cart['hotel'] as $key => $cart_item){
             // $cart_item['quantity'] <= limitNum - order_quantity
-            $sql = "SELECT (h.quantity_limit - IFNULL(SUM(oh.quantity), 0)) as available_num, h.people_num_limit FROM `hotel` as h LEFT JOIN `order_hotel` as oh ON h.id = oh.hotel_id AND oh.order_datetime = ? WHERE h.id=? GROUP BY oh.hotel_id";
+            $sql = "SELECT (h.quantity_limit - IFNULL(SUM(oh.quantity), 0)) as available_num, h.people_num_limit FROM `hotel` as h LEFT JOIN `order_hotel` as oh ON h.id = oh.hotel_id AND oh.order_date = ? WHERE h.id=? GROUP BY oh.hotel_id";
             $stmt = $pdo->prepare($sql);
             $stmt->execute([$cart_item['order_date'], $cart_item['id']]);
             $result = $stmt->fetch();
@@ -153,10 +152,16 @@ switch ($action){
         if ($price < 0) break;
         $price += $shipemnt_fee;
 
+        if ($payment_method === '信用卡'){
+            $status = "已付款";
+        }else{
+            $status = "未付款";
+        }
+
         // 新增訂單
-        $sql = "INSERT INTO `sales_order` (`order_id`, `user_id`, `price`, `original_price`, `discount`, `coupon`, `shipment_id`, `shipping_fee`, `payment_method`, `shipment_num`, `status`, `shipment_status`, `create_datetime`) VALUES ('', ?, ?, ?, ?, ?, ?, ?, ?, ?, '已付款', '未出貨', NOW())";
+        $sql = "INSERT INTO `sales_order` (`order_id`, `user_id`, `price`, `original_price`, `discount`, `coupon`, `shipment_id`, `shipping_fee`, `payment_method`, `status`, `shipment_status`, `create_datetime`) VALUES ('', ?, ?, ?, ?, ?, ?, ?, ?, ?, '未出貨', NOW())";
         $stmt = $pdo->prepare($sql);
-        $stmt->execute([$user_id, $price, $original_price, $discount, $couponInputValue, $shipment_id, $shipemnt_fee, $payment_method, $shipment_num]);
+        $stmt->execute([$user_id, $price, $original_price, $discount, $couponInputValue, $shipment_id, $shipemnt_fee, $payment_method, $status]);
         $sales_order_id = $pdo->lastInsertId();
 
         $sql = "UPDATE `sales_order` SET `order_id` = CONCAT(RPAD(REPLACE(SUBSTRING(NOW(), 1, 10), '-', '') , 12 - LENGTH(id), '0'), id) WHERE id = $sales_order_id";
@@ -180,7 +185,7 @@ switch ($action){
                     VALUES (?, ?, ?, ?)";
                     break;
                 case 'hotel':
-                    $sql2 = "INSERT INTO `order_hotel` (`item_id`, `hotel_id`, `price`, `quantity`, `people_num`,`order_datetime`)
+                    $sql2 = "INSERT INTO `order_hotel` (`item_id`, `hotel_id`, `price`, `quantity`, `people_num`,`order_date`)
                     VALUES (?, ?, ?, ?, ?, ?)";
                     break;
             }
@@ -292,7 +297,7 @@ switch ($action){
         $user_id = $_SESSION['user']['id'];
         $id = $_POST['id'];
 
-        $sql_hotel = "SELECT h.name_zh, h.name_en, DATE(oh.order_datetime) as order_date, oh.quantity, oh.people_num, oh.price, oh.quantity * oh.price as sub_total FROM `sales_order` as so 
+        $sql_hotel = "SELECT h.name_zh, h.name_en, DATE(oh.order_date) as order_date, oh.quantity, oh.people_num, oh.price, oh.quantity * oh.price as sub_total FROM `sales_order` as so 
         JOIN `order_item` as oi ON so.id = oi.order_id  
         JOIN `order_hotel` as oh ON oi.id = oh.item_id  
         JOIN `hotel` as h ON oh.hotel_id = h.id  
@@ -346,7 +351,66 @@ switch ($action){
         
         echo json_encode($output, JSON_UNESCAPED_UNICODE);
         break;
-        
+    case 'readOneStaff':
+        if (isset($_SESSION['staff'])){
+            $id = $_POST['id'];
+    
+            $sql_hotel = "SELECT h.name_zh, h.name_en, DATE(oh.order_date) as order_date, oh.quantity, oh.people_num, oh.price, oh.quantity * oh.price as sub_total FROM `sales_order` as so 
+            JOIN `order_item` as oi ON so.id = oi.order_id  
+            JOIN `order_hotel` as oh ON oi.id = oh.item_id  
+            JOIN `hotel` as h ON oh.hotel_id = h.id
+            WHERE so.id = ?";
+    
+            $sql_evnet = "SELECT e.id, e.name, CONCAT(e.date, '/', e.time) as order_datetime, oe.quantity, oe.price, oe.quantity * oe.price as sub_total  FROM `sales_order` as so 
+            JOIN `order_item` as oi ON so.id = oi.order_id  
+            JOIN `order_event` as oe ON oi.id = oe.item_id
+            JOIN `event` as e ON oe.event_id = e.id
+            WHERE so.id = ?";
+    
+            $sql_resturant = "SELECT DATE(_or.order_datetime) as order_date, TIME(_or.order_datetime) as order_time, _or.quantity, GROUP_CONCAT(r.id SEPARATOR '，') as id FROM `sales_order` as so 
+            JOIN `order_item` as oi ON so.id = oi.order_id 
+            JOIN `order_restaurant` as _or ON oi.id = _or.item_id 
+            JOIN `restaurant` as r ON _or.restaurant_id = r.id
+            WHERE so.id = ?
+            group by _or.`item_id`";
+    
+                
+            $sql_sales_order = "SELECT so.*, m.fullname, m.mobile, m.zipcode, m.county, m.district, m.address from `sales_order` as so JOIN `members` as m ON so.user_id = m.id where so.id = ?";
+            
+            $sql_shipemnt = "SELECT * FROM `shipment` where id = ?";
+            
+    
+            $output = [];
+    
+            $stmt = $pdo->prepare($sql_hotel);
+            $stmt->execute([$id]);
+            $result = $stmt->fetchAll();
+            $output['hotel'] = $result;
+    
+            $stmt = $pdo->prepare($sql_evnet);
+            $stmt->execute([$id]);
+            $result = $stmt->fetchAll();
+            $output['event'] = $result;
+    
+            $stmt = $pdo->prepare($sql_resturant);
+            $stmt->execute([$id]);
+            $result = $stmt->fetchAll();
+            $output['restaurant'] = $result;
+    
+            $stmt = $pdo->prepare($sql_sales_order);
+            $stmt->execute([$id]);
+            $result = $stmt->fetch();
+            $output['order'] = $result;
+    
+            $stmt = $pdo->prepare($sql_shipemnt);
+            $stmt->execute([$output['order']['shipment_id']]);
+            $result = $stmt->fetch();
+            $output['shipment'] = $result;
+            
+            echo json_encode($output, JSON_UNESCAPED_UNICODE);
+        }
+        break;
+    
     case 'cancel':
         $user_id = $_SESSION['user']['id'];
         $order_id = $_POST['order_id'];

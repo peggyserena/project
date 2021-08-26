@@ -3,14 +3,6 @@
 $title = '訂單詳情';
 $pageName = 'staff_order_item';
 
-if(
-    ! isset($_SESSION['staff'])
-  ){
-  header('Location: staff_login.php');
-  exit;
-  }
-?>
-
 <?php include __DIR__ . '/parts/staff_html-head.php'; ?>
 
 <style>

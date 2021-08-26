@@ -3,14 +3,6 @@
 $title = '各項種類維護';
 $pageName = 'staff_category_editor';
 
-if(
-  ! isset($_SESSION['staff'])
-){
-header('Location: staff_login.php');
-exit;
-} 
-
-
 ?>
 <?php include __DIR__. '/parts/staff_html-head.php'; ?>
 <style>

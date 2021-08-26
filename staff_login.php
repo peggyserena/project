@@ -113,7 +113,7 @@ $pageName ='staff_login';
             insertText('#modal_content', '登入成功')
             $('#modal_alert').modal('show')
             setTimeout(function () {
-              window.history.back()
+              location.href = "<?= $_SESSION['back'] ?>";
             }, 2000)
             // location.href = './staff_index.php';
           } else {

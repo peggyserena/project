@@ -3,12 +3,6 @@
 $title = '出貨管理';
 $pageName = 'staff_order_shippment';
 
-if(
-    ! isset($_SESSION['staff'])
-  ){
-  header('Location: staff_login.php');
-  exit;
-  }
 ?>
 
 <?php include __DIR__ . '/parts/staff_html-head.php'; ?>

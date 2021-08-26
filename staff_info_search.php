@@ -3,15 +3,6 @@
 $title = '員工資料查詢';
 $pageName = 'staff_info_search';
 
-if(
-  ! isset($_SESSION['staff'])
-){
-header('Location: staff_login.php');
-exit;
-} 
-
-
-
 
 // role類別
 // $sql = "SELECT * FROM `staff_role_category`";

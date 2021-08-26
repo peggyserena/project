@@ -1,4 +1,21 @@
 <!doctype html>
+<?php
+$php_self_arr = explode( "/", $_SERVER['PHP_SELF']); // ['project', 'member.php']
+$request_uri_arr = explode( "/", $_SERVER['REQUEST_URI']); // ['project', 'member.php?tab=wishList']
+$current_path_self = end($php_self_arr); // member.php
+$current_path_uri = end($request_uri_arr); // member.php?tab=wishList
+$needLogin = ["member.php"];
+if(
+    ! isset($_SESSION['user']) &&
+    $current_path_self != 'login.php' &&
+    in_array($current_path_self, $needLogin)
+){
+    
+$_SESSION['back'] = $current_path_uri;
+header('Location: login.php');
+exit;
+}
+?>
 <html lang="en">
 
 <head>

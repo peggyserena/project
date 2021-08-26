@@ -78,7 +78,7 @@ switch ($action){
         }
 
         // 獲取資料
-        $sql = "SELECT * FROM `sales_order` as so 
+        $sql = "SELECT *, so.id as order_id FROM `sales_order` as so 
         LEFT JOIN `members` as m 
         ON so.user_id = m.id
         $stmt_where
@@ -95,7 +95,7 @@ switch ($action){
         $user_id = $_SESSION['user']['id'];
         $id = $_POST['id'];
 
-        $sql_hotel = "SELECT h.name_zh, h.name_en, DATE(oh.order_datetime) as order_date, oh.quantity, oh.people_num, oh.price, oh.quantity * oh.price as sub_total FROM `sales_order` as so 
+        $sql_hotel = "SELECT h.name_zh, h.name_en, DATE(oh.order_date) as order_date, oh.quantity, oh.people_num, oh.price, oh.quantity * oh.price as sub_total FROM `sales_order` as so 
         JOIN `order_item` as oi ON so.id = oi.order_id  
         JOIN `order_hotel` as oh ON oi.id = oh.item_id  
         JOIN `hotel` as h ON oh.hotel_id = h.id  
@@ -169,6 +169,29 @@ switch ($action){
             $stmt->execute([$user_id, $order_id]);
         }else{
             $output = ["info" => "此訂單無法刪除，已超過鑑賞期限7天"];
+        }
+        echo json_encode($output, JSON_UNESCAPED_UNICODE);
+        break;
+    
+
+    case 'shipment':
+        $order_id = $_POST['order_id'];
+        $shipment_num = $_POST['shipment_num'] ?? "";
+        $payment_method = $_POST['payment_method'] ?? "";
+        $output = [];
+
+        // 一定兩者其一為非空值
+        if ($shipment_num == "" xor $payment_method == ""){
+            if ($payment_method == ""){
+                $sql = "UPDATE `sales_order` SET `shipment_num` = ?, `shipment_datetime` = NOW(), `status` = '已付款' , `shipment_status` = '已出貨' WHERE `id` = ?";
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute([$shipment_num, $order_id]);    
+            }else{
+                $sql = "UPDATE `sales_order` SET `payment_method` = ?, `shipment_num` = ?, `shipment_datetime` = NOW(), `status` = '已付款' , `shipment_status` = '已出貨' WHERE `id` = ?";
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute([$payment_method, $shipment_num, $order_id]);
+            }
+            $output = ["success"];
         }
         echo json_encode($output, JSON_UNESCAPED_UNICODE);
         break;

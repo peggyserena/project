@@ -3,13 +3,6 @@
 $title = '薰衣草森林-管理系統';
 $pageName = 'staff_info';
 
-if(
-  ! isset($_SESSION['staff'])
-){
-header('Location: staff_login.php');
-exit;
-}
-
 // 陣列
 // print_r, var_dump
 

@@ -110,7 +110,9 @@ table td img.available {
 table td img.full {
   background-color: #f98f8f;
 }
-
+table td img.temp {
+  background-color: #dcc5ef;
+}
 table > img {
   width: 5rem;
   height: auto;

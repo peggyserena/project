@@ -1,11 +1,17 @@
 <!doctype html>
 <?php
-$request_arr = explode( "/", $_SERVER['REQUEST_URI']);
-$current_path = end($request_arr);
+$php_self_arr = explode( "/", $_SERVER['PHP_SELF']);
+$request_uri_arr = explode( "/", $_SERVER['REQUEST_URI']);
+$current_path_self = end($php_self_arr);
+$current_path_uri = end($request_uri_arr);
+$needLogin = ["member.php"];
 if(
     ! isset($_SESSION['staff']) &&
-    $current_path != 'staff_login.php'
+    $current_path_self != 'staff_login.php' &&
+    in_array($current_path_self, $needLogin)
 ){
+    
+$_SESSION['back'] = $current_path_uri;
 header('Location: staff_login.php');
 exit;
 }
@@ -28,7 +34,10 @@ exit;
     <link rel="stylesheet" href="<?= WEB_ROOT ?>/css/style_cellphone.css">
     <link rel="stylesheet" href="<?= WEB_ROOT ?>/css/staff_style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
-
+    <script>
+        // 讓js也可以存取php的WEB_API變數資料
+        WEB_API = "<?= WEB_API ?>";
+    </script>
 
 </head>
 
