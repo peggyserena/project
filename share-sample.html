@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/bootstrap.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/style_desktop.css">
+    <link rel="stylesheet" href="./css/style_tablet.css">
+    <link rel="stylesheet" href="./css/style_cellphone.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+</head>
+<style>
+
+/* =======================1 ========================= */
+
+    body {
+        background-color: #fcd912;
+    }
+
+    .container {
+
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    }
+
+    .socialShare {
+    height: 80px;
+    width: 80px;
+    transition: all ease 0.5s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    /*for trigger*/
+    }
+    .socialShare .trigger {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    font-size: 1.5rem;
+    display: inline-flex;
+    height: 60px;
+    width: 60px;
+    position: absolute;
+    right: 0;
+    justify-content: center;
+    align-items: center;
+    border-radius: 500px;
+    transition: all ease 0.25s;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.6);
+    }
+    .socialShare .trigger:hover {
+    cursor: pointer;
+    }
+    .socialShare .menu {
+    display: flex;
+    justify-content: space-around;
+    flex-grow: 1;
+    }
+    .socialShare .menu .icon a {
+    display: inline-flex;
+    justify-content: center;
+    align-items: flex-start;
+    text-decoration: none;
+    }
+    .socialShare .menu .icon a i.fa {
+    border-radius: 500px;
+    background-color: #1a1a1a;
+    height: 0px;
+    width: 0px;
+    display: flex;
+    color: #ffffff;
+    justify-content: center;
+    align-items: center;
+    transform: scale(0);
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.6);
+    }
+
+    /*
+    *Active States
+    */
+    .socialShare.active {
+    width: 480px;
+    padding-right: 80px;
+    /** for trigger **/
+    /** trigger end **/
+    /** for menu **/
+    /** menu end **/
+    }
+    .socialShare.active .trigger {
+    background-color: transparent;
+    height: 50px;
+    width: 50px;
+    box-shadow: none;
+    }
+    .socialShare.active .trigger::before, .socialShare.active .trigger::after {
+    content: "";
+    position: absolute;
+    height: 50%;
+    width: 0;
+    border-left: 4px solid #1a1a1a;
+    }
+    .socialShare.active .trigger::before {
+    animation: rotateBefore 1s ease forwards;
+    }
+    .socialShare.active .trigger::after {
+    transform: rotate(-45deg);
+    }
+    .socialShare.active .trigger i.fa {
+    visibility: hidden;
+    }
+    .socialShare.active .menu .icon a i.fa {
+    height: 20px;
+    width: 20px;
+    padding: 0.5rem;
+    animation: blow 0.5s ease forwards;
+    }
+    .socialShare.active .menu .icon:nth-child(4) a i.fa {
+    animation-delay: 0.15s;
+    }
+    .socialShare.active .menu .icon:nth-child(3) a i.fa {
+    animation-delay: 0.3s;
+    }
+    .socialShare.active .menu .icon:nth-child(2) a i.fa {
+    animation-delay: 0.45s;
+    }
+    .socialShare.active .menu .icon:nth-child(1) a i.fa {
+    animation-delay: 0.6s;
+    }
+    .socialShare.active .menu .icon:nth-child(0) a i.fa {
+    animation-delay: 0.75s;
+    }
+
+    @keyframes blow {
+    0% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1.5);
+    }
+    }
+    @keyframes rotateBefore {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(225deg);
+    }
+    }
+
+/* ======================= 2 ========================= */
+    .sm_icons .fa {
+        height: 32px;
+        width: 32px;
+        line-height: 32px;
+        font-size: 24px;
+        display: inline-block;
+        color: #fff;
+        text-align: center;
+        text-decoration: none;
+        margin: 2px 5px;
+        text-rendering: geometricPrecision;
+    }
+    .fa:before {
+        display: block;
+    }
+    .sm_icons.big .fa {
+        height: 48px;
+        width: 48px;
+        line-height: 48px;
+        font-size: 36px;
+    }
+    .share_icons {
+        position: fixed;
+        top: 50%;
+        right: 0;
+        background-color: rgba(0, 0, 0, 0.6);
+        width: 50px;
+        text-align: center;
+        color: #fff;
+        font-weight: bold;
+    }
+    .share_icons .share {
+        display: block;
+        margin: 15px auto;
+    }
+
+    .fa.fa-facebook {
+        background-color: #3b5998;
+    }
+    .fa.fa-twitter {
+        background-color: #00aced;
+    }
+    .fa.fa-google-plus {
+        background-color: #dd4b39;
+    }
+    .fa.fa-linkedin {
+        background-color: #0073b2;
+    }
+    .fa.fa-envelope {
+        background-color: #8a8a8a;
+    }
+    .fa.fa-youtube {
+        background-color: #bb0000;
+    }
+    .fa.fa-instagram {
+        background-color: #3d739c;
+    }
+    .fa.fa-pinterest {
+        background-color: #bd081c;
+    }
+    .fa.fa-rss {
+        background-color: #f86811;
+    }
+    .fa.fa-sitemap {
+        background-color: #d5d6d1;
+    }
+    .fa.fa-android {
+        color: #b9cc55;
+    }
+    .fa.fa-apple {
+        color: #fff;
+    }
+
+
+/* ======================= 3 ========================= */
+
+body {
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+    .social-media-share {
+        position: relative;
+    }
+    .social-media-share button {
+        padding: 0.5em 0;
+        width: 80px;
+        height: 80px;
+        font-size: 2.5em;
+        line-height: 1;
+        color: #fff;
+        border: 0;
+        border-radius: 50%;
+        background-color: transparent;
+        cursor: pointer;
+        outline: none;
+    }
+    .social-media-share button.toggle {
+        position: relative;
+        z-index: 2;
+        background-color: #21d4fd;
+        background-image: linear-gradient(19deg, #21d4fd 0%, #b721ff 100%);
+    }
+    .social-media-share ul {
+        padding: 0;
+        list-style: none;
+    }
+    .social-media-share li {
+        position: absolute;
+        z-index: 1;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        transform-origin: 40px 50%;
+    }
+    .social-media-share li button {
+        position: absolute;
+        left: 0%;
+    }
+    .social-media-share li:nth-child(1) {
+        transform: rotate(0deg);
+    }
+    .social-media-share li:nth-child(2) {
+        transform: rotate(45deg);
+    }
+    .social-media-share li:nth-child(3) {
+        transform: rotate(90deg);
+    }
+    .social-media-share li:nth-child(4) {
+        transform: rotate(135deg);
+    }
+    .social-media-share li:nth-child(5) {
+        transform: rotate(180deg);
+    }
+    .social-media-share li:nth-child(6) {
+        transform: rotate(225deg);
+    }
+    .social-media-share li:nth-child(7) {
+        transform: rotate(270deg);
+    }
+    .social-media-share li:nth-child(8) {
+        transform: rotate(315deg);
+    }
+    .social-media-share li:nth-child(1) button {
+        transform: rotate(0deg) scale(0.5);
+        background-color: #3b5999;
+    }
+    .social-media-share li:nth-child(2) button {
+        transform: rotate(-45deg) scale(0.5);
+        background-color: #55acee;
+    }
+    .social-media-share li:nth-child(3) button {
+        transform: rotate(-90deg) scale(0.5);
+        background-color: #0077b5;
+    }
+    .social-media-share li:nth-child(4) button {
+        transform: rotate(-135deg) scale(0.5);
+        background-color: #34465d;
+    }
+    .social-media-share li:nth-child(5) button {
+        transform: rotate(-180deg) scale(0.5);
+        background-color: #dd4b39;
+    }
+    .social-media-share li:nth-child(6) button {
+        transform: rotate(-225deg) scale(0.5);
+        background-color: #bd081c;
+    }
+    .social-media-share li:nth-child(7) button {
+        transform: rotate(-270deg) scale(0.5);
+        background-color: #cd201f;
+    }
+    .social-media-share li:nth-child(8) button {
+        transform: rotate(-315deg) scale(0.5);
+        background-color: #e4405f;
+    }
+
+
+</style>
+<body>
+    <div class="container">
+        <div class="socialShare">
+    
+          <div class="menu">
+            <div class="icon">
+              <a href="#">
+                <i class="fa fa-linkedin"></i>
+              </a>
+            </div>
+            <div class="icon">
+              <a href="#">
+                <i class="fa fa-twitter"></i>
+              </a>
+            </div>
+            <div class="icon">
+              <a href="#">
+                <i class="fa fa-instagram"></i>
+              </a>
+            </div>
+            <div class="icon">
+              <a href="#">
+                <i class="fa fa-facebook"></i>
+              </a>
+            </div>
+            <div class="icon">
+              <a href="#">
+                <i class="fa fa-youtube-play"></i>
+              </a>
+            </div>
+    
+          </div>
+    
+    
+          <div class="trigger">
+            <i class="fa fa-share-alt"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="share_icons sm_icons" id="social">
+        <div class="share share_label">Share</div>
+        <a class="share fa fa-facebook" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=<?php the_permalink(); ?>">
+            <span class="hidden">&nbsp;</span>
+        </a>
+        <a class="share fa fa-twitter" target="_blank" href="https://twitter.com/intent/tweet?url=<?php the_permalink(); ?>&text=<?php echo urlencode( get_the_title() ); ?>">
+            <span class="hidden">&nbsp;</span>
+        </a>
+        <a class="share fa fa-google-plus" target="_blank" href="https://plus.google.com/share?url=<?php the_permalink(); ?>">
+            <span class="hidden">&nbsp;</span>
+        </a>
+        <a class="share fa fa-linkedin" target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url=<?php the_permalink(); ?>&title=<?php echo urlencode( get_the_title() ); ?>">
+        <a class="share fa fa-envelope" target="_blank" href="mailto:?&subject=<?php echo urlencode( get_the_title() ); ?>&body=<?php the_permalink(); ?>">
+            <span class="hidden">&nbsp;</span>
+        </a>
+    </div>
+    
+    <div class="container d-flex justify-content-center align-items-center">
+        <h1>Social URL Share</h1>
+        <ul>
+          <a href="" target="_blank">
+            <li class="btn btn-danger icon-google">Share to google+</li>
+          </a>
+          <a href="" target="_blank">
+            <li class="btn btn-primary icon-facebook">Share to facebook</li>
+          </a>
+          <a href="" target="_blank">
+            <li class="btn btn-success icon-line">Share to Line</li>
+          </a>
+          <a href="" target="_blank">
+            <li class="btn btn-info icon-twitter">Share to Twitter</li>
+          </a>
+        </ul>
+      </div>
+      
+      <div class="social-media-share">
+        <button class="toggle" onclick="socialToggle()">
+            <i class="fas fa-share-alt"></i>
+        </button>
+        <ul>
+            <li><button><i class="fab fa-facebook-f"></i></button></li>
+            <li><button><i class="fab fa-twitter"></i></button></li>
+            <li><button><i class="fab fa-linkedin-in"></i></button></li>
+            <li><button><i class="fab fa-tumblr"></i></button></li>
+            
+            <li><button><i class="fab fa-google-plus-g"></i></button></li>
+            <li><button><i class="fab fa-pinterest-p"></i></button></li>
+            <li><button><i class="fab fa-youtube"></i></button></li>
+            <li><button><i class="fab fa-instagram"></i></button></li>
+            
+            
+            
+            
+            
+        </ul>
+    </div>
+    
+    <!--
+        <i class="fas fa-share-alt"></i>
+        <i class="fab fa-facebook-f"></i>
+        <i class="fab fa-twitter"></i>
+        <i class="fab fa-instagram"></i>
+        <i class="fab fa-pinterest-p"></i>
+        <i class="fab fa-linkedin-in"></i>
+        <i class="fab fa-youtube"></i>
+        <i class="fab fa-tumblr"></i>
+        <i class="fab fa-google-plus-g"></i>
+    -->
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.4/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- <script src="./js/jquery-3.6.0.js"></script> -->
+<script src="./js/bootstrap.bundle.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script src="https://kit.fontawesome.com/4641c99346.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
+<script src="./js/script.js"></script>
+<script>
+/*
+* Included Jquery
+*/
+$(document).ready(function(){
+  $(".trigger").on('click',function(){
+    $(".socialShare").toggleClass("active");
+  });
+});
+
+</script>
+<script>
+    $(document).ready(function(){
+	$(".share.fa-facebook").attr("href","https://www.facebook.com/sharer/sharer.php?u=" + $(location).attr('href') );
+	$(".share.fa-twitter").attr("href","https://twitter.com/intent/tweet?url=" + $(location).attr('href') + "&text=" + encodeURIComponent($('title').text()) );
+	$(".share.fa-google-plus").attr("href","https://plus.google.com/share?url=" + $(location).attr('href') );
+	$(".share.fa-linkedin").attr("href","https://www.linkedin.com/shareArticle?mini=true&url=" + $(location).attr('href') + "&title=" + encodeURIComponent($('title').text()) );
+	$(".share.fa-envelope").attr("href","mailto:?subject=" + encodeURIComponent($('title').text()) + "&body=" + $(location).attr('href') );
+});
+</script>
+<script>
+    $(document).ready(function() {
+  var windowlocation = location.href;
+
+  $(".icon-google").parent("a").attr("href", "https://plus.google.com/share?url=" + windowlocation),
+  $(".icon-line").parent("a").attr("href", "http://line.me/R/msg/text/?" + windowlocation),
+  $(".icon-facebook").parent("a").attr("href", "http://www.facebook.com/share.php?u=" + windowlocation),
+  $(".icon-twitter").parent("a").attr("href","http://twitter.com/home/?status=" + windowlocation);
+});
+</script>
+<script>
+    var tween,
+	socialOpened = false;
+
+function socialToggle() {
+	if (tween) tween.kill();
+	if (socialOpened) {
+		tween = gsap.to(".social-media-share li button", {
+			duration: 0.5,
+			left: "0%",
+			scale: 0.5,
+			ease: "power3.inOut"
+		});
+		socialOpened = false;
+	} else {
+		tween = gsap.to(".social-media-share li button", {
+			duration: 2,
+			left: "150%",
+			scale: 1,
+			ease: "elastic",
+			stagger: {
+				from: 0,
+				amount: 0.3
+			}
+		});
+		socialOpened = true;
+	}
+}
+
+</script>
+
+</body>
+</html>

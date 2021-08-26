@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/bootstrap.css" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/style_desktop.css" />
+    <link rel="stylesheet" href="./css/style_tablet.css" />
+    <link rel="stylesheet" href="./css/style_cellphone.css" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
+  </head>
+  <style>
+    .workplace {
+      border: 1px rgb(252, 30, 252) solid;
+      text-align: center;
+    }
+
+    .picture_group img {
+      border: 1px rgb(175, 175, 175) solid;
+      margin: 1rem 0;
+      padding: 0.5rem;
+      border-radius: 0.5rem;
+      display: block;
+      width: 50%;
+    }
+
+    .picture_group input {
+      display: block;
+      margin-top: 1rem;
+    }
+
+    .button_group {
+      border: 1px rgb(150, 56, 56) solid;
+      text-align: center;
+    }
+
+    .picture_select {
+      border: 1px rgb(51, 72, 253) solid;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .canvas {
+      width: 50%;
+      height: 400px;
+      border: steelblue 1px solid;
+    }
+
+    .canvas img {
+      width: 100%;
+    }
+  </style>
+
+  <body>
+    <header>
+      <div class="logo animate__animated animate__rollIn animate__slow 3s"><img src="./images/logo/logo.svg" alt="" /></div>
+    </header>
+    <nav id="nav_01" class="navbar navbar-expand-lg navbar-light bg-light active">
+      <a class="navbar-brand" href="index.html"><img src="./images/logo/logo_nav.svg" alt="" /></a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="index.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 園區介紹 </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">園區介紹</a>
+              <a class="dropdown-item" href="#">網站地圖</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 最新公告 </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">森林體驗</a>
+              <a class="dropdown-item" href="#">餐飲</a>
+              <a class="dropdown-item" href="#">住宿</a>
+              <a class="dropdown-item" href="#">周邊商品</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="itinerary.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 交通指南 </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="itinerary.html">自行開車</a>
+              <a class="dropdown-item" href="itinerary.html">大眾交通工具</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 森林體驗 </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">特惠活動</a>
+              <a class="dropdown-item" href="#">活動項目</a>
+              <a class="dropdown-item" href="#">報名參加</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 饗宴 </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">特惠活動</a>
+              <a class="dropdown-item" href="#">
+                <MENU:context></MENU:context>
+              </a>
+              <a class="dropdown-item" href="#">訂位</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 住宿 </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">特惠活動</a>
+              <a class="dropdown-item" href="#">房型</a>
+              <a class="dropdown-item" href="#">訂房</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 套裝行程 </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">特惠活動</a>
+              <a class="dropdown-item" href="#">一泊二食</a>
+              <a class="dropdown-item" href="#">一泊二食+下午茶</a>
+              <a class="dropdown-item" href="#">一泊二食+森林體驗</a>
+              <a class="dropdown-item" href="#">一泊二食+下午茶+森林體驗</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 周邊商品 </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">特惠活動</a>
+              <a class="dropdown-item" href="#">商品項目</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 遊客日誌＆相簿 </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">遊客日誌</a>
+              <a class="dropdown-item" href="#">相簿</a>
+            </div>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <a id="logIn" href="#">會員註冊/登入</a>
+        </form>
+        <a href="memberInfo.html"><img src="./images/icon/member.svg" alt="" /></a>
+        <a href="shoppingcart.html"><img src="./images/icon/shoopingcart.svg" alt="" /></a>
+      </div>
+    </nav>
+    <nav class="nav_02">
+      <ul>
+        <li>
+          <a href="index.html">
+            <div><img src="./images/icon/home.svg" alt="" /></div>
+            <div class="rw">
+              <span>Home</span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="shoppingcart.html">
+            <div><img src="./images/icon/shoopingcart.svg" alt="" /></div>
+            <div class="rw">
+              <span>cart</span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="memberInfo.html">
+            <img src="./images/icon/member.svg" alt="" />
+            <div class="rw">
+              <span>member</span>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a href="contact.html">
+            <img src="./images/icon/mail.svg" alt="" />
+            <div class="rw">
+              <span>contact</span>
+            </div>
+          </a>
+        </li>
+        <li id="goTop">
+          <a href="contact.html">
+            <img src="./images/icon/goTop.svg" alt="" />
+            <div class="rw">
+              <span>go top</span>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <main>
+      <div class="container">
+        <div class="picture_group row">
+          <div class="picture_select col" name="user_active_col[]" value="1">
+            <input type="checkbox" />
+            <img src="./images/card/card01.svg" alt="" />
+          </div>
+          <div class="picture_select col" name="user_active_col[]" value="2">
+            <input type="checkbox" class="" />
+            <img src="./images/card/card01.svg" alt="" />
+          </div>
+          <div class="picture_select col" name="user_active_col[]" value="3">
+            <input type="checkbox" class="" />
+            <img src="./images/card/card01.svg" alt="" />
+          </div>
+          <div class="picture_select col" name="user_active_col[]" value="4">
+            <input type="checkbox" class="" />
+            <img src="./images/card/card01.svg" alt="" />
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div>
+          <div class="workplace row">
+            <div class="canvas col"></div>
+            <div class="col">
+              <input type="textarea" style="width: 100%; height: 100%" value="輸入文字" />
+            </div>
+          </div>
+          <div class="button_group col-12">
+            <input type="button" value="download" />
+            <input type="button" value="email to" />
+            <input type="button" value="share by LINE" />
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer class="nb-footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="about">
+              <p>
+                Bootstrap Footer example snippets with CSS, Javascript and HTML. Code example of bootstrap-3 footer using HTML, Javascript, jQuery, and CSS. 5 Beautiful and Responsive Footer
+                Templates. Pin a fixed-height footer to the bottom of the viewport in desktop browsers with this custom HTML and CSS.
+              </p>
+              <div class="social-media">
+                <ul class="row justify-content-center align-items-center">
+                  <li class="animate__animated animate__rollIn animate__slow 2s">
+                    <a href="http://www.nextbootstrap.com/" title=""><i class="fab fa-facebook-f"></i></a>
+                  </li>
+                  <li class="animate__animated animate__rollIn animate__slow 2s">
+                    <a href="http://www.nextbootstrap.com/" title=""><i class="fa fa-twitter"></i></a>
+                  </li>
+                  <li class="animate__animated animate__rollIn animate__slow 2s">
+                    <a href="http://www.nextbootstrap.com/" title=""><i class="fa fa-google-plus"></i></a>
+                  </li>
+                  <li class="animate__animated animate__rollIn animate__slow 2s">
+                    <a href="http://www.nextbootstrap.com/" title=""><i class="fa fa-linkedin"></i></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3 col-sm-6">
+            <div class="footer-info-single">
+              <h2 class="title">Help Center</h2>
+              <ul class="list-unstyled">
+                <li>
+                  <a href="http://www.nextbootstrap.com/" title=""><img src="./images/icon/arrow_d_r.svg" alt="" />隱私權政策</a>
+                </li>
+                <li>
+                  <a href="http://www.nextbootstrap.com/" title=""><img src="./images/icon/arrow_d_r.svg" alt="" />FAQ's</a>
+                </li>
+                <li>
+                  <a href="http://www.nextbootstrap.com/" title=""><img src="./images/icon/arrow_d_r.svg" alt="" />購物流程</a>
+                </li>
+                <li>
+                  <a href="http://www.nextbootstrap.com/" title=""><img src="./images/icon/arrow_d_r.svg" alt="" />Delivery Info</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-md-3 col-sm-6">
+            <div class="footer-info-single">
+              <h2 class="title">Customer information</h2>
+              <ul class="list-unstyled">
+                <li>
+                  <a href="http://www.nextbootstrap.com/" title=""><img src="./images/icon/arrow_d_r.svg" alt="" />About Us</a>
+                </li>
+                <li>
+                  <a href="http://www.nextbootstrap.com/" title=""><img src="./images/icon/arrow_d_r.svg" alt="" />FAQ's</a>
+                </li>
+                <li>
+                  <a href="http://www.nextbootstrap.com/" title=""><img src="./images/icon/arrow_d_r.svg" alt="" />Sell Your Items</a>
+                </li>
+                <li>
+                  <a href="http://www.nextbootstrap.com/" title=""><img src="./images/icon/arrow_d_r.svg" alt="" />Contact Us</a>
+                </li>
+                <li>
+                  <a href="http://www.nextbootstrap.com/" title=""><img src="./images/icon/arrow_d_r.svg" alt="" />RSS</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-md-3 col-sm-6">
+            <div class="footer-info-single">
+              <h2 class="title">Security & privacy</h2>
+              <ul class="list-unstyled">
+                <li>
+                  <a href="http://www.nextbootstrap.com/" title=""><img src="./images/icon/arrow_d_r.svg" alt="" />Terms Of Use</a>
+                </li>
+                <li>
+                  <a href="http://www.nextbootstrap.com/" title=""><img src="./images/icon/arrow_d_r.svg" alt="" />Privacy Policy</a>
+                </li>
+                <li>
+                  <a href="http://www.nextbootstrap.com/" title=""><img src="./images/icon/arrow_d_r.svg" alt="" />Return / Refund Policy</a>
+                </li>
+                <li>
+                  <a href="http://www.nextbootstrap.com/" title=""><img src="./images/icon/arrow_d_r.svg" alt="" />Store Locations</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-md-3 col-sm-6">
+            <div class="footer-info-single">
+              <h2 class="title">Payment</h2>
+              <p>
+                Sample HTML page with Twitter's Bootstrap. Code example of Easy Sticky Footer using HTML, Javascript, jQuery, and CSS. This bootstrap tutorial covers all the major elements of
+                responsive
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section class="copyright">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-6">
+              <p>Copyright © 2021. Pei-Jing Studio.</p>
+            </div>
+            <div class="col-sm-6"></div>
+          </div>
+        </div>
+      </section>
+    </footer>
+
+    <script src="./js/jquery-3.6.0.js"></script>
+    <script src="./js/bootstrap.bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <script src="https://kit.fontawesome.com/4641c99346.js" crossorigin="anonymous"></script>
+    <script src="./js/script.js"></script>
+    <script>
+      $('.picture_select').click(function () {
+        var img = $(this).children('img').attr('src')
+        $('.canvas').html('<img src="' + img + '">')
+      })
+    </script>
+  </body>
+</html>

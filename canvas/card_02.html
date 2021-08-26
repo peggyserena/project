@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/bootstrap.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+
+</head>
+<style>
+    .whole-card {
+        margin: 3rem auto;
+    }
+
+    .card {
+        width: 100%;
+        height: 40rem;
+        border-radius: 1rem;
+        color: rgb(255, 255, 255);
+        position: relative;
+        z-index: -9;
+    }
+
+    .card img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        padding: 1rem;
+        object-fit: contain;
+
+    }
+
+    .card .bottom {
+        align-items: flex-end;
+        justify-content: center;
+        text-align: center;
+        width: 100%;
+        top: 45%;
+        position: absolute;
+    }
+
+    .card-face {
+        position: relative;
+        top: 25%;
+        justify-content: space-between;
+        width: 100%;
+        height: 100%;
+    }
+
+    .card-numbers {
+        width: 60%;
+        text-align: justify;
+        font-size: 1.2rem;
+        margin: 0 auto;
+        background: rgba(79, 202, 206, 0.274);
+    }
+
+    .card-name {
+        width: 70%;
+        margin-left: 15%;
+        font-size: 1.2rem;
+        text-align: justify;
+        background: rgba(79, 202, 206, 0.274);
+    }
+
+    .card-date {
+        width: 70%;
+        text-align: right;
+        margin-left: 15%;
+        background: rgba(79, 202, 206, 0.274);
+
+    }
+
+    .card-date .diff {
+        font-size: 1rem;
+    }
+
+
+    .form-group input {
+        font-size: 1rem;
+    }
+
+    .enter-title {
+        font-size: 1.5rem;
+        margin: 2rem auto;
+    }
+
+    .workplace {
+        border: 1px rgb(252, 30, 252) solid;
+        text-align: center;
+    }
+
+    .picture_group img {
+        border: 1px rgb(175, 175, 175) solid;
+        margin: 1rem 0;
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        display: block;
+        width: 50%;
+    }
+
+    .picture_group input {
+        display: block;
+        margin-top: 1rem;
+    }
+
+    .button_group {
+        border: 1px rgb(150, 56, 56) solid;
+        text-align: center;
+    }
+
+    .picture_select {
+        border: 1px rgb(51, 72, 253) solid;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+
+    .canvas {
+        width: 50%;
+        height: 400px;
+        border: steelblue 1px solid;
+    }
+
+    .canvas img {
+        width: 100%;
+    }
+</style>
+
+<body>
+
+
+    <main>
+        <div class="container">
+            <div class="container">
+                <div class="picture_group row ">
+                    <div class="picture_select col" name="user_active_col[]" value="1">
+                        <input type="checkbox">
+                        <img src="./images/card/card01.svg" alt="">
+                    </div>
+                    <div class="picture_select col" name="user_active_col[]" value="2">
+                        <input type="checkbox" class="">
+                        <img src="./images/card/card01.svg" alt="">
+                    </div>
+                    <div class="picture_select col" name="user_active_col[]" value="3">
+                        <input type="checkbox" class="">
+                        <img src="./images/card/card01.svg" alt="">
+                    </div>
+                    <div class="picture_select col" name="user_active_col[]" value="4">
+                        <input type="checkbox" class="">
+                        <img src="./images/card/card01.svg" alt="">
+                    </div>
+                </div>
+            </div>
+
+            <div class="whole-card row">
+                <div class="col col-sm-12 col-md-6 ">
+                    <div class="card">
+                        <!-- <img src="./images/card/card01.svg" alt=""> -->
+                        <div class="card-face">
+                            <div class=" card-numbers  ">
+                                <div class="quartet">
+                                    write something here
+                                </div>
+                            </div>
+                            <div class="bottom">
+                                <div class="card-name disabled ">
+                                    write something more
+                                </div>
+                                <div class="card-date disabled">
+                                    <span class="diff">
+                                        date
+                                    </span><br>
+                                    <span class="card-dates ">
+                                        ******
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <form class="col-sm-12 col-md-4 offset-md-1 ">
+                    <div class="row ">
+                        <h1 class=" enter-title">Enter your credit card info</h1>
+                        <div class="col-sm-12 form-group">
+                            <input type="text" class="form-control cc-number" id="cc-number" name="cc-number"
+                                placeholder="Enter a credit card number" cc-concept="card-numbers">
+                        </div>
+                        <div class="col-sm-12 form-group">
+                            <input type="text" class="form-control cc-name" id="cc-name" name="cc-name"
+                                placeholder="Enter the name in your card" cc-concept="card-name">
+                        </div>
+                        <div class="col-sm-12 form-group">
+                            <input type="text" class="form-control card-show-date" id="card-show-date"
+                                name="card-show-date" placeholder="yyyy/mm/dd" maxLength="10" cc-concept="card-date">
+                        </div>
+
+                </form>
+            </div>
+            <div class="button_group col-12 ">
+                <input type="button" value="download">
+                <a href="mailto:"><img class="b-green rot-135" src="./images/icon/mail.svg" style="width: 50px;"
+                        alt=""></a>
+                <input type="button" value="share by LINE">
+            </div>
+
+        </div>
+
+
+    </main>
+
+</body>
+
+<script src="./js/jquery-3.6.0.js"></script>
+<script src="./js/bootstrap.bundle.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script src="https://kit.fontawesome.com/4641c99346.js" crossorigin="anonymous"></script>
+<script src="./js/script.js"></script>
+<script>
+    const cardElement = document.getElementsByClassName('card')[0];
+    const inputCCNumber = document.getElementsByClassName('cc-number')[0];
+    const inputCCName = document.getElementsByClassName('cc-name')[0];
+    const inputCCValidDate = document.getElementsByClassName('card-show-date')[0];
+    const cardName = document.getElementsByClassName('card-name')[0];
+    const cardDates = document.getElementsByClassName('card-dates')[0];
+    const maskChar = '&#9679;';
+    const initialCardDates = `${maskChar}${maskChar}/${maskChar}${maskChar}`;
+    const initialQuartet = `${maskChar}`;
+    const ccNumber = `${initialQuartet}}`;
+
+    const ccNumberChange = e => {
+        const { target, keyCode } = e;
+        const { name, value } = target;
+        const stringLen = value.length;
+        const cardQuartet = document.getElementsByClassName('quartet');
+        const { classList } = cardElement;
+
+        // if ((stringLen === 4 || stringLen === 9 || stringLen === 14) && keyCode !== 8) {
+        //     inputCCNumber.value = `${value} `;
+        // }
+
+        const ccNumberValueArr = value.split(' ');
+
+        for (let i = 0, cardQuartetLen = cardQuartet.length; i < cardQuartetLen; ++i) {
+
+            if (ccNumberValueArr[i]) {
+                const ccQuartet = ccNumberValueArr[i];
+                const ccQuartetArr = ccQuartet.split('');
+
+                cardQuartet[i].innerHTML = ccQuartetArr.join('');
+            } else {
+                cardQuartet[i].innerHTML = ccNumberArr[i];
+            }
+        }
+    };
+
+    const ccNameChange = e => {
+        const { target } = e;
+        const { value } = target;
+        const nameText = (value.length === 0) ? 'Your name here' : value;
+
+        cardName.innerHTML = nameText.toUpperCase();
+    }
+
+    ccToggleDisable = e => {
+        const { target } = e;
+        ccElement.classList.toggle('disabled');
+    }
+
+    const ccValidDateChange = e => {
+        const { target, keyCode } = e;
+        const { value } = target;
+        const valueLen = value.length;
+
+        cardDates.innerHTML = `${value}`;
+    }
+
+
+    // Card Number
+    inputCCNumber.addEventListener('keyup', ccNumberChange);
+
+    // Card Name
+    inputCCName.addEventListener('input', ccNameChange);
+
+    // Date
+    inputCCValidDate.addEventListener('keyup', ccValidDateChange);
+
+</script>
+<script>
+    $(".picture_select").click(function () {
+        var img = $(this).children('img').attr('src');
+        $('.card').html('<img src="' + img + '">');
+    });
+</script>
+
+
+</body>
+
+</html>

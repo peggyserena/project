@@ -1,0 +1,95 @@
+@charset "UTF-8";
+@media only screen and (min-width: 992px) {
+  .nav_04,
+  .nav_03 {
+    display: none;
+  }
+
+  /* ===================== HOTEL ===================== */
+
+  .poetry2 {
+    display: none;
+  }
+
+  #myTab li {
+    border-radius: 10px 10px 0 0;
+    margin-right: 2px;
+    padding: 1rem;
+    background-color: rgb(194, 218, 226);
+  }
+
+  #myTab li:hover {
+    background: linear-gradient(45deg, #dcc5ef 0%, #adda9a 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#499bea', endColorstr='#1abc9c', GradientType=1);
+  }
+
+  #myTab li a {
+    color: white;
+    list-style: none;
+    text-decoration: none;
+  }
+  .amenities ul li {
+    position: relative;
+    list-style: none;
+    font-size: 1rem;
+    font-weight: 300;
+    color: #0e384b;
+  }
+
+  /* ===================== index ===================== */
+
+  .pop-up {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 99;
+    width: 500px;
+  }
+  .box_cellphone {
+    display: none;
+  }
+  .box_tablet {
+    display: none;
+  }
+
+  .push-2 h4 {
+    width: 100%;
+    line-height: 2rem;
+  }
+
+  /* ===================== NEWS ===================== */
+
+  /* ===================== RESTAURANT ===================== */
+
+  .tablet_cellphone {
+    display: none;
+  }
+
+  .seatChart_num > div > input[type='checkbox']:checked ~ label {
+    background-color: #2acd72;
+    font-weight: 900;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    line-height: 30px;
+    text-align: center;
+  }
+
+  .seatChart_num > div > input {
+    display: none;
+  }
+
+  .seatChart_num > div > label {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    line-height: 30px;
+    text-align: center;
+    background-color: #f98f8f;
+    font-weight: 900;
+  }
+  .seatChart_num > div > label.available {
+    background-color: #0000e3;
+  }
+}

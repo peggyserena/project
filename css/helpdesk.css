@@ -1,0 +1,46 @@
+body {
+  background: linear-gradient(45deg, #e8ddf1 0%, #e1ebdc 100%);
+  position: relative;
+  z-index: -10;
+}
+
+.direct-contact-container .contact-list li img {
+  width: 2rem;
+  border-radius: 50%;
+  padding: 5px;
+  margin: 0 1rem 0 0;
+}
+.direct-contact-container .contact-list li {
+  margin: 0.5rem 0;
+}
+.direct-contact-container .contact-list li a {
+  color: gray;
+}
+.direct-contact-container .contact-list {
+  list-style-type: none;
+}
+
+.btn-4 {
+  width: 100%;
+  transition: all 0.2s ease-in-out;
+}
+.btn-4:hover {
+  transform: scale(0.975);
+}
+
+.social-media-list li {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  width: 2rem;
+  margin: 0 0.5rem;
+}
+
+.social-media-list li:hover {
+  transform: translateY(-1rem);
+}
+
+hr {
+  border-bottom: 3px solid white;
+}

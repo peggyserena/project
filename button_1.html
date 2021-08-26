@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title></title>
+    <link rel="stylesheet" href="./css/bootstrap.css" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/style_desktop.css" />
+    <link rel="stylesheet" href="./css/style_tablet.css" />
+    <link rel="stylesheet" href="./css/style_cellphone.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" />
+  </head>
+  <style>
+    /* =====================================================
+   Some defaults across all toggle demos
+   ===================================================== */
+    .toggle {
+      display: block;
+      text-align: center;
+      margin-top: 40px;
+      user-select: none;
+    }
+
+    .toggle-checkbox {
+      display: none;
+    }
+
+    .toggle-btn {
+      display: block;
+      margin: 0 auto;
+      font-size: 1.4em;
+      transition: all 350ms ease-in;
+    }
+    .toggle-btn:hover {
+      cursor: pointer;
+    }
+
+    .toggle-btn,
+    .toggle-btn:before,
+    .toggle-btn:after,
+    .toggle-checkbox,
+    .toggle-checkbox:before,
+    .toggle-checkbox:after,
+    .toggle-feature,
+    .toggle-feature:before,
+    .toggle-feature:after {
+      transition: all 250ms ease-in;
+    }
+    .toggle-btn:before,
+    .toggle-btn:after,
+    .toggle-checkbox:before,
+    .toggle-checkbox:after,
+    .toggle-feature:before,
+    .toggle-feature:after {
+      content: '';
+      display: block;
+    }
+
+    /* =====================================================
+   Toggle - knob button style
+   ===================================================== */
+    .toggle-knob .toggle-btn {
+      position: relative;
+      width: 120px;
+      height: 40px;
+      font-family: 'PT Sans', Sans Serif;
+      text-transform: uppercase;
+      color: #fff;
+      background: #a4bf4d;
+      box-shadow: inset 0 20px 40px -10px #7b9d25;
+      border-radius: 40px;
+    }
+    .toggle-knob .toggle-btn:before {
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 60%;
+      transform: translateY(-50%);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #f1f1f1;
+      box-shadow: 0 4px 10px 0 #999, inset 0 10px 10px 8px rgba(241, 241, 241, 0.6), inset 0 0 8px 0px #333, inset 0 0 0 13px #ccc, inset 0 0 0 14px #f1f1f1;
+      text-indent: -100%;
+    }
+    .toggle-knob .toggle-feature {
+      position: relative;
+      display: block;
+      overflow: hidden;
+      height: 40px;
+      text-shadow: 0 1px 2px #666;
+    }
+    .toggle-knob .toggle-feature:before,
+    .toggle-knob .toggle-feature:after {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .toggle-knob .toggle-feature:before {
+      content: attr(data-label-on);
+      left: 20%;
+    }
+    .toggle-knob .toggle-feature:after {
+      content: attr(data-label-off);
+      right: -60%;
+    }
+    .toggle-knob .toggle-checkbox:checked + .toggle-btn {
+      background: #a2a2a2;
+      box-shadow: inset 0 20px 40px -10px #7e7e7e;
+    }
+    .toggle-knob .toggle-checkbox:checked + .toggle-btn:before {
+      left: 0;
+    }
+    .toggle-knob .toggle-checkbox:checked + .toggle-btn .toggle-feature:before {
+      left: -60%;
+    }
+    .toggle-knob .toggle-checkbox:checked + .toggle-btn .toggle-feature:after {
+      right: 20%;
+    }
+  </style>
+  <body>
+    <div class="toggle toggle-knob">
+      <input type="checkbox" id="toggle-knob" class="toggle-checkbox" />
+      <label class="toggle-btn" for="toggle-knob"><span class="toggle-feature" data-label-on="on" data-label-off="off"></span></label>
+    </div>
+
+    <script src="./js/jquery-3.6.0.js"></script>
+    <script src="./js/bootstrap.bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <script src="https://kit.fontawesome.com/4641c99346.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
+    <script src="./js/script.js"></script>
+  </body>
+</html>
