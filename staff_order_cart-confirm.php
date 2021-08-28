@@ -12,43 +12,44 @@ $sum = 0;
     * {-webkit-print-color-adjust: exact !important;}
     }
     body {
-  background: linear-gradient(45deg, #e8ddf1 0%, #e1ebdc 100%);
-  position: relative;
-  z-index: -10;
-}
+    background: linear-gradient(45deg, #e8ddf1 0%, #e1ebdc 100%);
+    position: relative;
+    z-index: -10;
+    }
 
-.card img {
-    width: 2.5rem;
-}
-.orderStatus div {
-    margin: 1rem;
-}
-.discountTip {
-    background-color: #fff1ab;
-    padding: 0;
-}
-.finalPrice {
-    background-color: #fff1ab;
-    color: darkblue;
-    border-bottom: 1px solid lightgray;
-}
+    .card img {
+        width: 2.5rem;
+    }
+    .orderStatus div {
+        margin: 1rem;
+    }
+    .discountTip {
+        background-color: #fff1ab;
+        padding: 0;
+    }
+    .finalPrice {
+        background-color: #fff1ab;
+        color: darkblue;
+        border-bottom: 1px solid lightgray;
+    }
 
-.container {
-    text-align: justify;
-}
-.cardContent span {
-    line-height: 2rem;
-}
-.track img {
-    width: auto;
-    height: 12.8px;
-    margin: 0.5rem 0.3rem 0.5rem 0rem;
-}
+    .container {
+        text-align: justify;
+        margin-top: 100px;
+    }
+    .cardContent span {
+        line-height: 2rem;
+    }
+    .track img {
+        width: auto;
+        height: 12.8px;
+        margin: 0.5rem 0.3rem 0.5rem 0rem;
+    }
 </style>
+<?php include __DIR__ . '/parts/staff_navbar.php'; ?>
 
 <?php include "parts/modal.php"?>
-<?php include __DIR__ . '/parts/navbar.php'; ?>
-<div class="container mt-5 mb-5  ">
+<div class=" container mb-5  ">
     <div class="card  row mb-5 con_01" >
         <div class="card-body " >
             <?php if (($_GET['type'] ?? "") != 'search') : ?>
@@ -208,9 +209,8 @@ $sum = 0;
                 </div>
                 <div id="textContentBox" style="display: none;">
                     <h4>付款方式：<span class="payment_method"></span></h4>
+                    <h4 class="">出貨狀態：<span class="shipment_status"></span>&ensp; <span id="pickup"></h4>
                     <h4 id="shipment_num_h4">物流編號：<span class="shipment_num"></span></h4>
-                    <h4><span id="pickup"></span></h4>
-                    <h4 class="">出貨狀態：<span class="shipment_status"></span></h4>
                     <h4 class="">出貨時間：<span class="shipment_datetime"></span></h4>
                 </div>
                 <h4>貨件追蹤查詢：<span style="font-size: 1rem;"class="track" id="shipmentTrack">
@@ -224,7 +224,7 @@ $sum = 0;
 </div>
 
 
-<?php include __DIR__. '/parts/scripts.php'; ?>
+<?php include __DIR__. '/js/staff_scripts.php'; ?>
 <script>
 $(document).ready(function(){
     fillTable();
@@ -332,7 +332,7 @@ function fillTable(){
          }
          if (data['order']['shipment_num'] === ""){
             $("#shipment_num_h4").hide();
-            $("#pickup").text("現場付款取貨");
+            $("#pickup").text("(現場付款取貨)");
          }
     }, 'json').fail(function(e){
     });
@@ -412,4 +412,4 @@ function fillTable(){
     
 </script> 
 
-<?php include __DIR__ . '/parts/html-foot.php'; ?>
+<?php include __DIR__ . '/parts/staff_html-foot.php'; ?>

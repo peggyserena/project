@@ -70,7 +70,7 @@ $pageName = 'staff_info_search';
                                 <option value="">全部</option>
                                 <option value="先生">先生</option>
                                 <option value="小姐">小姐</option>
-                                <option value="中性">不表明</option>
+                                <option value="不表明">不表明</option>
                             </select>
                         </li>
 
@@ -150,6 +150,7 @@ $pageName = 'staff_info_search';
         mobile: $("#mobile").val(),
         identityNum: $("#identityNum").val(),
         birthmonth: $("#select_month").val(),
+        gender: $("#gender").val(),
         age: $("#age").val(),
     },function(data) {
         console.log(data);
@@ -187,7 +188,7 @@ $pageName = 'staff_info_search';
     var month = 1;
     var selectedMonth = "<?= $_GET['month'] ?? "" ?>";
     $("#select_month option").each(function(ind, elem) {
-        if (ind > 1) {
+        if (ind > 0) {
             elem.text = month;
             elem.value = month;
             month++;

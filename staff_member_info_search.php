@@ -68,7 +68,7 @@ $pageName = 'staff_member_info_search';
                                 <option value="">全部</option>
                                 <option value="先生">先生</option>
                                 <option value="小姐">小姐</option>
-                                <option value="中性">不表明</option>
+                                <option value="不表明">不表明</option>
                             </select>
                         </li>
                         <li class="">
@@ -173,7 +173,7 @@ $pageName = 'staff_member_info_search';
     var month = 1;
     var selectedMonth = "<?= $_GET['month'] ?? "" ?>";
     $("#select_month option").each(function(ind, elem) {
-        if (ind > 1) {
+        if (ind > 0) {
             elem.text = month;
             elem.value = month;
             month++;

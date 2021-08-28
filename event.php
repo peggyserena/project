@@ -97,6 +97,14 @@ $pageName = 'event';
                 <form action="event.php" method="get">
                 <ul class="row list-unstyled p-2 m-0 justify-content-center align-items-center ">
                         <li class=" ">
+                            <input id="eventNname_id" name='name' placeholder="活動名稱搜尋">
+                        </li>
+                        <li class=" ">
+                            <select id="select_cat_id" name='cat_id'>
+                                <option value="">活動類別</option>
+                            </select>
+                        </li>
+                        <li class=" ">
                             <select id="select_cat_id" name='cat_id'>
                                 <option value="">活動類別</option>
                             </select>
