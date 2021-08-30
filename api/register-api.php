@@ -81,13 +81,13 @@ switch ($action){
                 $stmt->execute([
                 $_POST['email'],
                 $_POST['fullname'],
-                $_POST['gender'],
+                $_POST['gender'] ?? "不表明",
                 $_POST['birthday'],
                 $_POST['mobile'],
                 $_POST['zipcode'] ?? "",
                 $_POST['county'] ?? "",
                 $_POST['district'] ?? "",
-                $_POST['address'],
+                $_POST['address'] ?? "",
                 password_hash($_POST['password'], PASSWORD_DEFAULT),
 
                 ]);
@@ -126,7 +126,7 @@ switch ($action){
                     $stmt = $pdo->prepare($sql);
                     $stmt->execute([$_POST['role_id']]);
                     $staff_id = $stmt->fetch();
-                    $role_code = chr(intval($_POST['role_id']) + 64); // 員工編號第一碼英文
+                    // $role_code = chr(intval($_POST['role_id']) + 64); // 員工編號第一碼英文
                     if (empty($staff_id)){
                         $staff_id_num = intval("00001");
                     }else{

@@ -75,9 +75,9 @@ $pageName ='staff_login';
     </div>
   </div>
 </div>
-<?php include __DIR__ . '/js/staff_scripts.php'; ?>
+<?php include __DIR__ . '/parts/staff_scripts.php'; ?>
 <script>
-  const staff_id_re = /^[A-Z]\d{5}$/
+  const staff_id_re = /^d{5}$/
   const $staff_id = $('#staff_id')
   const fileds = [$staff_id]
 
@@ -99,12 +99,10 @@ $pageName ='staff_login';
     }
 
     if (isPass) {
-      console.log("test1");
       $.post(
         '<?= WEB_API?>/login-api.php',
         $(document.form1).serialize(),
         function (data) {
-          console.log(data);
           if (data.success) {
             // alert('資料修改成功');
             // swal('Title...', 'Hello World!', 'success');
@@ -113,7 +111,7 @@ $pageName ='staff_login';
             insertText('#modal_content', '登入成功')
             $('#modal_alert').modal('show')
             setTimeout(function () {
-              location.href = "<?= $_SESSION['back'] ?>";
+              location.href = "<?= $_SESSION['back'] ?? '' ?>";
             }, 2000)
             // location.href = './staff_index.php';
           } else {

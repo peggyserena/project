@@ -48,9 +48,11 @@ $pageName = 'staff_info';
                     <label for="fullname">姓名： </label><span id="fullname"></span>
                 </div>
                 <div class="form-group">
-                    <label for="birthday">生日： </label><spa id='birthday'></span>
+                    <label for="gender">性別： </label><span id="gender"></span>
                 </div>
-
+                <div class="form-group">
+                    <label for="birthday">生日： </label><spa id='birthday'></span><spa id='age' hidden></span> 歲
+                </div>
  
                 <div class="form-group">
                     <label for="identityNum">身分證字號： </label><span id='identityNum'></span>
@@ -64,6 +66,12 @@ $pageName = 'staff_info';
                 <div class="form-group">
                     <label for="county">地址： </label><span id='zipcode'></span><span id='county'></span><span id='district'></span><span id='address'></span>
                 </div>
+                <div class="form-group">
+                    <label for="created_at">到職日： </label><span id='created_at'></span>
+                </div>
+                <div class="form-group">
+                    <label for="left_at">離職日： </label><span id='left_at'></span>
+                </div>
      
                 <div  class="text-center"><a href="staff_info_editor.php" class="custom-btn btn-4 text-center t_shadow">修改</a>
                 </div>
@@ -74,7 +82,7 @@ $pageName = 'staff_info';
 </main>
 
 
-<?php include __DIR__ . '/js/staff_scripts.php'; ?>
+<?php include __DIR__ . '/parts/staff_scripts.php'; ?>
 
 <script>
     $.post('api/staff-api.php', {
@@ -101,6 +109,10 @@ $pageName = 'staff_info';
             {
                 selector: "#fullname",
                 text: data['fullname']
+            },
+            {
+                selector: "#gender",
+                text: data['gender']
             },
             {
                 selector: "#birthday",
@@ -134,15 +146,16 @@ $pageName = 'staff_info';
                 selector: "#address",
                 text: data['address']
             },
+            {
+                selector: "#created_at",
+                text: data['created_at']
+            },
+            {
+                selector: "#left_at",
+                text: data['left_at']
+            },
         ]
-        
-        // map
-        // {
-        //     selector: "#event_name",
-        //     attr: {
-        //         text: data['name']
-        //     }
-        // }
+    
         list.forEach(function(m){
             // attr
             // attr: {
@@ -161,6 +174,36 @@ $pageName = 'staff_info';
             }
         });
     }
+
+    $(document).ready(function () {
+    console.log($(document).width());           
+        $('#datepicker').datepicker
+        ({
+            dateFormat: 'mm/dd/yy',
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "-100:+0",
+            maxDate: new Date(),
+            inline: true,
+
+                onSelect: function() {
+                var birthDay = document.getElementById("datepicker").value;
+                    var DOB = new Date(birthDay);
+                    var today = new Date();
+                    var age = today.getTime() - DOB.getTime();
+                    var elapsed = new Date(age);
+                    var year = elapsed.getYear()-70;
+                    var month = elapsed.getMonth();
+                    var day = elapsed.getDay();
+                    var ageTotal = year + " Years," + month + " Months," + day + " Days";
+
+                    document.getElementById('agecal').innerText = ageTotal;
+
+                }
+        });  
+
+    });
+
 </script>
 
 <?php include __DIR__. '/parts/staff_html-foot.php'; ?>

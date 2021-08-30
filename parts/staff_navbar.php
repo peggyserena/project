@@ -102,8 +102,8 @@ body {
         <li class="nav-item dropdown<?= $pageName == '' ? 'active' : '' ?>">
             <a class="nav-link dropdown-toggle" href="staff_madol.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">彈跳視窗</a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="staff_madol_create.php"> 彈跳視窗新增</a>
-                <a class="dropdown-item" href="staff_madol_search.php"> 彈跳視窗查詢&修改 </a>
+                <a class="dropdown-item" href="staff_modol_create.php"> 彈跳視窗新增</a>
+                <a class="dropdown-item" href="staff_modol_editor.php"> 彈跳視窗查詢&修改 </a>
             </div>
         </li>
         <li class="nav-item <?= $pageName == 'staff_category_editor' ? 'active' : '' ?>">

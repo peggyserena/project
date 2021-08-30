@@ -60,7 +60,7 @@ $pageName = 'staff_coupon_create';
     </div>
   </main>
 
-<?php include __DIR__ . '/js/staff_scripts.php'; ?>
+<?php include __DIR__ . '/parts/staff_scripts.php'; ?>
 <script>
 
 // 設定end_date大於start_date

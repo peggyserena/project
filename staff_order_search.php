@@ -86,7 +86,7 @@ $pageName = 'staff_order_search';
 
     </main>
 
-    <?php include __DIR__ . '/js/staff_scripts.php'; ?>
+    <?php include __DIR__ . '/parts/staff_scripts.php'; ?>
 <script>
   function nullTo(str){
     return str === null ? "" : str; 
@@ -116,10 +116,12 @@ $pageName = 'staff_order_search';
             data.forEach(function(elem, ind){
                 var order_id = "";
                 var status_class = "";
+                var cancel_btn = `<a href="#" onclick="orderCancel(${elem['order_id']})">取消</a>`;
                 if (elem['status'] == "已取消"){
-                    status_class = "text-danger";
+                    status_class = "text-secondary";
+                    cancel_btn = "已取消";
                 }
-                var tr = `<tr>
+                var tr = `<tr class="${status_class}">
                         <td class="order_id">${ind + 1}</td>
                         <td class="order_id">${elem['order_id']}</td>
                         <td class="order_date">${elem['create_datetime']}</td>
@@ -129,7 +131,7 @@ $pageName = 'staff_order_search';
                         <td class="order_price text-right">$ ${dallorCommas(elem['price'])}</td>
                         <td class="order_status text-center">${elem['status']}</td>
                         <td class="order_shipment_status text-center"><a href="staff_order_cart-confirm.php?id=${elem['order_id']}">${elem['shipment_status']}</a></td>
-                        <td class="order_cancel text-center"><a href="" onclick="orderCancel(${elem['order_id']})">取消</a></td>
+                        <td class="order_cancel text-center">${cancel_btn}</td>
                     </tr>`;
                 $("#tradeRecord table tbody").append(tr);
             });
@@ -161,6 +163,7 @@ $pageName = 'staff_order_search';
             function(e) {
                 alert( "error" );
                 console.log(e.responseText);
+                alert( "error" );
         });
     }
 </script>

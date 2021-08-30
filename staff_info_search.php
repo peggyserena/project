@@ -94,7 +94,7 @@ $pageName = 'staff_info_search';
                             </select>
                         </li>
                         <li class="">
-                            <select id="age" name="age">
+                            <select id="ageRangeRange" name="ageRangeRange">
                                 <option value="" disabled hidden selected>年齡區間</option>
                                 <option value="">全部</option>
                                 <option value="18-22">18-20歲</option>
@@ -120,12 +120,10 @@ $pageName = 'staff_info_search';
                                 <td>職稱</td>
                                 <td>姓名</td>
                                 <td>性別</td>
-                                <td>生日</td>
-                                <td>身分證字號</td>
-                                <td>E-mail</td>
-                                <td>手機</td>
-                                <td>地址</td>
-                                <td>就職日</td>
+                                <td>年齡</td>
+                                <td>到職日</td>
+                                <td>離職日</td>
+                                <td>查詢</td>
                             </tr>
                         </thead>
                         <tbody>
@@ -139,9 +137,10 @@ $pageName = 'staff_info_search';
 </main>
 
 
-<?php include __DIR__ . '/js/staff_scripts.php'; ?>
+<?php include __DIR__ . '/parts/staff_scripts.php'; ?>
 
 <script>
+  staffIntoSearch()
   function staffIntoSearch(){
     $.post('<?= WEB_API ?>/staff-api.php', {
         action: 'readAll',
@@ -151,9 +150,8 @@ $pageName = 'staff_info_search';
         identityNum: $("#identityNum").val(),
         birthmonth: $("#select_month").val(),
         gender: $("#gender").val(),
-        age: $("#age").val(),
+        ageRangeRange: $("#ageRangeRange").val(),
     },function(data) {
-        console.log(data);
         staff_list = data['result'];
         $("#profile table tbody").html("");
         staff_list.forEach(function(staff, index){
@@ -164,12 +162,9 @@ $pageName = 'staff_info_search';
                             <td>${nullTo(staff['fullname'])}</td>
                             <td>${nullTo(staff['gender'])}</td>
                             <td>${nullTo(staff['birthday'])}</td>
-                            <td>${nullTo(staff['identityNum'])}</td>
-                            <td>${nullTo(staff['email'])}</td>
-                            <td>${nullTo(staff['mobile'])}</td>
-                            <td>${nullTo(staff['zipcode']) + nullTo(staff['county']) + nullTo(staff['district']) + nullTo(staff['address'])}</td>
                             <td>${nullTo(staff['created_at'])}</td>
-
+                            <td>${nullTo(staff['left_at'])}</td>
+                            <td><a href="staff_info.php">查詢</a></td>
                             </tr>`;
             $("#profile table tbody").append(output);
         })

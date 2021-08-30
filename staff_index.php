@@ -67,8 +67,8 @@ $aceept_role = [1, 2];
         <div><a class=" " href="staff_event_search.php"> 森林體驗維護</a></div>
         <div><a class=" " href="staff_forestnews_create.php"> 森林快報新增</a></div>
         <div><a class=" " href="staff_forestnews_search.php"> 森林快報維護</a></div>
-        <div><a class=" " href="staff_madol_create.php">彈跳視窗新增</a></div>
-        <div><a class=" " href="staff_madol_search.php">彈跳視窗維護</a></div>
+        <div><a class=" " href="staff_modal_create.php">彈跳視窗新增</a></div>
+        <div><a class=" " href="staff_modal_editor.php">彈跳視窗維護</a></div>
         <div><a class=" " href="staff_gallery.php">首頁&相簿維護</a></div>
         <div><a class=" " href="staff_category_editor.php"> 各項種類維護</a></div>
     </div>
@@ -82,7 +82,7 @@ $aceept_role = [1, 2];
 
     </div>
 </main>
-<?php include __DIR__ . '/js/staff_scripts.php'; ?>
+<?php include __DIR__ . '/parts/staff_scripts.php'; ?>
 
 <script>
   

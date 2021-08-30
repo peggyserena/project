@@ -3,16 +3,11 @@ include __DIR__ . '/../parts/config.php';
 include __DIR__ . '/../parts/imgHandler.php';
 include __DIR__ . '/../parts/tool.php';
 
-$action = isset($_POST['action']) ? $_POST['action'] : $_POST['type']; // 操作類型
+$action = isset($_POST['action']) ? $_POST['action'] : ''; // 操作類型
+
 $result = ["error"];
 
 switch ($action) {
-    case 'readCat':
-        $sql = "SELECT * FROM event_category";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([]);
-        $result = $stmt->fetchAll();
-        break;
     case 'readAll':
         // 抓取活動參與人數與類別中文名稱
         $result['data'] = read();

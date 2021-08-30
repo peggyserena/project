@@ -83,7 +83,7 @@ $pageName ='staff_password_editor';
     </div>
 
 </main>
-<?php include __DIR__ . '/js/staff_scripts.php'; ?>
+<?php include __DIR__ . '/parts/staff_scripts.php'; ?>
 <script>
     const fileds = [];
 

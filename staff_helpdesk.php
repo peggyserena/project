@@ -113,7 +113,7 @@ $pageName = 'staff_helpdesk';
         </div>
 </main>
 
-<?php include __DIR__ . '/js/staff_scripts.php'; ?>
+<?php include __DIR__ . '/parts/staff_scripts.php'; ?>
 
 <script>
 helpdeskRecord();

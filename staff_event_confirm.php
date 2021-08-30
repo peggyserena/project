@@ -3,7 +3,6 @@
 $title = '確認森林體驗新增內容';
 $pageName = 'staff_event_comfirm';
 
-
 ?>
 <?php include __DIR__ . '/parts/staff_html-head.php'; ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
@@ -109,7 +108,7 @@ $pageName = 'staff_event_comfirm';
 
 
 </div>
-    <?php include __DIR__ . '/js/staff_scripts.php'; ?>
+    <?php include __DIR__ . '/parts/staff_scripts.php'; ?>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
 
 <script>
@@ -129,6 +128,14 @@ $pageName = 'staff_event_comfirm';
             if (data['img'].length > 0){
                 img = data['img'][0]['path'];
             }
+            
+            dateString = "";
+            dateList = new URLSearchParams(window.location.search).get("dateList").split(",");
+            dateList.forEach(function(date){
+                dateString += `${date} ${data['time'].substr(0, 5)} 和`;
+            })
+            dateString = dateString.substr(0, dateString.length - 1);
+            
             list = [
                 {
                     selector: ".event_name",
@@ -146,7 +153,7 @@ $pageName = 'staff_event_comfirm';
                 },
                 {
                     selector: ".event_datetime",
-                    text: `${data['date']} ${data['time'].substr(0, 5)}`,
+                    text: dateString,
                 },
                 {
                     selector: ".event_available_quantity",

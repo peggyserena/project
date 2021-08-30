@@ -18,10 +18,11 @@ switch ($type) {
         };
 
         $cartMap = [];
-
-        foreach($_SESSION['cart']['hotel'] as $hotel){
-            $key = $hotel['id']."-".$hotel['order_date']; // 1-2021-08-26
-            $cartMap[$key] = 1;
+        if (array_key_exists('hotel', $_SESSION['cart'])){
+            foreach($_SESSION['cart']['hotel'] as $hotel){
+                $key = $hotel['id']."-".$hotel['order_date']; // 1-2021-08-26
+                $cartMap[$key] = 1;
+            }
         }
         
         foreach($result as $result_key => $hoteList){

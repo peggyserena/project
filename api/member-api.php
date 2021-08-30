@@ -29,9 +29,9 @@ switch ($action) {
                 $param = [];
                 $condition_map = [
                 'id' => "`id` = ?",
-                'fullname' => "`fullname` = ?",
-                'mobile' => "`mobile` = ?",
-                'email' => "`email` = ?",
+                'fullname' => "`fullname` LIKE CONCAT('%', ?, '%')",
+                'mobile' => "`mobile` LIKE CONCAT('%', ?, '%')",
+                'email' => "`email` LIKE CONCAT('%', ?, '%')",
                 'gender' => "`gender` = ?",
                 'birthmonth'=>"MONTH(`birthday`) = ?",
                 'age' => "TIMESTAMPDIFF(YEAR, `birthday`, CURDATE()) BETWEEN ? AND ?",

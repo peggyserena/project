@@ -108,7 +108,7 @@ exit;
                             </select>
                         </li>
                         <li class="">
-                            <select id="age" name="age">
+                            <select id="ageRange" name="ageRange">
                                 <option value="" disabled hidden selected>年齡區間</option>
                                 <option value="">全部</option>
                                 <option value="18-22">18-20歲</option>
@@ -126,7 +126,7 @@ exit;
 
             <div id="profile" class="  p-0  m-0">
                 <div class="">
-                <table class="table table-bordered table-Primary table-hover text-center">
+                    <table class="table table-bordered table-Primary table-hover text-center">
                         <thead class="bg-dark text-white">
                             <tr>
                                 <td>序號</td>
@@ -136,12 +136,16 @@ exit;
                                 <td>性別</td>
                                 <td>生日</td>
                                 <td>就職日</td>
-                                <td>確認</td>
+                                <td>離職日</td>                    
+                                <td><a href="staff_info.php" type="button" onclic="">送出</a></td>
+
                             </tr>
                         </thead>
                         <tbody>
                         </tbody>
                     </table>
+                    <td><button type="button" onclic="">送出</button></td>
+
                 </div>
             </div>
         </div>
@@ -150,7 +154,7 @@ exit;
 </main>
 
 
-<?php include __DIR__ . '/js/staff_scripts.php'; ?>
+<?php include __DIR__ . '/parts/staff_scripts.php'; ?>
  <!-- <td>${nullTo(staff['role_name'])}"></td> -->
 
 <script>
@@ -162,7 +166,7 @@ exit;
         fullname: $("#fullname").val(),
         mobile: $("#mobile").val(),
         birthmonth: $("#select_month").val(),
-        age: $("#age").val(),
+        ageRange: $("#ageRange").val(),
         gender: $("#gender").val(),
     },function(data) {
         console.log(data);
@@ -171,14 +175,13 @@ exit;
         staff_list.forEach(function(staff, index){
             var output = `<tr>
                             <td class="bg-dark text-white" style="border: #454d55 1px solid ;">${index + 1}</td>
-                            <td ><input class="actived text-center" " name="${staff['staff_id']}" data-table="${staff['staff_id']}" data-id="" value="${nullTo(staff['staff_id'])}"/></td>
+                            <td >${nullTo(staff['staff_id'])}</td>
                             <td class=""><input class="actived text-center" name="${staff['role_name']}" data-table="${staff['role_name']}" data-id="" value="${nullTo(staff['role_name'])}"/></td>
                             <td>${nullTo(staff['fullname'])}</td>
                             <td>${nullTo(staff['gender'])}</td>
                             <td>${nullTo(staff['birthday'])}</td>
                             <td>${nullTo(staff['created_at'])}</td>
-                            <td><button type="button" onclic="">送出</button></td>
-
+                            <td>${nullTo(staff['left_at'])}</td>
                             </tr>`;
             $("#profile table tbody").append(output);
         })

@@ -13,7 +13,7 @@ $pageName = 'staff_index';
 
 <?php include __DIR__. '/parts/staff_html-head.php'; ?>
 <?php include __DIR__. '/parts/staff_navbar.php'; ?>
-<?php include __DIR__ . '/js/staff_scripts.php'; ?>
+<?php include __DIR__ . '/parts/staff_scripts.php'; ?>
 
 <script>
   

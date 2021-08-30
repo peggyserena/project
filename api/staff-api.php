@@ -27,11 +27,11 @@ switch ($action){
                 $condition = [];
                 $param = [];
                 $condition_map = [
-                'staff_id' => "`staff_id` = ?",
-                'fullname' => "`fullname` = ?",
+                'staff_id' => "`staff_id` LIKE CONCAT('%', ?, '%')",
+                'fullname' => "`fullname` LIKE CONCAT('%', ?, '%')",
                 'gender' => "`gender` = ?",
-                'mobile' => "`mobile` = ?",
-                'identityNum' => "`identityNum` = ?",
+                'mobile' => "`mobile` LIKE CONCAT('%', ?, '%')",
+                'identityNum' => "`identityNum` LIKE CONCAT('%', ?, '%')",
                 'birthmonth'=>"MONTH(`birthday`) = ?",
                 'age' => "TIMESTAMPDIFF(YEAR, `birthday`, CURDATE()) BETWEEN ? AND ?",
                 ];
@@ -73,18 +73,22 @@ switch ($action){
                 }
                 break;
         case 'changeProfile':
-                $columns = ['address', 'county', 'district', 'zipcode', 'mobile', 'birthday', 'identityNum', 'email', 'fullname', 'gender', 'created_at'];
+                $columns = ['address', 'county', 'district', 'zipcode', 'mobile', 'birthday', 'identityNum', 'email', 'fullname', 'gender', 'left_at'];
                 $fill_count = 0;
                 $update_data = [];
                 foreach($columns as $col){
-                        $data = $_POST[$col];
+                        if ($col === 'gender'){
+                                $data = $_POST[$col] ?? "不表明";
+                        }else {
+                                $data = $_POST[$col];
+                        }
                         if (isset($data)) {
                                 $fill_count++;
                                 array_push($update_data, $data);
                         }
                 }
                 if ($fill_count == count($columns)){
-                        $a_sql = "UPDATE `staff` SET ".implode(' = ?,', $columns)." = ? WHERE `staff_id` = ?";
+                        $a_sql = "UPDATE `staff` SET ".implode(' = ?,', $columns)." = ?, `created_at` = NOW() WHERE `staff_id` = ?";
                         // address = ?, county = ?
                         $a_stmt = $pdo->prepare($a_sql);
                         array_push($update_data, $staff['staff_id']);

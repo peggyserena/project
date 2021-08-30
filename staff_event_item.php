@@ -108,7 +108,7 @@ $pageName = 'staff_event_item';
 
 
 </div>
-    <?php include __DIR__ . '/js/staff_scripts.php'; ?>
+    <?php include __DIR__ . '/parts/staff_scripts.php'; ?>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
 
 <script>

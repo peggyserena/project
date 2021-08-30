@@ -107,7 +107,7 @@ $r = $pdo->query($sql)->fetchAll();
     </div>
 
 </main>
-<?php include __DIR__ . '/js/staff_scripts.php'; ?>
+<?php include __DIR__ . '/parts/staff_scripts.php'; ?>
 <script src="erTWZipcode-master/js/er.twzipcode.data.js"></script>
 <script src="erTWZipcode-master/js/er.twzipcode.min.js"></script>
 <script>

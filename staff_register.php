@@ -118,7 +118,7 @@ if (!in_array($_SESSION['staff']['role'], $aceept_role)){
     </div>
 
 </main>
-<?php include __DIR__ . '/js/staff_scripts.php'; ?>
+<?php include __DIR__ . '/parts/staff_scripts.php'; ?>
 <script>
     function checkForm() {
         $.post(
@@ -216,125 +216,5 @@ if (!in_array($_SESSION['staff']['role'], $aceept_role)){
 
             
         });
-    function fillData(data, elem){
-        var event_img_cover = "";
-        if (typeof(data['img']) !== "undefined"){
-            event_img_cover = "<?= WEB_ROOT."/" ?>" + data['img'][0]['path'];
-        }
-        list = [
-            {
-                selector: ".eventItem",
-                attr: {
-                    id: `event_${data['id']}`,
-                }
-            },
-            {
-                selector: ".event_name",
-                text: data['name'],
-            },
-            {
-                selector: ".event_img_cover",
-                attr: {
-                    src: event_img_cover
-                }
-            },
-            {
-                selector: ".event_quantity",
-                text: data['quantity_map'][data['name']],
-            },
-            {
-                selector: ".event_datetime",
-                text: `${data['date']} ${data['time'].substr(0, 5)}`,
-            },
-            {
-                selector: ".event_available_quantity",
-                text:`${data['limitNum'] - data['quantity']}/${data['limitNum']}`,
-            },
-            {
-                selector: ".event_price",
-                text: data['price'],
-            },
-            {
-                selector: ".event_quantity_input",
-                attr: {
-                    max: data['limitNum'] - data['quantity'],
-                },
-            },
-
-            {
-                selector: ".ec_name",
-                text: data['ec_name'],
-            },
-            {
-                selector: ".event_location",
-                text: data['location'],
-            },
-            {
-                selector: ".event_limitNum",
-                text: data['limitNum'],
-            },
-            {
-                selector: ".event_content",
-                text: data['content'],
-            },
-            {
-                selector: ".event_description",
-                text: substr(data['description'], 50),
-            },
-            {
-                selector: ".event_link",
-                attr: {
-                    href: `event_item.php?id=${data['id']}`
-                }
-            },
-            {
-                selector: ".add-to-cart",
-                attr: {
-                    onclick: `tr_addTransaction('event', 'cart', ${data['id']})`
-                }
-            },
-            {
-                selector: ".add-to-wishList",
-                attr: {
-                    onclick: `tr_addTransaction('event', 'wishList', ${data['id']})`
-                }
-            },
-        ]
-        
-        // map
-        // {
-        //     selector: "#event_name",
-        //     attr: {
-        //         text: data['name']
-        //     }
-        // }
-        list.forEach(function(m){
-            // attr
-            // attr: {
-            //         src: <?= WEB_ROOT."/" ?>data['img'][0]['path']
-            //     }
-            if ('text' in m){
-                $(elem).find(m['selector']).text(m['text']);
-            }
-            if ('value' in m){
-                $(elem).find(m['selector']).val(m['value']);
-            }
-            for (attr_key in m['attr']){
-                // fill_key = 'src'
-                // m['attr']['src']
-                $(elem).find(m['selector']).attr(attr_key, m['attr'][attr_key]);
-            }
-        });
-
-        
-        if (typeof(data['img']) !== "undefined"){
-            data['img'].forEach(function(data_img){
-                var output = `<a href='<?= WEB_ROOT."/" ?>${data_img['path']}' data-fancybox='F_box1' data-caption=' ${data['name']}'>
-                        <img src='<?= WEB_ROOT."/" ?>${data_img['path']}' alt=''>
-                    </a>`
-                $(".fancybox").append(output);
-            })
-        }
-    }
 </script>
 <?php include __DIR__ . '/parts/staff_html-foot.php'; ?>

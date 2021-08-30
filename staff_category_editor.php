@@ -57,7 +57,7 @@ $pageName = 'staff_category_editor';
         </div>
   </main>
 
-    <?php include __DIR__ . '/js/staff_scripts.php'; ?>
+    <?php include __DIR__ . '/parts/staff_scripts.php'; ?>
 
     <script>
         var selectedId = "<?= $_GET['cat_id'] ?? "" ?>";

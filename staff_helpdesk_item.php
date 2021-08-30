@@ -102,7 +102,7 @@ a:hover{
 <div class="text-center mb-5">   
     <a class="custom-btn btn-4 text-center c_1" href="<?= WEB_ROOT ?>/staff_helpdesk.php">回上頁</a>
 </div>
-<?php include __DIR__ . '/js/staff_scripts.php'; ?>
+<?php include __DIR__ . '/parts/staff_scripts.php'; ?>
 <script src="<?= WEB_ROOT ?>/js/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
 <script>
 $("#img")

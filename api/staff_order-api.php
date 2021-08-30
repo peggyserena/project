@@ -42,21 +42,19 @@ switch ($action){
         $param = [];
 
         $condition_map = [
-            'email' => "m.email LIKE ?",
-            'fullname' => "m.fullname LIKE ?",
-            'mobile' => "m.mobile LIKE ?",
-            'order_id' => "so.order_id LIKE ?",
+            'email' => "m.email LIKE CONCAT('%', ?, '%')",
+            'fullname' => "m.fullname LIKE CONCAT('%', ?, '%')",
+            'mobile' => "m.mobile LIKE CONCAT('%', ?, '%')",
+            'order_id' => "so.order_id LIKE CONCAT('%', ?, '%')",
             'status' => "so.status = ?",
             'shipment_status' => "so.shipment_status = ?",
+            'user_id' => "so.`user_id` = ?",
         ];
 
         // 設定condition的條件
         foreach($condition_map as $key => $value){
-            $val = replaceAllToEmpty($_POST[$key]);
+            $val = replaceAllToEmpty($_POST[$key] ?? "");
             if (!empty($val)){
-                if (strpos($value, " LIKE ")){
-                    $val = "%$val%";
-                }
                 array_push($condition, $value);
                 array_push($param, $val);
             }
@@ -151,22 +149,20 @@ switch ($action){
         break;
         
     case 'cancel':
-        $user_id = $_SESSION['user']['id'];
         $order_id = $_POST['order_id'];
         $last_date = date('Y-m-d', strtotime("-7 days"));
         $product_list = ['event', 'hotel', 'restaurant'];
         $count = 0;
         $output = [];
 
-        $sql = "SELECT * FROM `sales_order` WHERE user_id = ? and create_datetime >= ? and order_id = ?";
+        $sql = "SELECT * FROM `sales_order` WHERE create_datetime >= ? and id = ?";
         $stmt = $pdo->prepare($sql);
-        $stmt->execute([$user_id, $last_date, $order_id]);
+        $stmt->execute([$last_date, $order_id]);
         $result = $stmt->fetchAll();
-        
         if (sizeof($result) > 0) {
-            $sql = "UPDATE `sales_order` SET status = '已取消' WHERE user_id = ? and order_id = ?";
+            $sql = "UPDATE `sales_order` SET status = '已取消' WHERE id = ?";
             $stmt = $pdo->prepare($sql);
-            $stmt->execute([$user_id, $order_id]);
+            $stmt->execute([$order_id]);
         }else{
             $output = ["info" => "此訂單無法刪除，已超過鑑賞期限7天"];
         }

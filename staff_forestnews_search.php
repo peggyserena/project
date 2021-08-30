@@ -135,7 +135,7 @@ $pageName = 'forestnews';
 
     </div>
 </main>
-    <?php include __DIR__ . '/js/staff_scripts.php'; ?>
+    <?php include __DIR__ . '/parts/staff_scripts.php'; ?>
 
     <script>
         var date = new Date();

@@ -15,7 +15,7 @@ $pageName = 'staff_order_shippment';
     <div class="container mt-5 mb-5  ">
     </div>
 
-<?php include __DIR__ . '/js/staff_scripts.php'; ?>
+<?php include __DIR__ . '/parts/staff_scripts.php'; ?>
 <script>
 </script>
 

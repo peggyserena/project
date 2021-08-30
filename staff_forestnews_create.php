@@ -76,7 +76,7 @@ $pageName = 'staff_forestnews_create';
     </div>
   </main>
 
-<?php include __DIR__ . '/js/staff_scripts.php'; ?>
+<?php include __DIR__ . '/parts/staff_scripts.php'; ?>
 <script src="<?= WEB_ROOT ?>/js/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
 <script>
 $("#img")

@@ -573,9 +573,6 @@ $pageName = 'hotel';
             }, function(data){
                 html = [];
                 console.log("createHotelData");
-                console.log(data);
-                hotel = JSON.parse('<?= json_encode($_SESSION['cart']['hotel']) ?>');
-                console.log(hotel);
                 var modal_attribute = '';
                 data.forEach(function (elem, index){
                     elem.forEach(function (elem2, index2){
@@ -600,14 +597,14 @@ $pageName = 'hotel';
                                     ${elem2['name_en']}</p></th>
                                 <th scope="row" class="d-none d-lg-table-cell text-center" ><img style="width: 8rem;" src='<?= WEB_ROOT ?>/images/hotel/${elem2['hotel_id']}_1.jpg' alt=""></th>
                                 <td class="">
-                                <div><span class="" ${modal_attribute} onclick="${onclick_function}"><img class="${status_class}" src="./images/icon/bookStatus.svg" alt=""></span><br>
+                                <div><span id="hotel_btn_${elem2['id']}_${elem2['order_date']}" class="" ${modal_attribute} onclick="${onclick_function}"><img class="${status_class}" src="./images/icon/bookStatus.svg" alt=""></span><br>
                                 ${dallorCommas(elem2['final_price'])}</div>
                             </td>`;
                         }else{
                             var className = "";
                             if (index > 2) className = "d-none d-md-table-cell";
                             html[elem2['id']] += `<td class="${className}">
-                                <div><span class="" ${modal_attribute} onclick="${onclick_function}"><img class="${status_class}" src="./images/icon/bookStatus.svg" alt=""></span><br>
+                                <div><span id="hotel_btn_${elem2['id']}_${elem2['order_date']}" class="" ${modal_attribute} onclick="${onclick_function}"><img class="${status_class}" src="./images/icon/bookStatus.svg" alt=""></span><br>
                                 ${dallorCommas(elem2['final_price'])}</div>
                             </td>`;
                         }
@@ -629,9 +626,8 @@ $pageName = 'hotel';
         function modalError(msg){
             modal_init();
             insertPage("#modal_img", "animation/animation_error.html");
-            insertText("#modal_content", msg);
+            insertHtml("#modal_content", `${msg}<a class="btn">前往購物車修改</a>`);
             $("#modal_alert").modal("show");
-            setTimeout(function(){ $("#modal_alert").modal("hide");}, 2000);
         }
     </script>
 

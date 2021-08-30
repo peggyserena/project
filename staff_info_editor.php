@@ -64,6 +64,13 @@ $pageName ='staff_register';
                         <input required type="text" class="form-control" name="fullname" id="fullname" placeholder="林小花" autofocus>
                     </div>
                     <div class="form-group">
+                        <label for="gender">性別 </label>
+                        <input type="radio" class="gender" name="gender" value="先生">先生
+                        <input type="radio" class="gender"  name="gender" value="小姐">小姐
+                        <input type="radio" class="gender"  name="gender" value="不表明">不表明
+                        <small class="form-text error"></small>
+                    </div>
+                    <div class="form-group">
                         <label for="identityNum">身分證字號</label>
                         <input required type="text" class="form-control" id="identityNum" name="identityNum"  required>
                     </div>
@@ -95,6 +102,17 @@ $pageName ='staff_register';
                         <label for="address">地址</label>
                         <input required type="text" class="form-control" name="address" id="address" placeholder="＊＊區＊＊路＊＊巷＊＊號＊＊樓" >
                     </div>
+                    <div class="form-group">
+                    <label for="created_at">到職日： </label><span id='created_at'></span>
+                    <input type="date" class="form-control" id="created_at" name="created_at" required>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="left_at">離職日： </label><span id='left_at'></span>
+                        <input type="date" class="form-control" id="left_at" name="left_at">
+
+                    </div>
+
                     <div class="button m-4"><button type="submit" class="custom-btn btn-4 t_shadow ">送出</button></div>
                     <hr>
                 </form>
@@ -103,7 +121,7 @@ $pageName ='staff_register';
     </div>
 
 </main>
-<?php include __DIR__ . '/js/staff_scripts.php'; ?>
+<?php include __DIR__ . '/parts/staff_scripts.php'; ?>
 <script src="erTWZipcode-master/js/er.twzipcode.data.js"></script>
 <script src="erTWZipcode-master/js/er.twzipcode.min.js"></script>
 <script>
@@ -208,6 +226,12 @@ $pageName ='staff_register';
                 value: data['fullname']
             },
             {
+                selector: `.gender[value='${data["gender"]}']`,
+                attr: {
+                    "checked" : "checked",
+                }
+            },
+            {
                 selector: "#birthday",
                 value: data['birthday']
             },
@@ -239,7 +263,16 @@ $pageName ='staff_register';
                 selector: "#address",
                 value: data['address']
             },
+            {
+                selector: "#created_at",
+                text: data['created_at']
+            },
+            {
+                selector: "#left_at",
+                text: data['left_at']
+            },
         ]
+
         
         // map
         // {
