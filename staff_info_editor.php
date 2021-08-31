@@ -50,14 +50,17 @@ $pageName ='staff_register';
             <div class="col-md-8 col-sm-12 con_01 m-2 p-0">
                 <h2 class="title b-green rot-135">修改個人資料</h2>
                 <form name="form1" id="myForm" method="post" novalidate onsubmit="checkForm(); return false;">
-                    <input required type="hidden" name="action" value="changeProfile"/>
+                    <input type="hidden" name="action" value="changeProfile"/>
+                    <input type="hidden" name="staff_id" value="<?= $_GET['staff_id'] ?>"/>
                     <div class="form-group">
                         <label for="staff_id">員工編號： </label>
                         <span type="text" id="staff_id"></span>
                     </div>
                     <div class="form-group">
-                        <label for="position">職稱： </label>
-                        <span type="text" id="position"></span>
+                        <label for="role">職稱： </label>
+                        <select type="text" class="form-control" id="role" name="role" autofocus required>
+                            <option value="">請選擇</option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="fullname">姓名</label>
@@ -104,14 +107,17 @@ $pageName ='staff_register';
                     </div>
                     <div class="form-group">
                     <label for="created_at">到職日： </label><span id='created_at'></span>
-                    <input type="date" class="form-control" id="created_at" name="created_at" required>
 
                     </div>
-                    <div class="form-group">
-                        <label for="left_at">離職日： </label><span id='left_at'></span>
-                        <input type="date" class="form-control" id="left_at" name="left_at">
+                    <?php 
+                    if (in_array($_SESSION['staff']['role'], [1,2,3])): ?>
+                        <div class="form-group">
+                            <label for="left_at">離職日： </label><span id='left_at'></span>
+                        </div>
+                    <?php
+                        endif;
+                    ?>
 
-                    </div>
 
                     <div class="button m-4"><button type="submit" class="custom-btn btn-4 t_shadow ">送出</button></div>
                     <hr>
@@ -191,7 +197,7 @@ $pageName ='staff_register';
                 insertPage("#modal_img", "animation/animation_error.html");
                 insertText("#modal_content", "資料傳輸失敗");
                 $("#modal_alert").modal("show");
-                setTimeout(function(){window.history.back();}, 2000);
+                // setTimeout(function(){window.history.back();}, 2000);
                 console.log(d);
             })
         }
@@ -201,15 +207,33 @@ $pageName ='staff_register';
 
 <script>
     $.post('api/staff-api.php', {
-        action: 'readCurrent',
+        action: 'readCat',
     }, function(result){
+        role = parseInt(<?= $_SESSION['staff']['role']?>);
         data = result['data'];
-        output = $("#myForm");
-        fillData(data, output);
+
+        for (key in data){
+            if (role === 1 || (role === 2 && data[key]['id'] in [3, 4])){
+                $("#role").append(`<option value="${data[key]['id']}">${data[key]['name']}</option>`);
+            }
+        }
+        
+        $.post('api/staff-api.php', {
+            action: 'read',
+            staff_id: "<?= $_GET['staff_id'] ?>"
+        }, function(result){
+            data = result['data'];
+            output = $("#myForm");
+            fillData(data, output);
+        }, 'json').fail(function(data){
+            console.log('error');
+            console.log(data);
+        })
     }, 'json').fail(function(data){
         console.log('error');
         console.log(data);
     })
+   
 
     function fillData(data, elem){
         list = [
@@ -218,8 +242,8 @@ $pageName ='staff_register';
                 text: data['staff_id']
             },
             {
-                selector: "#position",
-                text: data['role_name']
+                selector: "#role",
+                value: data['role']
             },
             {
                 selector: "#fullname",
@@ -252,14 +276,6 @@ $pageName ='staff_register';
                 value: data['zipcode']
             },
             {
-                selector: "#county",
-                value: data['county']
-            },
-            {
-                selector: "#district",
-                value: data['district']
-            },
-            {
                 selector: "#address",
                 value: data['address']
             },
@@ -269,11 +285,14 @@ $pageName ='staff_register';
             },
             {
                 selector: "#left_at",
-                text: data['left_at']
+                value: data['left_at']
             },
         ]
 
-        
+        document.querySelector('#myForm select[name=county]').value = data['county'];
+        document.querySelector('#myForm select[name=county]').dispatchEvent(new Event("change"));
+        document.querySelector('#myForm select[name=district]').value = data['district'];
+        document.querySelector('#myForm select[name=district]').dispatchEvent(new Event("change"));
         // map
         // {
         //     selector: "#event_name",
@@ -319,10 +338,6 @@ $("#birthday").attr("max", max);
     });
   //first time init all select elements in #myForm
 //   M.FormSelect.init(document.querySelectorAll('#myForm select'));
-  document.querySelector('#myForm select[name=county]').value = "<?= $_SESSION['staff']['county'] ?>";
-  document.querySelector('#myForm select[name=county]').dispatchEvent(new Event("change"));
-  document.querySelector('#myForm select[name=district]').value = "<?= $_SESSION['staff']['district'] ?>";
-  document.querySelector('#myForm select[name=district]').dispatchEvent(new Event("change"));
 </script>
 <?php // unset($_SESSION['staff'])?>
 <?php include __DIR__. '/parts/staff_html-foot.php'; ?>

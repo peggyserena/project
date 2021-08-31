@@ -73,7 +73,7 @@ if (!in_array($_SESSION['staff']['role'], $aceept_role)){
             <div class="col-md-7 con_01 m-0 p-0">
                 <h2 class="title b-green rot-135">新增員工</h2>
                 <form name="form1" method="post" onsubmit="checkForm(); return false;">
-                    <input type="hidden" name="action" value="admin_register"/>
+                    <input type="hidden" name="action" value="register"/>
                     <div class="form-group">
                         <label for="quantity">人數 <span>(必填)</span></label>
                         <input type="text" class="form-control" id="quantity" name="quantity" min=1 autofocus required>
@@ -122,7 +122,7 @@ if (!in_array($_SESSION['staff']['role'], $aceept_role)){
 <script>
     function checkForm() {
         $.post(
-            '<?= WEB_API?>/register-api.php',
+            '<?= WEB_API?>/staff-api.php',
             $(document.form1).serialize(),
             function(data) {
                 if (data.authError) {
@@ -188,10 +188,8 @@ if (!in_array($_SESSION['staff']['role'], $aceept_role)){
                 role = parseInt(<?= $_SESSION['staff']['role']?>);
                 data = result['data'];
 
-                for (key in data){
-                    if (role === 2 && !(data[key]['id'] in [3, 4])){
-                        continue;
-                    }
+                
+                if (role === 1 || (role === 2 && data[key]['id'] in [3, 4])){
                     $("#role").append(`<option value="${data[key]['id']}">${data[key]['name']}</option>`);
                 }
                 

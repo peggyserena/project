@@ -94,11 +94,11 @@ $pageName = 'staff_info_search';
                             </select>
                         </li>
                         <li class="">
-                            <select id="ageRangeRange" name="ageRangeRange">
+                            <select id="age" name="age">
                                 <option value="" disabled hidden selected>年齡區間</option>
                                 <option value="">全部</option>
-                                <option value="18-22">18-20歲</option>
-                                <option value="23-30">21-30歲</option>
+                                <option value="18-20">18-20歲</option>
+                                <option value="21-30">21-30歲</option>
                                 <option value="31-40">31-40歲</option>
                                 <option value="41-50">41-50歲</option>
                                 <option value="51-100">51歲以上</option>
@@ -150,7 +150,7 @@ $pageName = 'staff_info_search';
         identityNum: $("#identityNum").val(),
         birthmonth: $("#select_month").val(),
         gender: $("#gender").val(),
-        ageRangeRange: $("#ageRangeRange").val(),
+        age: $("#age").val(),
     },function(data) {
         staff_list = data['result'];
         $("#profile table tbody").html("");
@@ -161,10 +161,10 @@ $pageName = 'staff_info_search';
                             <td>${nullTo(staff['role_name'])}</td>
                             <td>${nullTo(staff['fullname'])}</td>
                             <td>${nullTo(staff['gender'])}</td>
-                            <td>${nullTo(staff['birthday'])}</td>
+                            <td>${nullTo(staff['age'])}</td>
                             <td>${nullTo(staff['created_at'])}</td>
                             <td>${nullTo(staff['left_at'])}</td>
-                            <td><a href="staff_info.php">查詢</a></td>
+                            <td><a href="staff_info.php?staff_id=${staff['staff_id']}">查詢</a></td>
                             </tr>`;
             $("#profile table tbody").append(output);
         })
@@ -183,7 +183,7 @@ $pageName = 'staff_info_search';
     var month = 1;
     var selectedMonth = "<?= $_GET['month'] ?? "" ?>";
     $("#select_month option").each(function(ind, elem) {
-        if (ind > 0) {
+        if (ind > 1) {
             elem.text = month;
             elem.value = month;
             month++;

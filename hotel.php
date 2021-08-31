@@ -556,7 +556,7 @@ $pageName = 'hotel';
 
         $("input[type='date']")[0].onchange = function(){
             var date_list = this.value.split("-");
-            nowDate = new Date(date_list[0], date_list[1], date_list[2]);
+            nowDate = new Date(date_list[0], parseInt(date_list[1]) - 1, date_list[2]);
             createDatePicker();
             createHotelData();
         }
@@ -575,15 +575,20 @@ $pageName = 'hotel';
                 console.log("createHotelData");
                 var modal_attribute = '';
                 data.forEach(function (elem, index){
-                    elem.forEach(function (elem2, index2){
-                        if (elem2['available_quantity'] === '0'){
+                    console.log(elem);
+                    elem['data'].forEach(function (elem2, index2){
+                        if (elem['status'] !== 'available'){
+                            status_class = "unavailable";
+                            modal_attribute = '';
+                            onclick_function = `modalError('此商品尚未開放')`;
+                        } else if (elem2['available_quantity'] === '0'){
                             status_class = "full";
                             modal_attribute = '';
                             onclick_function = `modalError('此商品已售完')`;
                         } else if (elem2['status'] === 'temp') {
                             status_class = elem2['status'];
                             modal_attribute = '';
-                            onclick_function = `modalError('此商品已在購物車中')`;
+                            onclick_function = `modalTemp('此商品已在購物車中')`;
                         }else{
                             status_class = "available";
                             modal_attribute = 'data-toggle="modal" data-target="#myModal_1"';
@@ -623,10 +628,16 @@ $pageName = 'hotel';
         createHotelData();
 
 
-        function modalError(msg){
+        function modalTemp(msg){
             modal_init();
             insertPage("#modal_img", "animation/animation_error.html");
             insertHtml("#modal_content", `${msg}<a class="btn">前往購物車修改</a>`);
+            $("#modal_alert").modal("show");
+        }
+        function modalError(msg){
+            modal_init();
+            insertPage("#modal_img", "animation/animation_error.html");
+            insertHtml("#modal_content", `${msg}`);
             $("#modal_alert").modal("show");
         }
     </script>

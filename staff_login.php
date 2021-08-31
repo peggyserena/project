@@ -77,7 +77,7 @@ $pageName ='staff_login';
 </div>
 <?php include __DIR__ . '/parts/staff_scripts.php'; ?>
 <script>
-  const staff_id_re = /^d{5}$/
+  const staff_id_re = /^\d{5}$/
   const $staff_id = $('#staff_id')
   const fileds = [$staff_id]
 
@@ -119,7 +119,6 @@ $pageName ='staff_login';
             insertPage("#modal_img", "animation/animation_error.html");
             insertText("#modal_content", "登入失敗，請確認員工編號和密碼！");
             $("#modal_alert").modal("show");
-            setTimeout(function(){window.history.back();}, 2000);
           }
         },
         'json'

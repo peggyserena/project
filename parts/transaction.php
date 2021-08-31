@@ -110,7 +110,7 @@ function addTransaction_hotel(method){
                 selector = `#hotel_btn_${id}_${order_date}`;
                 modal_attribute = "";
                 status_class = 'temp';
-                onclick_function = `modalError('此商品已在購物車中')`;
+                onclick_function = `modalTemp('此商品已在購物車中')`;
                 newSpan = `<span id="selector" class="" ${modal_attribute} onclick="${onclick_function}"><img class="${status_class}" src="./images/icon/bookStatus.svg" alt=""></span>`
 
                 parent = $(selector).parent();

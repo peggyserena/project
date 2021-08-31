@@ -50,8 +50,8 @@ $pageName = 'staff_info';
                 <div class="form-group">
                     <label for="gender">性別： </label><span id="gender"></span>
                 </div>
-                <div class="form-group">
-                    <label for="birthday">生日： </label><spa id='birthday'></span><spa id='age' hidden></span> 歲
+                <div class="form-group ">
+                    <label for="birthday">生日： </label><span id='birthday'></span>&emsp;&emsp;<span id='age'></span> 歲
                 </div>
  
                 <div class="form-group">
@@ -69,11 +69,17 @@ $pageName = 'staff_info';
                 <div class="form-group">
                     <label for="created_at">到職日： </label><span id='created_at'></span>
                 </div>
-                <div class="form-group">
-                    <label for="left_at">離職日： </label><span id='left_at'></span>
-                </div>
+                <?php 
+                    if (in_array($_SESSION['staff']['role'], [1,2,3])): ?>
+                        <div class="form-group">
+                            <label for="left_at">離職日： </label><span id='left_at'></span>
+                        </div>
+                <?php
+                    endif;
+                ?>
+                
      
-                <div  class="text-center"><a href="staff_info_editor.php" class="custom-btn btn-4 text-center t_shadow">修改</a>
+                <div  class="text-center"><a href="staff_info_editor.php?staff_id=<?= $_GET['staff_id'] ?? "" ?>" class="custom-btn btn-4 text-center t_shadow">修改</a>
                 </div>
             </div>
 
@@ -86,7 +92,8 @@ $pageName = 'staff_info';
 
 <script>
     $.post('api/staff-api.php', {
-        action: 'readCurrent',
+        action: 'read',
+        staff_id: "<?= $_GET['staff_id'] ?? "" ?>"
     }, function(result){
         data = result['data'];
         output = $("#profile");
@@ -117,6 +124,10 @@ $pageName = 'staff_info';
             {
                 selector: "#birthday",
                 text: data['birthday']
+            },
+            {
+                selector: "#age",
+                text: data['age']
             },
             {
                 selector: "#identityNum",
@@ -153,7 +164,7 @@ $pageName = 'staff_info';
             {
                 selector: "#left_at",
                 text: data['left_at']
-            },
+            }
         ]
     
         list.forEach(function(m){
@@ -175,34 +186,7 @@ $pageName = 'staff_info';
         });
     }
 
-    $(document).ready(function () {
-    console.log($(document).width());           
-        $('#datepicker').datepicker
-        ({
-            dateFormat: 'mm/dd/yy',
-            changeMonth: true,
-            changeYear: true,
-            yearRange: "-100:+0",
-            maxDate: new Date(),
-            inline: true,
 
-                onSelect: function() {
-                var birthDay = document.getElementById("datepicker").value;
-                    var DOB = new Date(birthDay);
-                    var today = new Date();
-                    var age = today.getTime() - DOB.getTime();
-                    var elapsed = new Date(age);
-                    var year = elapsed.getYear()-70;
-                    var month = elapsed.getMonth();
-                    var day = elapsed.getDay();
-                    var ageTotal = year + " Years," + month + " Months," + day + " Days";
-
-                    document.getElementById('agecal').innerText = ageTotal;
-
-                }
-        });  
-
-    });
 
 </script>
 
