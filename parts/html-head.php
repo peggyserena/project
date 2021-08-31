@@ -44,3 +44,4 @@ exit;
 </head>
 
 <body>
+    <?php include __DIR__. '/staff_modal_sample.php'; ?>

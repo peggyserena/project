@@ -15,7 +15,7 @@ $pageName = 'index';
 </style>
 
 <main>
-    <div class="modal fade text-muted" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <!-- <div class="modal fade text-muted" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content ">
                 <h3 class="modal-title title text-center m-0" id="exampleModalLongTitle">森林防疫懶人包</h3>
@@ -33,7 +33,7 @@ $pageName = 'index';
             </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <div id="slider" name="slider" class=" owl-carousel owl-theme">
     </div>
 

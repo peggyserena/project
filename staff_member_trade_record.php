@@ -95,7 +95,7 @@ $pageName = 'member_trade_Record';
                         <td class="order_date text-center">${elem['create_datetime']}</td>
                         <td class="order_price text-left">${dallorCommas(elem['price'])}</td>
                         <td class="order_status text-center ${status_class}">${elem['status']}</td>
-                        <td class="order_status text-center "><a href="cart-confirm.php?id=${elem['id']}&type='search'">查詢</a></td>
+                        <td class="order_status text-center "><a href="staff_order_cart-confirm.php?id=${elem['order_id']}">查詢</a></td>
                         <td class="order_status text-center "><button onclick="orderCancel(${elem['order_id']})">取消</button></td>
                     </tr>`;
                 $("#tradeRecord table tbody").append(tr);

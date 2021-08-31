@@ -224,7 +224,7 @@ $sum = 0;
 </div>
 
 
-<?php include __DIR__. '/js/staff_scripts.php'; ?>
+<?php include __DIR__. '/parts/staff_scripts.php'; ?>
 <script>
 $(document).ready(function(){
     fillTable();

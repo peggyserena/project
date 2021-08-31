@@ -3,12 +3,6 @@
 $title = '感謝購買';
 $pageName = 'cart-confirm';
 
-if(
-        ! isset($_SESSION['user'])
-){
-    header('Location: index.php');
-    exit;
-}
 $sum = 0;
 ?>
 <?php include __DIR__ . '/parts/html-head.php'; ?>

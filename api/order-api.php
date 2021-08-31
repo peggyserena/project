@@ -86,6 +86,8 @@ switch ($action){
                 $_SESSION['cart']['hotel'][$key]["quantity"] = $result['available_num'];
                 echo json_encode(["info" => "超出購買上限，目前剩餘房數".$result['available_num']."名"], JSON_UNESCAPED_UNICODE);
                 break;
+                // 2 * 3 >= 6 => 合格
+                // 2 * 3 < $peopleNum 不合格
             }else if ($result['people_num_limit'] * $cart_item['quantity'] < $cart_item['people_num']){
                 $flag = false;
                 $_SESSION['cart']['hotel'][$key]["people_num"] = $result['people_num_limit'] * $cart_item['quantity'];
@@ -103,6 +105,8 @@ switch ($action){
                 implode(",", $cart_item['id'])
             ]);
             $result = $stmt->fetch();
+
+            // 確認座位是否為空
             if ($result['count'] > 0){
                 $flag = false;
                 unset($_SESSION['cart']['restaurant'][$key]);
@@ -416,7 +420,6 @@ switch ($action){
         $order_id = $_POST['order_id'];
         $last_date = date('Y-m-d', strtotime("-7 days"));
         $product_list = ['event', 'hotel', 'restaurant'];
-        $count = 0;
         $output = [];
 
         $sql = "SELECT * FROM `sales_order` WHERE user_id = ? and create_datetime >= ? and order_id = ?";

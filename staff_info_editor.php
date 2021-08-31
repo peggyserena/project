@@ -58,7 +58,8 @@ $pageName ='staff_register';
                     </div>
                     <div class="form-group">
                         <label for="role">職稱： </label>
-                        <select type="text" class="form-control" id="role" name="role" autofocus required>
+                        <span type="text" id="role_span" style="display: none;"></span>
+                        <select type="text" class="form-control" id="role_select" name="role" style="display: none;" autofocus required>
                             <option value="">請選擇</option>
                         </select>
                     </div>
@@ -112,7 +113,9 @@ $pageName ='staff_register';
                     <?php 
                     if (in_array($_SESSION['staff']['role'], [1,2,3])): ?>
                         <div class="form-group">
-                            <label for="left_at">離職日： </label><span id='left_at'></span>
+                            <label for="left_at">離職日： </label>
+                            <input type="date" class="form-control" style="display: none;" id="left_at_input" name="left_at">
+                            <span id='left_at_span' style="display: none;"></span> 
                         </div>
                     <?php
                         endif;
@@ -213,9 +216,11 @@ $pageName ='staff_register';
         data = result['data'];
 
         for (key in data){
-            if (role === 1 || (role === 2 && data[key]['id'] in [3, 4])){
-                $("#role").append(`<option value="${data[key]['id']}">${data[key]['name']}</option>`);
+            $hidden = "hidden";
+            if (role === 1 || (role === 2 && [3, 4].includes(parseInt(data[key]['id']) ))){
+                $hidden = "";
             }
+            $("#role_select").append(`<option value="${data[key]['id']}" ${$hidden}>${data[key]['name']}</option>`);
         }
         
         $.post('api/staff-api.php', {
@@ -242,8 +247,12 @@ $pageName ='staff_register';
                 text: data['staff_id']
             },
             {
-                selector: "#role",
+                selector: "#role_select",
                 value: data['role']
+            },
+            {
+                selector: "#role_span",
+                text: $(`#role_select option[value=${data['role']}]`).text()
             },
             {
                 selector: "#fullname",
@@ -284,10 +293,25 @@ $pageName ='staff_register';
                 text: data['created_at']
             },
             {
-                selector: "#left_at",
+                selector: "#left_at_input",
                 value: data['left_at']
             },
+            {
+                selector: "#left_at_span",
+                text: data['left_at']
+            },
         ]
+        if (data['left_at'] === null){
+            $("#left_at_input").show();
+        }else {
+            $("#left_at_span").show();
+        }
+        if ("<?= $_SESSION['staff']['staff_id']?>" === data['staff_id']){
+            $("#role_span").show();
+        }else {
+            $("#role_select").show();
+        }
+        
 
         document.querySelector('#myForm select[name=county]').value = data['county'];
         document.querySelector('#myForm select[name=county]').dispatchEvent(new Event("change"));

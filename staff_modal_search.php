@@ -67,15 +67,17 @@ $pageName = 'staff_modal_search';
             
                             </tr>
                         </thead>
-                        <tbody class="modal_data">
+                        <tbody>
                             <tr class="modal_data text-center" style="display: none;">
                                 <td class="bg-dark text-white count_num" style="border: #454d55 1px solid ;"></td>
                                 <td><span class="cat_id"></span></td>
-                                <td><span class="name"></span></td>
+                                <td><span class="modal_title"></span></td>
                                 <td><span class="content"></span></td>
-                                <td><p class="notice"></p></p><p id="link_name"></p><p id="link_address"></td>
+                                <td><p class="notice"></p></td>
+                                <td><p class="link_name"></p></td>
+                                <td><p class="link_address"></p></td>
                                 <td><a class="edit_link" href="" target="blank">修改</a></td>
-                                <td><input class="status_used" type="radio" name="status">使用 &emsp; <input class="status_disable" type="radio" name="status">停用</td>
+                                <td><p class="status"></p></td>
                             </tr>
                         </tbody>
                     </table>
@@ -88,7 +90,7 @@ $pageName = 'staff_modal_search';
     <script>
         $(document).ready(function() {
             readCat();
-            fillData(data, elem)
+            readData();
         });
 
         function readCat(){
@@ -97,7 +99,7 @@ $pageName = 'staff_modal_search';
             }, function(result){
                 
                 var selected_cat_id = parseInt("<?= $_GET['cat_id'] ?? ''?>");
-                result.forEach(function(elem){
+                result['data'].forEach(function(elem){
                     output = `<option value='${elem['id']}' ${selected_cat_id == elem['id'] ? "selected" : ""}>${elem['name']}</option>`;
                     $("#select_cat_id").append(output);
                 })
@@ -112,10 +114,11 @@ $pageName = 'staff_modal_search';
                 action: 'readAll',
                 cat_id: $("#select_cat_id").val(),
             }, function(result){
-                $("#result tbody").html($($(".modal_data")[0]));
+                $("#result tbody").html($(".modal_data")[0]); // 清空tbody裡面的資料，只留下.modal_data第一筆當作是模板資料
                 data = result['data'];
                 console.log(result);
                 var count = 0;
+                // data = {0: {name, name}, 1: {}}
                 for (key in data){
                     count++;
                     elem = data[key];
@@ -130,9 +133,6 @@ $pageName = 'staff_modal_search';
             }, 'json').fail(function(data){
             })
         }
-        $(document).ready(function() {
-            readCat();
-        });
     function fillData(data, elem){
 
         list = [
@@ -142,11 +142,11 @@ $pageName = 'staff_modal_search';
                 },
                 {
                     selector: ".cat_id",
-                    text: data['m_name'],
+                    text: data['cat_name'],
                 },
                 {
-                    selector: ".name",
-                    text: data['name'],
+                    selector: ".modal_title",
+                    text: data['title'],
                 },
                 {
                     selector: ".content",
@@ -172,9 +172,7 @@ $pageName = 'staff_modal_search';
                 },
                 {
                     selector: ".status",
-                    attr: {
-                        checked: `deleteItem(event, ${data['id']})`,
-                    },
+                    text: data['status'],
                 },
             ]
         

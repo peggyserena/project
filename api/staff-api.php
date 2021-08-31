@@ -13,6 +13,25 @@ $auth_role = [
         1 => ["*"],
         2 => [3, 4],
 ];
+
+$auth_role_new = [
+        "read" => [
+               1 => ["*"], 
+               2 => ["*"], 
+               3 => ["*"],
+               4 => [4],
+        ],
+        'changeProfile' => [
+               1 => ["*"], 
+               2 => [2,3,4],
+               3 => [3],
+               4 => [4],
+        ],
+        'changeLeftAt' => [
+                 1 => ["*"],
+                 2 => [3,4],
+         ]
+];
 switch ($action){
         case 'readCat':
                 $sql ="SELECT * FROM `staff_role_category`";
@@ -22,30 +41,16 @@ switch ($action){
                 $output['success'] = "讀取成功";
                 break;
         case 'read':
-                $staff_id = $_POST['staff_id'] ?? "";
-                $aceept_role = $auth_role[$staff['role']] ?? [];
-                if (!empty($staff_id)){
-                        
-                        $staff_id = $_POST['staff_id'];
+                $staff_id = $_POST['staff_id'] ?? $staff['staff_id']; // POST是查尋的ID,staff是現在登入的員工ID
+                if (empty($staff_id)) $staff_id = $staff['staff_id']; // 如果POST是空值，使用現在登入的員工ID
+                $aceept_role = $auth_role_new['read'][$staff['role']] ?? [];
+                
+                $role = getStaffRole($staff_id);  // 操作的員工職位
+                if (in_array("*", $aceept_role) || in_array($role, $aceept_role)){
                         $sql ="SELECT staff.*, src.name as role_name, TIMESTAMPDIFF(YEAR, `birthday`, CURDATE()) as age FROM `staff` JOIN `staff_role_category` as src ON staff.role = src.id WHERE staff_id = ?";
                         $stmt = $pdo->prepare($sql);
                         $stmt->execute([$staff_id]);
                         $output['data'] = $stmt->fetch();
-                        foreach($output['data'] as $key => $value){
-                                if (!(in_array("*", $aceept_role) || in_array($value['role'], $aceept_role))){
-                                        unset($output['data'][$key]['left_at']);
-                                }
-                        }
-                        $output['success'] = "讀取成功";
-                } else{
-                        $sql ="SELECT staff.*, src.name as role_name FROM `staff` JOIN `staff_role_category` as src ON staff.role = src.id WHERE staff_id = ?";
-                        $stmt = $pdo->prepare($sql);
-                        $stmt->execute([$staff['staff_id']]);
-                        $output['data'] = $stmt->fetch();
-                        
-                        if (!(in_array("*", $aceept_role) || in_array($output['data']['role'], $aceept_role))){
-                                unset($output['data']['left_at']);
-                        }
                         $output['success'] = "讀取成功";
                 }
                 break;
@@ -99,72 +104,66 @@ switch ($action){
                 }
                 break;
         case 'changeProfile':
-                $staff_id = $_POST['staff_id'] ?? "";
-                if (!empty($staff_id)){
-                        // 管理者權限修改
-
-                        // 取得可操作權限的role陣列
-                        $aceept_role = $auth_role[$staff['role']] ?? [];
-
-                        // 抓到修改的帳號資料
-                        $sql = "SELECT * FROM `staff` WHERE `staff_id` = ?";
-                        $stmt = $pdo->prepare($sql);
-                        $stmt->execute([$staff_id]);
-                        $staff = $stmt->fetch();
-
-                        // 判斷是否有權限執行
-                        if (in_array("*", $aceept_role) || in_array($staff['role'], $aceept_role)){
-                                $columns = ['role', 'address', 'county', 'district', 'zipcode', 'mobile', 'birthday', 'identityNum', 'email', 'fullname', 'gender', 'left_at'];
-                        }else{
-                                
-                                print("權限不足");
-                                die();
-                        }
-                        
-                }else{
-                        // 一般帳號修改
-                        $staff = $_SESSION['staff'];
-                        $columns = ['address', 'county', 'district', 'zipcode', 'mobile', 'birthday', 'identityNum', 'email', 'fullname', 'gender'];
-                }
-                $fill_count = 0;
-                $update_data = [];
-                foreach($columns as $col){
-                        if ($col === 'gender'){
-                                $data = $_POST[$col] ?? "不表明";
-                        }else {
-                                $data = $_POST[$col];
-                        }
-                        if (isset($data)) {
-                                $fill_count++;
-                                array_push($update_data, $data);
-                        }
-                }
-                if ($fill_count == count($columns)){
-                        $a_sql = "UPDATE `staff` SET ".implode(' = ?,', $columns)." = ?, `created_at` = NOW() WHERE `staff_id` = ?";
-                        // address = ?, county = ?
-                        $a_stmt = $pdo->prepare($a_sql);
-                        array_push($update_data, $staff['staff_id']);
-                        $a_stmt->execute($update_data);
-                        
-                        if ($a_stmt->rowCount()) {
-                                $output['success'] = "修改個人資料成功";
-                        } else{
-                                $output['error'] = "修改個人資料失敗";
-                                // $output['error'] = $a_stmt;
-                        }
-                }
-
-                // 當更新自己帳號的資料時，更新session裡面的資料成與資料庫相同
-                if ($_SESSION['staff']['staff_id'] === $staff['staff_id']){
-                        $a_sql = "SELECT * FROM `staff` WHERE `staff_id` = ?";
-                        // address = ?, county = ?
-                        $a_stmt = $pdo->prepare($a_sql);
-                        $a_stmt->execute([$staff['staff_id']]);
-                        if ($a_stmt->rowCount()) {
-                                $_SESSION['staff'] = $a_stmt->fetch();
-                        }
-                }
+                $staff_id = $_POST['staff_id'] ?? $staff['staff_id']; // POST是查尋的ID,staff是現在登入的員工ID
+                $aceept_role = $auth_role_new['changeProfile'][$staff['role']] ?? []; // 取得可操作權限的role陣列
+                $aceept_role_left_at = $auth_role_new['changeLeftAt'][$staff['role']] ?? []; // 取得可操作權限的role陣列
                 
+                $role = getStaffRole($staff_id);  // 修改的員工職位
+                $left_at = getStaff($staff_id)['left_at']; // 修改的員工的離職日
+
+                if (in_array("*", $aceept_role) || in_array($role, $aceept_role)){
+                        $columns = ['role', 'address', 'county', 'district', 'zipcode', 'mobile', 'birthday', 'identityNum', 'email', 'fullname', 'gender'];
+                        if (in_array("*", $aceept_role) || in_array($role, $aceept_role)){
+
+                                // 判斷有沒有離職日的資料，有的話新增left_at的欄位到$columns中，使所有欄位必填 (前台)
+                                // 且 離職日是空的 (後台)
+                                if (!empty($_POST['left_at']) && empty($left_at)){
+                                        array_push($columns, 'left_at');
+                                }
+                        }
+
+                        $fill_count = 0; // 從0開始計算總共拿到多少欄位資料
+                        $update_data = []; // 得到的所有欄位資料
+                        foreach($columns as $col){
+                                if ($col === 'gender'){
+                                        $data = $_POST[$col] ?? "不表明";
+                                }else {
+                                        $data = $_POST[$col];
+                                }
+                                if (isset($data)) {
+                                        $fill_count++;
+                                        array_push($update_data, $data);
+                                }
+                        }
+
+                        // 判斷是否全部欄位都有填寫
+                        if ($fill_count == count($columns)){
+                                $a_sql = "UPDATE `staff` SET ".implode(' = ?,', $columns)." = ? WHERE `staff_id` = ?";
+                                // address = ?, county = ?
+                                $a_stmt = $pdo->prepare($a_sql);
+                                array_push($update_data, $staff_id);
+                                $a_stmt->execute($update_data);
+                                $output['success'] = "修改個人資料成功";
+                                
+                        }else{
+                                $output['error'] = "修改個人資料失敗";
+                        }
+        
+                        // 當更新自己帳號的資料時，更新session裡面的資料成與資料庫相同
+                        if ($_SESSION['staff']['staff_id'] === $staff_id){
+                                $a_sql = "SELECT * FROM `staff` WHERE `staff_id` = ?";
+                                // address = ?, county = ?
+                                $a_stmt = $pdo->prepare($a_sql);
+                                $a_stmt->execute([$staff_id]);
+                                if ($a_stmt->rowCount()) {
+                                        $_SESSION['staff'] = $a_stmt->fetch();
+                                }
+                        }
+
+                } else{ 
+                        print("權限不足");
+                        die();
+                }
                 break;
                 
         case 'exportExcel':
@@ -258,5 +257,16 @@ switch ($action){
                 }
                 
                 break;
+}
+
+function getStaffRole($staff_id){
+        return getStaff($staff_id)['role'];
+}
+function getStaff($staff_id){
+        global $pdo;
+        $sql = "SELECT * FROM `staff` WHERE `staff_id` = ?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$staff_id]);
+        return $stmt->fetch();
 }
 echo json_encode($output, JSON_UNESCAPED_UNICODE);

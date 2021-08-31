@@ -134,7 +134,9 @@ function fillData(){
             insertPage("#modal_img", "animation/animation_success.html");
             insertText("#modal_content", "修改成功!");
             $("#modal_alert").modal("show");
-            setTimeout(location.href = "staff_gallery.php", 2000);
+            setTimeout(function(){
+              location.href = "staff_gallery.php"
+            }, 2000);
 
         },
         error: function(data){
