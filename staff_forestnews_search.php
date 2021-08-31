@@ -2,7 +2,7 @@
 
 
 <?php
-$title = '森林體驗查詢';
+$title = '森林快報查詢';
 $pageName = 'forestnews';
 ?>
 <?php include __DIR__ . '/parts/staff_html-head.php'; ?>

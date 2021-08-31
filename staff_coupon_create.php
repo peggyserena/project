@@ -1,6 +1,6 @@
 <?php require __DIR__ . '/parts/config.php'; ?>
 <?php
-$title = '森林快報新增';
+$title = '發放購物金&禮券';
 $pageName = 'staff_coupon_create';
 ?>
 
@@ -17,7 +17,7 @@ $pageName = 'staff_coupon_create';
 
     <div class="container ">
       <div class="con_01 row ">
-          <h2 class="title b-green rot-135 col-sm-12">新增活動</h2>
+          <h2 class="title b-green rot-135 col-sm-12">發放購物金&禮券</h2>
           <form class="p-5 col-sm-12" name="form" id="myForm" method="post" onsubmit="create(); return false;" enctype="multipart/form-data">
               <input type="hidden" name="type" value="add"/>
               <div class="form-group">
@@ -39,21 +39,28 @@ $pageName = 'staff_coupon_create';
               </div>
               <div class="form-group">
                   <label for="price">金額</label>
-                  <textarea type="text" class="form-control" id="content" name="content"  required></textarea>
+                  <input type="number" class="form-control" id="price" name="price"  required>
               </div>
               <div class="form-group">
                   <label for="notice">備註</label>
                   <textarea type="text" class="form-control" id="notice" name="notice"  required></textarea>
               </div>
-              <div class="button m-4 text-center"><button type="submit" class="custom-btn btn-4 t_shadow ">送出</button></div>
-              <hr>
+              <div class="form-group">
+                  <label for="">收受者</label>
+                  <select class="form-control" name="" id="">
+                    <option value="">全部</option>
+                    <option value="">家族成員(VIP)</option>
+                    <option value="">好朋友</option>
+                  </select>
+              </div>
+              <div class="button m-4 text-center"><button type="submit" class="custom-btn btn-4 t_shadow ">發放寄出</button></div>
           </form>
       <div>
       
     </div>
   </main>
 
-<?php include __DIR__. '/parts/staff_scripts.php'; ?>
+<?php include __DIR__ . '/parts/staff_scripts.php'; ?>
 <script>
 
 // 設定end_date大於start_date

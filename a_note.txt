@@ -115,3 +115,12 @@ foreach($arr as $key => $a){
 3
 
 
+
+
+// 資料庫欄位新增資料
+1. SQL 指令 INSERT INTO 後面的欄位要新增
+2. 如果SQL 指令 有新增?，則要新增對應數量的參數到$stmt->execute()裡面
+3. 前台: 新增可以存放資料的input欄位(如radio或是textarea)，設定好name和value
+4. 找到傳輸資料到後台的程式(如checkOutCart使用post傳輸)
+5. 在post內的data位置，加入新增的欄位與資料
+6. 再到後台接收前台傳輸的資料(如使用$_POST['newColumn'])

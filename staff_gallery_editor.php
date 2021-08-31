@@ -51,7 +51,7 @@ $pageName = 'staff_gallery_editor';
   </div>
 
 </main>
-<?php include __DIR__. '/parts/staff_scripts.php'; ?>
+<?php include __DIR__ . '/parts/staff_scripts.php'; ?>
 <script src="<?= WEB_ROOT ?>/js/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
 <script>
 fillData();
@@ -134,7 +134,9 @@ function fillData(){
             insertPage("#modal_img", "animation/animation_success.html");
             insertText("#modal_content", "修改成功!");
             $("#modal_alert").modal("show");
-            setTimeout(location.href = "staff_gallery.php", 2000);
+            setTimeout(function(){
+              location.href = "staff_gallery.php"
+            }, 2000);
 
         },
         error: function(data){

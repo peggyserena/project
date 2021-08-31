@@ -22,6 +22,10 @@ $tableMap = [
         'cat' => "staff_role_category",
         'foreign_key' => "role",
     ],
+    "coupon" => [
+        'cat' => "coupon_category",
+        'foreign_key' => "cat_id",
+    ],
 ];
 switch ($action) {
     case 'readCat':
@@ -31,6 +35,7 @@ switch ($action) {
             "helpdesk" => "客服信件",
             "members" => "客戶種類",
             "staff" => "員工職稱種類",
+            "coupon" => "購物金&禮券種類",
         ];
         break;
     case 'readAll':
@@ -76,6 +81,11 @@ switch ($action) {
         $result = $stmt->fetchAll();
 
         $sql = "SELECT * FROM members_role_category";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([]);
+        $result = $stmt->fetchAll();
+        break;
+        $sql = "SELECT * FROM coupon_category";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([]);
         $result = $stmt->fetchAll();

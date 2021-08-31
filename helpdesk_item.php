@@ -3,13 +3,6 @@
 $title = '會員中心';
 $pageName = 'member';
 
-if(
-    ! isset($_SESSION['user'])
-){
-header('Location: login.php');
-exit;
-}
-
 // 
 // 二維陣列
 // [

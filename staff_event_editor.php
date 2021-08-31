@@ -109,7 +109,7 @@ $pageName = 'staff_event_editor';
 
   </main>
 
-<?php include __DIR__. '/parts/staff_scripts.php'; ?>
+<?php include __DIR__ . '/parts/staff_scripts.php'; ?>
 <script src="<?= WEB_ROOT ?>/js/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
 <script>
 $("#img")
@@ -146,7 +146,7 @@ $("#img")
     $("#preview_video_img").html("");
     const [file] = $("#video_img")[0].files
     if (file) {
-      var img =`<li class="ui-state-default" data-order="${i}">
+      var img =`<li class="ui-state-default" data-order="1">
                         <div style="display: grid;">
                           <img class="preview_img" style="max-width: 120px; max-height: 120px" src="${URL.createObjectURL(file)}" alt="your image" />
                           <button type="button" onclick="deleteItem(this);">X</button>
@@ -186,9 +186,8 @@ $("#img")
         $(`#${elem}`).val(data[elem]);
       });
 
-
       $("#preview_video_img").html("");
-      if ('video_img' in data) {
+      if (data['video_img'] != "") {
         var img =`<li class="ui-state-default" data-order="${i}">
                         <div style="display: grid;">
                           <img class="preview_img" style="max-width: 120px; max-height: 120px" src="${data['video_img']}" alt="your image" />

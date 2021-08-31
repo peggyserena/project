@@ -175,7 +175,7 @@ switch ($type) {
             case 'add':
                 if (!empty($id)) {
                     if ($qty > 0) {
-                        $sql_count = "SELECT SUM(quantity) as order_quantity FROM `order_hotel` WHERE hotel_id=$id AND order_datetime = '$order_date'  GROUP BY hotel_id";
+                        $sql_count = "SELECT SUM(quantity) as order_quantity FROM `order_hotel` WHERE hotel_id=$id AND order_date = '$order_date'  GROUP BY hotel_id";
                         $result = $pdo->query($sql_count)->fetch();
                         $order_quantity = 0;
                         $order_quantity = $result['order_quantity'];

@@ -9,155 +9,11 @@ if (isset($_SESSION['user'])) {
 
 ?>
 <?php include __DIR__ . '/parts/html-head.php'; ?>
+<link rel="stylesheet" href="./css/cart.css">
 
 
 
 <style>
-    body {
-        background: linear-gradient(45deg, #e8ddf1 0%, #e1ebdc 100%);
-        position: relative;
-        z-index: -10;
-
-    }
-
-    .card-wrapper {
-        background-color: #FFFFDA;
-        width: 100%;
-        display: flex;
-        color: green;
-        /* display: none */
-    }
-
-    input {
-        margin: 1px 0;
-        padding-left: 3%;
-        font-size: 1rem;
-        border: 1px solid lightgray;
-    }
-
-    input[type="text"] {
-        display: block;
-        height: 2.5rem;
-        width: 100%;
-    }
-
-    input[type="email"] {
-        display: block;
-        height: 2.5rem;
-        width: 100%;
-    }
-
-    .column-left {
-        width: 49.9%;
-        float: left;
-        margin-bottom: 2px;
-    }
-
-    .column-right {
-        width: 49.9%;
-        float: right;
-    }
-
-    a.disabled {
-        pointer-events: none;
-        cursor: default;
-    }
-
-    .buyer1 form div {
-        margin: 1px 0;
-        padding: 5px 3%;
-        font-size: 1rem;
-        background-color: white;
-        color: gray
-    }
-
-    .buyer1 form label {
-        margin: 0;
-        padding: 5px
-    }
-
-    input[type="text"] {
-        padding-left: 1rem
-    }
-
-    .card-wrapper {
-        display: none
-    }
-
-    /* #agreeReceipt{
-        margin-top:1rem
-    } */
-    label span {
-        color: gray
-    }
-
-    input[type=text]:focus {
-        background-color: #cce5ff;
-    }
-
-    input:focus {
-        outline: none !important;
-        border-color: #719ECE;
-        box-shadow: 0 0 10px #719ECE;
-    }
-
-    textarea:focus {
-        outline: none !important;
-        border-color: #719ECE;
-        box-shadow: 0 0 10px #719ECE;
-    }
-    
-    .discountTip{
-        color:gray;
-        padding:0;
-    }
-
-    .finalPrice{
-        background-color:#fff1ab; 
-        color:darkblue;
-        border-bottom:1px solid lightgray;
-    }
-
-    .shipway img{
-      width: auto;
-      height: 40px;
-      margin: 0.5rem 0.7rem 0.5rem 0.5rem ;
-    }
-
-    .shipway .track img{
-      width: auto;
-      height: 12.8px;
-      margin: 0.5rem 0.3rem 0.5rem 0rem ;
-    }
-    .alert img{
-      width: auto;
-      height: 12.8px;
-      margin: 0.5rem 0.3rem 0.5rem 0rem ;
-    }
-
-    .shipway .track li {
-      margin: 0.5rem 1rem 0.5rem 0.3rem ;
-      transition: 0.5s ease;
-    }
-
-    .shipway .track li:hover{
-    transform: translateX(0.5rem);
-    }
-
-    .shipway .track li a:hover{
-    color:#83a573;
-    font-weight: 700;
-    }
-
-    select, textarea{
-      margin: 1px 0;
-      border: none;
-    }
-
-    .form-control{
-      height: 40px;
-    }
-        
 
 </style>
 <!-- <?php var_dump($_SESSION['cart']); ?> -->
@@ -335,7 +191,7 @@ if (isset($_SESSION['user'])) {
     <div>
         <h3 class="title p-2 b-green rot-135">金額計算</h3>
         <div class="alert  m-0" role="alert">
-            <h4>使用購物金： <input class="pl-0"style="width:120px;text-align: center;"  type="number" id="couponBalanceInput" value="0" min=0/> <span> <a href='member.php?tab=coupon'>&emsp;<img src="./images/icon/arrow_g_r.svg" alt=""><small class='font-weight-bold' >購物金查詢</small></a></span></h4> 
+            <h4>使用購物金： <input class="pl-0"style="width:120px;text-align: center;"  type="number" id="couponBalanceInput" value="0" min=0/> <span> <a href='member.php?tab=coupon'target="_blnk">&emsp;<img src="./images/icon/arrow_g_r.svg" alt=""><small class='font-weight-bold' >購物金查詢</small></a></span></h4> 
                 <div class="d-flex text-secondary font-weight-bold">
                     <p class="mr-2"> 目前可使用金額/總購物金餘額： <span id="couponBalance"></span>/<span id="couponTotal"></span></p>
                     <p class="mx-2"> 本次使用金額： <span id="couponBalanceUsed"></span>；</p>
@@ -360,8 +216,8 @@ if (isset($_SESSION['user'])) {
         <div>
             <h3 class="title p-2 b-green rot-135">付款方式</h3>
             <div class="mx-2 my-3">
-                <input id="cd" type="radio" name="payment_method" value="creditCard" /><label for="cd">信用卡</label>
-                <input id="cod" type="radio" name="payment_method" value="COD" /><label for="cod">付現</label>
+                <input id="cd" type="radio" name="payment_method" value="信用卡" /><label for="cd">信用卡</label>
+                <input id="cod" type="radio" name="payment_method" value="付現" /><label for="cod">付現</label>
             </div>
         </div>
 
@@ -409,9 +265,6 @@ if (isset($_SESSION['user'])) {
                         <label for="email">email： </label><span><?= $user['email'] ?></span>
                     </div>
                     <div class="form-group col-lg-6 col-sm-12">
-                        <label for="email_2nd">備用eamil： </label><span><?= $user['email_2nd'] ?></span>
-                    </div>
-                    <div class="form-group col-sm-12">
                         <label for="zipcode">地址： </label><span><?= $user['zipcode'] ?></span><span><?= $user['county'] ?></span><span><?= $user['district'] ?></span><span><?= htmlentities($user['address']) ?></span>
                     </div>
                     <div class="form-group col-sm-12 ">
@@ -610,7 +463,7 @@ if (isset($_SESSION['user'])) {
         var discountPrice = 0;
 
         if (isDiscount) {
-            discountPrice = total * 0.15;
+            discountPrice = Math.round(total * 0.15);
         }
         couponPrice = $("#couponBalanceInput").val();
         if (total - discountPrice - couponPrice < 0){
@@ -665,6 +518,7 @@ if (isset($_SESSION['user'])) {
                 action: 'add',
                 coupon: $("#couponBalanceInput").val(),
                 shipment_id: $("input[type='radio'][name='shipment']:checked").val(),
+                payment_method: $("input[type='radio'][name='payment_method']:checked").val(),
             }, function(data) {
                 // location.reload();  // 刷頁面
                 if ($('tbody>tr').length < 1) {
@@ -843,7 +697,10 @@ if (isset($_SESSION['user'])) {
         },function(data) {
             balance = data['data']['couponBalance'];
             total = data['data']['couponTotal'];
+            window.total = total;
             $("#couponTotal").text('$ ' + dallorCommas(total));
+            // $("#couponTotal").data("value", total);
+            
             $("#couponBalance").text('$ ' + dallorCommas(balance));
             $("#couponBalance").data("value", balance);
             $("#couponBalanceInput").attr("max", balance);
@@ -853,7 +710,8 @@ if (isset($_SESSION['user'])) {
     couponBalance();
     $("#couponBalanceInput").change(function(){
         balanceUsed = $(this).val(); // input value
-        finalBalance = parseInt($("#couponBalance").data("value")) - balanceUsed;
+        finalBalance = parseInt(window.total) - balanceUsed;
+        // finalBalance = parseInt($("#couponTotal").data("value")) - balanceUsed;
         if (finalBalance < 0){
             finalBalance = 0;
             balanceUsed = $(this).attr("max");

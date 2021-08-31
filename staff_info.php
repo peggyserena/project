@@ -3,13 +3,6 @@
 $title = '薰衣草森林-管理系統';
 $pageName = 'staff_info';
 
-if(
-  ! isset($_SESSION['staff'])
-){
-header('Location: staff_login.php');
-exit;
-}
-
 // 陣列
 // print_r, var_dump
 
@@ -55,9 +48,11 @@ exit;
                     <label for="fullname">姓名： </label><span id="fullname"></span>
                 </div>
                 <div class="form-group">
-                    <label for="birthday">生日： </label><spa id='birthday'></span>
+                    <label for="gender">性別： </label><span id="gender"></span>
                 </div>
-
+                <div class="form-group ">
+                    <label for="birthday">生日： </label><span id='birthday'></span>&emsp;&emsp;<span id='age'></span> 歲
+                </div>
  
                 <div class="form-group">
                     <label for="identityNum">身分證字號： </label><span id='identityNum'></span>
@@ -71,8 +66,20 @@ exit;
                 <div class="form-group">
                     <label for="county">地址： </label><span id='zipcode'></span><span id='county'></span><span id='district'></span><span id='address'></span>
                 </div>
+                <div class="form-group">
+                    <label for="created_at">到職日： </label><span id='created_at'></span>
+                </div>
+                <?php 
+                    if (in_array($_SESSION['staff']['role'], [1,2,3])): ?>
+                        <div class="form-group">
+                            <label for="left_at">離職日： </label><span id='left_at'></span>
+                        </div>
+                <?php
+                    endif;
+                ?>
+                
      
-                <div  class="text-center"><a href="staff_info_editor.php" class="custom-btn btn-4 text-center t_shadow">修改</a>
+                <div  class="text-center"><a href="staff_info_editor.php?staff_id=<?= $_GET['staff_id'] ?? "" ?>" class="custom-btn btn-4 text-center t_shadow">修改</a>
                 </div>
             </div>
 
@@ -81,11 +88,12 @@ exit;
 </main>
 
 
-<?php include __DIR__. '/parts/staff_scripts.php'; ?>
+<?php include __DIR__ . '/parts/staff_scripts.php'; ?>
 
 <script>
     $.post('api/staff-api.php', {
-        action: 'readCurrent',
+        action: 'read',
+        staff_id: "<?= $_GET['staff_id'] ?? "" ?>"
     }, function(result){
         data = result['data'];
         output = $("#profile");
@@ -110,8 +118,16 @@ exit;
                 text: data['fullname']
             },
             {
+                selector: "#gender",
+                text: data['gender']
+            },
+            {
                 selector: "#birthday",
                 text: data['birthday']
+            },
+            {
+                selector: "#age",
+                text: data['age']
             },
             {
                 selector: "#identityNum",
@@ -141,15 +157,16 @@ exit;
                 selector: "#address",
                 text: data['address']
             },
+            {
+                selector: "#created_at",
+                text: data['created_at']
+            },
+            {
+                selector: "#left_at",
+                text: data['left_at']
+            }
         ]
-        
-        // map
-        // {
-        //     selector: "#event_name",
-        //     attr: {
-        //         text: data['name']
-        //     }
-        // }
+    
         list.forEach(function(m){
             // attr
             // attr: {
@@ -168,6 +185,9 @@ exit;
             }
         });
     }
+
+
+
 </script>
 
 <?php include __DIR__. '/parts/staff_html-foot.php'; ?>

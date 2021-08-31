@@ -16,6 +16,7 @@ $pageName = 'hotel';
 <body>
 
     <?php include "parts/transaction.php"?>
+    <?php include "parts/modal.php"?>
     <div id="slider" class=" owl-carousel owl-theme">
         <img src="./images/hotel/banner_01.jpg">
         <img src="./images/hotel/banner_02.png">
@@ -555,7 +556,7 @@ $pageName = 'hotel';
 
         $("input[type='date']")[0].onchange = function(){
             var date_list = this.value.split("-");
-            nowDate = new Date(date_list[0], date_list[1], date_list[2]);
+            nowDate = new Date(date_list[0], parseInt(date_list[1]) - 1, date_list[2]);
             createDatePicker();
             createHotelData();
         }
@@ -572,17 +573,26 @@ $pageName = 'hotel';
             }, function(data){
                 html = [];
                 console.log("createHotelData");
-                console.log(data);
-                
                 var modal_attribute = '';
                 data.forEach(function (elem, index){
-                    elem.forEach(function (elem2, index2){
-                        if (elem2['available_quantity'] > 0){
-                            status_class = "available";
-                            modal_attribute = 'data-toggle="modal" data-target="#myModal_1"';
-                        }else{
+                    console.log(elem);
+                    elem['data'].forEach(function (elem2, index2){
+                        if (elem['status'] !== 'available'){
+                            status_class = "unavailable";
+                            modal_attribute = '';
+                            onclick_function = `modalError('此商品尚未開放')`;
+                        } else if (elem2['available_quantity'] === '0'){
                             status_class = "full";
                             modal_attribute = '';
+                            onclick_function = `modalError('此商品已售完')`;
+                        } else if (elem2['status'] === 'temp') {
+                            status_class = elem2['status'];
+                            modal_attribute = '';
+                            onclick_function = `modalTemp('此商品已在購物車中')`;
+                        }else{
+                            status_class = "available";
+                            modal_attribute = 'data-toggle="modal" data-target="#myModal_1"';
+                            onclick_function = `modalInfo('${elem2['id']}', '${elem2['name_zh']}', '${elem2['order_date']}', ${elem2['available_quantity']}, ${elem2['people_num_limit']})`;
                         }
                         if (!(elem2['id'] in html)){
                             var name_zh = `<div class="d-none d-md-block">${elem2['name_zh']}</div>
@@ -592,14 +602,14 @@ $pageName = 'hotel';
                                     ${elem2['name_en']}</p></th>
                                 <th scope="row" class="d-none d-lg-table-cell text-center" ><img style="width: 8rem;" src='<?= WEB_ROOT ?>/images/hotel/${elem2['hotel_id']}_1.jpg' alt=""></th>
                                 <td class="">
-                                <div><span class="" ${modal_attribute} onclick="modalInfo('${elem2['id']}', '${elem2['name_zh']}', '${elem2['order_datetime']}', ${elem2['available_quantity']}, ${elem2['people_num_limit']})"><img class="${status_class}" src="./images/icon/bookStatus.svg" alt=""></span><br>
+                                <div><span id="hotel_btn_${elem2['id']}_${elem2['order_date']}" class="" ${modal_attribute} onclick="${onclick_function}"><img class="${status_class}" src="./images/icon/bookStatus.svg" alt=""></span><br>
                                 ${dallorCommas(elem2['final_price'])}</div>
                             </td>`;
                         }else{
                             var className = "";
                             if (index > 2) className = "d-none d-md-table-cell";
                             html[elem2['id']] += `<td class="${className}">
-                                <div><span class="" ${modal_attribute} onclick="modalInfo('${elem2['id']}', '${elem2['name_zh']}', '${elem2['order_datetime']}', ${elem2['available_quantity']}, ${elem2['people_num_limit']})"><img class="${status_class}" src="./images/icon/bookStatus.svg" alt=""></span><br>
+                                <div><span id="hotel_btn_${elem2['id']}_${elem2['order_date']}" class="" ${modal_attribute} onclick="${onclick_function}"><img class="${status_class}" src="./images/icon/bookStatus.svg" alt=""></span><br>
                                 ${dallorCommas(elem2['final_price'])}</div>
                             </td>`;
                         }
@@ -617,6 +627,19 @@ $pageName = 'hotel';
         createDatePicker();
         createHotelData();
 
+
+        function modalTemp(msg){
+            modal_init();
+            insertPage("#modal_img", "animation/animation_error.html");
+            insertHtml("#modal_content", `${msg}<a class="btn">前往購物車修改</a>`);
+            $("#modal_alert").modal("show");
+        }
+        function modalError(msg){
+            modal_init();
+            insertPage("#modal_img", "animation/animation_error.html");
+            insertHtml("#modal_content", `${msg}`);
+            $("#modal_alert").modal("show");
+        }
     </script>
 
     <?php include __DIR__ . '/parts/html-foot.php'; ?>

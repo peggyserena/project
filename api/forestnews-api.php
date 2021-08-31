@@ -1,5 +1,6 @@
 <?php include __DIR__ . '/../parts/config.php';
 include __DIR__ . '/../parts/imgHandler.php';
+include __DIR__ . '/../parts/tool.php';
 
 $action = isset($_POST['action']) ? $_POST['action'] : $_POST['type']; // 操作類型
 

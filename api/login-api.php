@@ -58,7 +58,7 @@ switch ($action){
         if (isset($_POST['staff_id'])) {
             // TODO: 欄位資料檢查
 
-            $a_sql = "SELECT * FROM `staff` WHERE `staff_id`=?";
+            $a_sql = "SELECT * FROM `staff` WHERE `staff_id`=? AND left_at IS NULL";
             $a_stmt = $pdo->prepare($a_sql);
             $a_stmt->execute([$_POST['staff_id']]);
             $row = $a_stmt->fetch();

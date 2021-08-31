@@ -3,17 +3,6 @@
 $title = '會員中心';
 $pageName = 'member';
 
-if(
-    ! isset($_SESSION['user'])
-){
-header('Location: login.php');
-exit;
-}
-
-
-$sql = "SELECT * FROM members WHERE id=" . $_SESSION['user']['id'];
-$r = $pdo->query($sql)->fetch();
-
 // 
 // 二維陣列
 // [
@@ -36,6 +25,11 @@ $r = $pdo->query($sql)->fetch();
 
 
 <?php include __DIR__ . '/parts/html-head.php'; ?>
+<?php
+$sql = "SELECT * FROM members WHERE id=" . $_SESSION['user']['id'];
+$r = $pdo->query($sql)->fetch();
+
+?>
 <link rel="stylesheet" href="./css/member.css">
 <style>
     
@@ -140,7 +134,7 @@ $r = $pdo->query($sql)->fetch();
                                             </th>
                                             <th scope="col" class="m-0 t_shadow text-center">日期／時間</th>
                                             <th scope="col" class="m-0 t_shadow text-center">單價</th>
-                                            <th scope="col" class="m-0 t_shadow text-center"><i class="fas fa-trash-alt"></i></th>
+                                            <th scope="col" class="m-0 t_shadow text-center">前往</th>
                                             <th scope="col" class="m-0 t_shadow text-center"><i class="fas fa-trash-alt"></i></th>
                                         </tr>
                                     </thead>
@@ -348,29 +342,26 @@ $r = $pdo->query($sql)->fetch();
 
     <?php include __DIR__ . '/parts/scripts.php'; ?>
 
+    <!------------------------------------- document ready ------------------------------------->
+    <script>
+        $(function() {
+            // 呈現數量
+            quantity.each(function() {
+                const qty = $(this).attr('data-qty') * 1;
+                $(this).val(qty);
+            });
+
+            calPrices();
+            getWishList();
+            helpdeskRecord();
+            readCat();
+        });
+    </script>
+
     <!------------------------------------- trade record ------------------------------------->
 
     <script>
         const quantity = $('select.quantity');
-
-        const deleteItem = function(hd, id) {
-            let t = $(hd.currentTarget);
-            console.log('hd:', hd);
-            $.get('<?= WEB_API ?>/cart-api.php', {
-                action: 'delete',
-                id: id
-            }, function(data) {
-                console.log(t);
-                t.closest('tr').remove();
-
-                // location.reload();  // 刷頁面
-                if ($('tbody>tr').length < 1) {
-                    location.reload(); // 重新載入
-                }
-                updateCartCount();
-                calPrices();
-            }, 'json');
-        };
 
         // 計算並呈現價格
         const calPrices = function() {
@@ -390,22 +381,6 @@ $r = $pdo->query($sql)->fetch();
             });
             $('.totalPrice').text('$ ' + dallorCommas(total));
         };
-
-        const changeQty = function(hd) {
-            const el = $(hd.currentTarget);
-            const qty = el.val();
-            const pid = el.closest('tr').attr('data-sid');
-
-            $.get('<?= WEB_API ?>/cart-api.php', {
-                action: 'add',
-                pid,
-                qty
-            }, function(data) {
-                updateCartCount();
-                calPrices();
-            }, 'json');
-        };
-
     </script>
     <script>
         function readOrder(){
@@ -465,22 +440,7 @@ $r = $pdo->query($sql)->fetch();
                     console.log(e.responseText);
             });
         }
-        // document ready
-        $(function() {
-            // 呈現數量
-            quantity.each(function() {
-                const qty = $(this).attr('data-qty') * 1;
-                $(this).val(qty);
-            });
-
-            calPrices();
-            getWishList();
-            helpdeskRecord();
-        });
         
-
-
-
         $("#end_date").val(getFormattedDate(new Date()));
         
         function getFormattedDate(d){
@@ -503,13 +463,15 @@ $r = $pdo->query($sql)->fetch();
                 action: 'read'
             }, function(data){
                 
+                console.log("data");
+                console.log(data);
                 data.forEach(function(elem){
                     var output = "";
-                    var type_map = {restaurant: "森林咖啡館", hd: "森林體驗", hotel: "夜宿薰衣草森林"};
+                    var type_map = {restaurant: "森林咖啡館", event: "森林體驗", hotel: "夜宿薰衣草森林"};
                     var goToWhere = `${elem['type']}.php`;
                     switch (elem['type']){
-                        case 'hd':
-                            goToWhere += `#hd_${elem['id']}`;
+                        case 'event':
+                            goToWhere += `#event_${elem['id']}`;
                             break;
                         case "hotel":
                             goToWhere += `#reservation`;
@@ -523,7 +485,7 @@ $r = $pdo->query($sql)->fetch();
                     output += "<td>" + elem['date'] + "/" + elem['time'].slice(0, 5) + "</td>";
                     output += "<td>" + dallorCommas(elem['price']) + "</td>";
                     output += `<td><a href="${goToWhere}"><i class="fas fa-trash-alt"></i></a></td>`;
-                    output += '<td><a href="javascript:" onclick="deleteWishList(hd,' + elem['wish_list_id'] + ')"><i class="fas fa-trash-alt"></i></a></td>';
+                    output += '<td><a href="javascript:" onclick="deleteWishList(event,' + elem['wish_list_id'] + ')"><i class="fas fa-trash-alt"></i></a></td>';
                     output = '<tr>' + output + '</tr>';
                     $("#wishList table tbody").append(output);
                     console.log(output);
@@ -556,16 +518,12 @@ $r = $pdo->query($sql)->fetch();
     <!------------------------------------- coupon ------------------------------------->
 
     <script>
-            function coupon(){
+        function coupon(){
             $.post('<?= WEB_API ?>/coupon-api.php', {
                 action: 'readAll',
-                name: $("#name").val(),
-                start_date: $("#start_date").val(),
-                end_date: $("#end_date").val(),
-                used_date: $("#used_date").val(),
-                price: $("#price").val(),
-                balance: $("#balance").val(),
-                note: $("#note").val(),
+                cat_id: $("#cat_id").val(),
+                year: $("#year").val(),
+                month: $("#month").val(),
             },function(data) {
                 console.log(data);
                 coupon_list = data['data'];
@@ -584,9 +542,21 @@ $r = $pdo->query($sql)->fetch();
                 });
             }, 'json')
         }
-        coupon();
-
-
+        function readCat(){
+            $.post('api/coupon-api.php', {
+                action: 'readCat',
+            }, function(result){
+                
+                var selected_cat_id = parseInt("<?= $_GET['cat_id'] ?? ''?>");
+                result.forEach(function(elem){
+                    output = `<option value='${elem['id']}' ${selected_cat_id == elem['id'] ? "selected" : ""}>${elem['name']}</option>`;
+                    $("#select_cat_id").append(output);
+                })
+                coupon();
+            }, 'json').fail(function(data){
+            })
+        }
+        
     </script>
 
 
@@ -680,7 +650,7 @@ $r = $pdo->query($sql)->fetch();
         }
     </script>
 
-    <!------------------------------------- search bar 設定 ------------------------------------->
+    <!------------------------------------- helpdesk search bar 設定 ------------------------------------->
     <script>
         var date = new Date();
         var year = date.getFullYear() - 3;
@@ -758,60 +728,6 @@ $r = $pdo->query($sql)->fetch();
         });
         $("#select_id").val(selectedId);
         $("#select_order").val(selectedOrder);
-    </script>
-    <script>
-            function readCat(){
-            $.post('api/coupon-api.php', {
-                action: 'readCat',
-            }, function(result){
-                
-                var selected_cat_id = parseInt("<?= $_GET['cat_id'] ?? ''?>");
-                result.forEach(function(elem){
-                    output = `<option value='${elem['id']}' ${selected_cat_id == elem['id'] ? "selected" : ""}>${elem['name']}</option>`;
-                    $("#select_cat_id").append(output);
-                })
-                readData();
-            }, 'json').fail(function(data){
-            })
-        }
-        function readData(){
-            $.post('api/coupon-api.php', {
-                action: 'readAll',
-                year: $("#select_year").val(),
-                month: $("#select_month").val(),
-                time: $("#select_time").val(),
-                cat_id: $("#select_cat_id").val(),
-                order: $("#select_order").val(),
-            }, function(result){
-                console.log("readData");
-                console.log(result);
-                $("#result tbody").html($($(".coupon_data")[0]));
-                data = result['data'];
-                var count = 0;
-                for (key in data){
-                    count++;
-                    elem = data[key];
-                    output = $($(".coupon_data")[0]).clone();
-                    output.show();
-                    $("#result tbody").append(output);
-                    elem['img'] = result['img'][elem['id']];
-                    elem['quantity_map'] = result['quantity_map'];
-                    elem['count_num'] = count;
-                    console.log(elem);
-                    fillData(elem, output);
-                }
-                
-            }, 'json').fail(function(data){
-                console.log('error');
-                console.log(data);
-            })
-        }
-        $(document).ready(function() {
-            readCat();
-        });
-
-
-
     </script>
     <!------------------------------------- 進入各tab內頁 ------------------------------------->
 

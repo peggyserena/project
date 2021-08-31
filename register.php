@@ -255,8 +255,6 @@ $("#birthday").attr("max", max);
     });
   //first time init all select elements in #myForm
 //   M.FormSelect.init(document.querySelectorAll('#myForm select'));
-  document.querySelector('#myForm select[name=county]').value = "<?= $_SESSION['member']['county'] ?>";
-  document.querySelector('#myForm select[name=district]').value = "<?= $_SESSION['member']['district'] ?>";
 </script>
 
 <?php include __DIR__ . '/parts/html-foot.php'; ?>

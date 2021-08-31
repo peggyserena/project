@@ -662,7 +662,7 @@ $pageName = 'index';
         
     }
     
-    </script>
+</script>
 
 
 

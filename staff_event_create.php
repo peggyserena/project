@@ -8,6 +8,23 @@ $pageName = 'staff_event_create';
 <link rel="stylesheet" href="<?= WEB_ROOT ?>/js/jquery-ui-1.12.1.custom/jquery-ui.structure.min.css">
 
 <style>
+input[type="date"]:after {
+    content: "\25BC"; 
+    color: #555;
+    padding: 0 5px;
+}
+/* make the native arrow invisible and stretch it over the whole field so you can click anywhere in the input field to trigger the native datepicker*/
+input[type="date"]::-webkit-calendar-picker-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    height: auto;
+    color: transparent;
+    background: transparent;
+}
 
 
 </style>
@@ -31,7 +48,12 @@ $pageName = 'staff_event_create';
             </div>
             <div class="form-group">
                 <label for="date">活動日期</label>
-                <input type="date" class="form-control" id="date" name="date"  required>
+                <div id="date_box_list">
+                  <div class="date_box" style="position: relative;">
+                    <input type="date" class="form-control" id="date" name="date[]"  required>
+                  </div>
+                </div>
+                <button class="addCatItem c_lBlue_b1 position-absolute" style="right: 3rem;"type="button" data-table="" onclick="addDateList()">新增日期</button>
             </div>
             <div class="form-group">
                 <label for="time">活動時間</label>
@@ -104,7 +126,7 @@ $pageName = 'staff_event_create';
     </div>
   </main>
 
-<?php include __DIR__. '/parts/staff_scripts.php'; ?>
+<?php include __DIR__ . '/parts/staff_scripts.php'; ?>
 <script src="<?= WEB_ROOT ?>/js/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
 <script>
 $("#img")
@@ -190,7 +212,13 @@ $( function() {
           insertPage("#modal_img", "animation/animation_success.html");
           insertText("#modal_content", "森林體驗新增成功!");
           $("#modal_alert").modal("show");
-          setTimeout(function(){location.href = `staff_event_confirm.php?id=${data['event_id']}`}, 2000);
+
+          param = `id=${data['event_id']}&dateList=`;
+          $("input[name='date[]']").each(function(ind, date){
+            param += `${$(date).val()},`;
+          })
+          param = param.substr(0, param.length - 1);
+          setTimeout(function(){location.href = `staff_event_confirm.php?${param}`}, 2000);
 
         },
         error: function(data){
@@ -211,5 +239,9 @@ $( function() {
   var d = new Date();
   var min = d.toISOString().split("T")[0];
   $("#date").attr("min", min);
+
+  function addDateList(){
+    $("#date_box_list").append($(".date_box").last().clone());
+  }
 </script>
 <?php include __DIR__. '/parts/staff_html-foot.php'; ?>

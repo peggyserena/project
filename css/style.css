@@ -151,6 +151,11 @@ p {
 .c_lBlue_b {
   background-color: #04c2ff;
 }
+.c_lBlue_b1 {
+  background-color: #04c2ff;
+  border-radius: 0.25rem;
+  color: white;
+}
 .c_lpurple_b {
   background-color: #dcc5ef;
 }

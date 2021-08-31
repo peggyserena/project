@@ -57,23 +57,21 @@ body {
         <li class="nav-item <?= $pageName == 'staff_helpdesk' ? 'active' : '' ?>">
           <a class="nav-link" href="staff_helpdesk.php" role="button" aria-haspopup="true" aria-expanded="false"> 客服信箱</a>
         </li>
-
-        <li class="nav-item dropdown<?= $pageName == 'staff_sale_order' ? 'active' : '' ?>">
-            <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">出貨&訂單查詢</a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="staff_shippment.php"> 出貨管理</a>
-                <a class="dropdown-item" href="staff_order_search.php"> 訂單查詢 </a>
-            </div>
+        <li class="nav-item <?= $pageName == 'staff_order_search' ? 'active' : '' ?>">
+          <a class="nav-link" href="staff_order_search.php" role="button" aria-haspopup="true" aria-expanded="false"> 訂單出貨</a>
         </li>
 
         <li class="nav-item <?= $pageName == 'staff_member_info_search' ? 'active' : '' ?>">
-          <a class="nav-link" href="staff_member_info_search.php" role="button" aria-haspopup="true" aria-expanded="false"> 會員資料</a>
+          <a class="nav-link" href="staff_member_info_search.php" role="button" aria-haspopup="true" aria-expanded="false">會員資料</a>
+        </li>
+        <li class="nav-item <?= $pageName == 'staff_setting_editor' ? 'active' : '' ?>">
+          <a class="nav-link" href="staff_setting_editor.php" role="button" aria-haspopup="true" aria-expanded="false"> 訂房開放時間</a>
         </li>
         <li class="nav-item dropdown<?= $pageName == 'staff_coupon' ? 'active' : '' ?>">
             <a class="nav-link dropdown-toggle" href="staff_coupon.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">購物金</a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="staff_coupon_create.php"> 購物金新增</a>
-                <a class="dropdown-item" href="staff_coupon_search.php"> 購物金查詢&修改&寄發 </a>
+                <a class="dropdown-item" href="staff_coupon_create.php"> 購物金寄發</a>
+                <a class="dropdown-item" href="staff_coupon_editor.php"> 購物金&禮券排程 </a>
             </div>
         </li>
         <li class="nav-item dropdown<?= $pageName == 'staff_edm' ? 'active' : '' ?>">
@@ -81,6 +79,31 @@ body {
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="staff_edm_create.php"> EDM新增</a>
                 <a class="dropdown-item" href="staff_edm_search.php"> EDM查詢&修改&寄發 </a>
+            </div>
+        </li>
+
+        <li class="nav-item <?= $pageName == 'staff_category_editor' ? 'active' : '' ?>">
+          <a class="nav-link" href="staff_category_editor.php" role="button" aria-haspopup="true" aria-expanded="false"> 種類</a>
+        </li>
+        
+        <li class="nav-item dropdown<?= $pageName == '' ? 'active' : '' ?>">
+            <a class="nav-link dropdown-toggle" href="staff_modal.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">彈跳視窗</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="staff_modal_create.php"> 彈跳視窗新增</a>
+                <a class="dropdown-item" href="staff_modal_search.php"> 彈跳視窗查詢&修改 </a>
+            </div>
+        </li>
+
+
+        <li class="nav-item <?= $pageName == 'staff_gallery' ? 'active' : '' ?>">
+          <a class="nav-link" href="staff_gallery.php" role="button" aria-haspopup="true" aria-expanded="false"> 首頁</a>
+        </li>
+
+        <li class="nav-item dropdown<?= $pageName == 'staff_forestnews' ? 'active' : '' ?>">
+            <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">森林快報</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="staff_forestnews_create.php"> 森林快報新增</a>
+                <a class="dropdown-item" href="staff_forestnews_search.php"> 森林快報查詢&修改 </a>
             </div>
         </li>
 
@@ -92,33 +115,6 @@ body {
                 <a class="dropdown-item" href="staff_event_search.php"> 森林體驗查詢&修改 </a>
             </div>
         </li>
-        <li class="nav-item dropdown<?= $pageName == 'staff_forestnews' ? 'active' : '' ?>">
-            <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">森林快報</a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="staff_forestnews_create.php"> 森林快報新增</a>
-                <a class="dropdown-item" href="staff_forestnews_search.php"> 森林快報查詢&修改 </a>
-            </div>
-        </li>
-
-
-        <li class="nav-item <?= $pageName == 'staff_gallery' ? 'active' : '' ?>">
-          <a class="nav-link" href="staff_gallery.php" role="button" aria-haspopup="true" aria-expanded="false"> 首頁維護</a>
-        </li>
-        <li class="nav-item dropdown<?= $pageName == '' ? 'active' : '' ?>">
-            <a class="nav-link dropdown-toggle" href="staff_madol.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">彈跳視窗</a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="staff_madol_create.php"> 彈跳視窗新增</a>
-                <a class="dropdown-item" href="staff_madol_search.php"> 彈跳視窗查詢&修改 </a>
-            </div>
-        </li>
-
-        <li class="nav-item dropdown<?= $pageName == 'staff_category' ? 'active' : '' ?>">
-            <a class="nav-link dropdown-toggle" href="staff_category.php" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">種類</a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="staff_category_create.php"> 種類新增</a>
-                <a class="dropdown-item" href="staff_category_editor.php"> 種類查詢&修改 </a>
-            </div>
-        </li>
 
 
     
@@ -127,9 +123,7 @@ body {
             <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">員工資料</a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="staff_register.php">員工編號新增 </a>
-                <a class="dropdown-item" href="staff_info_search.php">員工資料查詢 </a>
-                <a class="dropdown-item" href="staff_category_create.php">員工職稱新增 </a>
-                <a class="dropdown-item" href="staff_category_editor.php">員工職稱修改 </a>
+                <a class="dropdown-item" href="staff_info_search.php">員工資料維護 </a>
             </div>
             <?php endif?>
         </li>

@@ -72,7 +72,7 @@ $pageName = 'staff_member_info_search';
                             </select>
                         </li>
                         <li class="">
-                            <select id="age" name="age">
+                            <select id="ageRange" name="ageRange">
                                 <option value="" disabled hidden selected>年齡區間</option>
                                 <option value="">全部</option>
                                 <option value="0-6">0-6歲</option>
@@ -123,7 +123,7 @@ $pageName = 'staff_member_info_search';
 </main>
 
 
-<?php include __DIR__. '/parts/staff_scripts.php'; ?>
+<?php include __DIR__ . '/parts/staff_scripts.php'; ?>
 
 <script>
   function memberIntoSearch(){
@@ -135,7 +135,7 @@ $pageName = 'staff_member_info_search';
         mobile: $("#mobile").val(),
         email: $("#email").val(),
         birthmonth: $("#select_month").val(),
-        age: $("#age").val(),
+        ageRange: $("#ageRange").val(),
     },function(data) {
         console.log(data);
         members_list = data['result'];
@@ -153,8 +153,7 @@ $pageName = 'staff_member_info_search';
                             <td>${nullTo(members['mobile'])}</td>
                             <td>${nullTo(members['zipcode']) + nullTo(members['county']) + nullTo(members['district']) + nullTo(members['address'])}</td>
                             <td>${nullTo(members['created_at'])}</td>
-                            <td><a hreef="staff_member_order_item.php"> </td>
-
+                            <td><a href="staff_member_trade_record.php?id=${members['id']}">查詢</td>
                             </tr>`;
             $("#profile table tbody").append(output);
         })
@@ -173,7 +172,7 @@ $pageName = 'staff_member_info_search';
     var month = 1;
     var selectedMonth = "<?= $_GET['month'] ?? "" ?>";
     $("#select_month option").each(function(ind, elem) {
-        if (ind > 1) {
+        if (ind > 0) {
             elem.text = month;
             elem.value = month;
             month++;

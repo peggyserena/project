@@ -1,5 +1,6 @@
 <?php include __DIR__ . '/../parts/config.php';
 include __DIR__ . '/../parts/imgHandler.php';
+include __DIR__ . '/../parts/tool.php';
 
 // $.post('/project/api/coupon-api.php', 
 // {'action': 'add', 'name': "testtt", 'price': 100, 'start_date': "2021-08-10", 'end_date': "2021-09-10"}, function(d){

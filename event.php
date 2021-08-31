@@ -97,6 +97,9 @@ $pageName = 'event';
                 <form action="event.php" method="get">
                 <ul class="row list-unstyled p-2 m-0 justify-content-center align-items-center ">
                         <li class=" ">
+                            <input id="eventNname_id" name='name' placeholder="活動名稱搜尋" value="<?= $_GET['name'] ?? "" ?>">
+                        </li>
+                        <li class=" ">
                             <select id="select_cat_id" name='cat_id'>
                                 <option value="">活動類別</option>
                             </select>
@@ -660,6 +663,7 @@ $pageName = 'event';
 
                 $.post('api/event-api.php', {
                     action: 'readAll',
+                    name: $("#eventNname_id").val(),
                     month: $("#select_month").val(),
                     time: $("#select_time").val(),
                     cat_id: $("#select_cat_id").val(),

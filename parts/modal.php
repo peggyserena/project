@@ -27,6 +27,9 @@
     <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="modal_alert" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-sm ">
             <div class="modal-content">
+                <div class="" style="position: absolute;right: 0; z-index: 1000;">
+                    <button type="button" class="close" data-dismiss="modal" style="margin: 7px;font-size: 36px;">×</button>
+                </div>
                 <div class="modal-body text-center">
                     <div class="content">
                         <div id="modal_img"></div>   
@@ -47,6 +50,9 @@
         }
         function insertText(selector, name){
             $(selector).text(name);
+        }
+        function insertHtml(selector, name){
+            $(selector).html(name);
         }
         function updateStyle(style){
             switch (style){

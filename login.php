@@ -141,7 +141,7 @@ $pageName = 'login';
                         insertPage("#modal_img", "animation/animation_success.html");
                         insertText("#modal_content", "歡迎您登入薰衣草森林會員～");
                         $("#modal_alert").modal("show");
-                        setTimeout(function(){window.history.back();}, 2000);
+                        setTimeout(function(){ location.href = "<?= $_SESSION['back'] ?? '' ?>"}, 2000);
                         // location.href = './index.php';
                     } else {
                         modal_init();

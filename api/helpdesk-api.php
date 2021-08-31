@@ -1,5 +1,6 @@
 <?php include __DIR__ . '/../parts/config.php';
 include __DIR__ . '/../parts/imgHandler.php';
+include __DIR__ . '/../parts/tool.php';
 
 $user = $_SESSION['user'] ?? null;
 $action = isset($_POST['action']) ? $_POST['action'] : ''; // 操作類型
@@ -152,16 +153,18 @@ switch ($action) {
         // insert img
         $name_list = uploadImgs($_FILES['img'], "images/helpdesk/");
         $img_order = json_decode($_POST['img_order']);
-        $sql = "INSERT INTO `helpdesk_image` (`type`, `helpdesk_id`, `path`, `num_order`) VALUES ".substr(str_repeat("(?, ?, ?, ?),", count($name_list)), 0, -1);
-        $param = []; // [path1, order1, path2, order2]
-        foreach($name_list as $index => $name){
-            array_push($param, 'staff');
-            array_push($param, $id);
-            array_push($param, $name);
-            array_push($param, $img_order[$index]);
+        if (count($name_list) > 0){
+            $sql = "INSERT INTO `helpdesk_image` (`type`, `helpdesk_id`, `path`, `num_order`) VALUES ".substr(str_repeat("(?, ?, ?, ?),", count($name_list)), 0, -1);
+            $param = []; // [path1, order1, path2, order2]
+            foreach($name_list as $index => $name){
+                array_push($param, 'staff');
+                array_push($param, $id);
+                array_push($param, $name);
+                array_push($param, $img_order[$index]);
+            }
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute($param);
         }
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute($param);
 
         // get old helpdesk
         $sql = "SELECT * FROM `helpdesk` WHERE id = ?";

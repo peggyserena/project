@@ -1,6 +1,9 @@
 <?php
 function uploadImgs($img, $target_dir, $size = 2000000){
     $name_list = [];
+    if ($img['size'][0] === 0){
+        return $name_list;    
+    }
     for ($i = 0; $i < count($img["name"]); $i++){
         $filename = md5(uniqid());
         $ext = explode(".", $img["name"][$i])[1];
@@ -55,7 +58,10 @@ function uploadImgs($img, $target_dir, $size = 2000000){
     return $name_list;
 }
 function uploadImg($img, $target_dir){
-    $name = "";
+    $name = ""; 
+    if ($img['size'] === 0){
+        return $name;    
+    }
     $filename = md5(uniqid());
     $ext = explode(".", $img["name"])[1];
     $target_file = $target_dir . basename("$filename.$ext");
@@ -126,18 +132,4 @@ function deleteImg($img){
     }else{
         unlink($img);
     }
-}
-function replaceAllToEmpty($arr = []){
-    if (is_array($arr)){
-        foreach ($arr as $key => $a){
-            if ($a === "all") {
-                $arr[$key] = "";
-            }
-        }
-    }else{
-        if ($arr === "all") {
-            $arr = "";
-        }
-    }
-    return $arr;
 }

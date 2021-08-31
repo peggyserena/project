@@ -1,162 +1,14 @@
 <?php require __DIR__ . '/parts/config.php'; ?>
 <?php
-$title = '森林體驗詳情';
-$pageName = 'staff_event_item';
+$title = '確認森林體驗新增內容';
+$pageName = 'staff_event_comfirm';
 
-
-
-
-// $month = "";
-// $time = "";
-// $cat_id = "";
-
-// $month = $_GET['month'] ?? "";
-// $time = $_GET['time'] ?? "";
-// $cat_id = $_GET['cat_id'] ?? "";
-// $order = $_GET['order'] ?? "";
-
-
-// $sql = "SELECT `e`.*, ec.name as `ec_name`, SUM(`oe`.quantity) as quantity FROM `event` as e";
-// $sql_condition = [];
-// array_push($sql_condition, "e.id = ?");
-
-// $sql .= " JOIN `event_category` as ec ON `cat_id` = ec.`id`";
-// $sql .= " LEFT JOIN `order_event` as oe ON e.id = oe.event_id";
-
-// if (sizeof($sql_condition) > 0) {
-//     $sql .= " WHERE ";
-// }
-// $sql .= implode(" AND ", $sql_condition);
-// $sql .= " group by e.id";
-// $stmt = $pdo->prepare($sql);
-// $stmt->execute([$_GET['id']]);
-// $event = $stmt->fetch();
-
-// // 抓圖片
-// $sql = "SELECT * FROM `event_image` WHERE event_id = ".$event['id']." ORDER BY num_order";
-// $stmt = $pdo->prepare($sql);
-// $stmt->execute([]);
-// $event_img = $stmt->fetchAll();
-
-
-// // 活動歷年總數
-// $sql = "SELECT e.name, IFNULL(sum(`quantity`), 0) as quantity FROM `event` as e LEFT JOIN `order_event` as oe ON e.id = oe.event_id WHERE e.id = ? GROUP BY `name`";
-// $stmt = $pdo->prepare($sql);
-// $stmt->execute([$_GET['id']]);
-// $quantity_list = $stmt->fetchAll();
-// $quantity_map = [];
-// foreach ($quantity_list as $value) {
-//     $quantity_map[$value['name']] = $value['quantity'];
-// }
 ?>
 <?php include __DIR__ . '/parts/staff_html-head.php'; ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+<link rel="stylesheet" href="./css/staff_event.css">
 <?php include __DIR__ . '/parts/staff_navbar.php'; ?>
 <style>
-/* ====================================== event ====================================== */
-    body {
-        text-align:justify;
-    }
-
-    .box>div>h3 {
-        width: 100%;
-    }
-    .d-flex img {
-        flex: 1 1 0;
-    }
-    .d-flex a {
-        flex: 1 1 0;
-    }
-
-    #event_img_cover {
-        width: 100%;
-        max-height: 550px;
-    }
-
-  
-    .eventItem .col-4 p {
-        text-align: justify;
-    }
-
-    .eventItem .fancybox {
-        width: 100%;
-        height: 180px;
-    }
-
-    .eventItem .fancybox img {
-        width: 100%;
-        max-height: 180px;
-        border:white solid 1px;
-    }
-
-
-    form li {
-        list-style: none;
-        padding: 0.5rem;
-
-    }
-
-    form ul {
-        justify-content: center;
-
-    }
-
-    a {
-        text-decoration:none;
-        color: white;
-    }
-
-    h4 {
-        font-weight: 500
-    }
-
-    .eventItem{
-        background-color:white;
-        margin:0 auto;
-    }
-
-    .eventItem .pop {
-        position: relative;
-    }
-
-    .eventItem .pop .priceBar01 {
-        position: absolute;
-        bottom: 0px;
-        color: white;
-    }
-
-    input:hover {
-        border: 2px white solid;
-    }
-
-    input{
-        text-align: center;
-    }
-
-
-    .container .box .col-lg-8{
-        background-image: url("./images/other/frame-02.svg");
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position:center;
-    }
-    .eventContent span{
-      font-weight: 700;
-    }
-    .container{
-    margin-top: 100px;
-  }
-
-/* ====================================== event ====================================== */
-
-    .modal-content {
-        padding:3px;
-        background:
-        linear-gradient(45deg, #DCC5EF 0%, #adda9a 100%)
-        no-repeat;
-        background-size:100% 10px ;
-        background-color:white;
-    }
 
 
 </style>
@@ -272,6 +124,18 @@ $pageName = 'staff_event_item';
         }, function(data){
             console.log('read');
             console.log(data);
+            img = "";
+            if (data['img'].length > 0){
+                img = data['img'][0]['path'];
+            }
+            
+            dateString = "";
+            dateList = new URLSearchParams(window.location.search).get("dateList").split(",");
+            dateList.forEach(function(date){
+                dateString += `${date} ${data['time'].substr(0, 5)} 和`;
+            })
+            dateString = dateString.substr(0, dateString.length - 1);
+            
             list = [
                 {
                     selector: ".event_name",
@@ -280,7 +144,7 @@ $pageName = 'staff_event_item';
                 {
                     selector: "#event_img_cover",
                     attr: {
-                        src: "<?= WEB_ROOT."/" ?>" + data['img'][0]['path']
+                        src: "<?= WEB_ROOT."/" ?>" + img
                     }
                 },
                 {
@@ -289,7 +153,7 @@ $pageName = 'staff_event_item';
                 },
                 {
                     selector: ".event_datetime",
-                    text: `${data['date']} ${data['time'].substr(0, 5)}`,
+                    text: dateString,
                 },
                 {
                     selector: ".event_available_quantity",

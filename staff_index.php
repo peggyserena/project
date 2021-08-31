@@ -56,34 +56,33 @@ $aceept_role = [1, 2];
     <!-- (div>a[href=#]{Link})*6 -->
     <div class=" row justify-content-center align-items-center">
         <div><a class=" " href="staff_helpdesk.php">客服信箱回覆</a></div>
-        <div><a class=" " href="staff_order_shippment.php">出貨狀態維護</a></div>
-        <div><a class=" " href="staff_order_search.php"> 交易訂單查詢</a></div>
+        <div><a class=" " href="staff_order_search.php"> 訂單出貨管理</a></div>
         <div><a class=" " href="staff_member_info_search.php"> 會員資料查詢</a></div>
-        <div><a class=" " href="staff_coupon_create.php"> 購物金<br>新增</a></div>
-        <div><a class=" " href="staff_coupon_search.php"> 購物金<br>維護</a></div>
+        <div><a class=" " href="staff_setting_editor.php"> 訂房時間<br>管理</a></div>
+        <div><a class=" " href="staff_coupon_create.php"> 購物金<br>發放</a></div>
+        <div><a class=" " href="staff_coupon_editor.php"> 購物金<br>排程</a></div>
+        <div><a class=" " href="staff_coupon_search.php"> 兌換券<br>管理</a></div>
         <div><a class=" " href="staff_edm_create.php"> EDM新增&寄發</a></div>
         <div><a class=" " href="staff_edm_search.php"> EDM維護&寄發</a></div>
-        <div><a class=" " href="staff_event_create.php"> 森林體驗新增</a></div>
-        <div><a class=" " href="staff_event_search.php"> 森林體驗維護</a></div>
+        <div><a class=" " href="staff_category_editor.php"> 各項種類維護</a></div>
+        <div><a class=" " href="staff_modal_create.php">彈跳視窗新增</a></div>
+        <div><a class=" " href="staff_modal_search.php">彈跳視窗維護</a></div>
+        <div><a class=" " href="staff_gallery.php">首頁&相簿維護</a></div>
         <div><a class=" " href="staff_forestnews_create.php"> 森林快報新增</a></div>
         <div><a class=" " href="staff_forestnews_search.php"> 森林快報維護</a></div>
-        <div><a class=" " href="staff_madol_create.php">彈跳視窗新增</a></div>
-        <div><a class=" " href="staff_madol_search.php">彈跳視窗維護</a></div>
-        <div><a class=" " href="staff_gallery.php">首頁&相簿維護</a></div>
-        <div><a class=" " href="staff_category.php"> 各項種類維護</a></div>
+        <div><a class=" " href="staff_event_create.php"> 森林體驗新增</a></div>
+        <div><a class=" " href="staff_event_search.php"> 森林體驗維護</a></div>
     </div>
     <hr>
     <div class=" row justify-content-center align-items-center">
         <?php if (in_array($_SESSION['staff']['role'] ?? "", $aceept_role)): ?>
-        <div><a class=" " href="staff_info_search.php"> 員工資料查詢</a></div>
-        <div><a class=" " href="staff_position_create.php">員工職稱新增</a></div>
-        <div><a class=" " href="staff_position_editor.php">員工職稱修改</a></div>
         <div><a class=" " href="staff_register.php">新增員工帳號</a></div>
+        <div><a class=" " href="staff_info_search.php"> 員工資料維護</a></div>
         <?php endif?>
 
     </div>
 </main>
-<?php include __DIR__. '/parts/staff_scripts.php'; ?>
+<?php include __DIR__ . '/parts/staff_scripts.php'; ?>
 
 <script>
   

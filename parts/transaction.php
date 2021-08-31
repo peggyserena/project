@@ -105,6 +105,18 @@ function addTransaction_hotel(method){
                 console.log("AddToCart_success");
                 updateCartCount();
 
+                id = $("#id").val();
+                order_date = $("#date").text();
+                selector = `#hotel_btn_${id}_${order_date}`;
+                modal_attribute = "";
+                status_class = 'temp';
+                onclick_function = `modalTemp('此商品已在購物車中')`;
+                newSpan = `<span id="selector" class="" ${modal_attribute} onclick="${onclick_function}"><img class="${status_class}" src="./images/icon/bookStatus.svg" alt=""></span>`
+
+                parent = $(selector).parent();
+                $(selector).remove();
+                parent.prepend(newSpan);
+
                 // modal
                 var modal_img = "animation/animation_addToCart.html";
                 insertPage("#modal_img", modal_img);

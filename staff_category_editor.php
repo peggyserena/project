@@ -1,15 +1,7 @@
 <?php require __DIR__ . '/parts/config.php'; ?>
 <?php
-$title = '各項種類資料查詢';
-$pageName = 'staff_category_search';
-
-if(
-  ! isset($_SESSION['staff'])
-){
-header('Location: staff_login.php');
-exit;
-} 
-
+$title = '各項種類維護';
+$pageName = 'staff_category_editor';
 
 ?>
 <?php include __DIR__. '/parts/staff_html-head.php'; ?>
@@ -229,8 +221,6 @@ exit;
         })
     }
     function fillData(data, cat_en_name, cat_name){
-        console.log("fillData");
-        console.log(data);
         th = "";
         if (cat_en_name === "forestnews"){
             th = "<th>英文名稱</th>";

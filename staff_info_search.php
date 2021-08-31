@@ -3,15 +3,6 @@
 $title = '員工資料查詢';
 $pageName = 'staff_info_search';
 
-if(
-  ! isset($_SESSION['staff'])
-){
-header('Location: staff_login.php');
-exit;
-} 
-
-
-
 
 // role類別
 // $sql = "SELECT * FROM `staff_role_category`";
@@ -77,8 +68,8 @@ exit;
                             <select id="gender" name="gender">
                                 <option disabled hidden selected value="">性別</option>
                                 <option value="">全部</option>
-                                <option value="先生">先生性</option>
-                                <option value="小姐">小姐性</option>
+                                <option value="先生">先生</option>
+                                <option value="小姐">小姐</option>
                                 <option value="不表明">不表明</option>
                             </select>
                         </li>
@@ -106,8 +97,8 @@ exit;
                             <select id="age" name="age">
                                 <option value="" disabled hidden selected>年齡區間</option>
                                 <option value="">全部</option>
-                                <option value="18-22">18-20歲</option>
-                                <option value="23-30">21-30歲</option>
+                                <option value="18-20">18-20歲</option>
+                                <option value="21-30">21-30歲</option>
                                 <option value="31-40">31-40歲</option>
                                 <option value="41-50">41-50歲</option>
                                 <option value="51-100">51歲以上</option>
@@ -129,12 +120,10 @@ exit;
                                 <td>職稱</td>
                                 <td>姓名</td>
                                 <td>性別</td>
-                                <td>生日</td>
-                                <td>身分證字號</td>
-                                <td>E-mail</td>
-                                <td>手機</td>
-                                <td>地址</td>
-                                <td>就職日</td>
+                                <td>年齡</td>
+                                <td>到職日</td>
+                                <td>離職日</td>
+                                <td>查詢</td>
                             </tr>
                         </thead>
                         <tbody>
@@ -148,9 +137,10 @@ exit;
 </main>
 
 
-<?php include __DIR__. '/parts/staff_scripts.php'; ?>
+<?php include __DIR__ . '/parts/staff_scripts.php'; ?>
 
 <script>
+  staffIntoSearch()
   function staffIntoSearch(){
     $.post('<?= WEB_API ?>/staff-api.php', {
         action: 'readAll',
@@ -159,9 +149,9 @@ exit;
         mobile: $("#mobile").val(),
         identityNum: $("#identityNum").val(),
         birthmonth: $("#select_month").val(),
+        gender: $("#gender").val(),
         age: $("#age").val(),
     },function(data) {
-        console.log(data);
         staff_list = data['result'];
         $("#profile table tbody").html("");
         staff_list.forEach(function(staff, index){
@@ -171,13 +161,10 @@ exit;
                             <td>${nullTo(staff['role_name'])}</td>
                             <td>${nullTo(staff['fullname'])}</td>
                             <td>${nullTo(staff['gender'])}</td>
-                            <td>${nullTo(staff['birthday'])}</td>
-                            <td>${nullTo(staff['identityNum'])}</td>
-                            <td>${nullTo(staff['email'])}</td>
-                            <td>${nullTo(staff['mobile'])}</td>
-                            <td>${nullTo(staff['zipcode']) + nullTo(staff['county']) + nullTo(staff['district']) + nullTo(staff['address'])}</td>
+                            <td>${nullTo(staff['age'])}</td>
                             <td>${nullTo(staff['created_at'])}</td>
-
+                            <td>${nullTo(staff['left_at'])}</td>
+                            <td><a href="staff_info.php?staff_id=${staff['staff_id']}">查詢</a></td>
                             </tr>`;
             $("#profile table tbody").append(output);
         })

@@ -1,6 +1,6 @@
 <?php require __DIR__ . '/parts/config.php'; ?>
 <?php
-$title = '森林體驗查詢';
+$title = '購物金&禮券發放排程';
 $pageName = 'staff_coupon_editor';
 
  ?>
@@ -16,7 +16,7 @@ $pageName = 'staff_coupon_editor';
   <main>
   <div class="container ">
     <div class="con_01 row mx-0 ">
-        <h2 class="title b-green rot-135 col-sm-12">修改活動</h2>
+        <h2 class="title b-green rot-135 col-sm-12">購物金&禮券發放排程</h2>
         <form action="<?= WEB_API ?>/coupon-api.php" class="p-5 col-sm-12" name="form1" id="myForm" method="post" onsubmit="create(); return false;" enctype="multipart/form-data">
           <input type="hidden" name="type" value="edit"/>
           <input type="hidden" name="id" value="<?= $_GET['id']?>"/>
@@ -56,7 +56,7 @@ $pageName = 'staff_coupon_editor';
 
   </main>
 
-<?php include __DIR__. '/parts/staff_scripts.php'; ?>
+<?php include __DIR__ . '/parts/staff_scripts.php'; ?>
 
 <script>
 
