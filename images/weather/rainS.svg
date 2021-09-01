@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 61.7 42.8">
+  <g>
+    <g>
+      <path d="M47.2 42.8H7.9c-4.3 0-7.9-3.5-7.9-7.9S3.5 27 7.9 27h39.4c4.3 0 7.9 3.5 7.9 7.9-.1 4.3-3.6 7.9-8 7.9z" fill="#fff"/>
+      <animateTransform attributeName="transform" attributeType="XML" dur="6s" keyTimes="0;0.5;1" repeatCount="indefinite" type="translate" values="0;5;0" calcMode="linear"/>
+    </g>
+    <circle cx="31.4" cy="18.5" r="9" fill="#ffeb3b"/>
+    <g>
+      <path d="M31.4 6.6c-.4 0-.6-.3-.6-.6V.6c0-.3.2-.6.5-.6h.1c.3 0 .6.3.6.6v5.5c0 .3-.3.5-.6.5zM31.4 30.1c-.4 0-.6.3-.6.6v5.5c0 .3.3.6.6.6h.1c.3 0 .6-.3.6-.6v-5.5c-.1-.3-.4-.6-.7-.6zM19.6 18.3c0 .4-.3.6-.6.6h-5.5c-.3 0-.6-.3-.6-.6v-.1c0-.3.3-.6.6-.6H19c.3.2.6.4.6.7zM43.1 18.3c0 .4.3.6.6.6h5.5c.3 0 .6-.3.6-.6v-.1c0-.3-.3-.6-.6-.6h-5.5c-.3.2-.6.4-.6.7zM22.4 26c.3.3.2.7 0 .9l-4.2 3.6c-.2.2-.6.2-.8-.1l-.1-.1c-.2-.2-.2-.6.1-.8l4.2-3.6c.3-.1.6-.1.8.1zM40.3 10.7c.3.3.6.3.8.1l4.2-3.6c.2-.2.3-.6.1-.8l-.1-.1c-.2-.2-.6-.3-.8-.1l-4.2 3.6c-.2.3-.3.7 0 .9zM22.4 10.8c.3-.3.2-.7 0-.9l-4.2-3.6c-.2-.2-.6-.2-.8.1l-.1.1c-.2.2-.2.6.1.8l4.2 3.6c.3.1.6.1.8-.1zM40.3 26.1c.3-.3.6-.3.8-.1l4.2 3.6c.2.2.3.6.1.8l-.1.1c-.2.2-.6.3-.8.1L40.3 27c-.2-.3-.3-.7 0-.9z" fill="#ffeb3b"/>
+      <animate attributeType="XML" attributeName="opacity" dur="0.5s" keyTimes="0;0.5;1" repeatCount="indefinite" values="1;0.6;1" calcMode="linear"/>
+    </g>
+    <animateTransform attributeName="transform" attributeType="XML" dur="2s" keyTimes="0;1" repeatCount="indefinite" type="scale" values="1;1" calcMode="linear"/>
+  </g>
+  <g>
+    <path d="M20.7 46.4c0 1.7-1.4 3.1-3.1 3.1s-3.1-1.4-3.1-3.1c0-1.7 3.1-7.8 3.1-7.8s3.1 6.1 3.1 7.8zM31.4 46.4c0 1.7-1.4 3.1-3.1 3.1-1.7 0-3.1-1.4-3.1-3.1 0-1.7 3.1-7.8 3.1-7.8s3.1 6.1 3.1 7.8zM41.3 46.4c0 1.7-1.4 3.1-3.1 3.1-1.7 0-3.1-1.4-3.1-3.1 0-1.7 3.1-7.8 3.1-7.8s3.1 6.1 3.1 7.8z" fill="#78e4ff"/>
+    <animateTransform attributeName="transform" attributeType="XML" dur="1s" keyTimes="0;1" repeatCount="indefinite" type="translate" values="0 0;0 10" calcMode="linear"/>
+    <animate attributeType="XML" attributeName="opacity" dur="1s" keyTimes="0;1" repeatCount="indefinite" values="1;0" calcMode="linear"/>
+  </g>
+  <g>
+    <path d="M55.7 25.1H34.4c-3.3 0-6-2.7-6-6s2.7-6 6-6h21.3c3.3 0 6 2.7 6 6s-2.7 6-6 6z" fill="#c2c2c2"/>
+    <circle cx="46.7" cy="13.4" r="10.7" fill="#c2c2c2"/>
+    <animateTransform attributeName="transform" attributeType="XML" dur="6s" keyTimes="0;0.5;1" repeatCount="indefinite" type="translate" values="0;-3;0" calcMode="linear"/>
+  </g>
+</svg>

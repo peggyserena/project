@@ -1,0 +1,144 @@
+body {
+  background: linear-gradient(45deg, #e8ddf1 0%, #e1ebdc 100%);
+  position: relative;
+  z-index: -10;
+}
+
+.card-wrapper {
+  background-color: #ffffda;
+  width: 100%;
+  display: flex;
+  color: green;
+  /* display: none */
+}
+
+input {
+  margin: 1px 0;
+  padding-left: 3%;
+  font-size: 1rem;
+  border: 1px solid lightgray;
+}
+
+input[type='text'] {
+  display: block;
+  height: 2.5rem;
+  width: 100%;
+}
+
+input[type='email'] {
+  display: block;
+  height: 2.5rem;
+  width: 100%;
+}
+
+.column-left {
+  width: 49.9%;
+  float: left;
+  margin-bottom: 2px;
+}
+
+.column-right {
+  width: 49.9%;
+  float: right;
+}
+
+a.disabled {
+  pointer-events: none;
+  cursor: default;
+}
+
+.buyer1 form div {
+  margin: 1px 0;
+  padding: 5px 3%;
+  font-size: 1rem;
+  background-color: white;
+  color: gray;
+}
+
+.buyer1 form label {
+  margin: 0;
+  padding: 5px;
+}
+
+input[type='text'] {
+  padding-left: 1rem;
+}
+
+.card-wrapper {
+  display: none;
+}
+
+/* #agreeReceipt{
+    margin-top:1rem
+} */
+label span {
+  color: gray;
+}
+
+input[type='text']:focus {
+  background-color: #cce5ff;
+}
+
+input:focus {
+  outline: none !important;
+  border-color: #719ece;
+  box-shadow: 0 0 10px #719ece;
+}
+
+textarea:focus {
+  outline: none !important;
+  border-color: #719ece;
+  box-shadow: 0 0 10px #719ece;
+}
+
+.discountTip {
+  color: gray;
+  padding: 0;
+}
+
+.finalPrice {
+  background-color: #fff1ab;
+  color: darkblue;
+  border-bottom: 1px solid lightgray;
+}
+
+.shipway img {
+  width: auto;
+  height: 40px;
+  margin: 0.5rem 0.7rem 0.5rem 0.5rem;
+}
+
+.shipway .track img {
+  width: auto;
+  height: 12.8px;
+  margin: 0.5rem 0.3rem 0.5rem 0rem;
+}
+.alert img {
+  width: auto;
+  height: 12.8px;
+  margin: 0.5rem 0.3rem 0.5rem 0rem;
+}
+
+.shipway .track li {
+  margin: 0.5rem 1rem 0.5rem 0.3rem;
+  transition: 0.5s ease;
+}
+
+.shipway .track li:hover {
+  transform: translateX(0.5rem);
+}
+
+.shipway .track li a:hover {
+  color: #83a573;
+  font-weight: 700;
+}
+
+select,
+textarea {
+  margin: 1px 0;
+  border: none;
+}
+
+.form-control {
+  height: 40px;
+}

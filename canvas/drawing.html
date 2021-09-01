@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/bootstrap.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+
+</head>
+<style>
+    .whole-card {
+        margin: 3rem auto;
+    }
+
+    .card {
+        width: 100%;
+        height: 40rem;
+        border-radius: 1rem;
+        color: rgb(255, 255, 255);
+        position: relative;
+    }
+
+    .card img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        padding: 1rem;
+        object-fit: contain;
+
+    }
+
+    .card .bottom {
+        align-items: flex-end;
+        justify-content: center;
+        text-align: center;
+        width: 100%;
+        top: 45%;
+        position: absolute;
+    }
+
+    .card-face {
+        position: relative;
+        top: 25%;
+        justify-content: space-between;
+        width: 100%;
+        height: 100%;
+    }
+
+    .card-numbers {
+        width: 60%;
+        text-align: justify;
+        font-size: 1.2rem;
+        margin: 0 auto;
+        background: rgba(79, 202, 206, 0.274);
+    }
+
+    .card-name {
+        width: 70%;
+        margin-left: 15%;
+        font-size: 1.2rem;
+        text-align: justify;
+        background: rgba(79, 202, 206, 0.274);
+    }
+
+    .card-date {
+        width: 70%;
+        text-align: right;
+        margin-left: 15%;
+        background: rgba(79, 202, 206, 0.274);
+
+    }
+
+    .card-date .diff {
+        font-size: 1rem;
+    }
+
+
+    .form-group input {
+        font-size: 1rem;
+    }
+
+    .enter-title {
+        font-size: 1.5rem;
+        margin: 2rem auto;
+    }
+</style>
+
+<body>
+    <header>
+        <div class="logo animate__animated animate__rollIn animate__slow 3s"><img src="./images/logo/logo.svg" alt="">
+        </div>
+    </header>
+    <nav id="nav_01" class="navbar navbar-expand-lg navbar-light bg-light active">
+        <a class="navbar-brand" href="index.html"><img src="./images/logo/logo_nav.svg" alt=""></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="index.html" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        園區介紹
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">園區介紹</a>
+                        <a class="dropdown-item" href="#">網站地圖</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        最新公告
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">森林體驗</a>
+                        <a class="dropdown-item" href="#">餐飲</a>
+                        <a class="dropdown-item" href="#">住宿</a>
+                        <a class="dropdown-item" href="#">周邊商品</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="itinerary.html" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        交通指南
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="itinerary.html">自行開車</a>
+                        <a class="dropdown-item" href="itinerary.html">大眾交通工具</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        森林體驗
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">特惠活動</a>
+                        <a class="dropdown-item" href="#">活動項目</a>
+                        <a class="dropdown-item" href="#">報名參加</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        饗宴
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">特惠活動</a>
+                        <a class="dropdown-item" href="#">
+                            <MENU:context></MENU:context>
+                        </a>
+                        <a class="dropdown-item" href="#">訂位</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        住宿
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">特惠活動</a>
+                        <a class="dropdown-item" href="#">房型</a>
+                        <a class="dropdown-item" href="#">訂房</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        套裝行程
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">特惠活動</a>
+                        <a class="dropdown-item" href="#">一泊二食</a>
+                        <a class="dropdown-item" href="#">一泊二食+下午茶</a>
+                        <a class="dropdown-item" href="#">一泊二食+森林體驗</a>
+                        <a class="dropdown-item" href="#">一泊二食+下午茶+森林體驗</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        周邊商品
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">特惠活動</a>
+                        <a class="dropdown-item" href="#">商品項目</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        遊客日誌＆相簿
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">遊客日誌</a>
+                        <a class="dropdown-item" href="#">相簿</a>
+                    </div>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <a id="logIn" href="#">會員註冊/登入</a>
+            </form>
+            <a href="memberInfo.html"><img src="./images/icon/member.svg" alt=""></a>
+            <a href="shoppingcart.html"><img src="./images/icon/shoopingcart.svg" alt=""></a>
+
+        </div>
+    </nav>
+    <nav class="nav_02">
+        <ul>
+            <li>
+                <a href="index.html">
+                    <div><img src="./images/icon/home.svg" alt=""></div>
+                    <div class="rw">
+                        <span>Home</span>
+                    </div>
+                </a>
+
+            </li>
+            <li>
+                <a href="shoppingcart.html">
+                    <div><img src="./images/icon/shoopingcart.svg" alt="">
+                    </div>
+                    <div class="rw">
+                        <span>cart</span>
+                    </div>
+
+                </a>
+            </li>
+            <li>
+                <a href="memberInfo.html">
+                    <img src="./images/icon/member.svg" alt="">
+                    <div class="rw">
+                        <span>member</span>
+                    </div>
+
+                </a>
+            </li>
+            <li>
+                <a href="contact.html">
+                    <img src="./images/icon/mail.svg" alt="">
+                    <div class="rw">
+                        <span>contact</span>
+                    </div>
+                </a>
+            </li>
+            <li id="goTop">
+                <a href="contact.html">
+                    <img src="./images/icon/goTop.svg" alt="">
+                    <div class="rw">
+                        <span>go top</span>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+
+    <main>
+        <div class="container">
+
+            <div class="whole-card row">
+                <div class="col col-sm-12 col-md-6 ">
+                    <div class="card">
+                        <img src="./images/card/card01.svg" alt="">
+                        <div class="card-face">
+                            <div class=" card-numbers  ">
+                                <div class="quartet">
+                                    write something here
+                                </div>
+                            </div>
+                            <div class="bottom">
+                                <div class="card-name disabled ">
+                                    write something more
+                                </div>
+                                <div class="card-date disabled">
+                                    <span class="diff">
+                                        date
+                                    </span><br>
+                                    <span class="card-dates ">
+                                        ******
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <form class="col-sm-12 col-md-4 offset-md-1 ">
+                    <div class="row ">
+                        <h1 class=" enter-title">Enter your credit card info</h1>
+                        <div class="col-sm-12 form-group">
+                            <input type="text" class="form-control cc-number" id="cc-number" name="cc-number"
+                                placeholder="Enter a credit card number" cc-concept="card-numbers">
+                        </div>
+                        <div class="col-sm-12 form-group">
+                            <input type="text" class="form-control cc-name" id="cc-name" name="cc-name"
+                                placeholder="Enter the name in your card" cc-concept="card-name">
+                        </div>
+                        <div class="col-sm-12 form-group">
+                            <input type="text" class="form-control card-show-date" id="card-show-date"
+                                name="card-show-date" placeholder="yyyy/mm/dd" maxLength="10" cc-concept="card-date">
+                        </div>
+                        <div class="col-sm-12 col-md form-group">
+                            <p><a href="mailto:"><img class="b-green rot-135" src="./images/icon/mail.svg"
+                                        alt="">email</a>
+                            </p>
+                        </div>
+                        <div class="col-sm-12 col-md form-group">
+                            <p><a href="mailto:"><img class="b-green rot-135" src="./images/icon/mail.svg"
+                                        alt="">email</a>
+                            </p>
+                        </div>
+                </form>
+            </div>
+        </div>
+
+
+    </main>
+    <footer class="nb-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="about">
+                        <p>Bootstrap Footer example snippets with CSS, Javascript and HTML. Code example of bootstrap-3
+                            footer using HTML, Javascript, jQuery, and CSS. 5 Beautiful and Responsive Footer Templates.
+                            Pin a fixed-height footer to the bottom of the viewport in desktop browsers with this custom
+                            HTML and CSS.</p>
+                        <div class="social-media">
+                            <ul class="row justify-content-center align-items-center ">
+                                <li class="animate__animated animate__rollIn animate__slow 2s"><a
+                                        href="http://www.nextbootstrap.com/" title=""><i
+                                            class="fab fa-facebook-f"></i></a></li>
+                                <li class="animate__animated animate__rollIn animate__slow 2s"><a
+                                        href="http://www.nextbootstrap.com/" title=""><i class="fa fa-twitter"></i></a>
+                                </li>
+                                <li class="animate__animated animate__rollIn animate__slow 2s"><a
+                                        href="http://www.nextbootstrap.com/" title=""><i
+                                            class="fa fa-google-plus"></i></a></li>
+                                <li class="animate__animated animate__rollIn animate__slow 2s"><a
+                                        href="http://www.nextbootstrap.com/" title=""><i class="fa fa-linkedin"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-info-single">
+                        <h2 class="title">Help Center</h2>
+                        <ul class="list-unstyled">
+                            <li><a href="http://www.nextbootstrap.com/" title=""><img src="./images/icon/arrow_d_r.svg"
+                                        alt="">隱私權政策</a></li>
+                            <li><a href="http://www.nextbootstrap.com/" title=""><img src="./images/icon/arrow_d_r.svg"
+                                        alt="">FAQ's</a></li>
+                            <li><a href="http://www.nextbootstrap.com/" title=""><img src="./images/icon/arrow_d_r.svg"
+                                        alt="">購物流程</a></li>
+                            <li><a href="http://www.nextbootstrap.com/" title=""><img src="./images/icon/arrow_d_r.svg"
+                                        alt="">Delivery Info</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-info-single">
+                        <h2 class="title">Customer information</h2>
+                        <ul class="list-unstyled">
+                            <li><a href="http://www.nextbootstrap.com/" title=""><img src="./images/icon/arrow_d_r.svg"
+                                        alt="">About Us</a></li>
+                            <li><a href="http://www.nextbootstrap.com/" title=""><img src="./images/icon/arrow_d_r.svg"
+                                        alt="">FAQ's</a></li>
+                            <li><a href="http://www.nextbootstrap.com/" title=""><img src="./images/icon/arrow_d_r.svg"
+                                        alt="">Sell Your Items</a></li>
+                            <li><a href="http://www.nextbootstrap.com/" title=""><img src="./images/icon/arrow_d_r.svg"
+                                        alt="">Contact Us</a></li>
+                            <li><a href="http://www.nextbootstrap.com/" title=""><img src="./images/icon/arrow_d_r.svg"
+                                        alt="">RSS</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-info-single">
+                        <h2 class="title">Security & privacy</h2>
+                        <ul class="list-unstyled">
+                            <li><a href="http://www.nextbootstrap.com/" title=""><img src="./images/icon/arrow_d_r.svg"
+                                        alt="">Terms Of Use</a></li>
+                            <li><a href="http://www.nextbootstrap.com/" title=""><img src="./images/icon/arrow_d_r.svg"
+                                        alt="">Privacy Policy</a></li>
+                            <li><a href="http://www.nextbootstrap.com/" title=""><img src="./images/icon/arrow_d_r.svg"
+                                        alt="">Return / Refund Policy</a></li>
+                            <li><a href="http://www.nextbootstrap.com/" title=""><img src="./images/icon/arrow_d_r.svg"
+                                        alt="">Store Locations</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6">
+                    <div class="footer-info-single">
+                        <h2 class="title">Payment</h2>
+                        <p>Sample HTML page with Twitter's Bootstrap. Code example of Easy Sticky Footer using HTML,
+                            Javascript, jQuery, and CSS. This bootstrap tutorial covers all the major elements of
+                            responsive</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="copyright">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <p>Copyright © 2021. Pei-Jing Studio.</p>
+                    </div>
+                    <div class="col-sm-6"></div>
+                </div>
+            </div>
+        </section>
+
+    </footer>
+
+</body>
+
+<script src="./js/jquery-3.6.0.js"></script>
+<script src="./js/bootstrap.bundle.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script src="https://kit.fontawesome.com/4641c99346.js" crossorigin="anonymous"></script>
+<script src="./js/script.js"></script>
+<script>
+    const cardElement = document.getElementsByClassName('card')[0];
+    const inputCCNumber = document.getElementsByClassName('cc-number')[0];
+    const inputCCName = document.getElementsByClassName('cc-name')[0];
+    const inputCCValidDate = document.getElementsByClassName('card-show-date')[0];
+    const cardName = document.getElementsByClassName('card-name')[0];
+    const cardDates = document.getElementsByClassName('card-dates')[0];
+    const maskChar = '&#9679;';
+    const initialCardDates = `${maskChar}${maskChar}/${maskChar}${maskChar}`;
+    const initialQuartet = `${maskChar}`;
+    const ccNumber = `${initialQuartet}}`;
+
+    const ccNumberChange = e => {
+        const { target, keyCode } = e;
+        const { name, value } = target;
+        const stringLen = value.length;
+        const cardQuartet = document.getElementsByClassName('quartet');
+        const { classList } = cardElement;
+
+        if ((stringLen === 4 || stringLen === 9 || stringLen === 14) && keyCode !== 8) {
+            inputCCNumber.value = `${value} `;
+        }
+
+        const ccNumberValueArr = value.split(' ');
+
+        for (let i = 0, cardQuartetLen = cardQuartet.length; i < cardQuartetLen; ++i) {
+
+            if (ccNumberValueArr[i]) {
+                const ccQuartet = ccNumberValueArr[i];
+                const ccQuartetArr = ccQuartet.split('');
+
+                cardQuartet[i].innerHTML = ccQuartetArr.join('');
+            } else {
+                cardQuartet[i].innerHTML = ccNumberArr[i];
+            }
+        }
+    };
+
+    const ccNameChange = e => {
+        const { target } = e;
+        const { value } = target;
+        const nameText = (value.length === 0) ? 'Your name here' : value;
+
+        cardName.innerHTML = nameText.toUpperCase();
+    }
+
+    ccToggleDisable = e => {
+        const { target } = e;
+        ccElement.classList.toggle('disabled');
+    }
+
+    const ccValidDateChange = e => {
+        const { target, keyCode } = e;
+        const { value } = target;
+        const valueLen = value.length;
+
+        cardDates.innerHTML = `${value}`;
+    }
+
+
+    // Card Number
+    inputCCNumber.addEventListener('keyup', ccNumberChange);
+
+    // Card Name
+    inputCCName.addEventListener('input', ccNameChange);
+
+    // Date
+    inputCCValidDate.addEventListener('keyup', ccValidDateChange);
+
+</script>
+
+</body>
+
+</html>

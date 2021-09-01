@@ -1,0 +1,11 @@
+body {
+  background: linear-gradient(45deg, #e8ddf1 0%, #e1ebdc 100%);
+}
+
+.con_01 {
+  background-color: whitesmoke;
+  margin-top: 100px;
+}
+select {
+  height: 30px;
+}

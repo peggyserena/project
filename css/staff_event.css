@@ -1,0 +1,97 @@
+/* ====================================== event ====================================== */
+body {
+  text-align: justify;
+}
+
+.box > div > h3 {
+  width: 100%;
+}
+.d-flex img {
+  flex: 1 1 0;
+}
+.d-flex a {
+  flex: 1 1 0;
+}
+
+#event_img_cover {
+  width: 100%;
+  max-height: 550px;
+}
+
+.eventItem .col-4 p {
+  text-align: justify;
+}
+
+.eventItem .fancybox {
+  width: 100%;
+  height: 180px;
+}
+
+.eventItem .fancybox img {
+  width: 100%;
+  max-height: 180px;
+  border: white solid 1px;
+}
+
+form li {
+  list-style: none;
+  padding: 0.5rem;
+}
+
+form ul {
+  justify-content: center;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+h4 {
+  font-weight: 500;
+}
+
+.eventItem {
+  background-color: white;
+  margin: 0 auto;
+}
+
+.eventItem .pop {
+  position: relative;
+}
+
+.eventItem .pop .priceBar01 {
+  position: absolute;
+  bottom: 0px;
+  color: white;
+}
+
+input:hover {
+  border: 2px white solid;
+}
+
+input {
+  text-align: center;
+}
+
+.container .box .col-lg-8 {
+  background-image: url('./images/other/frame-02.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+.eventContent span {
+  font-weight: 700;
+}
+.container {
+  margin-top: 100px;
+}
+
+/* ====================================== event ====================================== */
+
+.modal-content {
+  padding: 3px;
+  background: linear-gradient(45deg, #dcc5ef 0%, #adda9a 100%) no-repeat;
+  background-size: 100% 10px;
+  background-color: white;
+}

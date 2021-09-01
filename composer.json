@@ -1,0 +1,6 @@
+{
+    "require": {
+        "phpmailer/phpmailer": "^6.5",
+        "mtdowling/cron-expression": "^1.2"
+    }
+}

@@ -1,0 +1,213 @@
+.container {
+  margin: 0 auto;
+}
+
+.banner img {
+  width: 100%;
+}
+
+.container h1 + h3 {
+  line-height: 2rem;
+  letter-spacing: 2px;
+}
+input {
+  text-align: center;
+}
+
+/* ===================== room ===================== */
+
+.pic_demo {
+  width: 100%;
+  padding: 0;
+}
+
+.pic_demo img {
+  width: 100%;
+  object-fit: cover;
+}
+
+.pic_small {
+  width: 100%;
+  justify-content: space-evenly;
+}
+
+.pic_piece {
+  padding: 0.5rem;
+}
+
+.pic_piece img {
+  width: 100%;
+}
+
+#doubleRoom {
+  width: 100%;
+  border: #eff2f6 3px solid;
+}
+
+.amenities {
+  margin: 0;
+}
+
+.amenities ul li::before {
+  content: '';
+  background-image: url('./images/icon/checkmark.svg');
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  background-size: contain;
+  margin-right: 5px;
+}
+
+#myTabContent .card-body {
+  background-color: #ee609b;
+  color: white;
+  border-radius: 0.25rem;
+}
+#myTabContent .amenities {
+  background-color: #eff2f6;
+}
+
+/* ===================== reservation ===================== */
+
+#myTab li {
+  border-radius: 10px 10px 0 0;
+  margin-right: 2px;
+  background-color: rgb(194, 218, 226);
+}
+
+#myTab li:hover {
+  background: linear-gradient(45deg, #dcc5ef 0%, #adda9a 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#499bea', endColorstr='#1abc9c', GradientType=1);
+}
+
+#myTab li a {
+  color: white;
+  list-style: none;
+  text-decoration: none;
+}
+
+/* ===================== reservation ===================== */
+
+table {
+  border: 1px solid #cfdef1;
+  vertical-align: middle;
+  text-align: center;
+  font-size: 1rem;
+  margin: 0 auto;
+  /* color:gray !important; */
+}
+table td img {
+  border-radius: 50%;
+}
+table td img:hover {
+  border-radius: 50%;
+  background-color: #0000e3;
+  box-shadow: 0px 0px 20px rgb(0, 255, 191);
+}
+table td img.available {
+  background-color: #afda9c;
+}
+table td img.full {
+  background-color: #f98f8f;
+}
+table td img.temp {
+  background-color: #dcc5ef;
+}
+table td img.unavailable {
+  background-color: #9aa1b5;
+}
+table > img {
+  width: 5rem;
+  height: auto;
+}
+
+table span {
+  display: inline-block;
+  margin: 0 1rem;
+}
+
+table i {
+  margin: 0 1rem;
+}
+
+table input {
+  margin: 0 1rem;
+}
+
+table .status {
+  background-color: #eff2f6;
+}
+
+table .status span img {
+  width: 2rem;
+  padding-right: 0 1rem;
+  margin: 0 1rem;
+}
+
+.container > form > div {
+  background-color: #ee609b;
+  color: white;
+  font-weight: 600;
+  padding: 0rem;
+  border-radius: 0.25rem;
+}
+
+.container > form > div > div {
+  margin-left: 1.5rem;
+  margin: 0 auto;
+}
+
+.c_1 h1,
+h3 {
+  text-shadow: 0 0 0.2em #0000e3, 0 0 0.25em #9aff02, -1px -1px white, 1px 1px rgb(26, 2, 94);
+}
+
+#notes h4 {
+  color: #0000e386;
+}
+
+#priceBar_h button {
+  border: 2px white solid;
+  margin: 0.5rem 1rem;
+}
+
+input:hover {
+  box-shadow: 0px 0px 20px rgb(0, 255, 191);
+  border: 2px white solid;
+}
+
+table span img {
+  width: 2em;
+}
+
+#myModal_1 .modal-content {
+  border: 3px solid #dcc5ef;
+}
+#myModal_1 .modal-body > div {
+  margin: 0.5rem 0;
+  font-weight: 700;
+  position: relative;
+  left: 7.5%;
+}
+#myModal_1 .modal-content:first-child > button {
+  background-color: #dcc5ef;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  position: relative;
+  top: 0.4rem;
+  left: 16rem;
+}
+
+.poetry1 {
+  line-height: 2.5rem;
+}
+ul {
+  list-style: none;
+}
+
+#reservation table th,
+#reservation table td {
+  padding-left: 0rem;
+  padding-right: 0rem;
+}
