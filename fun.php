@@ -182,9 +182,9 @@ $pageName = 'fun';
  
 
         <div class="container  m-auto " style="background-color: rgba(250, 195, 112, 0.2);">
-            <h2 class="box_desktop b-green rot-135 text-center t_shadow mt-5">歡迎下載動畫卡片，把真誠的祝福傳送給朋友吧！！</h2>
-            <h2 class="box_tablet b-green rot-135 text-center t_shadow mt-5">歡迎下載動畫卡片，把真誠的祝福傳送給朋友吧！！</h2>
-            <h3 class="box_cellphone b-green rot-135 text-center t_shadow p-2 mb-4 ">歡迎下載動畫卡片<br>把真誠的祝福傳送給朋友吧！！</h3>
+            <h2 class="box_desktop b-green rot-135 text-center t_shadow mt-5">歡迎下載動畫卡片，把真誠的祝福傳送給朋友吧！</h2>
+            <h2 class="box_tablet b-green rot-135 text-center t_shadow mt-5">歡迎下載動畫卡片，把真誠的祝福傳送給朋友吧！</h2>
+            <h3 class="box_cellphone b-green rot-135 text-center t_shadow p-2 mb-4 ">歡迎下載動畫卡片<br>把真誠的祝福傳送給朋友吧！</h3>
             <div class="row align-items-start">
                 <video class="col-lg-6 col-md-6 col-sm-12 mb-4" controls="controls">width="500" height="250"
                     <source src="./images/video/helloween.mp4" type="video/mp4">
