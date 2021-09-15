@@ -1,25 +1,25 @@
 <style>
 #myModal button {
   transition: all 0.5s ease;
+  position: absolute;
   width: 3rem;
   height: 3rem;
-  position: absolute;
   z-index: 100;
   background-color: #ff9980;
-  right: 1%;
-  top: 1%;
+  right: 3%;
+  top: 3%;
   border-radius: 50%;
   border: 2px solid #fff;
   color: white;
   -webkit-box-shadow: -4px -2px 6px 0px rgba(0, 0, 0, 0.1);
 }
 
-#myModal button:hover {
+#myModalSample button:hover {
   background-color: orange;
   color: #fff;
 }
 
-.modal button {
+#myModalSample button {
   transition: all 0.5s ease;
   border-radius: 50%;
   transform: scale(0.6);
@@ -29,7 +29,7 @@
   font-weight: 900;
   -webkit-box-shadow: -4px -2px 6px 0px rgba(0, 0, 0, 0.1);
 }
-.modal button:hover {
+#myModalSample button:hover {
   background-color: orange;
 }
 .modal-content {
@@ -37,15 +37,18 @@
   background-color: white;
 }
 
+.modal-header, .modal-footer{
+    display: block;
+}
 
 </style>
-    <div class="modal fade text-muted" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalTitle" aria-hidden="true">
+    <div class="modal fade text-muted" id="myModalSample" tabindex="-1" role="dialog" aria-labelledby="myModalTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content ">
+            <div class="modal-content p-0 m-0 ">
                 <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 id="modal_title" class="modal-title title text-center m-0" name="title" ></h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <div class="modal-header title text-center">
+                    <h3 id="modal_title" class="text-center m-0 px-2" name="title" ></h3>
+                    <button type="button" class="close p-2" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <!-- Modal body -->
                 <div class="modal-body pb-2 pl-4 pr-4 pt-4">
@@ -54,9 +57,13 @@
                     </pre>
                 </div>
                 <!-- Modal footer -->
-                <div class="modal-footer p-3" style="background-color:MistyRose">
+                <div class="modal-footer p-2" style="background-color:MistyRose">
                     <pre>
-                        <p id="modal_note" name="note"></p>
+                        <p id="modal_notice" class="text-muted" name="notice" ></p>
+                        <a id="link_address" name="link_address" href=""><p id="link_name" name="link_name"></p></a>
+
+                                    
+
                     </pre>
                 </div>
             </div>
@@ -73,8 +80,8 @@
           }, function(data){
               console.log(data);
               if (data){
-                fillDataa(data, $("#myModal"));
-                $("#myModal").modal("show");
+                fillDataa(data, $("#myModalSample"));
+                $("#myModalSample").modal("show");
               }
               
           }, 'json').fail(function(data){
@@ -92,6 +99,21 @@
                 {
                     selector: "#modal_content",
                     text: data['content'],
+                },
+                {
+                    selector: "#modal_notice",
+                    text: data['notice'],
+                },
+                {
+                    selector: "#link_address",
+                    attr: {
+                        src: data['link_address'],
+                    }
+
+                },
+                 {
+                    selector: "#link_name",
+                    text: data['link_name'],
                 },
             ]
 

@@ -37,11 +37,11 @@ $pageName = 'staff_modal_create';
               </div>
               <div class="form-group">
                   <label for="link_name">連結標題</label>
-                  <textarea type="text" class="form-control" id="link_name" name="link_name"  required></textarea>
+                  <textarea type="text" class="form-control" id="link_name" name="link_name"  ></textarea>
               </div>
               <div class="form-group">
                   <label for="link_address">連結網址</label>
-                  <textarea type="text" class="form-control" id="link_address" name="link_address"  required></textarea>
+                  <textarea type="text" class="form-control" id="link_address" name="link_address" ></textarea>
               </div>
               <div class="form-group">
                   <label for="link_address">狀態</label>
