@@ -11,7 +11,7 @@ $pageName = 'fun';
     body {
         background: linear-gradient(45deg,#e8ddf1 0%,  #e1ebdc 100%);
         position: relative;
-        index:1;
+        z-index:1;
 
     }
 
